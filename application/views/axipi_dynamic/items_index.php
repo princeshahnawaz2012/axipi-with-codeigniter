@@ -1,15 +1,15 @@
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
-<li class="first"><a href="<?php echo base_url(); ?>projects">Projects</a></li>
+<li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('items'); ?></a></li>
 </ul>
 </div>
 </div>
 
 <div class="box1">
-<h1>Projects</h1>
+<h1><?php echo $this->lang->line('items'); ?></h1>
 <ul>
-<li class="one"><a class="add" href="<?php echo base_url(); ?>axipi/dynamic/items/?a=add">Add</a></li>
+<li class="first"><a class="add" href="<?php echo current_url(); ?>?a=add"><?php echo $this->lang->line('add'); ?></a></li>
 </ul>
 <div class="display">
 
@@ -28,9 +28,9 @@
 <?php foreach($projects as $pro):?>
 
 <tr>
-<td><a href="<?php echo base_url(); ?>axipi/dynamic/items/?a=view&amp;itm_id=<?php echo $pro->itm_id;?>"><?php echo $pro->itm_id;?></a></td>
+<td><a href="<?php echo current_url(); ?>?a=view&amp;itm_id=<?php echo $pro->itm_id;?>"><?php echo $pro->itm_id;?></a></td>
 <td><?php echo $pro->itm_code;?></td>
-<th><a href="<?php echo base_url(); ?>axipi/dynamic/items/?a=update&amp;itm_id=<?php echo $pro->itm_id;?>">Update</a></th>
+<th><a href="<?php echo current_url(); ?>?a=update&amp;itm_id=<?php echo $pro->itm_id;?>"><?php echo $this->lang->line('update'); ?></a></th>
 </tr>
 
 <?php endforeach;?>

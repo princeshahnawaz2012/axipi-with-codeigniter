@@ -32,15 +32,15 @@ class items_model extends CI_Model {
         return $select_language;
     }
     function get_all_items() {
-        $query = $this->db->query('SELECT COUNT(pro.itm_id) AS count FROM itm AS pro WHERE 1');
+        $query = $this->db->query('SELECT COUNT(itm.itm_id) AS count FROM itm AS itm WHERE 1');
         return $query->result();
     }
     function get_pagination_items($num, $offset) {
-        $query = $this->db->query('SELECT pro.* FROM itm AS pro WHERE 1 GROUP BY pro.itm_id LIMIT '.$offset.', '.$num);
+        $query = $this->db->query('SELECT itm.* FROM itm AS itm WHERE 1 GROUP BY itm.itm_id LIMIT '.$offset.', '.$num);
         return $query->result();
     }
-    function get_item($pro_id) {
-        $query = $this->db->query('SELECT pro.* FROM itm pro WHERE pro.itm_id = ? GROUP BY pro.itm_id', array($pro_id));
+    function get_item($itm_id) {
+        $query = $this->db->query('SELECT itm.* FROM itm itm WHERE itm.itm_id = ? GROUP BY itm.itm_id', array($itm_id));
         return $query->result();
     }
 }
