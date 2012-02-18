@@ -14,9 +14,19 @@ class Axipi_controller extends CI_Controller {
 
 	}
 	public function index() {
+		$this->load->helper(array('form'));
 		$this->load->library('pagination');
 
-		$get_pro_all = $this->items_model->get_all_items();
+		$flt = array();
+		$flt[] = '1';
+		if($this->input->post('items_sct_id')) {
+			$flt[] = 'itm.sct_id = '.$this->db->escape($this->input->post('items_sct_id'));
+			$this->session->set_userdata('items_sct_id', $this->input->post('items_sct_id'));
+		} else if($this->session->userdata('items_sct_id')) {
+			$flt[] = 'itm.sct_id = '.$this->db->escape($this->session->userdata('items_sct_id'));
+		}
+
+		$get_pro_all = $this->items_model->get_all_items($flt);
 
 		$config['base_url'] = '?';
 		$config['total_rows'] = $get_pro_all[0]->count;
@@ -44,7 +54,9 @@ class Axipi_controller extends CI_Controller {
 
 		$data = array();
 		$data['pagination'] = $this->pagination->create_links();
-		$data['items'] = $this->items_model->get_pagination_items($config['per_page'], $start);
+		$data['items'] = $this->items_model->get_pagination_items($flt, $config['per_page'], $start);
+		$data['select_section'] = $this->items_model->select_section();
+		$data['select_language'] = $this->items_model->select_language();
 		$this->zones['content'] = $this->load->view('axipi_dynamic/items_index', $data, true);
 	}
 	public function delete() {

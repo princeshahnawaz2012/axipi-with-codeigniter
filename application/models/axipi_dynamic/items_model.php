@@ -31,12 +31,12 @@ class items_model extends CI_Model {
 		}
         return $select_language;
     }
-    function get_all_items() {
-        $query = $this->db->query('SELECT COUNT(itm.itm_id) AS count FROM itm AS itm WHERE 1');
+    function get_all_items($flt) {
+        $query = $this->db->query('SELECT COUNT(itm.itm_id) AS count FROM itm AS itm WHERE '.implode(' AND ', $flt));
         return $query->result();
     }
-    function get_pagination_items($num, $offset) {
-        $query = $this->db->query('SELECT itm.*, COUNT(DISTINCT(items.itm_id)) AS count_children FROM itm AS itm LEFT JOIN itm items ON items.itm_parent = itm.itm_id WHERE 1 GROUP BY itm.itm_id ORDER BY itm.itm_id DESC LIMIT '.$offset.', '.$num);
+    function get_pagination_items($flt, $num, $offset) {
+        $query = $this->db->query('SELECT itm.*, COUNT(DISTINCT(items.itm_id)) AS count_children FROM itm AS itm LEFT JOIN itm items ON items.itm_parent = itm.itm_id WHERE '.implode(' AND ', $flt).' GROUP BY itm.itm_id ORDER BY itm.itm_id DESC LIMIT '.$offset.', '.$num);
         return $query->result();
     }
     function get_item($itm_id) {

@@ -13,6 +13,13 @@
 </ul>
 <div class="display">
 
+<?php echo form_open(current_url()); ?>
+<div class="filters">
+<div><?php echo form_label($this->lang->line('sct_code'), 'items_sct_id'); ?><?php echo form_dropdown('items_sct_id', $select_section, set_value('items_sct_id', $this->session->userdata('items_sct_id')), 'class="select"'); ?></div>
+<div><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></div>
+</div>
+</form>
+
 <div class="paging">
 <?php echo $pagination; ?>
 </div>
