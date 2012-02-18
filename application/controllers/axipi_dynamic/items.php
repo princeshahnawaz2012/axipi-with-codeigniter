@@ -18,8 +18,11 @@ class Axipi_controller extends CI_Controller {
 		$this->load->library('pagination');
 
 		$filters = array();
+		$filters['items_itm_code'] = array('itm.itm_code', 'like');
+		$filters['items_itm_title'] = array('itm.itm_title', 'like');
 		$filters['items_sct_id'] = array('itm.sct_id', 'equal');
 		$filters['items_cmp_code'] = array('cmp.cmp_code', 'like');
+		$filters['items_lng_id'] = array('itm.lng_id', 'equal');
 		$flt = build_filters($filters);
 
 		$get_pro_all = $this->items_model->get_all_items($flt);
@@ -141,6 +144,13 @@ class Axipi_controller extends CI_Controller {
 				$this->db->update('itm'); 
 				$this->index();
 			}
+		}
+	}
+	public function view() {
+		if($this->itm_id != 0) {
+			$data = array();
+			$data['itm'] = $this->items_model->get_item($this->itm_id);
+			$this->zones['content'] = $this->load->view('axipi_dynamic/items_view', $data, true);
 		}
 	}
 }

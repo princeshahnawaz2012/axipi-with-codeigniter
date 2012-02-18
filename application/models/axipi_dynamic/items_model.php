@@ -40,7 +40,7 @@ class items_model extends CI_Model {
         return $query->result();
     }
     function get_item($itm_id) {
-        $query = $this->db->query('SELECT itm.* FROM itm itm WHERE itm.itm_id = ? GROUP BY itm.itm_id', array($itm_id));
+        $query = $this->db->query('SELECT itm.*, cmp.cmp_code, sct.sct_code, lng.lng_code, COUNT(DISTINCT(items.itm_id)) AS count_children FROM itm AS itm LEFT JOIN cmp AS cmp ON cmp.cmp_id = itm.cmp_id LEFT JOIN sct AS sct ON sct.sct_id = itm.sct_id LEFT JOIN lng AS lng ON lng.lng_id = itm.lng_id LEFT JOIN itm AS items ON items.itm_parent = itm.itm_id WHERE itm.itm_id = ? GROUP BY itm.itm_id', array($itm_id));
         return $query->result();
     }
 }

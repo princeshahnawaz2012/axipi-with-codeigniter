@@ -14,6 +14,7 @@ if($itm) {
 <div class="box1">
 <h1><?php echo $itm[0]->itm_code; ?></h1>
 <ul>
+<li><a href="<?php echo current_url(); ?>?a=view&amp;itm_id=<?php echo $itm[0]->itm_id; ?>"><?php echo $this->lang->line('view'); ?></a></li>
 <li><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>
 <div class="display">
