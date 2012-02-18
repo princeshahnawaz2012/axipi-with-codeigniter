@@ -3,6 +3,9 @@
 class Welcome extends CI_Controller {
     function __construct() {
         parent::__construct();
+		if(function_exists('date_default_timezone_set')) {
+			date_default_timezone_set('Etc/UCT');
+		}
     }
 	public function index() {
 		if(!$this->uri->uri_string()) {

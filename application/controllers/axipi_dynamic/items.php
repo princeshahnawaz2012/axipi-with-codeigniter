@@ -58,25 +58,7 @@ class Axipi_controller extends CI_Controller {
 		$data['select_language'] = $this->items_model->select_language();
 		$this->zones['content'] = $this->load->view('axipi_dynamic/items_index', $data, true);
 	}
-	public function delete() {
-		if($this->itm_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['itm'] = $this->items_model->get_item($this->itm_id);
-
-			$this->form_validation->set_rules('confirm', $this->lang->line('confirm'), 'required');
-
-			if($this->form_validation->run() == FALSE) {
-				$this->zones['content'] = $this->load->view('axipi_dynamic/items_delete', $data, true);
-			} else {
-				$this->db->where('itm_id', $this->itm_id);
-				$this->db->delete('itm'); 
-				$this->index();
-			}
-		}
-	}
-	public function add() {
+	public function create() {
 		$this->load->helper(array('form'));
 		$this->load->library('form_validation');
 		$data = array();
@@ -94,7 +76,7 @@ class Axipi_controller extends CI_Controller {
 		$this->form_validation->set_rules('lng_id', $this->lang->line('lng_code'), 'required');
 
 		if($this->form_validation->run() == FALSE) {
-			$this->zones['content'] = $this->load->view('axipi_dynamic/items_add', $data, true);
+			$this->zones['content'] = $this->load->view('axipi_dynamic/items_create', $data, true);
 		} else {
 			$this->db->set('sct_id', $this->input->post('sct_id'));
 			$this->db->set('itm_code', $this->input->post('itm_code'));
@@ -107,6 +89,13 @@ class Axipi_controller extends CI_Controller {
 			$this->db->set('lng_id', $this->input->post('lng_id'));
 			$this->db->insert('itm'); 
 			$this->index();
+		}
+	}
+	public function read() {
+		if($this->itm_id != 0) {
+			$data = array();
+			$data['itm'] = $this->items_model->get_item($this->itm_id);
+			$this->zones['content'] = $this->load->view('axipi_dynamic/items_read', $data, true);
 		}
 	}
 	public function update() {
@@ -146,11 +135,22 @@ class Axipi_controller extends CI_Controller {
 			}
 		}
 	}
-	public function view() {
+	public function delete() {
 		if($this->itm_id != 0) {
+			$this->load->helper(array('form'));
+			$this->load->library('form_validation');
 			$data = array();
 			$data['itm'] = $this->items_model->get_item($this->itm_id);
-			$this->zones['content'] = $this->load->view('axipi_dynamic/items_view', $data, true);
+
+			$this->form_validation->set_rules('confirm', $this->lang->line('confirm'), 'required');
+
+			if($this->form_validation->run() == FALSE) {
+				$this->zones['content'] = $this->load->view('axipi_dynamic/items_delete', $data, true);
+			} else {
+				$this->db->where('itm_id', $this->itm_id);
+				$this->db->delete('itm'); 
+				$this->index();
+			}
 		}
 	}
 }

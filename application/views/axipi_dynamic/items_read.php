@@ -6,7 +6,7 @@ if($itm) {
 <div class="display">
 <ul>
 <li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('items'); ?></a></li>
-<li><a href="<?php echo current_url(); ?>?a=view&amp;itm_id=<?php echo $itm[0]->itm_id; ?>"><?php echo $itm[0]->itm_code; ?></a></li>
+<li><?php echo $this->lang->line('read'); ?></li>
 </ul>
 </div>
 </div>
@@ -19,7 +19,7 @@ if($itm) {
 </ul>
 <div class="display">
 
-<h2><?php echo $this->lang->line('view'); ?></h2>
+<h2><?php echo $this->lang->line('read'); ?></h2>
 
 <div class="column1">
 <p><span class="label"><?php echo $this->lang->line('sct_code'); ?></span><?php echo $itm[0]->sct_code; ?></p>

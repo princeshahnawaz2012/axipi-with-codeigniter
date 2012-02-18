@@ -2,7 +2,7 @@
 <div class="display">
 <ul>
 <li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('items'); ?></a></li>
-<li><a href="<?php echo current_url(); ?>?a=add"><?php echo $this->lang->line('index'); ?></a></li>
+<li><?php echo $this->lang->line('create'); ?></li>
 </ul>
 </div>
 </div>
@@ -14,11 +14,11 @@
 </ul>
 <div class="display">
 
-<h2><?php echo $this->lang->line('add'); ?></h2>
+<h2><?php echo $this->lang->line('create'); ?></h2>
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open(current_url().'?a=add'); ?>
+<?php echo form_open(current_url().'?a=create'); ?>
 
 <div class="column1">
 <p><?php echo form_label($this->lang->line('sct_code').' *', 'sct_id'); ?><?php echo form_dropdown('sct_id', $select_section, set_value('sct_id'), 'class="select"'); ?></p>
@@ -28,6 +28,10 @@
 <p><?php echo form_label($this->lang->line('cmp_code').' *', 'cmp_id'); ?><?php echo form_dropdown('cmp_id', $select_component, set_value('cmp_id'), 'class="select"'); ?></p>
 <p><?php echo form_label($this->lang->line('itm_content'), 'itm_content'); ?><?php echo form_textarea('itm_content', set_value('itm_content'), 'class="textarea"'); ?></p>
 <p><?php echo form_label($this->lang->line('itm_summary'), 'itm_summary'); ?><?php echo form_textarea('itm_summary', set_value('itm_summary'), 'class="textarea"'); ?></p>
+<p><?php echo form_label($this->lang->line('itm_publishstartdate'), 'itm_publishstartdate'); ?><?php echo form_input('itm_publishstartdate', set_value('itm_publishstartdate', date('Y-m-d')), 'class="inputtext datefield"'); ?></p>
+<p><?php echo form_label($this->lang->line('itm_publishstarttime'), 'itm_publishstarttime'); ?><?php echo form_input('itm_publishstarttime', set_value('itm_publishstarttime', date('H:i:s')), 'class="inputtext timefield"'); ?></p>
+<p><?php echo form_label($this->lang->line('itm_publishenddate'), 'itm_publishenddate'); ?><?php echo form_input('itm_publishenddate', set_value('itm_publishenddate'), 'class="inputtext datefield"'); ?></p>
+<p><?php echo form_label($this->lang->line('itm_publishendtime'), 'itm_publishendtime'); ?><?php echo form_input('itm_publishendtime', set_value('itm_publishendtime'), 'class="inputtext timefield"'); ?></p>
 <p><?php echo form_label($this->lang->line('itm_link'), 'itm_link'); ?><?php echo form_input('itm_link', set_value('itm_link'), 'class="inputtext"'); ?></p>
 </div>
 

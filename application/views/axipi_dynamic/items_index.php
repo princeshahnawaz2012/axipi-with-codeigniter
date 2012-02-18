@@ -2,6 +2,7 @@
 <div class="display">
 <ul>
 <li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('items'); ?></a></li>
+<li><?php echo $this->lang->line('index'); ?></li>
 </ul>
 </div>
 </div>
@@ -9,9 +10,11 @@
 <div class="box1">
 <h1><?php echo $this->lang->line('items'); ?></h1>
 <ul>
-<li class="first"><a class="add" href="<?php echo current_url(); ?>?a=add"><?php echo $this->lang->line('add'); ?></a></li>
+<li><a class="create" href="<?php echo current_url(); ?>?a=create"><?php echo $this->lang->line('create'); ?></a></li>
 </ul>
 <div class="display">
+
+<h2><?php echo $this->lang->line('index'); ?></h2>
 
 <?php echo form_open(current_url()); ?>
 <div class="filters">
@@ -36,6 +39,8 @@
 <th><?php echo $this->lang->line('sct_code'); ?></th>
 <th><?php echo $this->lang->line('cmp_code'); ?></th>
 <th><?php echo $this->lang->line('lng_code'); ?></th>
+<th><?php echo $this->lang->line('itm_ispublished'); ?></th>
+<th><?php echo $this->lang->line('itm_access'); ?></th>
 <th>&nbsp;</th>
 </tr>
 </thead>
@@ -43,12 +48,15 @@
 <?php foreach($items as $itm):?>
 
 <tr>
-<td><a href="<?php echo current_url(); ?>?a=view&amp;itm_id=<?php echo $itm->itm_id;?>"><?php echo $itm->itm_id;?></a></td>
+<td><a href="<?php echo current_url(); ?>?a=read&amp;itm_id=<?php echo $itm->itm_id;?>"><?php echo $itm->itm_id;?></a></td>
 <td><?php echo $itm->itm_code;?></td>
 <td><?php echo $itm->itm_title;?></td>
 <td><?php echo $itm->sct_code;?></td>
 <td><?php echo $itm->cmp_code;?></td>
 <td><?php echo $itm->lng_code;?></td>
+<td><?php echo $itm->itm_ispublished;?></td>
+<td><?php echo $itm->itm_access; ?><?php if($itm->count_groups != 0 && $itm->itm_access == 'groups') { ?> (<?php echo $itm->groups; ?>)<?php } ?>
+</td>
 <th><a href="<?php echo current_url(); ?>?a=update&amp;itm_id=<?php echo $itm->itm_id;?>"><?php echo $this->lang->line('update'); ?></a>
 <?php if($itm->count_children == 0) { ?>
 <a href="<?php echo current_url(); ?>?a=delete&amp;itm_id=<?php echo $itm->itm_id;?>"><?php echo $this->lang->line('delete'); ?></a>
