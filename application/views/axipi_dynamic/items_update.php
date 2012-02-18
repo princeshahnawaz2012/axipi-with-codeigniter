@@ -41,7 +41,7 @@ if($itm) {
 <p><?php echo form_label($this->lang->line('itm_ordering').' *', 'itm_ordering'); ?><?php echo form_input('itm_ordering', set_value('itm_ordering', $itm[0]->itm_ordering), 'class="inputtext numericfield"'); ?></p>
 <p><?php echo form_label($this->lang->line('lng_code').' *', 'lng_id'); ?><?php echo form_dropdown('lng_id', $select_language, set_value('lng_id', $itm[0]->lng_id), 'class="select"'); ?></p>
 <p><?php echo form_label($this->lang->line('itm_access').' *', 'itm_access'); ?><?php echo form_dropdown('itm_access', $this->lang->line('itm_access_values'), set_value('itm_access', $itm[0]->itm_access), 'class="select"'); ?></p>
-<p><input type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></p>
+<p><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></p>
 </div>
 
 </form>

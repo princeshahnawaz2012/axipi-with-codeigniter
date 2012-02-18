@@ -36,7 +36,7 @@ class items_model extends CI_Model {
         return $query->result();
     }
     function get_pagination_items($num, $offset) {
-        $query = $this->db->query('SELECT itm.* FROM itm AS itm WHERE 1 GROUP BY itm.itm_id LIMIT '.$offset.', '.$num);
+        $query = $this->db->query('SELECT itm.*, COUNT(DISTINCT(items.itm_id)) AS count_children FROM itm AS itm LEFT JOIN itm items ON items.itm_parent = itm.itm_id WHERE 1 GROUP BY itm.itm_id ORDER BY itm.itm_id DESC LIMIT '.$offset.', '.$num);
         return $query->result();
     }
     function get_item($itm_id) {

@@ -29,7 +29,7 @@ if($cmp) {
 </div>
 
 <div class="column1 columnlast">
-<p><input type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></p>
+<p><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></p>
 </div>
 
 </form>

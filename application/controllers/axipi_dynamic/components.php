@@ -22,20 +22,29 @@ class Axipi_controller extends CI_Controller {
 		$config['total_rows'] = $get_pro_all[0]->count;
 		$config['per_page'] = 20;
 		$config['page_query_string'] = TRUE;
+		$config['use_page_numbers'] = TRUE;
+		$config['first_url'] = '?page=1';
+		$config['query_string_segment'] = 'page';
 		
 		$this->pagination->initialize($config);
 
-		$segment_array = $this->uri->segment_array();
-		$segment_count = $this->uri->total_segments();
-		if($this->input->get('per_page')) {
-			$limit = $this->input->get('per_page');
+		if($this->input->get('page') && is_numeric($this->input->get('page'))) {
+			$page = $this->input->get('page');
+			$this->session->set_userdata('per_page_components', $page);
+		} else if($this->session->userdata('per_page_components') && is_numeric($this->session->userdata('per_page_components'))) {
+			$_GET['page'] = $this->session->userdata('per_page_components');
 		} else {
-			$limit = 0;
+			$_GET['page'] = 0;
+		}
+		$start = ($this->input->get('page') * $config['per_page']) - $config['per_page'];
+		if($start < 0) {
+			$start = 0;
+			$_GET['page'] = 1;
 		}
 
 		$data = array();
 		$data['pagination'] = $this->pagination->create_links();
-		$data['projects'] = $this->components_model->get_pagination_components($config['per_page'], $limit);
+		$data['projects'] = $this->components_model->get_pagination_components($config['per_page'], $start);
 		$this->zones['content'] = $this->load->view('axipi_dynamic/components_index', $data, true);
 	}
 	public function add() {

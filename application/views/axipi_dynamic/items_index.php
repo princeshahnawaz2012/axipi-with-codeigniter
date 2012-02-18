@@ -25,12 +25,15 @@
 </tr>
 </thead>
 <tbody>
-<?php foreach($projects as $pro):?>
+<?php foreach($items as $itm):?>
 
 <tr>
-<td><a href="<?php echo current_url(); ?>?a=view&amp;itm_id=<?php echo $pro->itm_id;?>"><?php echo $pro->itm_id;?></a></td>
-<td><?php echo $pro->itm_code;?></td>
-<th><a href="<?php echo current_url(); ?>?a=update&amp;itm_id=<?php echo $pro->itm_id;?>"><?php echo $this->lang->line('update'); ?></a></th>
+<td><a href="<?php echo current_url(); ?>?a=view&amp;itm_id=<?php echo $itm->itm_id;?>"><?php echo $itm->itm_id;?></a></td>
+<td><?php echo $itm->itm_code;?></td>
+<th><a href="<?php echo current_url(); ?>?a=update&amp;itm_id=<?php echo $itm->itm_id;?>"><?php echo $this->lang->line('update'); ?></a>
+<?php if($itm->count_children == 0) { ?>
+<a href="<?php echo current_url(); ?>?a=delete&amp;itm_id=<?php echo $itm->itm_id;?>"><?php echo $this->lang->line('delete'); ?></a>
+<?php } ?></th>
 </tr>
 
 <?php endforeach;?>
