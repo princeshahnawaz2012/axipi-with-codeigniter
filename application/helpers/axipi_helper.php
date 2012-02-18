@@ -1,0 +1,27 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+if( ! function_exists('build_filters')) {
+	function build_filters($filters) {
+		$CI =& get_instance();
+		$flt = array();
+		$flt[] = '1';
+		foreach($filters as $k =>$v) {
+			$value = false;
+			if($CI->input->post($k) || isset($_POST[$k]) == 1) {
+				$value = $CI->input->post($k);
+				$CI->session->set_userdata($k, $CI->input->post($k));
+			} else if($CI->session->userdata($k)) {
+				$value = $CI->session->userdata($k);
+			}
+			if($value) {
+				if($v[1] == 'equal') {
+					$flt[] = $v[0].' = '.$CI->db->escape($value);
+				}
+				if($v[1] == 'like') {
+					$flt[] = $v[0].' LIKE '.$CI->db->escape('%'.$value.'%');
+				}
+			}
+		}
+		return $flt;
+	}
+}

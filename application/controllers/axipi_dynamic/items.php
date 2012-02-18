@@ -14,17 +14,13 @@ class Axipi_controller extends CI_Controller {
 
 	}
 	public function index() {
-		$this->load->helper(array('form'));
+		$this->load->helper(array('axipi', 'form'));
 		$this->load->library('pagination');
 
-		$flt = array();
-		$flt[] = '1';
-		if($this->input->post('items_sct_id')) {
-			$flt[] = 'itm.sct_id = '.$this->db->escape($this->input->post('items_sct_id'));
-			$this->session->set_userdata('items_sct_id', $this->input->post('items_sct_id'));
-		} else if($this->session->userdata('items_sct_id')) {
-			$flt[] = 'itm.sct_id = '.$this->db->escape($this->session->userdata('items_sct_id'));
-		}
+		$filters = array();
+		$filters['items_sct_id'] = array('itm.sct_id', 'equal');
+		$filters['items_cmp_code'] = array('cmp.cmp_code', 'like');
+		$flt = build_filters($filters);
 
 		$get_pro_all = $this->items_model->get_all_items($flt);
 
