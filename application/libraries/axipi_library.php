@@ -2,6 +2,9 @@
 
 class axipi_library {
 	public function __construct($params = array()) {
+		if(function_exists('date_default_timezone_set')) {
+			date_default_timezone_set('Etc/UCT');
+		}
 		set_error_handler(array($this, 'error_handler'));
 		$this->CI =& get_instance();
 		$this->CI->head = array();
@@ -9,6 +12,9 @@ class axipi_library {
 		$this->debug = array();
 		$this->jquery = array();
 		$this->base_url = base_url();
+	}
+	function login($usr_email, $usr_plainpassword) {
+		return $this->CI->users_model->login($usr_email, $usr_plainpassword);
 	}
 	function error_handler($e_type, $e_message, $e_file, $e_line) {
 		$e_type_values = array(1=>'E_ERROR', 2=>'E_WARNING', 4=>'E_PARSE', 8=>'E_NOTICE', 16=>'E_CORE_ERROR', 32=>'E_CORE_WARNING', 64=>'E_COMPILE_ERROR', 128=>'E_COMPILE_WARNING', 256=>'E_USER_ERROR', 512=>'E_USER_WARNING', 1024=>'E_USER_NOTICE', 2048=>'E_STRICT', 4096=>'E_RECOVERABLE_ERROR', 8192=>'E_DEPRECATED', 16384=>'E_USER_DEPRECATED', 30719=>'E_ALL');

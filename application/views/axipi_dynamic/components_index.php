@@ -40,7 +40,7 @@
 
 <?php foreach($results as $result):?>
 <tr>
-<td><a href="<?php echo current_url(); ?>?a=view&amp;cmp_id=<?php echo $result->cmp_id;?>"><?php echo $result->cmp_id;?></a></td>
+<td><a href="<?php echo current_url(); ?>?a=read&amp;cmp_id=<?php echo $result->cmp_id;?>"><?php echo $result->cmp_id;?></a></td>
 <td><?php echo $result->cmp_code;?></td>
 <td><?php echo $result->count_items;?></td>
 <th>

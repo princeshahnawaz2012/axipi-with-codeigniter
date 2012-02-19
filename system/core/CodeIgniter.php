@@ -305,7 +305,57 @@
 	// Mark a start point so we can benchmark the controller
 	$BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_start');
 
+	include_once(BASEPATH.'core/Loader.php');
+	$loader = new CI_Loader();
+	$db = $loader->database('', true);
+
+	if(isset($_SERVER['PATH_INFO']) == 1) {
+		if(substr($_SERVER['PATH_INFO'], -1) == '/') {
+			$page = substr($_SERVER['PATH_INFO'], 1, -1);
+		} else {
+			$page = substr($_SERVER['PATH_INFO'], 1);
+		}
+	} else {
+		$page = 'axipi';
+	}
+
+	$query = $db->query('SELECT * FROM '.$db->dbprefix('itm').' AS itm WHERE itm_code = ?', array($page));
+	if($query->num_rows() == 0) {
+		$query = $db->query('SELECT * FROM '.$db->dbprefix('itm').' AS itm WHERE itm_code = ?', array('error404'));
+	}
+	$itm = $query->result();
+
+	$query = $db->query('SELECT * FROM '.$db->dbprefix('cmp').' AS cmp WHERE cmp_id = ?', array($itm[0]->cmp_id));
+	$cmp = $query->result();
+
+	$query = $db->query('SELECT * FROM '.$db->dbprefix('lng').' AS lng WHERE lng_id = ?', array($itm[0]->lng_id));
+	$lng = $query->result();
+
+	$query = $db->query('SELECT * FROM '.$db->dbprefix('sct').' AS sct WHERE sct_id = ?', array($itm[0]->sct_id));
+	$sct = $query->result();
+
+	$query = $db->query('SELECT * FROM '.$db->dbprefix('lay').' AS lay WHERE lay_id = ?', array($sct[0]->lay_id));
+	$lay = $query->result();
+
+	list($folder, $class) = explode('/', $cmp[0]->cmp_code);
+	require_once(APPPATH.'controllers/'.$cmp[0]->cmp_code.'.php');
+
 	$CI = new $class();
+	$CI->db = $db;
+	$CI->itm = $itm;
+	$CI->cmp = $cmp;
+	$CI->lng = $lng;
+	$CI->sct = $sct;
+	$CI->lay = $lay;
+	$CI->zones['pagesidebar'] = '<ul>';
+	$CI->zones['pagesidebar'] .= '<li><a href="'.base_url().'axipi/dynamic/components">Components</a></li>';
+	$CI->zones['pagesidebar'] .= '<li><a href="'.base_url().'axipi/dynamic/items">Items</a></li>';
+	$CI->zones['pagesidebar'] .= '</ul>';
+	if(isset($_GET['a']) == 1 && method_exists($CI, $_GET['a']) && $_GET['a'] != 'index') {
+		$CI->{$_GET['a']}();
+	} else {
+		$CI->index();
+	}
 
 /*
  * ------------------------------------------------------
@@ -313,52 +363,6 @@
  * ------------------------------------------------------
  */
 	$EXT->_call_hook('post_controller_constructor');
-
-/*
- * ------------------------------------------------------
- *  Call the requested method
- * ------------------------------------------------------
- */
-	// Is there a "remap" function? If so, we call it instead
-	if (method_exists($CI, '_remap'))
-	{
-		$CI->_remap($method, array_slice($URI->rsegments, 2));
-	}
-	else
-	{
-		// is_callable() returns TRUE on some versions of PHP 5 for private and protected
-		// methods, so we'll use this workaround for consistent behavior
-		if ( ! in_array(strtolower($method), array_map('strtolower', get_class_methods($CI))))
-		{
-			// Check and see if we are using a 404 override and use it.
-			if ( ! empty($RTR->routes['404_override']))
-			{
-				$x = explode('/', $RTR->routes['404_override']);
-				$class = $x[0];
-				$method = (isset($x[1]) ? $x[1] : 'index');
-				if ( ! class_exists($class))
-				{
-					if ( ! file_exists(APPPATH.'controllers/'.$class.'.php'))
-					{
-						show_404("{$class}/{$method}");
-					}
-
-					include_once(APPPATH.'controllers/'.$class.'.php');
-					unset($CI);
-					$CI = new $class();
-				}
-			}
-			else
-			{
-				show_404("{$class}/{$method}");
-			}
-		}
-
-		// Call the requested method.
-		// Any URI segments present (besides the class/function) will be passed to the method for convenience
-		call_user_func_array(array(&$CI, $method), array_slice($URI->rsegments, 2));
-	}
-
 
 	// Mark a benchmark end point
 	$BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_end');

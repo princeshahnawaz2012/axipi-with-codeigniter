@@ -52,7 +52,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database', 'axipi_library', 'session');
+$autoload['libraries'] = array('axipi_library', 'session');
 
 
 /*
@@ -109,7 +109,7 @@ $autoload['language'] = array('axipi_core', 'axipi_dynamic');
 |
 */
 
-$autoload['model'] = array();
+$autoload['model'] = array('axipi_dynamic/users_model');
 
 
 /* End of file autoload.php */

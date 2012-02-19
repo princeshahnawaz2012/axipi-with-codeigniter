@@ -9,8 +9,10 @@ class items_model extends CI_Model {
 		$select_component[''] = '--';
 		$this->db->cache_on();
         $query = $this->db->query('SELECT cmp.cmp_id, cmp.cmp_code FROM '.$this->db->dbprefix('cmp').' AS cmp WHERE 1 GROUP BY cmp.cmp_id ORDER BY cmp.cmp_code ASC');
-		foreach ($query->result() as $row) {
-			$select_component[$row->cmp_id] = $row->cmp_code;
+		if($query->num_rows() > 0) {
+			foreach($query->result() as $row) {
+				$select_component[$row->cmp_id] = $row->cmp_code;
+			}
 		}
         return $select_component;
     }
@@ -19,8 +21,10 @@ class items_model extends CI_Model {
 		$select_section[''] = '--';
 		$this->db->cache_on();
         $query = $this->db->query('SELECT sct.sct_id, CONCAT(sct_trl.sct_trl_title, \' (\', sct.sct_code, \')\') AS sct_title FROM '.$this->db->dbprefix('sct').' AS sct LEFT JOIN '.$this->db->dbprefix('sct_trl').' AS sct_trl ON sct_trl.sct_id = sct.sct_id WHERE sct_trl.lng_id = \''.$this->lng[0]->lng_id.'\' GROUP BY sct.sct_id ORDER BY sct.sct_code ASC');
-		foreach ($query->result() as $row) {
-			$select_section[$row->sct_id] = $row->sct_title;
+		if($query->num_rows() > 0) {
+			foreach($query->result() as $row) {
+				$select_section[$row->sct_id] = $row->sct_title;
+			}
 		}
         return $select_section;
     }
@@ -29,8 +33,10 @@ class items_model extends CI_Model {
 		$select_language[''] = '--';
 		$this->db->cache_on();
         $query = $this->db->query('SELECT lng.lng_id, CONCAT(lng.lng_title, \' (\', lng.lng_code, \')\') AS lng_title FROM '.$this->db->dbprefix('lng').' AS lng WHERE 1 GROUP BY lng.lng_id ORDER BY lng.lng_code ASC');
-		foreach ($query->result() as $row) {
-			$select_language[$row->lng_id] = $row->lng_title;
+		if($query->num_rows() > 0) {
+			foreach($query->result() as $row) {
+				$select_language[$row->lng_id] = $row->lng_title;
+			}
 		}
         return $select_language;
     }

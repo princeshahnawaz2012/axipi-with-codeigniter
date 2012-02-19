@@ -183,7 +183,7 @@ $lang['users'] = 'Users';
 $lang['usr_gender_array'] = array(1=>'Man', 2=>'Woman', 3=>'Other');
 $lang['view-short'] = 'View';
 $lang['read'] = 'Read';
-$lang['wrong-email'] = 'Wrong email';
+$lang['login_error'] = 'Login error';
 $lang['wrong-password'] = 'Wrong password';
 $lang['zone'] = 'Zone';
 $lang['zones'] = 'Zones';

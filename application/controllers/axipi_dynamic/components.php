@@ -11,7 +11,6 @@ class components extends CI_Controller {
 		} else {
 			$this->cmp_id = 0;
 		}
-
 	}
 	public function index() {
 		$this->load->helper(array('axipi', 'form'));
@@ -30,7 +29,7 @@ class components extends CI_Controller {
 	}
 	public function rule_cmp_code($cmp_code) {
 		$query = $this->db->query('SELECT cmp.cmp_code FROM '.$this->db->dbprefix('cmp').' AS cmp WHERE cmp.cmp_code = ? GROUP BY cmp.cmp_id', array($cmp_code));
-		if ($query->num_rows() > 0) {
+		if($query->num_rows() > 0) {
 			$this->form_validation->set_message('rule_cmp_code', $this->lang->line('value_already_used'));
 			return FALSE;
 		} else {

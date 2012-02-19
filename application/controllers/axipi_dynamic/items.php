@@ -11,7 +11,6 @@ class items extends CI_Controller {
 		} else {
 			$this->itm_id = 0;
 		}
-
 	}
 	public function index() {
 		$this->load->helper(array('axipi', 'form'));
@@ -37,7 +36,7 @@ class items extends CI_Controller {
 	}
 	public function rule_itm_code($itm_code) {
 		$query = $this->db->query('SELECT itm.itm_code FROM '.$this->db->dbprefix('itm').' AS itm WHERE itm.itm_code = ? GROUP BY itm.itm_id', array($itm_code));
-		if ($query->num_rows() > 0) {
+		if($query->num_rows() > 0) {
 			$this->form_validation->set_message('rule_itm_code', $this->lang->line('value_already_used'));
 			return FALSE;
 		} else {
