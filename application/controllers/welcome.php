@@ -36,7 +36,7 @@ class Welcome extends CI_Controller {
 			$this->controller->lng = $this->lng;
 			$this->controller->sct = $this->sct;
 			$this->controller->lay = $this->lay;
-			if($this->input->get('a') && method_exists($controller, $this->input->get('a')) && $this->input->get('a') != 'index') {
+			if($this->input->get('a') && method_exists($this->controller, $this->input->get('a')) && $this->input->get('a') != 'index') {
 				$this->controller->{$this->input->get('a')}();
 			} else {
 				$this->controller->index();
