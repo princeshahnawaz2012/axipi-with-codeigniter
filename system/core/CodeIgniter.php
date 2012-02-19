@@ -302,19 +302,14 @@
  *  Instantiate the requested controller
  * ------------------------------------------------------
  */
-	// Mark a start point so we can benchmark the controller
-	$BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_start');
 
 	include_once(BASEPATH.'core/Loader.php');
 	$loader = new CI_Loader();
 	$db = $loader->database('', true);
 
-	if(isset($_SERVER['PATH_INFO']) == 1) {
-		if(substr($_SERVER['PATH_INFO'], -1) == '/') {
-			$page = substr($_SERVER['PATH_INFO'], 1, -1);
-		} else {
-			$page = substr($_SERVER['PATH_INFO'], 1);
-		}
+	$uri_string = $URI->uri_string();
+	if($uri_string != '') {
+		$page = $uri_string;
 	} else {
 		$page = 'axipi';
 	}
@@ -337,8 +332,20 @@
 	$query = $db->query('SELECT * FROM '.$db->dbprefix('lay').' AS lay WHERE lay_id = ?', array($sct[0]->lay_id));
 	$lay = $query->result();
 
-	list($folder, $class) = explode('/', $cmp[0]->cmp_code);
+	list($directory, $class) = explode('/', $cmp[0]->cmp_code);
 	require_once(APPPATH.'controllers/'.$cmp[0]->cmp_code.'.php');
+	$RTR->set_directory($directory);
+	$RTR->set_class($class);
+
+	if($IN->get('a') && method_exists($class, $IN->get('a'))) {
+		$method = $IN->get('a');
+	} else {
+		$method = 'index';
+	}
+	$RTR->set_method($method);
+
+	// Mark a start point so we can benchmark the controller
+	$BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_start');
 
 	$CI = new $class();
 	$CI->db = $db;
@@ -351,11 +358,7 @@
 	$CI->zones['pagesidebar'] .= '<li><a href="'.base_url().'axipi/dynamic/components">Components</a></li>';
 	$CI->zones['pagesidebar'] .= '<li><a href="'.base_url().'axipi/dynamic/items">Items</a></li>';
 	$CI->zones['pagesidebar'] .= '</ul>';
-	if(isset($_GET['a']) == 1 && method_exists($CI, $_GET['a']) && $_GET['a'] != 'index') {
-		$CI->{$_GET['a']}();
-	} else {
-		$CI->index();
-	}
+	$CI->{$method}();
 
 /*
  * ------------------------------------------------------
