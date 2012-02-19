@@ -4,12 +4,12 @@ class components_model extends CI_Model {
     function __construct() {
         parent::__construct();
     }
-    function get_all_components() {
-        $query = $this->db->query('SELECT COUNT(cmp.cmp_id) AS count FROM '.$this->db->dbprefix('cmp').' AS cmp WHERE 1');
+    function get_all_components($flt) {
+        $query = $this->db->query('SELECT COUNT(cmp.cmp_id) AS count FROM '.$this->db->dbprefix('cmp').' AS cmp WHERE '.implode(' AND ', $flt));
         return $query->result();
     }
-    function get_pagination_components($num, $offset) {
-        $query = $this->db->query('SELECT cmp.* FROM cmp AS '.$this->db->dbprefix('cmp').' AS cmp WHERE 1 GROUP BY cmp.cmp_id LIMIT '.$offset.', '.$num);
+    function get_pagination_components($flt, $num, $offset) {
+        $query = $this->db->query('SELECT cmp.*, COUNT(DISTINCT(items.itm_id)) AS count_items FROM '.$this->db->dbprefix('cmp').' AS cmp LEFT JOIN '.$this->db->dbprefix('itm').' AS items ON items.cmp_id = cmp.cmp_id WHERE '.implode(' AND ', $flt).' GROUP BY cmp.cmp_id ORDER BY cmp.cmp_id DESC LIMIT '.$offset.', '.$num);
         return $query->result();
     }
     function get_component($cmp_id) {

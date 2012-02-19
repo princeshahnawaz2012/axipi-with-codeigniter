@@ -16,7 +16,6 @@ class Axipi_controller extends CI_Controller {
 	public function index() {
 		$this->load->helper(array('axipi', 'form'));
 		$this->load->library('pagination');
-		$this->axipi_library->jquery_load('jquery');
 
 		$filters = array();
 		$filters['items_itm_code'] = array('itm.itm_code', 'like');
@@ -26,35 +25,12 @@ class Axipi_controller extends CI_Controller {
 		$filters['items_lng_id'] = array('itm.lng_id', 'equal');
 		$flt = build_filters($filters);
 
-		$get_pro_all = $this->items_model->get_all_items($flt);
-
-		$config['base_url'] = '?';
-		$config['total_rows'] = $get_pro_all[0]->count;
-		$config['per_page'] = 30;
-		$config['page_query_string'] = TRUE;
-		$config['use_page_numbers'] = TRUE;
-		$config['first_url'] = '?page=1';
-		$config['query_string_segment'] = 'page';
-		
-		$this->pagination->initialize($config);
-
-		if($this->input->get('page') && is_numeric($this->input->get('page'))) {
-			$page = $this->input->get('page');
-			$this->session->set_userdata('per_page_items', $page);
-		} else if($this->session->userdata('per_page_items') && is_numeric($this->session->userdata('per_page_items'))) {
-			$_GET['page'] = $this->session->userdata('per_page_items');
-		} else {
-			$_GET['page'] = 0;
-		}
-		$start = ($this->input->get('page') * $config['per_page']) - $config['per_page'];
-		if($start < 0) {
-			$start = 0;
-			$_GET['page'] = 1;
-		}
+		$results_count = $this->items_model->get_all_items($flt);
+		$build_pagination = $this->axipi_library->build_pagination($results_count[0]->count, 30);
 
 		$data = array();
-		$data['pagination'] = $this->pagination->create_links();
-		$data['items'] = $this->items_model->get_pagination_items($flt, $config['per_page'], $start);
+		$data['pagination'] = $build_pagination['output'];
+		$data['results'] = $this->items_model->get_pagination_items($flt, $build_pagination['limit'], $build_pagination['start']);
 		$data['select_section'] = $this->items_model->select_section();
 		$data['select_language'] = $this->items_model->select_language();
 		$this->zones['content'] = $this->load->view('axipi_dynamic/items_index', $data, true);
@@ -88,6 +64,7 @@ class Axipi_controller extends CI_Controller {
 			$this->db->set('itm_summary', $this->input->post('itm_summary'));
 			$this->db->set('itm_link', $this->input->post('itm_link'));
 			$this->db->set('lng_id', $this->input->post('lng_id'));
+			$this->db->set('itm_ispublished', 1);
 			$this->db->insert('itm'); 
 			$this->index();
 		}
@@ -149,6 +126,7 @@ class Axipi_controller extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/items_delete', $data, true);
 			} else {
 				$this->db->where('itm_id', $this->itm_id);
+				$this->db->where('itm_islocked', 0);
 				$this->db->delete('itm'); 
 				$this->index();
 			}

@@ -2,7 +2,7 @@
 <div class="display">
 <ul>
 <li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('components'); ?></a></li>
-<li><a href="<?php echo current_url(); ?>?a=add"><?php echo $this->lang->line('index'); ?></a></li>
+<li><?php echo $this->lang->line('create'); ?></li>
 </ul>
 </div>
 </div>
@@ -14,14 +14,14 @@
 </ul>
 <div class="display">
 
-<h2><?php echo $this->lang->line('add'); ?></h2>
+<h2><?php echo $this->lang->line('create'); ?></h2>
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open(current_url().'?a=add'); ?>
+<?php echo form_open(current_url().'?a=create'); ?>
 
 <div class="column1">
-<p><?php echo form_label($this->lang->line('cmp_code'), 'cmp_code'); ?><?php echo form_input('cmp_code', set_value('cmp_code'), 'class="inputtext"'); ?></p>
+<p><?php echo form_label($this->lang->line('cmp_code').' *', 'cmp_code'); ?><?php echo form_input('cmp_code', set_value('cmp_code'), 'class="inputtext"'); ?></p>
 </div>
 
 <div class="column1 columnlast">

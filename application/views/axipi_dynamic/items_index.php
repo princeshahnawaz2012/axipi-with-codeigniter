@@ -30,6 +30,7 @@
 <div class="paging">
 <?php echo $pagination; ?>
 </div>
+
 <table>
 <thead>
 <tr>
@@ -45,27 +46,28 @@
 </tr>
 </thead>
 <tbody>
-<?php foreach($items as $itm):?>
 
+<?php foreach($results as $result):?>
 <tr>
-<td><a href="<?php echo current_url(); ?>?a=read&amp;itm_id=<?php echo $itm->itm_id;?>"><?php echo $itm->itm_id;?></a></td>
-<td><?php echo $itm->itm_code;?></td>
-<td><?php echo $itm->itm_title;?></td>
-<td><?php echo $itm->sct_code;?></td>
-<td><?php echo $itm->cmp_code;?></td>
-<td><?php echo $itm->lng_code;?></td>
-<td><?php echo $itm->itm_ispublished;?></td>
-<td><?php echo $itm->itm_access; ?><?php if($itm->count_groups != 0 && $itm->itm_access == 'groups') { ?> (<?php echo $itm->groups; ?>)<?php } ?>
+<td><a href="<?php echo current_url(); ?>?a=read&amp;itm_id=<?php echo $result->itm_id;?>"><?php echo $result->itm_id;?></a></td>
+<td><?php echo $result->itm_code;?></td>
+<td><?php echo $result->itm_title;?></td>
+<td><?php echo $result->sct_code;?></td>
+<td><?php echo $result->cmp_code;?></td>
+<td><?php echo $result->lng_code;?></td>
+<td><?php echo $result->itm_ispublished;?></td>
+<td><?php echo $result->itm_access; ?><?php if($result->count_groups != 0 && $result->itm_access == 'groups') { ?> (<?php echo $result->groups; ?>)<?php } ?>
 </td>
-<th><a href="<?php echo current_url(); ?>?a=update&amp;itm_id=<?php echo $itm->itm_id;?>"><?php echo $this->lang->line('update'); ?></a>
-<?php if($itm->count_children == 0) { ?>
-<a href="<?php echo current_url(); ?>?a=delete&amp;itm_id=<?php echo $itm->itm_id;?>"><?php echo $this->lang->line('delete'); ?></a>
-<?php } ?></th>
+<th>
+<a href="<?php echo current_url(); ?>?a=update&amp;itm_id=<?php echo $result->itm_id;?>"><?php echo $this->lang->line('update'); ?></a>
+<?php if($result->count_items == 0) { ?><a href="<?php echo current_url(); ?>?a=delete&amp;itm_id=<?php echo $result->itm_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
+</th>
 </tr>
-
 <?php endforeach;?>
+
 </tbody>
 </table>
+
 <div class="paging">
 <?php echo $pagination; ?>
 </div>

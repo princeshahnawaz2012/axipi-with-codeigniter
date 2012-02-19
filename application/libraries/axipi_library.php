@@ -18,6 +18,36 @@ class axipi_library {
 		$key = md5($e_type.' | '.$e_message.' | '.$e_file.' | '.$e_line);
 		$this->debug[$key] = $e_type.' | '.$e_message.' | '.$e_file.' | '.$e_line;
 	}
+	function build_pagination($total, $per_page) {
+		$this->CI->load->library('pagination');
+
+		$config = array();
+		$config['base_url'] = '?';
+		$config['total_rows'] = $total;
+		$config['per_page'] = $per_page;
+		$config['page_query_string'] = TRUE;
+		$config['use_page_numbers'] = TRUE;
+		$config['first_url'] = '?page=1';
+		$config['query_string_segment'] = 'page';
+
+		$key = 'per_page_'.$this->CI->uri->uri_string();
+		if($this->CI->input->get('page') && is_numeric($this->CI->input->get('page'))) {
+			$page = $this->CI->input->get('page');
+			$this->CI->session->set_userdata($key, $page);
+		} else if($this->CI->session->userdata($key) && is_numeric($this->CI->session->userdata($key))) {
+			$_GET['page'] = $this->CI->session->userdata($key);
+		} else {
+			$_GET['page'] = 0;
+		}
+		$start = ($this->CI->input->get('page') * $config['per_page']) - $config['per_page'];
+		if($start < 0) {
+			$start = 0;
+			$_GET['page'] = 1;
+		}
+
+		$this->CI->pagination->initialize($config);
+		return array('output'=>$this->CI->pagination->create_links(), 'start'=>$start, 'limit'=>$config['per_page']);
+	}
 	function get_head() {
 		$head = array();
 		if($this->CI->lay[0]->lay_type == 'text/html') {
