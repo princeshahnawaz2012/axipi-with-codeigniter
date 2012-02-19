@@ -60,7 +60,7 @@
 </td>
 <th>
 <a href="<?php echo current_url(); ?>?a=update&amp;itm_id=<?php echo $result->itm_id;?>"><?php echo $this->lang->line('update'); ?></a>
-<?php if($result->count_items == 0) { ?><a href="<?php echo current_url(); ?>?a=delete&amp;itm_id=<?php echo $result->itm_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
+<?php if($result->count_items == 0 && $result->itm_islocked == 0) { ?><a href="<?php echo current_url(); ?>?a=delete&amp;itm_id=<?php echo $result->itm_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
 </th>
 </tr>
 <?php endforeach;?>

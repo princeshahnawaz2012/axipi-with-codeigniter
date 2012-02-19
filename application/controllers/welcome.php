@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class welcome extends CI_Controller {
     function __construct() {
         parent::__construct();
 		if(function_exists('date_default_timezone_set')) {
@@ -29,8 +29,9 @@ class Welcome extends CI_Controller {
 			$query = $this->db->query('SELECT * FROM '.$this->db->dbprefix('lay').' AS lay WHERE lay_id = ?', array($this->sct[0]->lay_id));
 			$this->lay = $query->result();
 	
+			list($folder, $class) = explode('/', $this->cmp[0]->cmp_code);
 			require_once(APPPATH.'controllers/'.$this->cmp[0]->cmp_code.'.php');
-			$this->controller = new Axipi_controller();
+			$this->controller = new $class();
 			$this->controller->itm = $this->itm;
 			$this->controller->cmp = $this->cmp;
 			$this->controller->lng = $this->lng;

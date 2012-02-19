@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Axipi_controller extends CI_Controller {
+class blank extends CI_Controller {
 	function __construct() {
 		parent::__construct();
 	}

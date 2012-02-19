@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Axipi_controller extends CI_Controller {
+class components extends CI_Controller {
 	function __construct() {
 		parent::__construct();
 
@@ -28,12 +28,21 @@ class Axipi_controller extends CI_Controller {
 		$data['results'] = $this->components_model->get_pagination_components($flt, $build_pagination['limit'], $build_pagination['start']);
 		$this->zones['content'] = $this->load->view('axipi_dynamic/components_index', $data, true);
 	}
+	public function rule_cmp_code($cmp_code) {
+		$query = $this->db->query('SELECT cmp.cmp_code FROM '.$this->db->dbprefix('cmp').' AS cmp WHERE cmp.cmp_code = ? GROUP BY cmp.cmp_id', array($cmp_code));
+		if ($query->num_rows() > 0) {
+			$this->form_validation->set_message('rule_cmp_code', $this->lang->line('value_already_used'));
+			return FALSE;
+		} else {
+			return TRUE;
+		}
+	}
 	public function create() {
 		$this->load->helper(array('form'));
 		$this->load->library('form_validation');
 		$data = array();
 
-		$this->form_validation->set_rules('cmp_code', $this->lang->line('cmp_code'), 'required|max_length[100]');
+		$this->form_validation->set_rules('cmp_code', 'lang:cmp_code', 'required|max_length[100]|callback_rule_cmp_code');
 
 		if($this->form_validation->run() == FALSE) {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/components_create', $data, true);
@@ -58,7 +67,7 @@ class Axipi_controller extends CI_Controller {
 			$data = array();
 			$data['cmp'] = $this->components_model->get_component($this->cmp_id);
 
-			$this->form_validation->set_rules('cmp_code', $this->lang->line('cmp_code'), 'max_length[100]');
+			$this->form_validation->set_rules('cmp_code', 'lang:cmp_code', 'max_length[100]');
 
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/components_update', $data, true);
@@ -77,7 +86,7 @@ class Axipi_controller extends CI_Controller {
 			$data = array();
 			$data['cmp'] = $this->components_model->get_component($this->cmp_id);
 
-			$this->form_validation->set_rules('confirm', $this->lang->line('confirm'), 'required');
+			$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
 
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/components_delete', $data, true);

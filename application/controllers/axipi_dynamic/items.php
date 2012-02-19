@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Axipi_controller extends CI_Controller {
+class items extends CI_Controller {
 	function __construct() {
 		parent::__construct();
 
@@ -35,6 +35,15 @@ class Axipi_controller extends CI_Controller {
 		$data['select_language'] = $this->items_model->select_language();
 		$this->zones['content'] = $this->load->view('axipi_dynamic/items_index', $data, true);
 	}
+	public function rule_itm_code($itm_code) {
+		$query = $this->db->query('SELECT itm.itm_code FROM '.$this->db->dbprefix('itm').' AS itm WHERE itm.itm_code = ? GROUP BY itm.itm_id', array($itm_code));
+		if ($query->num_rows() > 0) {
+			$this->form_validation->set_message('rule_itm_code', $this->lang->line('value_already_used'));
+			return FALSE;
+		} else {
+			return TRUE;
+		}
+	}
 	public function create() {
 		$this->load->helper(array('form'));
 		$this->load->library('form_validation');
@@ -43,14 +52,14 @@ class Axipi_controller extends CI_Controller {
 		$data['select_section'] = $this->items_model->select_section();
 		$data['select_language'] = $this->items_model->select_language();
 
-		$this->form_validation->set_rules('sct_id', $this->lang->line('sct_code'), 'required');
-		$this->form_validation->set_rules('itm_code', $this->lang->line('itm_code'), 'required|max_length[100]');
-		$this->form_validation->set_rules('itm_virtualcode', $this->lang->line('itm_virtualcode'), 'max_length[100]');
-		$this->form_validation->set_rules('itm_title', $this->lang->line('itm_title'), 'required|max_length[255]');
-		$this->form_validation->set_rules('cmp_id', $this->lang->line('cmp_code'), 'required');
-		$this->form_validation->set_rules('itm_link', $this->lang->line('itm_link'), 'max_length[255]');
-		$this->form_validation->set_rules('itm_ordering', $this->lang->line('itm_ordering'), 'required|numeric');
-		$this->form_validation->set_rules('lng_id', $this->lang->line('lng_code'), 'required');
+		$this->form_validation->set_rules('sct_id', 'lang:sct_code', 'required');
+		$this->form_validation->set_rules('itm_code', 'lang:itm_code', 'required|max_length[100]|callback_rule_itm_code');
+		$this->form_validation->set_rules('itm_virtualcode', 'lang:itm_virtualcode', 'max_length[100]');
+		$this->form_validation->set_rules('itm_title', 'lang:itm_title', 'required|max_length[255]');
+		$this->form_validation->set_rules('cmp_id', 'lang:cmp_code', 'required');
+		$this->form_validation->set_rules('itm_link', 'lang:itm_link', 'max_length[255]');
+		$this->form_validation->set_rules('itm_ordering', 'lang:itm_ordering', 'required|numeric');
+		$this->form_validation->set_rules('lng_id', 'lang:lng_code', 'required');
 
 		if($this->form_validation->run() == FALSE) {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/items_create', $data, true);
@@ -86,14 +95,14 @@ class Axipi_controller extends CI_Controller {
 			$data['select_section'] = $this->items_model->select_section();
 			$data['select_language'] = $this->items_model->select_language();
 
-			$this->form_validation->set_rules('sct_id', $this->lang->line('sct_code'), 'required');
-			$this->form_validation->set_rules('itm_code', $this->lang->line('itm_code'), 'required|max_length[100]');
-			$this->form_validation->set_rules('itm_virtualcode', $this->lang->line('itm_virtualcode'), 'max_length[100]');
-			$this->form_validation->set_rules('itm_title', $this->lang->line('itm_title'), 'required|max_length[255]');
-			$this->form_validation->set_rules('cmp_id', $this->lang->line('cmp_code'), 'required');
-			$this->form_validation->set_rules('itm_link', $this->lang->line('itm_link'), 'max_length[255]');
-			$this->form_validation->set_rules('itm_ordering', $this->lang->line('itm_ordering'), 'required|numeric');
-			$this->form_validation->set_rules('lng_id', $this->lang->line('lng_code'), 'required');
+			$this->form_validation->set_rules('sct_id', 'lang:sct_code', 'required');
+			$this->form_validation->set_rules('itm_code', 'lang:itm_code', 'required|max_length[100]');
+			$this->form_validation->set_rules('itm_virtualcode', 'lang:itm_virtualcode', 'max_length[100]');
+			$this->form_validation->set_rules('itm_title', 'lang:itm_title', 'required|max_length[255]');
+			$this->form_validation->set_rules('cmp_id', 'lang:cmp_code', 'required');
+			$this->form_validation->set_rules('itm_link', 'lang:itm_link', 'max_length[255]');
+			$this->form_validation->set_rules('itm_ordering', 'lang:itm_ordering', 'required|numeric');
+			$this->form_validation->set_rules('lng_id', 'lang:lng_code', 'required');
 
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/items_update', $data, true);
@@ -120,7 +129,7 @@ class Axipi_controller extends CI_Controller {
 			$data = array();
 			$data['itm'] = $this->items_model->get_item($this->itm_id);
 
-			$this->form_validation->set_rules('confirm', $this->lang->line('confirm'), 'required');
+			$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
 
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/items_delete', $data, true);
