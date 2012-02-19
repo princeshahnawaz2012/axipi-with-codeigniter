@@ -16,6 +16,7 @@ class Axipi_controller extends CI_Controller {
 	public function index() {
 		$this->load->helper(array('axipi', 'form'));
 		$this->load->library('pagination');
+		$this->axipi_library->jquery_load('jquery');
 
 		$filters = array();
 		$filters['items_itm_code'] = array('itm.itm_code', 'like');
@@ -29,7 +30,7 @@ class Axipi_controller extends CI_Controller {
 
 		$config['base_url'] = '?';
 		$config['total_rows'] = $get_pro_all[0]->count;
-		$config['per_page'] = 20;
+		$config['per_page'] = 30;
 		$config['page_query_string'] = TRUE;
 		$config['use_page_numbers'] = TRUE;
 		$config['first_url'] = '?page=1';

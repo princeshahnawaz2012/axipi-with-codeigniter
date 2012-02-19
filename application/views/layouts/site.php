@@ -12,7 +12,7 @@
 
 <div id="box-pageheader">
 <div id="display-pageheader">
-<?php if(isset($zones['header']) == 1) { echo $zones['header']; } ?>
+<?php if(isset($zones['pageheader']) == 1) { echo $zones['pageheader']; } ?>
 </div>
 </div>
 
@@ -22,8 +22,15 @@
 </div>
 </div>
 
+<div id="box-pagesidebar">
+<div id="display-pagesidebar">
+<?php if(isset($zones['pagesidebar']) == 1) { echo $zones['pagesidebar']; } ?>
+</div>
+</div>
+
 <div id="box-pagefooter">
 <div id="display-pagefooter">
+<?php if(isset($zones['pagefooter']) == 1) { echo $zones['pagefooter']; } ?>
 </div>
 </div>
 

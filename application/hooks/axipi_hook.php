@@ -7,6 +7,6 @@ class Axipi_hook {
 	public function Output() {
 		$output = array();
 		$output['zones'] = $this->CI->zones;
-		$page = $this->CI->load->view('layouts/site', $output, 'true');
+		$page = $this->CI->load->view('layouts/'.$this->CI->lay[0]->lay_code, $output, 'true');
 	}
 }
