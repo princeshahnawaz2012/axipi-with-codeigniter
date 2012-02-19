@@ -337,7 +337,7 @@
 	$RTR->set_directory($directory);
 	$RTR->set_class($class);
 
-	if($IN->get('a') && method_exists($class, $IN->get('a'))) {
+	if($IN->get('a') && method_exists($class, $IN->get('a')) && strncmp($IN->get('a'), '_', 1) != 0) {
 		$method = $IN->get('a');
 	} else {
 		$method = 'index';
