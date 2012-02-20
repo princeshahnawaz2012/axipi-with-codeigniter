@@ -302,9 +302,9 @@
  *  Instantiate the requested controller
  * ------------------------------------------------------
  */
-	include_once(BASEPATH.'core/Loader.php');
-	$loader = new CI_Loader();
-	$db = $loader->database('', true);
+
+	$LOAD =& load_class('Loader', 'core');
+	$db = $LOAD->database('', true);
 
 	$uri_string = $URI->uri_string();
 	if($uri_string != '') {
