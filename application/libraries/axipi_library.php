@@ -40,7 +40,7 @@ class axipi_library {
 		if($this->CI->input->get('page') && is_numeric($this->CI->input->get('page'))) {
 			$page = $this->CI->input->get('page');
 			$this->CI->session->set_userdata($key, $page);
-		} else if($this->CI->session->userdata($key) && is_numeric($this->CI->session->userdata($key))) {
+		} elseif($this->CI->session->userdata($key) && is_numeric($this->CI->session->userdata($key))) {
 			$_GET['page'] = $this->CI->session->userdata($key);
 		} else {
 			$_GET['page'] = 0;
@@ -179,7 +179,7 @@ class axipi_library {
 							$output .= loop_v($v);
 							$output .= '</li>';
 						}
-					} else if(strval($v) != '') {
+					} elseif(strval($v) != '') {
 						$output .= '<li>'.$k.':';
 						$output .= ' '.$v;
 						$output .= '</li>';

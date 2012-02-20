@@ -10,7 +10,7 @@ if( ! function_exists('build_filters')) {
 			if($CI->input->post($k) || isset($_POST[$k]) == 1) {
 				$value = $CI->input->post($k);
 				$CI->session->set_userdata($k, $CI->input->post($k));
-			} else if($CI->session->userdata($k)) {
+			} elseif($CI->session->userdata($k)) {
 				$value = $CI->session->userdata($k);
 			}
 			if($value) {

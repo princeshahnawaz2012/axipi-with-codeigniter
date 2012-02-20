@@ -302,7 +302,6 @@
  *  Instantiate the requested controller
  * ------------------------------------------------------
  */
-
 	$LOAD =& load_class('Loader', 'core');
 	$db = $LOAD->database('', true);
 
