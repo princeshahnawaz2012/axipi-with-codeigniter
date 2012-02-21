@@ -1,10 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Axipi_hook {
-    function __construct() {
-		$this->CI =& get_instance();
-    }
+class axipi_hook {
 	public function post_controller_constructor() {
+		$this->CI =& get_instance();
 		if($this->CI->session->userdata('usr_id')) {
 			$this->CI->usr = $this->CI->users_model->get_user($this->CI->session->userdata('usr_id'));
 		}
@@ -33,6 +31,7 @@ class Axipi_hook {
 		$this->CI->output->set_content_type($this->CI->lay[0]->lay_type);
 	}
 	public function post_controller() {
+		$this->CI =& get_instance();
 		$output = array();
 		$output['zones'] = $this->CI->zones;
 		$page = $this->CI->load->view('layouts/'.$this->CI->lay[0]->lay_code, $output, 'true');

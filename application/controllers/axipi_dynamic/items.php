@@ -14,7 +14,6 @@ class items extends CI_Controller {
 	}
 	public function index() {
 		$this->load->helper(array('axipi', 'form'));
-		$this->load->library('pagination');
 
 		$filters = array();
 		$filters['items_itm_code'] = array('itm.itm_code', 'like');

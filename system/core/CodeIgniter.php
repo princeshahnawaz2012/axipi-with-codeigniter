@@ -360,7 +360,6 @@
 	$CI->zones['pagesidebar'] .= '<li><a href="'.base_url().'axipi/dynamic/components">Components</a></li>';
 	$CI->zones['pagesidebar'] .= '<li><a href="'.base_url().'axipi/dynamic/items">Items</a></li>';
 	$CI->zones['pagesidebar'] .= '</ul>';
-	$CI->{$method}();
 
 /*
  * ------------------------------------------------------
