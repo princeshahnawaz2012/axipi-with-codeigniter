@@ -7,7 +7,8 @@ INSERT INTO `cmp` (`cmp_id`, `lay_id`, `cmp_code`, `cmp_prepend`, `cmp_prependor
 (1001, NULL, 'axipi_core/error403', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1),
 (1002, NULL, 'axipi_core/error404', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1),
 (1003, NULL, 'axipi_dynamic/components', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1),
-(1004, NULL, 'axipi_dynamic/items', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1);
+(1004, NULL, 'axipi_dynamic/items', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1),
+(1005, NULL, 'axipi_core/debug', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1);
 
 --
 -- Dumping data for table `itm`
@@ -18,7 +19,8 @@ INSERT INTO `itm` (`itm_id`, `cmp_id`, `cou_id`, `lay_id`, `lng_id`, `sct_id`, `
 (1001, 1001, NULL, NULL, 1000, 1000, 'error403', NULL, NULL, 'Error 403', NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, 'all', NULL, NULL, 0, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1),
 (1002, 1002, NULL, NULL, 1000, 1000, 'error404', NULL, NULL, 'Error 404', NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, 'all', NULL, NULL, 0, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1),
 (1003, 1003, NULL, NULL, 1000, 1000, 'axipi/dynamic/components', NULL, NULL, 'Components', NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, 'all', NULL, NULL, 0, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1),
-(1004, 1004, NULL, NULL, 1000, 1000, 'axipi/dynamic/items', NULL, NULL, 'Items', NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, 'all', NULL, NULL, 0, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1);
+(1004, 1004, NULL, NULL, 1000, 1000, 'axipi/dynamic/items', NULL, NULL, 'Items', NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, 'all', NULL, NULL, 0, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1),
+(1005, 1005, NULL, NULL, 1000, 1000, 'axipi/core/debug', NULL, NULL, 'Debug', NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, 'all', NULL, NULL, 0, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1);
 
 --
 -- Dumping data for table `lay`
