@@ -5,6 +5,7 @@ class error403 extends CI_Controller {
 		parent::__construct();
 	}
 	public function index() {
+		$this->output->set_status_header(404);
 		$this->zones['content'] = '<p>403</p>';
 	}
 }

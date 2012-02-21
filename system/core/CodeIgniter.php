@@ -314,7 +314,11 @@
 
 	$query = $db->query('SELECT * FROM '.$db->dbprefix('itm').' AS itm WHERE itm_code = ?', array($page));
 	if($query->num_rows() == 0) {
-		$query = $db->query('SELECT * FROM '.$db->dbprefix('itm').' AS itm WHERE itm_code = ?', array('error404'));
+		$query = $db->query('SELECT cmp.cmp_id FROM '.$db->dbprefix('cmp').' AS cmp WHERE cmp_code = ?', array('axipi_core/error404'));
+		if($query->num_rows() > 0) {
+			$cmp = $query->result();
+			$query = $db->query('SELECT * FROM '.$db->dbprefix('itm').' AS itm WHERE cmp_id = ?', array($cmp[0]->cmp_id));
+		}
 	}
 	$itm = $query->result();
 

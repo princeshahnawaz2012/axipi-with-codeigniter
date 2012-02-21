@@ -30,6 +30,7 @@ class Axipi_hook {
 				}
 			}
 		}
+		$this->CI->output->set_content_type($this->CI->lay[0]->lay_type);
 	}
 	public function post_controller() {
 		$output = array();
