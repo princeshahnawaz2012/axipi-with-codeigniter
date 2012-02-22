@@ -151,6 +151,11 @@ class axipi_library {
 				} elseif(isset($this->CI->sct[0]->sct_virtualcode) == 1 && file_exists('scripts/sct_virtualcode/'.$this->CI->sct[0]->sct_virtualcode.'.dist.js')) {
 					$foot[] = '<script src="'.$this->base_url.'scripts/sct_virtualcode/'.$this->CI->sct[0]->sct_virtualcode.'.dist.js" type="text/javascript"></script>';
 				}
+				if(file_exists('scripts/cmp_code/'.$this->CI->cmp[0]->cmp_code.'.js')) {
+					$foot[] = '<script src="'.$this->base_url.'scripts/cmp_code/'.$this->CI->cmp[0]->cmp_code.'.js" type="text/javascript"></script>';
+				} elseif(file_exists('scripts/cmp_code/'.$this->CI->cmp[0]->cmp_code.'.dist.js')) {
+					$foot[] = '<script src="'.$this->base_url.'scripts/cmp_code/'.$this->CI->cmp[0]->cmp_code.'.dist.js" type="text/javascript"></script>';
+				}
 				if(file_exists('scripts/itm_virtualcode/'.$this->CI->itm[0]->itm_virtualcode.'.js')) {
 					$foot[] = '<script src="'.$this->base_url.'scripts/itm_virtualcode/'.$this->CI->itm[0]->itm_virtualcode.'.js" type="text/javascript"></script>';
 				}
