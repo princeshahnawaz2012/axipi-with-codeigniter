@@ -112,3 +112,4 @@ form .error{color:#FF0000;}
 #box-debug h2{background-color:#E6D8C5;display:block;font-size:12px;font-weight:normal;margin:0px 0px 5px 0px;padding:1px 0px 2px 5px;}
 #box-debug p, #box-debug ul{margin:5px;}
 #box-debug ul ul{margin-left:8px;}
+#box-debug textarea{height:300px;width:98%;}

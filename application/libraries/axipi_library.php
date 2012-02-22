@@ -24,6 +24,9 @@ class axipi_library {
 		$key = md5($e_type.' | '.$e_message.' | '.$e_file.' | '.$e_line);
 		$this->debug[$key] = $e_type.' | '.$e_message.' | '.$e_file.' | '.$e_line;
 	}
+	function debug($data) {
+		$this->debug[] = '<p><textarea>'.print_r($data, 1).'</textarea></p>';
+	}
 	function build_pagination($total, $per_page) {
 		$this->CI->load->library('pagination');
 
