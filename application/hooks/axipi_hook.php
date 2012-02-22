@@ -34,6 +34,6 @@ class axipi_hook {
 		$this->CI =& get_instance();
 		$output = array();
 		$output['zones'] = $this->CI->zones;
-		$page = $this->CI->load->view('layouts/'.$this->CI->lay[0]->lay_code, $output, 'true');
+		$page = $this->CI->load->view($this->CI->lay[0]->lay_code, $output, 'true');
 	}
 }

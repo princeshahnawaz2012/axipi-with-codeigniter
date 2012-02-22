@@ -4,6 +4,7 @@ class items extends CI_Controller {
 	function __construct() {
 		parent::__construct();
 
+		$this->load->language('axipi_dynamic');
 		$this->load->model('axipi_dynamic/items_model', '', true);
 
 		if($this->input->get('itm_id')) {

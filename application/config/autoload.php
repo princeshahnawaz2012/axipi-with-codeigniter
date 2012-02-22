@@ -96,7 +96,7 @@ $autoload['config'] = array();
 |
 */
 
-$autoload['language'] = array('axipi_core', 'axipi_dynamic');
+$autoload['language'] = array('axipi_core');
 
 
 /*
