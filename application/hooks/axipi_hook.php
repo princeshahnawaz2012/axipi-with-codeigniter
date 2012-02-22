@@ -34,19 +34,22 @@ class axipi_hook {
 		$this->CI =& get_instance();
 		$output = array();
 		$output['zones'] = $this->CI->zones;
-		$output['zones']['pagesidebar'] = '';
-		$query = $this->CI->db->query('SELECT itm.itm_id, itm.itm_code, itm.itm_title, itm.itm_ispublished, itm.itm_islocked, itm.itm_access, cmp.cmp_code, sct.sct_code, lng.lng_code FROM '.$this->CI->db->dbprefix('itm').' AS itm LEFT JOIN '.$this->CI->db->dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id LEFT JOIN '.$this->CI->db->dbprefix('sct').' AS sct ON sct.sct_id = itm.sct_id LEFT JOIN '.$this->CI->db->dbprefix('lng').' AS lng ON lng.lng_id = itm.lng_id LEFT JOIN '.$this->CI->db->dbprefix('grp_itm').' AS grp_itm ON grp_itm.itm_id = itm.itm_id LEFT JOIN '.$this->CI->db->dbprefix('grp').' AS grp ON grp.grp_id = grp_itm.grp_id LEFT JOIN '.$this->CI->db->dbprefix('itm').' AS items ON items.itm_parent = itm.itm_id WHERE cmp.cmp_iselement = \'1\' GROUP BY itm.itm_id');
+		//AND (itm.itm_access = \'all\' OR (itm.itm_access = \'createdby\' AND itm.itm_createdby = \''.$this->usr->v['id'].'\') OR itm.itm_access = \''.$this->usr->v['access'].'\' OR (itm.itm_access = \'groups\' AND grp_itm.grp_id IN ('.$this->dtb->array2in(array_keys($this->usr->v['grp'])).')) OR (itm.itm_access = \'organizations\' AND itm_org.org_id IN ('.$this->dtb->array2in(array_keys($this->usr->v['org'])).'))) AND (itm_zon_display = \'all\' OR dsp_itm.dsp_id = \''.parent::exchange()->itm->v['id'].'\') 
+		$query = $this->CI->db->query('SELECT zon_code, COUNT(DISTINCT(itm_stg.stg_id)) AS count_stg, itm_link AS link, cmp_code, itm.itm_id AS id, itm_content AS content, itm_code AS code, itm_virtualcode AS virtualcode, itm_parent AS parent, itm_title AS title FROM '.$this->CI->db->dbprefix('itm_zon').' itm_zon LEFT JOIN '.$this->CI->db->dbprefix('itm').' itm ON itm.itm_id = itm_zon.itm_id LEFT JOIN '.$this->CI->db->dbprefix('cmp').' cmp ON cmp.cmp_id = itm.cmp_id LEFT JOIN '.$this->CI->db->dbprefix('zon').' zon ON zon.zon_id = itm_zon.zon_id LEFT JOIN '.$this->CI->db->dbprefix('grp_itm').' grp_itm ON grp_itm.itm_id = itm.itm_id AND grp_itm_ispublished = \'1\' LEFT JOIN '.$this->CI->db->dbprefix('itm_stg').' itm_stg ON itm_stg.itm_id = itm.itm_id WHERE itm.itm_publishstartdate <= \''.date('Y-m-d H:i:s').'\' AND IF(itm.itm_publishenddate IS NOT NULL, itm.itm_publishenddate >= \''.date('Y-m-d H:i:s').'\', \'1\') AND cmp_iselement = \'1\' AND itm.lng_id = \''.$this->CI->lng[0]->lng_id.'\' AND zon.lay_id = \''.$this->CI->lay[0]->lay_id.'\' AND zon_ispublished = \'1\' AND itm_zon_ispublished = \'1\' AND itm_ispublished = \'1\' GROUP BY itm_zon.zon_id, itm_zon.itm_id ORDER BY itm_zon_ordering ASC, itm_title ASC');
 		if($query->num_rows() > 0) {
 			foreach($query->result() as $row) {
-				echo $row->cmp_code.' / '.$row->itm_code.'<br />';
 				list($directory, $class) = explode('/', $row->cmp_code);
 				if(file_exists(APPPATH.'widgets/'.$row->cmp_code.EXT)) {
 					require_once APPPATH.'widgets/'.$row->cmp_code.EXT;
 					$widget = new $class();
+					$widget->data = $row;
 					foreach(get_object_vars($this->CI) as $key => $object) {
 						$widget->$key =& $this->CI->$key;
 					}
-					$output['zones']['pagesidebar'] .= $widget->index();
+					if(isset($output['zones'][$row->zon_code]) == 0) {
+						$output['zones'][$row->zon_code] = '';
+					}
+					$output['zones'][$row->zon_code] .= $widget->index();
 				}
 			}
 		} 

@@ -38,7 +38,7 @@ CREATE TABLE `cmp` (
   KEY `cmp_iszone` (`cmp_iselement`),
   KEY `cmp_isrelation` (`cmp_isrelation`),
   KEY `cmp_isdisplay` (`cmp_isdisplay`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='components' AUTO_INCREMENT=1000 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='components' AUTO_INCREMENT=1136 ;
 
 -- --------------------------------------------------------
 
@@ -65,24 +65,6 @@ CREATE TABLE `cmp_stg` (
   KEY `cmp_id` (`cmp_id`),
   KEY `stg_id` (`stg_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='components_settings';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cnt_usr`
---
-
-DROP TABLE IF EXISTS `cnt_usr`;
-CREATE TABLE `cnt_usr` (
-  `cnt_usr_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `usr_id` int(10) unsigned NOT NULL,
-  `cnt_usr_remoteaddr` varchar(255) DEFAULT NULL,
-  `cnt_usr_httpuseragent` varchar(255) DEFAULT NULL,
-  `cnt_usr_remotehost` varchar(255) DEFAULT NULL,
-  `cnt_usr_datecreated` datetime DEFAULT NULL,
-  PRIMARY KEY (`cnt_usr_id`),
-  KEY `usr_id` (`usr_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='connections_users' AUTO_INCREMENT=1000 ;
 
 -- --------------------------------------------------------
 
@@ -132,7 +114,7 @@ CREATE TABLE `cou_sub` (
   PRIMARY KEY (`cou_sub_id`),
   KEY `cou_sub_code` (`cou_sub_code`),
   KEY `cou_sub_title` (`cou_sub_title`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='countries_subdivisions' AUTO_INCREMENT=1000 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='countries_subdivisions' AUTO_INCREMENT=1206 ;
 
 -- --------------------------------------------------------
 
@@ -183,7 +165,7 @@ CREATE TABLE `grp` (
   PRIMARY KEY (`grp_id`),
   UNIQUE KEY `grp_code` (`grp_code`),
   KEY `grp_ispublished` (`grp_ispublished`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='groups' AUTO_INCREMENT=1000 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='groups' AUTO_INCREMENT=1004 ;
 
 -- --------------------------------------------------------
 
@@ -424,7 +406,7 @@ CREATE TABLE `itm` (
   KEY `itm_parent` (`itm_parent`),
   FULLTEXT KEY `itm_summary` (`itm_summary`),
   FULLTEXT KEY `itm_content` (`itm_content`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='items' AUTO_INCREMENT=1000 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='items' AUTO_INCREMENT=1085 ;
 
 -- --------------------------------------------------------
 
@@ -488,6 +470,23 @@ CREATE TABLE `itm_stg` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `itm_trl`
+--
+
+DROP TABLE IF EXISTS `itm_trl`;
+CREATE TABLE `itm_trl` (
+  `itm_id` int(10) unsigned NOT NULL,
+  `trl_id` int(10) unsigned NOT NULL,
+  `itm_trl_createdby` int(10) unsigned DEFAULT NULL,
+  `itm_trl_datecreated` datetime DEFAULT NULL,
+  `itm_trl_modifiedby` int(10) unsigned DEFAULT NULL,
+  `itm_trl_datemodified` datetime DEFAULT NULL,
+  PRIMARY KEY (`itm_id`,`trl_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='items_translations';
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `itm_zon`
 --
 
@@ -534,7 +533,7 @@ CREATE TABLE `lay` (
   PRIMARY KEY (`lay_id`),
   UNIQUE KEY `lay_code` (`lay_code`),
   KEY `lay_ispublished` (`lay_ispublished`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='layouts' AUTO_INCREMENT=1000 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='layouts' AUTO_INCREMENT=1002 ;
 
 -- --------------------------------------------------------
 
@@ -563,7 +562,33 @@ CREATE TABLE `lng` (
   UNIQUE KEY `lng_code` (`lng_code`),
   KEY `lng_ispublished` (`lng_ispublished`),
   KEY `lng_title` (`lng_title`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='languages' AUTO_INCREMENT=1000 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='languages' AUTO_INCREMENT=1002 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lng_stg`
+--
+
+DROP TABLE IF EXISTS `lng_stg`;
+CREATE TABLE `lng_stg` (
+  `lng_id` int(10) unsigned NOT NULL,
+  `stg_id` int(10) unsigned NOT NULL,
+  `lng_stg_value` varchar(255) DEFAULT NULL,
+  `lng_stg_createdby` int(10) unsigned DEFAULT NULL,
+  `lng_stg_datecreated` datetime DEFAULT NULL,
+  `lng_stg_modifiedby` int(10) unsigned DEFAULT NULL,
+  `lng_stg_datemodified` datetime DEFAULT NULL,
+  `lng_stg_publishedby` int(10) unsigned DEFAULT NULL,
+  `lng_stg_datepublished` datetime DEFAULT NULL,
+  `lng_stg_unpublishedby` int(10) unsigned DEFAULT NULL,
+  `lng_stg_dateunpublished` datetime DEFAULT NULL,
+  `lng_stg_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`lng_id`,`stg_id`),
+  KEY `lng_id` (`lng_id`),
+  KEY `stg_id` (`stg_id`),
+  KEY `lng_stg_ispublished` (`lng_stg_ispublished`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='languages_settings';
 
 -- --------------------------------------------------------
 
@@ -588,7 +613,7 @@ CREATE TABLE `per` (
   PRIMARY KEY (`per_id`),
   UNIQUE KEY `per_code` (`per_code`),
   KEY `per_ispublished` (`per_ispublished`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='permissions' AUTO_INCREMENT=1000 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='permissions' AUTO_INCREMENT=1009 ;
 
 -- --------------------------------------------------------
 
@@ -636,7 +661,33 @@ CREATE TABLE `sct` (
   UNIQUE KEY `sct_code` (`sct_code`),
   KEY `sct_ispublished` (`sct_ispublished`),
   KEY `lay_id` (`lay_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='sections' AUTO_INCREMENT=1000 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='sections' AUTO_INCREMENT=1002 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sct_stg`
+--
+
+DROP TABLE IF EXISTS `sct_stg`;
+CREATE TABLE `sct_stg` (
+  `sct_id` int(10) unsigned NOT NULL,
+  `stg_id` int(10) unsigned NOT NULL,
+  `sct_stg_value` varchar(255) DEFAULT NULL,
+  `sct_stg_createdby` int(10) unsigned DEFAULT NULL,
+  `sct_stg_datecreated` datetime DEFAULT NULL,
+  `sct_stg_modifiedby` int(10) unsigned DEFAULT NULL,
+  `sct_stg_datemodified` datetime DEFAULT NULL,
+  `sct_stg_publishedby` int(10) unsigned DEFAULT NULL,
+  `sct_stg_datepublished` datetime DEFAULT NULL,
+  `sct_stg_unpublishedby` int(10) unsigned DEFAULT NULL,
+  `sct_stg_dateunpublished` datetime DEFAULT NULL,
+  `sct_stg_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`sct_id`,`stg_id`),
+  KEY `sct_id` (`sct_id`),
+  KEY `stg_id` (`stg_id`),
+  KEY `sct_stg_ispublished` (`sct_stg_ispublished`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='sections_settings';
 
 -- --------------------------------------------------------
 
@@ -693,7 +744,7 @@ CREATE TABLE `stg` (
   UNIQUE KEY `stg_code` (`stg_code`),
   KEY `stg_ispublished` (`stg_ispublished`),
   KEY `stg_isglobal` (`stg_isglobal`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='settings' AUTO_INCREMENT=1000 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='settings' AUTO_INCREMENT=1050 ;
 
 -- --------------------------------------------------------
 
@@ -824,7 +875,23 @@ CREATE TABLE `usr` (
   KEY `usr_ispublished` (`usr_ispublished`),
   KEY `usr_keyregister` (`usr_keyregister`),
   KEY `usr_keypassword` (`usr_keypassword`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='users' AUTO_INCREMENT=1000 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='users' AUTO_INCREMENT=1001 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wtd`
+--
+
+DROP TABLE IF EXISTS `wtd`;
+CREATE TABLE `wtd` (
+  `wtd_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `wtd_key` char(32) NOT NULL,
+  `wtd_content` text NOT NULL,
+  `wtd_datecreated` datetime NOT NULL,
+  `wtd_datemodified` datetime DEFAULT NULL,
+  PRIMARY KEY (`wtd_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='watchdog' AUTO_INCREMENT=1002 ;
 
 -- --------------------------------------------------------
 
@@ -851,4 +918,4 @@ CREATE TABLE `zon` (
   PRIMARY KEY (`zon_id`),
   UNIQUE KEY `lay_zon` (`lay_id`,`zon_code`),
   KEY `zon_ispublished` (`zon_ispublished`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='zones' AUTO_INCREMENT=1000 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='zones' AUTO_INCREMENT=1014 ;

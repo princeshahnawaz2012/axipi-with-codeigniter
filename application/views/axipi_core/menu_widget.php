@@ -1,5 +1,8 @@
-<h2>menu todo</h2>
-<p><?php echo $this->session->userdata('session_id'); ?></p>
-<p><a href="<?php echo base_url(); ?>axipi/dynamic/components">Components</a></p>
-<p><a href="<?php echo base_url(); ?>axipi/dynamic/items">Items</a></p>
-<p><a href="<?php echo base_url(); ?>axipi/core/debug">Debug</a></p>
+<div class="box-menu">
+<h1><?php echo $widget->title; ?></h1>
+<div class="display">
+
+<?php echo $listnav; ?>
+
+</div>
+</div>

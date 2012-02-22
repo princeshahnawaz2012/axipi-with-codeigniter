@@ -6,7 +6,7 @@ if($grp) {
 <div class="display">
 <ul>
 <li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('groups'); ?></a></li>
-<li><?php echo $this->lang->line('update'); ?></li>
+<li><?php echo $this->lang->line('delete'); ?></li>
 </ul>
 </div>
 </div>
@@ -14,22 +14,20 @@ if($grp) {
 <div class="box1">
 <h1><?php echo $grp[0]->grp_code; ?></h1>
 <ul>
+<li><a href="<?php echo current_url(); ?>?a=update&amp;grp_id=<?php echo $grp[0]->grp_id; ?>"><?php echo $this->lang->line('update'); ?></a></li>
 <li><a href="<?php echo current_url(); ?>?a=read&amp;grp_id=<?php echo $grp[0]->grp_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
 <li><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>
 <div class="display">
 
-<h2><?php echo $this->lang->line('update'); ?></h2>
+<h2><?php echo $this->lang->line('delete'); ?></h2>
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open(current_url().'?a=update&amp;grp_id='.$grp[0]->grp_id); ?>
+<?php echo form_open(current_url().'?a=delete&amp;grp_id='.$grp[0]->grp_id); ?>
 
 <div class="column1">
-<p><?php echo form_label($this->lang->line('grp_code').' *', 'grp_code'); ?><?php echo form_input('grp_code', set_value('grp_code', $grp[0]->grp_code), 'class="inputtext"'); ?></p>
-</div>
-
-<div class="column1 columnlast">
+<p><?php echo form_label($this->lang->line('confirm').' *', 'confirm'); ?><?php echo form_checkbox('confirm', 1, false, 'class="inputcheckbox"'); ?></p>
 <p><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></p>
 </div>
 

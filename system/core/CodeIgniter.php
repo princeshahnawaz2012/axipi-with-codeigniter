@@ -335,18 +335,24 @@
 	$lay = $query->result();
 
 	list($directory, $class) = explode('/', $cmp[0]->cmp_code);
-	require_once(APPPATH.'controllers/'.$cmp[0]->cmp_code.'.php');
-	$RTR->set_directory($directory);
-	$RTR->set_class($class);
+	if(file_exists(APPPATH.'controllers/'.$cmp[0]->cmp_code.EXT)) {
+		require_once(APPPATH.'controllers/'.$cmp[0]->cmp_code.EXT);
+		$RTR->set_directory($directory);
+		$RTR->set_class($class);
 
-	if($IN->get('a') && method_exists($class, $IN->get('a')) && strncmp($IN->get('a'), '_', 1) != 0) {
-		$method = $IN->get('a');
+		if($IN->get('a') && method_exists($class, $IN->get('a')) && strncmp($IN->get('a'), '_', 1) != 0) {
+			$method = $IN->get('a');
+		} else {
+			$method = 'index';
+		}
+		$RTR->set_method($method);
+
+		$CFG->set_item('language', $lng[0]->lng_code);
 	} else {
+		require_once(APPPATH.'controllers/axipi_core/error404'.EXT);
+		$class = 'error404';
 		$method = 'index';
 	}
-	$RTR->set_method($method);
-
-    echo $CFG->set_item('language', $lng[0]->lng_code);
 
 	// Mark a start point so we can benchmark the controller
 	$BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_start');
@@ -358,10 +364,6 @@
 	$CI->lng = $lng;
 	$CI->sct = $sct;
 	$CI->lay = $lay;
-	$CI->zones['pagesidebar'] = '<ul>';
-	$CI->zones['pagesidebar'] .= '<li><a href="'.base_url().'axipi/dynamic/components">Components</a></li>';
-	$CI->zones['pagesidebar'] .= '<li><a href="'.base_url().'axipi/dynamic/items">Items</a></li>';
-	$CI->zones['pagesidebar'] .= '</ul>';
 
 /*
  * ------------------------------------------------------
