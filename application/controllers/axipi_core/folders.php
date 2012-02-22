@@ -105,7 +105,6 @@ class folders extends CI_Controller {
 					$output .= '<td>&nbsp;</td>';
 				}
 				$output .= '<th>';
-				$output .= '<a href="'.current_url().'?a=chmod_644&amp;folder='.$folder.'">chmod 0644</a>';
 				$output .= '<a href="'.current_url().'?a=chmod_755&amp;folder='.$folder.'">chmod 0755</a>';
 				$output .= '<a href="'.current_url().'?a=chmod_775&amp;folder='.$folder.'">chmod 0775</a>';
 				$output .= '<a href="'.current_url().'?a=chmod_777&amp;folder='.$folder.'">chmod 0777</a>';
@@ -123,12 +122,6 @@ class folders extends CI_Controller {
 		$output .= '</div>';
 
 		$this->zones['content'] = $output;
-	}
-	public function chmod_644() {
-		if(in_array($this->input->get('folder'), $this->folders) && is_dir($this->input->get('folder'))) {
-			directory_chmod($this->input->get('folder'), 0644);
-		}
-		$this->index();
 	}
 	public function chmod_755() {
 		if(in_array($this->input->get('folder'), $this->folders) && is_dir($this->input->get('folder'))) {
