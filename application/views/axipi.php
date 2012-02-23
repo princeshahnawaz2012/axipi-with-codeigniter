@@ -16,7 +16,25 @@
 
 <div id="box-pagecontent">
 <div id="display-pagecontent">
-<?php echo $zones['content']; ?>
+
+	<div id="box-contentheader">
+	<div id="display-contentheader">
+	<?php if(isset($zones['contentheader']) == 1) { echo $zones['contentheader']; } ?>
+	</div>
+	</div>
+
+	<div id="box-content">
+	<div id="display-content">
+	<?php echo $zones['content']; ?>
+	</div>
+	</div>
+
+	<div id="box-contentfooter">
+	<div id="display-contentfooter">
+	<?php if(isset($zones['contentfooter']) == 1) { echo $zones['contentfooter']; } ?>
+	</div>
+	</div>
+
 </div>
 </div>
 

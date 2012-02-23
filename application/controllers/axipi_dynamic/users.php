@@ -49,7 +49,8 @@ class users extends CI_Controller {
 		} else {
 			$this->db->set('usr_email', $this->input->post('usr_email'));
 			$this->db->set('usr_ispublished', 1);
-			$this->db->insert('usr'); 
+			$this->db->insert('usr');
+			$this->msg[] = $this->lang->line('created');
 			$this->index();
 		}
 	}
@@ -74,7 +75,8 @@ class users extends CI_Controller {
 			} else {
 				$this->db->set('usr_email', $this->input->post('usr_email'));
 				$this->db->where('usr_id', $this->usr_id);
-				$this->db->update('usr'); 
+				$this->db->update('usr');
+				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}
 		}
@@ -93,7 +95,8 @@ class users extends CI_Controller {
 			} else {
 				$this->db->where('usr_id', $this->usr_id);
 				$this->db->where('usr_islocked', 0);
-				$this->db->delete('usr'); 
+				$this->db->delete('usr');
+				$this->msg[] = $this->lang->line('deleted');
 				$this->index();
 			}
 		}

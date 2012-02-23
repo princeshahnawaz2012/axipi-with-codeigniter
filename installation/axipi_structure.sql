@@ -72,8 +72,7 @@ CREATE TABLE `cmp_stg` (
 -- Table structure for table `cou`
 --
 
-DROP TABLE IF EXISTS `cou`;
-CREATE TABLE `cou` (
+CREATE TABLE IF NOT EXISTS `cou` (
   `cou_id` int(10) unsigned NOT NULL,
   `cou_alpha2` char(2) NOT NULL,
   `cou_alpha3` char(3) NOT NULL,
@@ -87,6 +86,7 @@ CREATE TABLE `cou` (
   `cou_unpublishedby` int(10) unsigned DEFAULT NULL,
   `cou_dateunpublished` datetime DEFAULT NULL,
   `cou_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `cou_islocked` tinyint(1) unsigned NOT NULL,
   PRIMARY KEY (`cou_id`),
   UNIQUE KEY `cou_alpha2` (`cou_alpha2`),
   UNIQUE KEY `cou_alpha3` (`cou_alpha3`)

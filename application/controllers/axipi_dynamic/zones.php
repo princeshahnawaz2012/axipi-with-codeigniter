@@ -55,7 +55,8 @@ class zones extends CI_Controller {
 			$this->db->set('zon_code', $this->input->post('zon_code'));
 			$this->db->set('zon_ordering', $this->input->post('zon_ordering'));
 			$this->db->set('zon_ispublished', 1);
-			$this->db->insert('zon'); 
+			$this->db->insert('zon');
+			$this->msg[] = $this->lang->line('created');
 			$this->index();
 		}
 	}
@@ -85,7 +86,8 @@ class zones extends CI_Controller {
 				$this->db->set('zon_code', $this->input->post('zon_code'));
 				$this->db->set('zon_ordering', $this->input->post('zon_ordering'));
 				$this->db->where('zon_id', $this->zon_id);
-				$this->db->update('zon'); 
+				$this->db->update('zon');
+				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}
 		}
@@ -106,6 +108,7 @@ class zones extends CI_Controller {
 				$this->db->where('zon_islocked', 0);
 				$this->db->delete('zon'); 
 				$this->index();
+				$this->msg[] = $this->lang->line('deleted');
 			}
 		}
 	}

@@ -53,8 +53,8 @@ $lang['access-children-values'] = array('keep'=>'Conserver', 'change'=>'Changer 
 $lang['itm_access_values'] = array('all'=>'Everybody', 'connected'=>'Connected', 'guest'=>'Guest', 'createdby'=>'Created by', 'groups'=>'Groups', 'organizations'=>'Organizations');
 $lang['add-short'] = 'Add';
 $lang['create'] = 'Create';
-$lang['added-lock'] = 'Already added';
-$lang['added'] = 'Added';
+$lang['created-lock'] = 'Already created';
+$lang['created'] = 'Created';
 $lang['cancel'] = 'Cancel';
 $lang['choice'] = 'Choice';
 $lang['value_already_used'] = 'The value in %s is already used';

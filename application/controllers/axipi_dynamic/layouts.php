@@ -49,7 +49,8 @@ class layouts extends CI_Controller {
 		} else {
 			$this->db->set('lay_code', $this->input->post('lay_code'));
 			$this->db->set('lay_ispublished', 1);
-			$this->db->insert('lay'); 
+			$this->db->insert('lay');
+			$this->msg[] = $this->lang->line('created');
 			$this->index();
 		}
 	}
@@ -74,7 +75,8 @@ class layouts extends CI_Controller {
 			} else {
 				$this->db->set('lay_code', $this->input->post('lay_code'));
 				$this->db->where('lay_id', $this->lay_id);
-				$this->db->update('lay'); 
+				$this->db->update('lay');
+				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}
 		}
@@ -93,7 +95,8 @@ class layouts extends CI_Controller {
 			} else {
 				$this->db->where('lay_id', $this->lay_id);
 				$this->db->where('lay_islocked', 0);
-				$this->db->delete('lay'); 
+				$this->db->delete('lay');
+				$this->msg[] = $this->lang->line('deleted');
 				$this->index();
 			}
 		}

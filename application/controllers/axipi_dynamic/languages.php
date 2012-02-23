@@ -51,7 +51,8 @@ class languages extends CI_Controller {
 			$this->db->set('lng_code', $this->input->post('lng_code'));
 			$this->db->set('lng_title', $this->input->post('lng_title'));
 			$this->db->set('lng_ispublished', 1);
-			$this->db->insert('lng'); 
+			$this->db->insert('lng');
+			$this->msg[] = $this->lang->line('created');
 			$this->index();
 		}
 	}
@@ -78,7 +79,8 @@ class languages extends CI_Controller {
 				$this->db->set('lng_code', $this->input->post('lng_code'));
 				$this->db->set('lng_title', $this->input->post('lng_title'));
 				$this->db->where('lng_id', $this->lng_id);
-				$this->db->update('lng'); 
+				$this->db->update('lng');
+				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}
 		}
@@ -97,7 +99,8 @@ class languages extends CI_Controller {
 			} else {
 				$this->db->where('lng_id', $this->lng_id);
 				$this->db->where('lng_islocked', 0);
-				$this->db->delete('lng'); 
+				$this->db->delete('lng');
+				$this->msg[] = $this->lang->line('deleted');
 				$this->index();
 			}
 		}

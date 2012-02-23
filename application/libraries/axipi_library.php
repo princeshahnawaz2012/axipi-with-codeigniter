@@ -7,6 +7,8 @@ class axipi_library {
 		}
 		set_error_handler(array($this, 'error_handler'));
 		$this->CI =& get_instance();
+		$this->CI->err = array();
+		$this->CI->msg = array();
 		$this->CI->head = array();
 		$this->CI->foot = array();
 		$this->debug = array();

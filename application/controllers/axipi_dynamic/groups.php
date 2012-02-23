@@ -49,14 +49,15 @@ class groups extends CI_Controller {
 		} else {
 			$this->db->set('grp_code', $this->input->post('grp_code'));
 			$this->db->set('grp_ispublished', 1);
-			$this->db->insert('grp'); 
+			$this->db->insert('grp');
+			$this->msg[] = $this->lang->line('created');
 			$this->index();
 		}
 	}
 	public function read() {
 		if($this->grp_id != 0) {
 			$data = array();
-			$data['grp'] = $this->groups_model->get_component($this->grp_id);
+			$data['grp'] = $this->groups_model->get_group($this->grp_id);
 			$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_read', $data, true);
 		}
 	}
@@ -65,7 +66,7 @@ class groups extends CI_Controller {
 			$this->load->helper(array('form'));
 			$this->load->library('form_validation');
 			$data = array();
-			$data['grp'] = $this->groups_model->get_component($this->grp_id);
+			$data['grp'] = $this->groups_model->get_group($this->grp_id);
 
 			$this->form_validation->set_rules('grp_code', 'lang:grp_code', 'max_length[100]');
 
@@ -74,7 +75,8 @@ class groups extends CI_Controller {
 			} else {
 				$this->db->set('grp_code', $this->input->post('grp_code'));
 				$this->db->where('grp_id', $this->grp_id);
-				$this->db->update('grp'); 
+				$this->db->update('grp');
+				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}
 		}
@@ -84,7 +86,7 @@ class groups extends CI_Controller {
 			$this->load->helper(array('form'));
 			$this->load->library('form_validation');
 			$data = array();
-			$data['grp'] = $this->groups_model->get_component($this->grp_id);
+			$data['grp'] = $this->groups_model->get_group($this->grp_id);
 
 			$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
 
@@ -93,7 +95,8 @@ class groups extends CI_Controller {
 			} else {
 				$this->db->where('grp_id', $this->grp_id);
 				$this->db->where('grp_islocked', 0);
-				$this->db->delete('grp'); 
+				$this->db->delete('grp');
+				$this->msg[] = $this->lang->line('deleted');
 				$this->index();
 			}
 		}

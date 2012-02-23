@@ -73,7 +73,7 @@ class items extends CI_Controller {
 			$this->db->set('itm_link', $this->input->post('itm_link'));
 			$this->db->set('lng_id', $this->input->post('lng_id'));
 			$this->db->set('itm_ispublished', 1);
-			$this->db->insert('itm'); 
+			$this->db->insert('itm');
 			$this->index();
 		}
 	}
@@ -116,7 +116,8 @@ class items extends CI_Controller {
 				$this->db->set('itm_link', $this->input->post('itm_link'));
 				$this->db->set('lng_id', $this->input->post('lng_id'));
 				$this->db->where('itm_id', $this->itm_id);
-				$this->db->update('itm'); 
+				$this->db->update('itm');
+				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}
 		}
@@ -137,6 +138,7 @@ class items extends CI_Controller {
 				$this->db->where('itm_islocked', 0);
 				$this->db->delete('itm'); 
 				$this->index();
+				$this->msg[] = $this->lang->line('deleted');
 			}
 		}
 	}

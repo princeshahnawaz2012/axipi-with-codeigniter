@@ -49,7 +49,8 @@ class permissions extends CI_Controller {
 		} else {
 			$this->db->set('per_code', $this->input->post('per_code'));
 			$this->db->set('per_ispublished', 1);
-			$this->db->insert('per'); 
+			$this->db->insert('per');
+			$this->msg[] = $this->lang->line('created');
 			$this->index();
 		}
 	}
@@ -74,7 +75,8 @@ class permissions extends CI_Controller {
 			} else {
 				$this->db->set('per_code', $this->input->post('per_code'));
 				$this->db->where('per_id', $this->per_id);
-				$this->db->update('per'); 
+				$this->db->update('per');
+				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}
 		}
@@ -93,7 +95,8 @@ class permissions extends CI_Controller {
 			} else {
 				$this->db->where('per_id', $this->per_id);
 				$this->db->where('per_islocked', 0);
-				$this->db->delete('per'); 
+				$this->db->delete('per');
+				$this->msg[] = $this->lang->line('deleted');
 				$this->index();
 			}
 		}

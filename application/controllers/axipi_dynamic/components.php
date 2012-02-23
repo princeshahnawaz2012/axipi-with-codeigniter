@@ -49,7 +49,8 @@ class components extends CI_Controller {
 		} else {
 			$this->db->set('cmp_code', $this->input->post('cmp_code'));
 			$this->db->set('cmp_ispublished', 1);
-			$this->db->insert('cmp'); 
+			$this->db->insert('cmp');
+			$this->msg[] = $this->lang->line('created');
 			$this->index();
 		}
 	}
@@ -74,7 +75,8 @@ class components extends CI_Controller {
 			} else {
 				$this->db->set('cmp_code', $this->input->post('cmp_code'));
 				$this->db->where('cmp_id', $this->cmp_id);
-				$this->db->update('cmp'); 
+				$this->db->update('cmp');
+				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}
 		}
@@ -93,7 +95,8 @@ class components extends CI_Controller {
 			} else {
 				$this->db->where('cmp_id', $this->cmp_id);
 				$this->db->where('cmp_islocked', 0);
-				$this->db->delete('cmp'); 
+				$this->db->delete('cmp');
+				$this->msg[] = $this->lang->line('deleted');
 				$this->index();
 			}
 		}
