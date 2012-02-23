@@ -94,7 +94,7 @@ class folders extends CI_Controller {
 				$fileperms = fileperms_test($folder);
 				$this->foldersize = directory_size($folder);
 				$total_foldersize += $this->foldersize;
-				//$files_count = directory_files_count($folder);
+				$files_count = directory_files_count($folder);
 				$total_filescount += $files_count;
 				$output .= '<tr><td>'.$folder.'</td><td>'.convert_size($this->foldersize).'</td><td>'.$files_count.'</td><td>'.$fileperms.'</td>';
 				if($posix == 1) {

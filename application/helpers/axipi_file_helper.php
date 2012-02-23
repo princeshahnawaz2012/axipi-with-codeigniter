@@ -67,7 +67,7 @@ function directory_files($location, $recursive = 1, $remove = '') {
 	if(is_dir($location)) {
 		$dir = opendir($location);
 		while($file = readdir($dir)) {
-			if(!in_array($file, exclude)) {
+			if($file != '.' && $file != '..' && $file != '.htaccess' && $file != 'index.html' && $file != '.DS_Store' && $file != 'Thumbs.db' && $file != 'index.php' && $file != '.svn') {
 				if(@is_dir($location.'/'.$file)) {
 					directory_files($location.'/'.$file, $recursive, $remove);
 				} else {
@@ -78,14 +78,14 @@ function directory_files($location, $recursive = 1, $remove = '') {
 		closedir($dir);
 	}
 }
-function directory_files_count($location, $recursive = 1, $remove = '') {
+function directory_files_count($location, $recursive = 1) {
 	$files_count = 0;
 	if(is_dir($location)) {
 		$dir = opendir($location);
 		while($file = readdir($dir)) {
-			if(!in_array($file, exclude)) {
+			if($file != '.' && $file != '..' && $file != '.htaccess' && $file != 'index.html' && $file != '.DS_Store' && $file != 'Thumbs.db' && $file != 'index.php' && $file != '.svn') {
 				if(@is_dir($location.'/'.$file)) {
-					$files_count += directory_files_count($location.'/'.$file, $recursive, $remove);
+					$files_count += $recursive ? directory_files_count($location.'/'.$file, $recursive) : 0;
 				} else {
 					$files_count++;
 				}
