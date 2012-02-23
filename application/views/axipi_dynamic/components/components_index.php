@@ -41,8 +41,8 @@
 <?php foreach($results as $result):?>
 <tr>
 <td><a href="<?php echo current_url(); ?>?a=read&amp;cmp_id=<?php echo $result->cmp_id;?>"><?php echo $result->cmp_id;?></a></td>
-<td><?php echo $result->cmp_code;?></td>
-<td><?php echo $result->count_items;?></td>
+<td><?php echo $result->cmp_code; ?></td>
+<td><?php echo $result->count_items; ?></td>
 <th>
 <a href="<?php echo current_url(); ?>?a=update&amp;cmp_id=<?php echo $result->cmp_id;?>"><?php echo $this->lang->line('update'); ?></a>
 <?php if($result->count_items == 0 && $result->cmp_islocked == 0) { ?><a href="<?php echo current_url(); ?>?a=delete&amp;cmp_id=<?php echo $result->cmp_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>

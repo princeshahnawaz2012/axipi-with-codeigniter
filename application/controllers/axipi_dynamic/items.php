@@ -32,7 +32,7 @@ class items extends CI_Controller {
 		$data['results'] = $this->items_model->get_pagination_items($flt, $build_pagination['limit'], $build_pagination['start']);
 		$data['select_section'] = $this->items_model->select_section();
 		$data['select_language'] = $this->items_model->select_language();
-		$this->zones['content'] = $this->load->view('axipi_dynamic/items_index', $data, true);
+		$this->zones['content'] = $this->load->view('axipi_dynamic/items/items_index', $data, true);
 	}
 	public function rule_itm_code($itm_code) {
 		$query = $this->db->query('SELECT itm.itm_code FROM '.$this->db->dbprefix('itm').' AS itm WHERE itm.itm_code = ? GROUP BY itm.itm_id', array($itm_code));
@@ -61,7 +61,7 @@ class items extends CI_Controller {
 		$this->form_validation->set_rules('lng_id', 'lang:lng_code', 'required');
 
 		if($this->form_validation->run() == FALSE) {
-			$this->zones['content'] = $this->load->view('axipi_dynamic/items_create', $data, true);
+			$this->zones['content'] = $this->load->view('axipi_dynamic/items/items_create', $data, true);
 		} else {
 			$this->db->set('sct_id', $this->input->post('sct_id'));
 			$this->db->set('itm_code', $this->input->post('itm_code'));
@@ -81,7 +81,7 @@ class items extends CI_Controller {
 		if($this->itm_id != 0) {
 			$data = array();
 			$data['itm'] = $this->items_model->get_item($this->itm_id);
-			$this->zones['content'] = $this->load->view('axipi_dynamic/items_read', $data, true);
+			$this->zones['content'] = $this->load->view('axipi_dynamic/items/items_read', $data, true);
 		}
 	}
 	public function update() {
@@ -104,7 +104,7 @@ class items extends CI_Controller {
 			$this->form_validation->set_rules('lng_id', 'lang:lng_code', 'required');
 
 			if($this->form_validation->run() == FALSE) {
-				$this->zones['content'] = $this->load->view('axipi_dynamic/items_update', $data, true);
+				$this->zones['content'] = $this->load->view('axipi_dynamic/items/items_update', $data, true);
 			} else {
 				$this->db->set('sct_id', $this->input->post('sct_id'));
 				$this->db->set('itm_code', $this->input->post('itm_code'));
@@ -131,7 +131,7 @@ class items extends CI_Controller {
 			$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
 
 			if($this->form_validation->run() == FALSE) {
-				$this->zones['content'] = $this->load->view('axipi_dynamic/items_delete', $data, true);
+				$this->zones['content'] = $this->load->view('axipi_dynamic/items/items_delete', $data, true);
 			} else {
 				$this->db->where('itm_id', $this->itm_id);
 				$this->db->where('itm_islocked', 0);

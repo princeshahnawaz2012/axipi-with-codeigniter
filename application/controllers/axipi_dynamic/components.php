@@ -26,7 +26,7 @@ class components extends CI_Controller {
 		$data = array();
 		$data['pagination'] = $build_pagination['output'];
 		$data['results'] = $this->components_model->get_pagination_components($flt, $build_pagination['limit'], $build_pagination['start']);
-		$this->zones['content'] = $this->load->view('axipi_dynamic/components_index', $data, true);
+		$this->zones['content'] = $this->load->view('axipi_dynamic/components/components_index', $data, true);
 	}
 	public function rule_cmp_code($cmp_code) {
 		$query = $this->db->query('SELECT cmp.cmp_code FROM '.$this->db->dbprefix('cmp').' AS cmp WHERE cmp.cmp_code = ? GROUP BY cmp.cmp_id', array($cmp_code));
@@ -45,7 +45,7 @@ class components extends CI_Controller {
 		$this->form_validation->set_rules('cmp_code', 'lang:cmp_code', 'required|max_length[100]|callback_rule_cmp_code');
 
 		if($this->form_validation->run() == FALSE) {
-			$this->zones['content'] = $this->load->view('axipi_dynamic/components_create', $data, true);
+			$this->zones['content'] = $this->load->view('axipi_dynamic/components/components_create', $data, true);
 		} else {
 			$this->db->set('cmp_code', $this->input->post('cmp_code'));
 			$this->db->set('cmp_ispublished', 1);
@@ -57,7 +57,7 @@ class components extends CI_Controller {
 		if($this->cmp_id != 0) {
 			$data = array();
 			$data['cmp'] = $this->components_model->get_component($this->cmp_id);
-			$this->zones['content'] = $this->load->view('axipi_dynamic/components_read', $data, true);
+			$this->zones['content'] = $this->load->view('axipi_dynamic/components/components_read', $data, true);
 		}
 	}
 	public function update() {
@@ -70,7 +70,7 @@ class components extends CI_Controller {
 			$this->form_validation->set_rules('cmp_code', 'lang:cmp_code', 'max_length[100]');
 
 			if($this->form_validation->run() == FALSE) {
-				$this->zones['content'] = $this->load->view('axipi_dynamic/components_update', $data, true);
+				$this->zones['content'] = $this->load->view('axipi_dynamic/components/components_update', $data, true);
 			} else {
 				$this->db->set('cmp_code', $this->input->post('cmp_code'));
 				$this->db->where('cmp_id', $this->cmp_id);
@@ -89,7 +89,7 @@ class components extends CI_Controller {
 			$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
 
 			if($this->form_validation->run() == FALSE) {
-				$this->zones['content'] = $this->load->view('axipi_dynamic/components_delete', $data, true);
+				$this->zones['content'] = $this->load->view('axipi_dynamic/components/components_delete', $data, true);
 			} else {
 				$this->db->where('cmp_id', $this->cmp_id);
 				$this->db->where('cmp_islocked', 0);

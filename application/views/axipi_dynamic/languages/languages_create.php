@@ -8,7 +8,7 @@
 </div>
 
 <div class="box1">
-<h1><?php echo $this->lang->line('component'); ?></h1>
+<h1><?php echo $this->lang->line('language'); ?></h1>
 <ul>
 <li><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>

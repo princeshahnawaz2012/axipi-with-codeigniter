@@ -26,7 +26,7 @@ class groups extends CI_Controller {
 		$data = array();
 		$data['pagination'] = $build_pagination['output'];
 		$data['results'] = $this->groups_model->get_pagination_groups($flt, $build_pagination['limit'], $build_pagination['start']);
-		$this->zones['content'] = $this->load->view('axipi_dynamic/groups_index', $data, true);
+		$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_index', $data, true);
 	}
 	public function rule_grp_code($grp_code) {
 		$query = $this->db->query('SELECT grp.grp_code FROM '.$this->db->dbprefix('grp').' AS grp WHERE grp.grp_code = ? GROUP BY grp.grp_id', array($grp_code));
@@ -45,7 +45,7 @@ class groups extends CI_Controller {
 		$this->form_validation->set_rules('grp_code', 'lang:grp_code', 'required|max_length[100]|callback_rule_grp_code');
 
 		if($this->form_validation->run() == FALSE) {
-			$this->zones['content'] = $this->load->view('axipi_dynamic/groups_create', $data, true);
+			$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_create', $data, true);
 		} else {
 			$this->db->set('grp_code', $this->input->post('grp_code'));
 			$this->db->set('grp_ispublished', 1);
@@ -57,7 +57,7 @@ class groups extends CI_Controller {
 		if($this->grp_id != 0) {
 			$data = array();
 			$data['grp'] = $this->groups_model->get_component($this->grp_id);
-			$this->zones['content'] = $this->load->view('axipi_dynamic/groups_read', $data, true);
+			$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_read', $data, true);
 		}
 	}
 	public function update() {
@@ -70,7 +70,7 @@ class groups extends CI_Controller {
 			$this->form_validation->set_rules('grp_code', 'lang:grp_code', 'max_length[100]');
 
 			if($this->form_validation->run() == FALSE) {
-				$this->zones['content'] = $this->load->view('axipi_dynamic/groups_update', $data, true);
+				$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_update', $data, true);
 			} else {
 				$this->db->set('grp_code', $this->input->post('grp_code'));
 				$this->db->where('grp_id', $this->grp_id);
@@ -89,7 +89,7 @@ class groups extends CI_Controller {
 			$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
 
 			if($this->form_validation->run() == FALSE) {
-				$this->zones['content'] = $this->load->view('axipi_dynamic/groups_delete', $data, true);
+				$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_delete', $data, true);
 			} else {
 				$this->db->where('grp_id', $this->grp_id);
 				$this->db->where('grp_islocked', 0);

@@ -43,10 +43,10 @@
 <?php foreach($results as $result):?>
 <tr>
 <td><a href="<?php echo current_url(); ?>?a=read&amp;lng_id=<?php echo $result->lng_id;?>"><?php echo $result->lng_id;?></a></td>
-<td><?php echo $result->lng_code;?></td>
-<td><?php echo $result->lng_title;?></td>
-<td><?php echo $result->count_items;?></td>
-<td><?php echo $result->count_users;?></td>
+<td><?php echo $result->lng_code; ?></td>
+<td><?php echo $result->lng_title; ?></td>
+<td><?php echo $result->count_items; ?></td>
+<td><?php echo $result->count_users; ?></td>
 <th>
 <a href="<?php echo current_url(); ?>?a=update&amp;lng_id=<?php echo $result->lng_id;?>"><?php echo $this->lang->line('update'); ?></a>
 <?php if($result->count_items == 0 && $result->lng_islocked == 0) { ?><a href="<?php echo current_url(); ?>?a=delete&amp;lng_id=<?php echo $result->lng_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
