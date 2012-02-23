@@ -8,7 +8,7 @@
 </div>
 
 <div class="box1">
-<h1><?php echo $this->lang->line('groups'); ?></h1>
+<h1><?php echo $this->lang->line('groups'); ?> (<?php echo $position; ?>)</h1>
 <ul>
 <li><a class="create" href="<?php echo current_url(); ?>?a=create"><?php echo $this->lang->line('create'); ?></a></li>
 </ul>

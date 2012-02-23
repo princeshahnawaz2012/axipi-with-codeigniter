@@ -70,6 +70,7 @@ $lang['copied'] = 'Copied';
 $lang['copy-short'] = 'Copy';
 $lang['copy'] = 'Copy';
 $lang['country'] = 'Country';
+$lang['countries'] = 'Countries';
 $lang['datefrom'] = 'From';
 $lang['dateto'] = 'to';
 $lang['days'] = 'Days';

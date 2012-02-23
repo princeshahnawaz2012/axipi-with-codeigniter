@@ -25,6 +25,7 @@ class zones extends CI_Controller {
 
 		$data = array();
 		$data['pagination'] = $build_pagination['output'];
+		$data['position'] = $build_pagination['position'];
 		$data['results'] = $this->zones_model->get_pagination_zones($flt, $build_pagination['limit'], $build_pagination['start']);
 		$data['select_layout'] = $this->zones_model->select_layout();
 		$this->zones['content'] = $this->load->view('axipi_dynamic/zones/zones_index', $data, true);

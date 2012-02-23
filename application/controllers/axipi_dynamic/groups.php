@@ -25,6 +25,7 @@ class groups extends CI_Controller {
 
 		$data = array();
 		$data['pagination'] = $build_pagination['output'];
+		$data['position'] = $build_pagination['position'];
 		$data['results'] = $this->groups_model->get_pagination_groups($flt, $build_pagination['limit'], $build_pagination['start']);
 		$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_index', $data, true);
 	}

@@ -34,12 +34,15 @@ class axipi_library {
 
 		$config = array();
 		$config['base_url'] = '?';
+		$config['num_links'] = 5;
 		$config['total_rows'] = $total;
 		$config['per_page'] = $per_page;
 		$config['page_query_string'] = TRUE;
 		$config['use_page_numbers'] = TRUE;
 		$config['first_url'] = '?page=1';
 		$config['query_string_segment'] = 'page';
+
+		$pages = ceil($total/$config['per_page']);
 
 		$key = 'per_page_'.$this->CI->uri->uri_string();
 		if($this->CI->input->get('page') && is_numeric($this->CI->input->get('page'))) {
@@ -56,8 +59,18 @@ class axipi_library {
 			$_GET['page'] = 1;
 		}
 
+		if($pages == 1) {
+			$position = $total;
+		} elseif($_GET['page'] == $pages && $pages != 0) {
+			$position = ($start+1).'-'.$total.'/'.$total;
+		} elseif($pages != 0) {
+			$position = ($start+1).'-'.($start+$config['per_page']).'/'.$total;
+		} else {
+			$position = $total;
+		}
+
 		$this->CI->pagination->initialize($config);
-		return array('output'=>$this->CI->pagination->create_links(), 'start'=>$start, 'limit'=>$config['per_page']);
+		return array('output'=>$this->CI->pagination->create_links(), 'start'=>$start, 'limit'=>$config['per_page'], 'position'=>$position);
 	}
 	function get_head() {
 		$head = array();

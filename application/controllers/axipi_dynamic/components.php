@@ -25,6 +25,7 @@ class components extends CI_Controller {
 
 		$data = array();
 		$data['pagination'] = $build_pagination['output'];
+		$data['position'] = $build_pagination['position'];
 		$data['results'] = $this->components_model->get_pagination_components($flt, $build_pagination['limit'], $build_pagination['start']);
 		$this->zones['content'] = $this->load->view('axipi_dynamic/components/components_index', $data, true);
 	}

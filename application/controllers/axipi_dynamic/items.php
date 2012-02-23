@@ -29,6 +29,7 @@ class items extends CI_Controller {
 
 		$data = array();
 		$data['pagination'] = $build_pagination['output'];
+		$data['position'] = $build_pagination['position'];
 		$data['results'] = $this->items_model->get_pagination_items($flt, $build_pagination['limit'], $build_pagination['start']);
 		$data['select_section'] = $this->items_model->select_section();
 		$data['select_language'] = $this->items_model->select_language();

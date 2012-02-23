@@ -25,6 +25,7 @@ class users extends CI_Controller {
 
 		$data = array();
 		$data['pagination'] = $build_pagination['output'];
+		$data['position'] = $build_pagination['position'];
 		$data['results'] = $this->users_model->get_pagination_users($flt, $build_pagination['limit'], $build_pagination['start']);
 		$this->zones['content'] = $this->load->view('axipi_dynamic/users/users_index', $data, true);
 	}
