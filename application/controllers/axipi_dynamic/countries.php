@@ -18,6 +18,7 @@ class countries extends CI_Controller {
 
 		$filters = array();
 		$filters['countries_cou_alpha2'] = array('cou.cou_alpha2', 'like');
+		$filters['countries_cou_alpha3'] = array('cou.cou_alpha3', 'like');
 		$flt = build_filters($filters);
 
 		$results_count = $this->countries_model->get_all_countries($flt);
