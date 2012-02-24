@@ -8,10 +8,13 @@ class items_model extends CI_Model {
 		$select_component = array();
 		$select_component[''] = '--';
 		$this->db->cache_on();
-        $query = $this->db->query('SELECT cmp.cmp_id, cmp.cmp_code FROM '.$this->db->dbprefix('cmp').' AS cmp WHERE 1 GROUP BY cmp.cmp_id ORDER BY cmp.cmp_code ASC');
+        $query = $this->db->query('SELECT cmp.cmp_id, SUBSTRING(cmp.cmp_code, LOCATE(\'/\', cmp.cmp_code) + 1) AS cmp_code, SUBSTRING(cmp.cmp_code, 1, LOCATE(\'/\', cmp.cmp_code) - 1) AS optgroup FROM '.$this->db->dbprefix('cmp').' AS cmp WHERE 1 GROUP BY cmp.cmp_id ORDER BY cmp.cmp_code ASC');
 		if($query->num_rows() > 0) {
 			foreach($query->result() as $row) {
-				$select_component[$row->cmp_id] = $row->cmp_code;
+				if(isset($select_component[$row->optgroup]) == 0) {
+					$select_component[$row->optgroup] = array();
+				}
+				$select_component[$row->optgroup][$row->cmp_id] = $row->cmp_code;
 			}
 		}
 		$this->db->cache_off();
