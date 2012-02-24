@@ -50,6 +50,8 @@ class components extends CI_Controller {
 		} else {
 			$this->db->set('cmp_code', $this->input->post('cmp_code'));
 			$this->db->set('cmp_ispublished', 1);
+			$this->db->set('cmp_createdby', $this->usr[0]->usr_id);
+			$this->db->set('cmp_datecreated', date('Y-m-d H:i:s'));
 			$this->db->insert('cmp');
 			$this->msg[] = $this->lang->line('created');
 			$this->index();
@@ -75,6 +77,8 @@ class components extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/components/components_update', $data, true);
 			} else {
 				$this->db->set('cmp_code', $this->input->post('cmp_code'));
+				$this->db->set('cmp_modifiedby', $this->usr[0]->usr_id);
+				$this->db->set('cmp_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('cmp_id', $this->cmp_id);
 				$this->db->update('cmp');
 				$this->msg[] = $this->lang->line('updated');

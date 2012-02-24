@@ -52,6 +52,8 @@ class languages extends CI_Controller {
 			$this->db->set('lng_code', $this->input->post('lng_code'));
 			$this->db->set('lng_title', $this->input->post('lng_title'));
 			$this->db->set('lng_ispublished', 1);
+			$this->db->set('lng_createdby', $this->usr[0]->usr_id);
+			$this->db->set('lng_datecreated', date('Y-m-d H:i:s'));
 			$this->db->insert('lng');
 			$this->msg[] = $this->lang->line('created');
 			$this->index();
@@ -79,6 +81,8 @@ class languages extends CI_Controller {
 			} else {
 				$this->db->set('lng_code', $this->input->post('lng_code'));
 				$this->db->set('lng_title', $this->input->post('lng_title'));
+				$this->db->set('lng_modifiedby', $this->usr[0]->usr_id);
+				$this->db->set('lng_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('lng_id', $this->lng_id);
 				$this->db->update('lng');
 				$this->msg[] = $this->lang->line('updated');

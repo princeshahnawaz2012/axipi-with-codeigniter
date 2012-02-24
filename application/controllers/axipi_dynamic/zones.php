@@ -55,6 +55,8 @@ class zones extends CI_Controller {
 			$this->db->set('lay_id', $this->input->post('lay_id'));
 			$this->db->set('zon_code', $this->input->post('zon_code'));
 			$this->db->set('zon_ordering', $this->input->post('zon_ordering'));
+			$this->db->set('zon_createdby', $this->usr[0]->usr_id);
+			$this->db->set('zon_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('zon_ispublished', 1);
 			$this->db->insert('zon');
 			$this->msg[] = $this->lang->line('created');
@@ -86,6 +88,8 @@ class zones extends CI_Controller {
 				$this->db->set('lay_id', $this->input->post('lay_id'));
 				$this->db->set('zon_code', $this->input->post('zon_code'));
 				$this->db->set('zon_ordering', $this->input->post('zon_ordering'));
+				$this->db->set('zon_modifiedby', $this->usr[0]->usr_id);
+				$this->db->set('zon_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('zon_id', $this->zon_id);
 				$this->db->update('zon');
 				$this->msg[] = $this->lang->line('updated');

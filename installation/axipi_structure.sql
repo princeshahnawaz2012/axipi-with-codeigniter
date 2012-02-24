@@ -4,8 +4,7 @@
 -- Table structure for table `cmp`
 --
 
-DROP TABLE IF EXISTS `cmp`;
-CREATE TABLE `cmp` (
+CREATE TABLE IF NOT EXISTS `cmp` (
   `cmp_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `lay_id` int(10) unsigned DEFAULT NULL,
   `cmp_code` varchar(100) NOT NULL,
@@ -38,7 +37,7 @@ CREATE TABLE `cmp` (
   KEY `cmp_iszone` (`cmp_iselement`),
   KEY `cmp_isrelation` (`cmp_isrelation`),
   KEY `cmp_isdisplay` (`cmp_isdisplay`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='components' AUTO_INCREMENT=1136 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='components' AUTO_INCREMENT=1137 ;
 
 -- --------------------------------------------------------
 
@@ -46,8 +45,7 @@ CREATE TABLE `cmp` (
 -- Table structure for table `cmp_stg`
 --
 
-DROP TABLE IF EXISTS `cmp_stg`;
-CREATE TABLE `cmp_stg` (
+CREATE TABLE IF NOT EXISTS `cmp_stg` (
   `cmp_id` int(10) unsigned NOT NULL,
   `stg_id` int(10) unsigned NOT NULL,
   `cmp_stg_value` varchar(255) DEFAULT NULL,
@@ -98,8 +96,7 @@ CREATE TABLE IF NOT EXISTS `cou` (
 -- Table structure for table `cou_sub`
 --
 
-DROP TABLE IF EXISTS `cou_sub`;
-CREATE TABLE `cou_sub` (
+CREATE TABLE IF NOT EXISTS `cou_sub` (
   `cou_sub_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `cou_id` int(10) unsigned NOT NULL,
   `cou_sub_code` varchar(6) NOT NULL,
@@ -122,8 +119,7 @@ CREATE TABLE `cou_sub` (
 -- Table structure for table `cou_trl`
 --
 
-DROP TABLE IF EXISTS `cou_trl`;
-CREATE TABLE `cou_trl` (
+CREATE TABLE IF NOT EXISTS `cou_trl` (
   `cou_id` int(10) unsigned NOT NULL,
   `lng_id` int(10) unsigned NOT NULL,
   `cou_trl_title` varchar(255) NOT NULL,
@@ -142,8 +138,7 @@ CREATE TABLE `cou_trl` (
 -- Table structure for table `grp`
 --
 
-DROP TABLE IF EXISTS `grp`;
-CREATE TABLE `grp` (
+CREATE TABLE IF NOT EXISTS `grp` (
   `grp_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `grp_code` varchar(100) NOT NULL,
   `grp_isitem` tinyint(1) unsigned NOT NULL DEFAULT '0',
@@ -173,8 +168,7 @@ CREATE TABLE `grp` (
 -- Table structure for table `grp_itm`
 --
 
-DROP TABLE IF EXISTS `grp_itm`;
-CREATE TABLE `grp_itm` (
+CREATE TABLE IF NOT EXISTS `grp_itm` (
   `grp_id` int(10) unsigned NOT NULL,
   `itm_id` int(10) unsigned NOT NULL,
   `grp_itm_createdby` int(10) unsigned DEFAULT NULL,
@@ -198,8 +192,7 @@ CREATE TABLE `grp_itm` (
 -- Table structure for table `grp_per`
 --
 
-DROP TABLE IF EXISTS `grp_per`;
-CREATE TABLE `grp_per` (
+CREATE TABLE IF NOT EXISTS `grp_per` (
   `grp_id` int(10) unsigned NOT NULL,
   `per_id` int(10) unsigned NOT NULL,
   `grp_per_createdby` int(10) unsigned DEFAULT NULL,
@@ -224,8 +217,7 @@ CREATE TABLE `grp_per` (
 -- Table structure for table `grp_trl`
 --
 
-DROP TABLE IF EXISTS `grp_trl`;
-CREATE TABLE `grp_trl` (
+CREATE TABLE IF NOT EXISTS `grp_trl` (
   `grp_id` int(10) unsigned NOT NULL,
   `lng_id` int(10) unsigned NOT NULL,
   `grp_trl_title` varchar(255) NOT NULL,
@@ -244,8 +236,7 @@ CREATE TABLE `grp_trl` (
 -- Table structure for table `grp_usr`
 --
 
-DROP TABLE IF EXISTS `grp_usr`;
-CREATE TABLE `grp_usr` (
+CREATE TABLE IF NOT EXISTS `grp_usr` (
   `grp_id` int(10) unsigned NOT NULL,
   `usr_id` int(10) unsigned NOT NULL,
   `grp_usr_title` varchar(100) DEFAULT NULL,
@@ -274,8 +265,7 @@ CREATE TABLE `grp_usr` (
 -- Table structure for table `hst`
 --
 
-DROP TABLE IF EXISTS `hst`;
-CREATE TABLE `hst` (
+CREATE TABLE IF NOT EXISTS `hst` (
   `hst_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `lay_id` int(10) unsigned DEFAULT NULL,
   `hst_code` varchar(100) NOT NULL,
@@ -293,11 +283,12 @@ CREATE TABLE `hst` (
   `hst_unpublishedby` int(10) unsigned DEFAULT NULL,
   `hst_dateunpublished` datetime DEFAULT NULL,
   `hst_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `hst_islocked` tinyint(1) unsigned NOT NULL,
   PRIMARY KEY (`hst_id`),
   UNIQUE KEY `hst_code` (`hst_code`),
   KEY `lay_id` (`lay_id`),
   KEY `hst_ispublished` (`hst_ispublished`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='hosts' AUTO_INCREMENT=1000 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='hosts' AUTO_INCREMENT=1001 ;
 
 -- --------------------------------------------------------
 
@@ -305,8 +296,7 @@ CREATE TABLE `hst` (
 -- Table structure for table `hst_stg`
 --
 
-DROP TABLE IF EXISTS `hst_stg`;
-CREATE TABLE `hst_stg` (
+CREATE TABLE IF NOT EXISTS `hst_stg` (
   `hst_id` int(10) unsigned NOT NULL,
   `stg_id` int(10) unsigned NOT NULL,
   `hst_stg_value` varchar(255) DEFAULT NULL,
@@ -331,8 +321,7 @@ CREATE TABLE `hst_stg` (
 -- Table structure for table `hst_trl`
 --
 
-DROP TABLE IF EXISTS `hst_trl`;
-CREATE TABLE `hst_trl` (
+CREATE TABLE IF NOT EXISTS `hst_trl` (
   `hst_id` int(10) unsigned NOT NULL,
   `lng_id` int(10) unsigned NOT NULL,
   `hst_trl_defaultitem` int(10) unsigned NOT NULL,
@@ -351,8 +340,7 @@ CREATE TABLE `hst_trl` (
 -- Table structure for table `itm`
 --
 
-DROP TABLE IF EXISTS `itm`;
-CREATE TABLE `itm` (
+CREATE TABLE IF NOT EXISTS `itm` (
   `itm_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `cmp_id` int(10) unsigned NOT NULL,
   `cou_id` int(10) unsigned DEFAULT NULL,
@@ -414,8 +402,7 @@ CREATE TABLE `itm` (
 -- Table structure for table `itm_rel`
 --
 
-DROP TABLE IF EXISTS `itm_rel`;
-CREATE TABLE `itm_rel` (
+CREATE TABLE IF NOT EXISTS `itm_rel` (
   `itm_id` int(10) unsigned NOT NULL,
   `rel_id` int(10) unsigned NOT NULL,
   `itm_rel_parent` int(10) unsigned DEFAULT NULL,
@@ -447,8 +434,7 @@ CREATE TABLE `itm_rel` (
 -- Table structure for table `itm_stg`
 --
 
-DROP TABLE IF EXISTS `itm_stg`;
-CREATE TABLE `itm_stg` (
+CREATE TABLE IF NOT EXISTS `itm_stg` (
   `itm_id` int(10) unsigned NOT NULL,
   `stg_id` int(10) unsigned NOT NULL,
   `itm_stg_value` varchar(255) DEFAULT NULL,
@@ -473,8 +459,7 @@ CREATE TABLE `itm_stg` (
 -- Table structure for table `itm_trl`
 --
 
-DROP TABLE IF EXISTS `itm_trl`;
-CREATE TABLE `itm_trl` (
+CREATE TABLE IF NOT EXISTS `itm_trl` (
   `itm_id` int(10) unsigned NOT NULL,
   `trl_id` int(10) unsigned NOT NULL,
   `itm_trl_createdby` int(10) unsigned DEFAULT NULL,
@@ -490,8 +475,7 @@ CREATE TABLE `itm_trl` (
 -- Table structure for table `itm_zon`
 --
 
-DROP TABLE IF EXISTS `itm_zon`;
-CREATE TABLE `itm_zon` (
+CREATE TABLE IF NOT EXISTS `itm_zon` (
   `itm_id` int(10) unsigned NOT NULL,
   `zon_id` int(10) unsigned NOT NULL,
   `itm_zon_ordering` mediumint(9) NOT NULL DEFAULT '0',
@@ -515,8 +499,7 @@ CREATE TABLE `itm_zon` (
 -- Table structure for table `lay`
 --
 
-DROP TABLE IF EXISTS `lay`;
-CREATE TABLE `lay` (
+CREATE TABLE IF NOT EXISTS `lay` (
   `lay_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `lay_code` varchar(100) NOT NULL,
   `lay_type` varchar(100) NOT NULL,
@@ -541,8 +524,7 @@ CREATE TABLE `lay` (
 -- Table structure for table `lng`
 --
 
-DROP TABLE IF EXISTS `lng`;
-CREATE TABLE `lng` (
+CREATE TABLE IF NOT EXISTS `lng` (
   `lng_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `lay_id` int(10) unsigned DEFAULT NULL,
   `lng_code` char(2) NOT NULL,
@@ -570,8 +552,7 @@ CREATE TABLE `lng` (
 -- Table structure for table `lng_stg`
 --
 
-DROP TABLE IF EXISTS `lng_stg`;
-CREATE TABLE `lng_stg` (
+CREATE TABLE IF NOT EXISTS `lng_stg` (
   `lng_id` int(10) unsigned NOT NULL,
   `stg_id` int(10) unsigned NOT NULL,
   `lng_stg_value` varchar(255) DEFAULT NULL,
@@ -596,8 +577,7 @@ CREATE TABLE `lng_stg` (
 -- Table structure for table `per`
 --
 
-DROP TABLE IF EXISTS `per`;
-CREATE TABLE `per` (
+CREATE TABLE IF NOT EXISTS `per` (
   `per_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `per_code` varchar(100) NOT NULL,
   `per_createdby` int(10) unsigned DEFAULT NULL,
@@ -621,8 +601,7 @@ CREATE TABLE `per` (
 -- Table structure for table `per_trl`
 --
 
-DROP TABLE IF EXISTS `per_trl`;
-CREATE TABLE `per_trl` (
+CREATE TABLE IF NOT EXISTS `per_trl` (
   `per_id` int(10) unsigned NOT NULL,
   `lng_id` int(10) unsigned NOT NULL,
   `per_trl_title` varchar(255) NOT NULL,
@@ -641,8 +620,7 @@ CREATE TABLE `per_trl` (
 -- Table structure for table `sct`
 --
 
-DROP TABLE IF EXISTS `sct`;
-CREATE TABLE `sct` (
+CREATE TABLE IF NOT EXISTS `sct` (
   `sct_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `lay_id` int(10) unsigned NOT NULL,
   `sct_code` varchar(100) NOT NULL,
@@ -669,8 +647,7 @@ CREATE TABLE `sct` (
 -- Table structure for table `sct_stg`
 --
 
-DROP TABLE IF EXISTS `sct_stg`;
-CREATE TABLE `sct_stg` (
+CREATE TABLE IF NOT EXISTS `sct_stg` (
   `sct_id` int(10) unsigned NOT NULL,
   `stg_id` int(10) unsigned NOT NULL,
   `sct_stg_value` varchar(255) DEFAULT NULL,
@@ -695,8 +672,7 @@ CREATE TABLE `sct_stg` (
 -- Table structure for table `sct_trl`
 --
 
-DROP TABLE IF EXISTS `sct_trl`;
-CREATE TABLE `sct_trl` (
+CREATE TABLE IF NOT EXISTS `sct_trl` (
   `lng_id` int(10) unsigned NOT NULL,
   `sct_id` int(10) unsigned NOT NULL,
   `sct_trl_title` varchar(255) NOT NULL,
@@ -718,8 +694,7 @@ CREATE TABLE `sct_trl` (
 -- Table structure for table `stg`
 --
 
-DROP TABLE IF EXISTS `stg`;
-CREATE TABLE `stg` (
+CREATE TABLE IF NOT EXISTS `stg` (
   `stg_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `stg_code` varchar(100) NOT NULL,
   `stg_value` varchar(255) DEFAULT NULL,
@@ -752,8 +727,7 @@ CREATE TABLE `stg` (
 -- Table structure for table `stg_trl`
 --
 
-DROP TABLE IF EXISTS `stg_trl`;
-CREATE TABLE `stg_trl` (
+CREATE TABLE IF NOT EXISTS `stg_trl` (
   `stg_id` int(10) unsigned NOT NULL,
   `lng_id` int(10) unsigned NOT NULL,
   `stg_trl_title` varchar(255) NOT NULL,
@@ -772,8 +746,7 @@ CREATE TABLE `stg_trl` (
 -- Table structure for table `stg_usr`
 --
 
-DROP TABLE IF EXISTS `stg_usr`;
-CREATE TABLE `stg_usr` (
+CREATE TABLE IF NOT EXISTS `stg_usr` (
   `stg_id` int(10) unsigned NOT NULL,
   `usr_id` int(10) unsigned NOT NULL,
   `stg_usr_value` varchar(255) DEFAULT NULL,
@@ -798,8 +771,7 @@ CREATE TABLE `stg_usr` (
 -- Table structure for table `trl_zon`
 --
 
-DROP TABLE IF EXISTS `trl_zon`;
-CREATE TABLE `trl_zon` (
+CREATE TABLE IF NOT EXISTS `trl_zon` (
   `zon_id` int(10) unsigned NOT NULL,
   `lng_id` int(10) unsigned NOT NULL,
   `trl_zon_title` varchar(255) NOT NULL,
@@ -818,8 +790,7 @@ CREATE TABLE `trl_zon` (
 -- Table structure for table `usr`
 --
 
-DROP TABLE IF EXISTS `usr`;
-CREATE TABLE `usr` (
+CREATE TABLE IF NOT EXISTS `usr` (
   `usr_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `cou_id` int(10) unsigned DEFAULT NULL,
   `cou_sub_id` int(10) unsigned DEFAULT NULL,
@@ -883,8 +854,7 @@ CREATE TABLE `usr` (
 -- Table structure for table `wtd`
 --
 
-DROP TABLE IF EXISTS `wtd`;
-CREATE TABLE `wtd` (
+CREATE TABLE IF NOT EXISTS `wtd` (
   `wtd_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `wtd_key` char(32) NOT NULL,
   `wtd_content` text NOT NULL,
@@ -899,8 +869,7 @@ CREATE TABLE `wtd` (
 -- Table structure for table `zon`
 --
 
-DROP TABLE IF EXISTS `zon`;
-CREATE TABLE `zon` (
+CREATE TABLE IF NOT EXISTS `zon` (
   `zon_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `lay_id` int(10) unsigned NOT NULL,
   `zon_code` varchar(100) NOT NULL,

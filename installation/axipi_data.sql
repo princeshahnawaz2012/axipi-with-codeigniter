@@ -30,7 +30,6 @@ INSERT INTO `cmp` (`cmp_id`, `lay_id`, `cmp_code`, `cmp_prepend`, `cmp_prependor
 (1026, NULL, 'axipi_dynamic/hosts', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
 (1027, NULL, 'axipi_core/debug', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
 (1028, NULL, 'axipi_core/database', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
-(1029, NULL, 'axipi_dynamic/organizations', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
 (1030, NULL, 'axipi_dynamic/settings', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
 (1031, NULL, 'axipi_dynamic/items_settings', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
 (1032, NULL, 'axipi_dynamic/hosts_settings', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
@@ -38,19 +37,14 @@ INSERT INTO `cmp` (`cmp_id`, `lay_id`, `cmp_code`, `cmp_prepend`, `cmp_prependor
 (1034, NULL, 'axipi_dynamic/sections_settings', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
 (1035, NULL, 'axipi_dynamic/layouts', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
 (1041, NULL, 'axipi_core/folders', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
-(1048, NULL, 'axipi_dynamic/notifications', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
-(1049, NULL, 'axipi_dynamic/groups_notifications', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
 (1050, NULL, 'axipi_core/profile', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
 (1078, NULL, 'axipi_core/medias', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
 (1084, NULL, 'axipi_core/lostpassword', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
 (1085, NULL, 'axipi_core/goodies', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
 (1095, NULL, 'axipi_core/redirect301', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
-(1128, NULL, 'axipi_dynamic/organizations_users', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
-(1129, NULL, 'axipi_dynamic/groups_organizations', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
 (1130, NULL, 'axipi_dynamic/countries', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
 (1131, NULL, 'axipi_dynamic/watchdog', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
 (1132, NULL, 'axipi_dynamic/connections_users', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
-(1133, NULL, 'axipi_dynamic/packages', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
 (1134, NULL, 'axipi_dynamic/items_logs', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
 (1135, NULL, 'axipi_dynamic/settings_users', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0);
 
@@ -318,7 +312,6 @@ INSERT INTO `cou` (`cou_id`, `cou_alpha2`, `cou_alpha3`, `cou_ordering`, `cou_cr
 (531, 'cw', 'cuw', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
 (534, 'sx', 'sxm', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
 (663, 'mf', 'maf', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0);
-
 
 --
 -- Dumping data for table `cou_sub`
@@ -793,8 +786,7 @@ INSERT INTO `cou_trl` (`cou_id`, `lng_id`, `cou_trl_title`, `cou_trl_createdby`,
 INSERT INTO `grp` (`grp_id`, `grp_code`, `grp_isitem`, `grp_isuser`, `grp_ispermission`, `grp_isnotification`, `grp_isorganization`, `grp_ordering`, `grp_createdby`, `grp_datecreated`, `grp_modifiedby`, `grp_datemodified`, `grp_publishedby`, `grp_datepublished`, `grp_unpublishedby`, `grp_dateunpublished`, `grp_ispublished`, `grp_islocked`) VALUES
 (1000, 'axipi', 1, 1, 1, 1, 1, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1),
 (1001, 'guest', 0, 0, 1, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
-(1002, 'connected', 0, 0, 1, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0),
-(1003, 'test', 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0);
+(1002, 'connected', 0, 0, 1, 0, 0, 0, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0);
 
 --
 -- Dumping data for table `grp_itm`
@@ -870,11 +862,6 @@ INSERT INTO `grp_trl` (`grp_id`, `lng_id`, `grp_trl_title`, `grp_trl_createdby`,
 
 INSERT INTO `grp_usr` (`grp_id`, `usr_id`, `grp_usr_title`, `grp_usr_keyregister`, `grp_usr_origin`, `grp_usr_createdby`, `grp_usr_datecreated`, `grp_usr_modifiedby`, `grp_usr_datemodified`, `grp_usr_publishedby`, `grp_usr_datepublished`, `grp_usr_unpublishedby`, `grp_usr_dateunpublished`, `grp_usr_ispublished`, `grp_usr_islocked`) VALUES
 (1000, 1000, NULL, NULL, NULL, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1);
-
---
--- Dumping data for table `hst`
---
-
 
 --
 -- Dumping data for table `hst_stg`
@@ -1171,15 +1158,7 @@ INSERT INTO `trl_zon` (`zon_id`, `lng_id`, `trl_zon_title`, `trl_zon_createdby`,
 --
 
 INSERT INTO `usr` (`usr_id`, `cou_id`, `cou_sub_id`, `lng_id`, `usr_email`, `usr_protectedpassword`, `usr_plainpassword`, `usr_timezone`, `usr_courtesy`, `usr_lastname`, `usr_firstname`, `usr_nickname`, `usr_gender`, `usr_address1`, `usr_address2`, `usr_address3`, `usr_zipcode`, `usr_city`, `usr_latitude`, `usr_longitude`, `usr_website`, `usr_phone`, `usr_mobile`, `usr_fax`, `usr_keypassword`, `usr_keyregister`, `usr_logincount`, `usr_loginlast`, `usr_optin`, `usr_doubleoptin`, `usr_unsubscribe`, `usr_hardbounce`, `usr_referer`, `usr_origin`, `usr_file`, `usr_mediasmall`, `usr_mediamedium`, `usr_medialarge`, `usr_createdby`, `usr_datecreated`, `usr_modifiedby`, `usr_datemodified`, `usr_publishedby`, `usr_datepublished`, `usr_unpublishedby`, `usr_dateunpublished`, `usr_ispublished`, `usr_islocked`) VALUES
-(1000, NULL, NULL, NULL, 'install@axipi.com', '19ad89bc3e3c9d7ef68b89523eff1987', NULL, 1, NULL, 'Axipi', 'Install', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2010-11-26 15:21:16', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1);
-
---
--- Dumping data for table `wtd`
---
-
-INSERT INTO `wtd` (`wtd_id`, `wtd_key`, `wtd_content`, `wtd_datecreated`, `wtd_datemodified`) VALUES
-(1000, '862fe2b4c816827d11f2e1cf896b2302', 'errtype:\r\nE_USER_NOTICE\r\nerrno:\r\n1024\r\nerrstr:\r\nFichier components/axipi_core/menu_widget.append.inc.php manquant\r\nerrfile:\r\n/Users/sdion/Sites/projects/axipi/axipi/base/www/components/axipi_core/classes/axipi.class.dist.php\r\nerrline:\r\n465\r\n', '2012-02-22 20:11:24', '2012-02-22 20:11:27'),
-(1001, 'd4af39fff2d417ab136fae1593cb9541', 'errtype:\r\nE_USER_NOTICE\r\nerrno:\r\n1024\r\nerrstr:\r\nFichier components/axipi_core/menu_widget.inc.php manquant\r\nerrfile:\r\n/Users/sdion/Sites/projects/axipi/axipi/base/www/components/axipi_core/classes/axipi.class.dist.php\r\nerrline:\r\n465\r\n', '2012-02-22 20:11:24', '2012-02-22 20:11:27');
+(1000, NULL, NULL, NULL, 'install@axipi.com', '19ad89bc3e3c9d7ef68b89523eff1987', NULL, 1, NULL, 'Axipi', 'Install', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 11, '2012-02-24 20:15:56', '2010-11-26 15:21:16', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2011-04-09 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1);
 
 --
 -- Dumping data for table `zon`

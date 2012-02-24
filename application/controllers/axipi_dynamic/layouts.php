@@ -49,6 +49,8 @@ class layouts extends CI_Controller {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/layouts/layouts_create', $data, true);
 		} else {
 			$this->db->set('lay_code', $this->input->post('lay_code'));
+			$this->db->set('lay_createdby', $this->usr[0]->usr_id);
+			$this->db->set('lay_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('lay_ispublished', 1);
 			$this->db->insert('lay');
 			$this->msg[] = $this->lang->line('created');
@@ -75,6 +77,8 @@ class layouts extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/layouts/layouts_update', $data, true);
 			} else {
 				$this->db->set('lay_code', $this->input->post('lay_code'));
+				$this->db->set('lay_modifiedby', $this->usr[0]->usr_id);
+				$this->db->set('lay_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('lay_id', $this->lay_id);
 				$this->db->update('lay');
 				$this->msg[] = $this->lang->line('updated');

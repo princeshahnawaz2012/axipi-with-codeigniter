@@ -49,6 +49,8 @@ class users extends CI_Controller {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/users/users_create', $data, true);
 		} else {
 			$this->db->set('usr_email', $this->input->post('usr_email'));
+			$this->db->set('usr_createdby', $this->usr[0]->usr_id);
+			$this->db->set('usr_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('usr_ispublished', 1);
 			$this->db->insert('usr');
 			$this->msg[] = $this->lang->line('created');
@@ -75,6 +77,8 @@ class users extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/users/users_update', $data, true);
 			} else {
 				$this->db->set('usr_email', $this->input->post('usr_email'));
+				$this->db->set('usr_modifiedby', $this->usr[0]->usr_id);
+				$this->db->set('usr_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('usr_id', $this->usr_id);
 				$this->db->update('usr');
 				$this->msg[] = $this->lang->line('updated');

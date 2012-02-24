@@ -51,6 +51,8 @@ class countries extends CI_Controller {
 		} else {
 			$this->db->set('cou_alpha2', $this->input->post('cou_alpha2'));
 			$this->db->set('cou_alpha3', $this->input->post('cou_alpha3'));
+			$this->db->set('cou_createdby', $this->usr[0]->usr_id);
+			$this->db->set('cou_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('cou_ispublished', 1);
 			$this->db->insert('cou');
 			$this->msg[] = $this->lang->line('created');
@@ -78,6 +80,8 @@ class countries extends CI_Controller {
 			} else {
 				$this->db->set('cou_alpha2', $this->input->post('cou_alpha2'));
 				$this->db->set('cou_alpha3', $this->input->post('cou_alpha3'));
+				$this->db->set('cou_modifiedby', $this->usr[0]->usr_id);
+				$this->db->set('cou_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('cou_id', $this->cou_id);
 				$this->db->update('cou');
 				$this->msg[] = $this->lang->line('updated');

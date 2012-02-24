@@ -73,6 +73,8 @@ class items extends CI_Controller {
 			$this->db->set('itm_summary', $this->input->post('itm_summary'));
 			$this->db->set('itm_link', $this->input->post('itm_link'));
 			$this->db->set('lng_id', $this->input->post('lng_id'));
+			$this->db->set('itm_createdby', $this->usr[0]->usr_id);
+			$this->db->set('itm_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('itm_ispublished', 1);
 			$this->db->insert('itm');
 			$this->index();
@@ -116,6 +118,8 @@ class items extends CI_Controller {
 				$this->db->set('itm_summary', $this->input->post('itm_summary'));
 				$this->db->set('itm_link', $this->input->post('itm_link'));
 				$this->db->set('lng_id', $this->input->post('lng_id'));
+				$this->db->set('itm_modifiedby', $this->usr[0]->usr_id);
+				$this->db->set('itm_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('itm_id', $this->itm_id);
 				$this->db->update('itm');
 				$this->msg[] = $this->lang->line('updated');

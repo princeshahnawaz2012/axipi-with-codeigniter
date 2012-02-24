@@ -49,6 +49,8 @@ class permissions extends CI_Controller {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/permissions/permissions_create', $data, true);
 		} else {
 			$this->db->set('per_code', $this->input->post('per_code'));
+			$this->db->set('per_createdby', $this->usr[0]->usr_id);
+			$this->db->set('per_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('per_ispublished', 1);
 			$this->db->insert('per');
 			$this->msg[] = $this->lang->line('created');
@@ -75,6 +77,8 @@ class permissions extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/permissions/permissions_update', $data, true);
 			} else {
 				$this->db->set('per_code', $this->input->post('per_code'));
+				$this->db->set('per_modifiedby', $this->usr[0]->usr_id);
+				$this->db->set('per_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('per_id', $this->per_id);
 				$this->db->update('per');
 				$this->msg[] = $this->lang->line('updated');

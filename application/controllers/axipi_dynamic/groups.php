@@ -49,6 +49,8 @@ class groups extends CI_Controller {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_create', $data, true);
 		} else {
 			$this->db->set('grp_code', $this->input->post('grp_code'));
+			$this->db->set('grp_createdby', $this->usr[0]->usr_id);
+			$this->db->set('grp_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('grp_ispublished', 1);
 			$this->db->insert('grp');
 			$this->msg[] = $this->lang->line('created');
@@ -75,6 +77,8 @@ class groups extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_update', $data, true);
 			} else {
 				$this->db->set('grp_code', $this->input->post('grp_code'));
+				$this->db->set('grp_modifiedby', $this->usr[0]->usr_id);
+				$this->db->set('grp_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('grp_id', $this->grp_id);
 				$this->db->update('grp');
 				$this->msg[] = $this->lang->line('updated');

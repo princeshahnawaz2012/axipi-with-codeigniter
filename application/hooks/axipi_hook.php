@@ -5,7 +5,27 @@ class axipi_hook {
 		$this->CI =& get_instance();
 		if($this->CI->session->userdata('usr_id')) {
 			$this->CI->usr = $this->CI->users_model->get_user($this->CI->session->userdata('usr_id'));
+			$this->CI->usr[0]->usr_access = 'connected';
+			$this->CI->usr[0]->groups = $this->CI->users_model->get_groups($this->CI->session->userdata('usr_id'));
+			$this->CI->usr[0]->groups[1002] = 'connected';
+		} else {
+			$this->CI->usr = array();
+			$this->CI->usr[0] = new stdClass();
+			$this->CI->usr[0]->usr_id = 0;
+			$this->CI->usr[0]->usr_access = 'guest';
+			$this->CI->usr[0]->groups[1001] = 'guest';
 		}
+		$this->CI->usr[0]->count_groups = count($this->CI->usr[0]->groups);
+
+		$this->CI->itm[0]->groups = array();
+        $query = $this->CI->db->query('SELECT grp_itm.grp_id, grp.grp_code FROM '.$this->CI->db->dbprefix('grp_itm').' AS grp_itm LEFT JOIN '.$this->CI->db->dbprefix('grp').' AS grp ON grp.grp_id = grp_itm.grp_id WHERE grp_itm.itm_id = ? GROUP BY grp.grp_id', array($this->CI->itm[0]->itm_id));
+		if($query->num_rows() > 0) {
+			foreach($query->result() as $row) {
+				$this->CI->itm[0]->groups[$row->grp_id] = $row->grp_code;
+			}
+		}
+		$this->CI->itm[0]->count_groups = count($this->CI->itm[0]->groups);
+
 		$this->CI->http_status = 200;
 		$now = date('Y-m-d H:i:s');
 		if($this->CI->itm[0]->itm_publishstartdate > $now) {
@@ -16,7 +36,19 @@ class axipi_hook {
 			$this->CI->http_status = 403;
 		} elseif($this->CI->itm[0]->itm_access == 'connected' && $this->CI->usr[0]->usr_access == 'guest') {
 			$this->CI->http_status = 403;
+		} elseif($this->CI->itm[0]->itm_access == 'groups') {
+			if($this->CI->usr[0]->count_groups == 0 || $this->CI->itm[0]->count_groups == 0) {
+				$this->CI->http_status = 403;
+			} else {
+				$diff_rights = array_intersect($this->CI->itm[0]->groups, $this->CI->usr[0]->groups);
+				$diff_rights_total = count($diff_rights);
+				if($diff_rights_total == 0) {
+					$this->CI->http_status = 403;
+				}
+				unset($diff_rights);
+			}
 		}
+
 		if($this->CI->http_status != 200) {
 			$query = $this->CI->db->query('SELECT * FROM '.$this->CI->db->dbprefix('cmp').' AS cmp WHERE cmp_code = ?', array('axipi_core/error'.$this->CI->http_status));
 			if($query->num_rows() > 0) {
@@ -34,8 +66,7 @@ class axipi_hook {
 		$this->CI =& get_instance();
 		$output = array();
 		$output['zones'] = $this->CI->zones;
-		//AND (itm.itm_access = \'all\' OR (itm.itm_access = \'createdby\' AND itm.itm_createdby = \''.$this->usr->v['id'].'\') OR itm.itm_access = \''.$this->usr->v['access'].'\' OR (itm.itm_access = \'groups\' AND grp_itm.grp_id IN ('.$this->dtb->array2in(array_keys($this->usr->v['grp'])).')) OR (itm.itm_access = \'organizations\' AND itm_org.org_id IN ('.$this->dtb->array2in(array_keys($this->usr->v['org'])).'))) AND (itm_zon_display = \'all\' OR dsp_itm.dsp_id = \''.parent::exchange()->itm->v['id'].'\') 
-		$query = $this->CI->db->query('SELECT zon_code, COUNT(DISTINCT(itm_stg.stg_id)) AS count_stg, itm_link AS link, cmp_code, itm.itm_id AS id, itm_content AS content, itm_code AS code, itm_virtualcode AS virtualcode, itm_parent AS parent, itm_title AS title FROM '.$this->CI->db->dbprefix('itm_zon').' itm_zon LEFT JOIN '.$this->CI->db->dbprefix('itm').' itm ON itm.itm_id = itm_zon.itm_id LEFT JOIN '.$this->CI->db->dbprefix('cmp').' cmp ON cmp.cmp_id = itm.cmp_id LEFT JOIN '.$this->CI->db->dbprefix('zon').' zon ON zon.zon_id = itm_zon.zon_id LEFT JOIN '.$this->CI->db->dbprefix('grp_itm').' grp_itm ON grp_itm.itm_id = itm.itm_id AND grp_itm_ispublished = \'1\' LEFT JOIN '.$this->CI->db->dbprefix('itm_stg').' itm_stg ON itm_stg.itm_id = itm.itm_id WHERE itm.itm_publishstartdate <= \''.date('Y-m-d H:i:s').'\' AND IF(itm.itm_publishenddate IS NOT NULL, itm.itm_publishenddate >= \''.date('Y-m-d H:i:s').'\', \'1\') AND cmp_iselement = \'1\' AND itm.lng_id = \''.$this->CI->lng[0]->lng_id.'\' AND zon.lay_id = \''.$this->CI->lay[0]->lay_id.'\' AND zon_ispublished = \'1\' AND itm_zon_ispublished = \'1\' AND itm_ispublished = \'1\' GROUP BY itm_zon.zon_id, itm_zon.itm_id ORDER BY itm_zon_ordering ASC, itm_title ASC');
+		$query = $this->CI->db->query('SELECT zon_code, COUNT(DISTINCT(itm_stg.stg_id)) AS count_stg, itm_link AS link, cmp_code, itm.itm_id AS id, itm_content AS content, itm_code AS code, itm_virtualcode AS virtualcode, itm_parent AS parent, itm_title AS title FROM '.$this->CI->db->dbprefix('itm_zon').' itm_zon LEFT JOIN '.$this->CI->db->dbprefix('itm').' itm ON itm.itm_id = itm_zon.itm_id LEFT JOIN '.$this->CI->db->dbprefix('cmp').' cmp ON cmp.cmp_id = itm.cmp_id LEFT JOIN '.$this->CI->db->dbprefix('zon').' zon ON zon.zon_id = itm_zon.zon_id LEFT JOIN '.$this->CI->db->dbprefix('grp_itm').' grp_itm ON grp_itm.itm_id = itm.itm_id AND grp_itm_ispublished = \'1\' LEFT JOIN '.$this->CI->db->dbprefix('itm_stg').' itm_stg ON itm_stg.itm_id = itm.itm_id WHERE itm.itm_publishstartdate <= \''.date('Y-m-d H:i:s').'\' AND IF(itm.itm_publishenddate IS NOT NULL, itm.itm_publishenddate >= \''.date('Y-m-d H:i:s').'\', \'1\') AND cmp_iselement = \'1\' AND itm.lng_id = \''.$this->CI->lng[0]->lng_id.'\' AND zon.lay_id = \''.$this->CI->lay[0]->lay_id.'\' AND zon_ispublished = \'1\' AND itm_zon_ispublished = \'1\' AND itm_ispublished = \'1\' AND (itm.itm_access = \'all\' OR (itm.itm_access = \'createdby\' AND itm.itm_createdby = \''.$this->CI->usr[0]->usr_id.'\') OR itm.itm_access = \''.$this->CI->usr[0]->usr_access.'\' OR (itm.itm_access = \'groups\' AND grp_itm.grp_id IN ('.implode(', ', array_keys($this->CI->usr[0]->groups)).'))) GROUP BY itm_zon.zon_id, itm_zon.itm_id ORDER BY itm_zon_ordering ASC, itm_title ASC');
 		if($query->num_rows() > 0) {
 			foreach($query->result() as $row) {
 				list($directory, $class) = explode('/', $row->cmp_code);
