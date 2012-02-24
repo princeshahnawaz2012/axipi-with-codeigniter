@@ -12,9 +12,9 @@ if($cou) {
 </div>
 
 <div class="box1">
-<h1><?php echo $cou[0]->cou_alpha2; ?></h1>
+<h1><?php echo $cou->cou_alpha2; ?></h1>
 <ul>
-<li><a href="<?php echo current_url(); ?>?a=update&amp;cou_id=<?php echo $cou[0]->cou_id; ?>"><?php echo $this->lang->line('update'); ?></a></li>
+<li><a href="<?php echo current_url(); ?>?a=update&amp;cou_id=<?php echo $cou->cou_id; ?>"><?php echo $this->lang->line('update'); ?></a></li>
 <li><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>
 <div class="display">
@@ -22,8 +22,8 @@ if($cou) {
 <h2><?php echo $this->lang->line('read'); ?></h2>
 
 <div class="column1">
-<p><span class="label"><?php echo $this->lang->line('cou_alpha2'); ?></span><?php echo $cou[0]->cou_alpha2; ?></p>
-<p><span class="label"><?php echo $this->lang->line('cou_alpha3'); ?></span><?php echo $cou[0]->cou_alpha3; ?></p>
+<p><span class="label"><?php echo $this->lang->line('cou_alpha2'); ?></span><?php echo $cou->cou_alpha2; ?></p>
+<p><span class="label"><?php echo $this->lang->line('cou_alpha3'); ?></span><?php echo $cou->cou_alpha3; ?></p>
 </div>
 
 <div class="column1 columnlast">

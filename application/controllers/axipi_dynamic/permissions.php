@@ -20,8 +20,8 @@ class permissions extends CI_Controller {
 		$filters['permissions_per_code'] = array('per.per_code', 'like');
 		$flt = build_filters($filters);
 
-		$results_count = $this->permissions_model->get_all_permissions($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results_count[0]->count, 30);
+		$results = $this->permissions_model->get_all_permissions($flt);
+		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
 		$data['pagination'] = $build_pagination['output'];
@@ -49,7 +49,7 @@ class permissions extends CI_Controller {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/permissions/permissions_create', $data, true);
 		} else {
 			$this->db->set('per_code', $this->input->post('per_code'));
-			$this->db->set('per_createdby', $this->usr[0]->usr_id);
+			$this->db->set('per_createdby', $this->usr->usr_id);
 			$this->db->set('per_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('per_ispublished', 1);
 			$this->db->insert('per');
@@ -77,7 +77,7 @@ class permissions extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/permissions/permissions_update', $data, true);
 			} else {
 				$this->db->set('per_code', $this->input->post('per_code'));
-				$this->db->set('per_modifiedby', $this->usr[0]->usr_id);
+				$this->db->set('per_modifiedby', $this->usr->usr_id);
 				$this->db->set('per_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('per_id', $this->per_id);
 				$this->db->update('per');

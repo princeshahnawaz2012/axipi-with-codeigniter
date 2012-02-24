@@ -1,13 +1,13 @@
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
-<li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->itm[0]->itm_title; ?></a></li>
+<li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->itm->itm_title; ?></a></li>
 </ul>
 </div>
 </div>
 
 <div class="box1">
-<h1><?php echo $this->itm[0]->itm_title; ?></h1>
+<h1><?php echo $this->itm->itm_title; ?></h1>
 <div class="display">
 
 <?php echo validation_errors(); ?>

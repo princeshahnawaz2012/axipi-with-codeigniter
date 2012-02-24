@@ -20,8 +20,8 @@ class languages extends CI_Controller {
 		$filters['languages_lng_code'] = array('lng.lng_code', 'like');
 		$flt = build_filters($filters);
 
-		$results_count = $this->languages_model->get_all_languages($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results_count[0]->count, 30);
+		$results = $this->languages_model->get_all_languages($flt);
+		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
 		$data['pagination'] = $build_pagination['output'];
@@ -52,7 +52,7 @@ class languages extends CI_Controller {
 			$this->db->set('lng_code', $this->input->post('lng_code'));
 			$this->db->set('lng_title', $this->input->post('lng_title'));
 			$this->db->set('lng_ispublished', 1);
-			$this->db->set('lng_createdby', $this->usr[0]->usr_id);
+			$this->db->set('lng_createdby', $this->usr->usr_id);
 			$this->db->set('lng_datecreated', date('Y-m-d H:i:s'));
 			$this->db->insert('lng');
 			$this->msg[] = $this->lang->line('created');
@@ -81,7 +81,7 @@ class languages extends CI_Controller {
 			} else {
 				$this->db->set('lng_code', $this->input->post('lng_code'));
 				$this->db->set('lng_title', $this->input->post('lng_title'));
-				$this->db->set('lng_modifiedby', $this->usr[0]->usr_id);
+				$this->db->set('lng_modifiedby', $this->usr->usr_id);
 				$this->db->set('lng_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('lng_id', $this->lng_id);
 				$this->db->update('lng');

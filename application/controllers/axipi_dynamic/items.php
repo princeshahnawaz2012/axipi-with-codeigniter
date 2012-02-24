@@ -24,8 +24,8 @@ class items extends CI_Controller {
 		$filters['items_lng_id'] = array('itm.lng_id', 'equal');
 		$flt = build_filters($filters);
 
-		$results_count = $this->items_model->get_all_items($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results_count[0]->count, 30);
+		$results = $this->items_model->get_all_items($flt);
+		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
 		$data['pagination'] = $build_pagination['output'];
@@ -73,7 +73,7 @@ class items extends CI_Controller {
 			$this->db->set('itm_summary', $this->input->post('itm_summary'));
 			$this->db->set('itm_link', $this->input->post('itm_link'));
 			$this->db->set('lng_id', $this->input->post('lng_id'));
-			$this->db->set('itm_createdby', $this->usr[0]->usr_id);
+			$this->db->set('itm_createdby', $this->usr->usr_id);
 			$this->db->set('itm_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('itm_ispublished', 1);
 			$this->db->insert('itm');
@@ -118,7 +118,7 @@ class items extends CI_Controller {
 				$this->db->set('itm_summary', $this->input->post('itm_summary'));
 				$this->db->set('itm_link', $this->input->post('itm_link'));
 				$this->db->set('lng_id', $this->input->post('lng_id'));
-				$this->db->set('itm_modifiedby', $this->usr[0]->usr_id);
+				$this->db->set('itm_modifiedby', $this->usr->usr_id);
 				$this->db->set('itm_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('itm_id', $this->itm_id);
 				$this->db->update('itm');

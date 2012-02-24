@@ -12,9 +12,9 @@ if($per) {
 </div>
 
 <div class="box1">
-<h1><?php echo $per[0]->per_code; ?></h1>
+<h1><?php echo $per->per_code; ?></h1>
 <ul>
-<li><a href="<?php echo current_url(); ?>?a=read&amp;per_id=<?php echo $per[0]->per_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
+<li><a href="<?php echo current_url(); ?>?a=read&amp;per_id=<?php echo $per->per_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
 <li><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>
 <div class="display">
@@ -23,10 +23,10 @@ if($per) {
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open(current_url().'?a=update&amp;per_id='.$per[0]->per_id); ?>
+<?php echo form_open(current_url().'?a=update&amp;per_id='.$per->per_id); ?>
 
 <div class="column1">
-<p><?php echo form_label($this->lang->line('per_code').' *', 'per_code'); ?><?php echo form_input('per_code', set_value('per_code', $per[0]->per_code), 'id="per_code" class="inputtext"'); ?></p>
+<p><?php echo form_label($this->lang->line('per_code').' *', 'per_code'); ?><?php echo form_input('per_code', set_value('per_code', $per->per_code), 'id="per_code" class="inputtext"'); ?></p>
 </div>
 
 <div class="column1 columnlast">

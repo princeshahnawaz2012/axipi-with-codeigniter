@@ -20,8 +20,8 @@ class components extends CI_Controller {
 		$filters['components_cmp_code'] = array('cmp.cmp_code', 'like');
 		$flt = build_filters($filters);
 
-		$results_count = $this->components_model->get_all_components($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results_count[0]->count, 30);
+		$results = $this->components_model->get_all_components($flt);
+		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
 		$data['pagination'] = $build_pagination['output'];
@@ -50,7 +50,7 @@ class components extends CI_Controller {
 		} else {
 			$this->db->set('cmp_code', $this->input->post('cmp_code'));
 			$this->db->set('cmp_ispublished', 1);
-			$this->db->set('cmp_createdby', $this->usr[0]->usr_id);
+			$this->db->set('cmp_createdby', $this->usr->usr_id);
 			$this->db->set('cmp_datecreated', date('Y-m-d H:i:s'));
 			$this->db->insert('cmp');
 			$this->msg[] = $this->lang->line('created');
@@ -77,7 +77,7 @@ class components extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/components/components_update', $data, true);
 			} else {
 				$this->db->set('cmp_code', $this->input->post('cmp_code'));
-				$this->db->set('cmp_modifiedby', $this->usr[0]->usr_id);
+				$this->db->set('cmp_modifiedby', $this->usr->usr_id);
 				$this->db->set('cmp_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('cmp_id', $this->cmp_id);
 				$this->db->update('cmp');

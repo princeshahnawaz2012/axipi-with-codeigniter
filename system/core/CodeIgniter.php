@@ -316,27 +316,27 @@
 	if($query->num_rows() == 0) {
 		$query = $db->query('SELECT cmp.cmp_id FROM '.$db->dbprefix('cmp').' AS cmp WHERE cmp_code = ?', array('axipi_core/error404'));
 		if($query->num_rows() > 0) {
-			$cmp = $query->result();
-			$query = $db->query('SELECT * FROM '.$db->dbprefix('itm').' AS itm WHERE cmp_id = ?', array($cmp[0]->cmp_id));
+			$cmp = $query->row();
+			$query = $db->query('SELECT * FROM '.$db->dbprefix('itm').' AS itm WHERE cmp_id = ?', array($cmp->cmp_id));
 		}
 	}
-	$itm = $query->result();
+	$itm = $query->row();
 
-	$query = $db->query('SELECT * FROM '.$db->dbprefix('cmp').' AS cmp WHERE cmp_id = ?', array($itm[0]->cmp_id));
-	$cmp = $query->result();
+	$query = $db->query('SELECT * FROM '.$db->dbprefix('cmp').' AS cmp WHERE cmp_id = ?', array($itm->cmp_id));
+	$cmp = $query->row();
 
-	$query = $db->query('SELECT * FROM '.$db->dbprefix('lng').' AS lng WHERE lng_id = ?', array($itm[0]->lng_id));
-	$lng = $query->result();
+	$query = $db->query('SELECT * FROM '.$db->dbprefix('lng').' AS lng WHERE lng_id = ?', array($itm->lng_id));
+	$lng = $query->row();
 
-	$query = $db->query('SELECT * FROM '.$db->dbprefix('sct').' AS sct WHERE sct_id = ?', array($itm[0]->sct_id));
-	$sct = $query->result();
+	$query = $db->query('SELECT * FROM '.$db->dbprefix('sct').' AS sct WHERE sct_id = ?', array($itm->sct_id));
+	$sct = $query->row();
 
-	$query = $db->query('SELECT * FROM '.$db->dbprefix('lay').' AS lay WHERE lay_id = ?', array($sct[0]->lay_id));
-	$lay = $query->result();
+	$query = $db->query('SELECT * FROM '.$db->dbprefix('lay').' AS lay WHERE lay_id = ?', array($sct->lay_id));
+	$lay = $query->row();
 
-	list($directory, $class) = explode('/', $cmp[0]->cmp_code);
-	if(file_exists(APPPATH.'controllers/'.$cmp[0]->cmp_code.EXT)) {
-		require_once(APPPATH.'controllers/'.$cmp[0]->cmp_code.EXT);
+	list($directory, $class) = explode('/', $cmp->cmp_code);
+	if(file_exists(APPPATH.'controllers/'.$cmp->cmp_code.EXT)) {
+		require_once(APPPATH.'controllers/'.$cmp->cmp_code.EXT);
 		$RTR->set_directory($directory);
 		$RTR->set_class($class);
 
@@ -347,7 +347,7 @@
 		}
 		$RTR->set_method($method);
 
-		$CFG->set_item('language', $lng[0]->lng_code);
+		$CFG->set_item('language', $lng->lng_code);
 	} else {
 		require_once(APPPATH.'controllers/axipi_core/error404'.EXT);
 		$class = 'error404';

@@ -21,8 +21,8 @@ class countries extends CI_Controller {
 		$filters['countries_cou_alpha3'] = array('cou.cou_alpha3', 'like');
 		$flt = build_filters($filters);
 
-		$results_count = $this->countries_model->get_all_countries($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results_count[0]->count, 30);
+		$results = $this->countries_model->get_all_countries($flt);
+		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
 		$data['pagination'] = $build_pagination['output'];
@@ -51,7 +51,7 @@ class countries extends CI_Controller {
 		} else {
 			$this->db->set('cou_alpha2', $this->input->post('cou_alpha2'));
 			$this->db->set('cou_alpha3', $this->input->post('cou_alpha3'));
-			$this->db->set('cou_createdby', $this->usr[0]->usr_id);
+			$this->db->set('cou_createdby', $this->usr->usr_id);
 			$this->db->set('cou_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('cou_ispublished', 1);
 			$this->db->insert('cou');
@@ -80,7 +80,7 @@ class countries extends CI_Controller {
 			} else {
 				$this->db->set('cou_alpha2', $this->input->post('cou_alpha2'));
 				$this->db->set('cou_alpha3', $this->input->post('cou_alpha3'));
-				$this->db->set('cou_modifiedby', $this->usr[0]->usr_id);
+				$this->db->set('cou_modifiedby', $this->usr->usr_id);
 				$this->db->set('cou_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('cou_id', $this->cou_id);
 				$this->db->update('cou');

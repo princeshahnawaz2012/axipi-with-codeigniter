@@ -20,8 +20,8 @@ class sections extends CI_Controller {
 		$filters['sections_sct_code'] = array('sct.sct_code', 'like');
 		$flt = build_filters($filters);
 
-		$results_count = $this->sections_model->get_all_sections($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results_count[0]->count, 30);
+		$results = $this->sections_model->get_all_sections($flt);
+		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
 		$data['pagination'] = $build_pagination['output'];
@@ -52,7 +52,7 @@ class sections extends CI_Controller {
 		} else {
 			$this->db->set('lay_id', $this->input->post('lay_id'));
 			$this->db->set('sct_code', $this->input->post('sct_code'));
-			$this->db->set('sct_createdby', $this->usr[0]->usr_id);
+			$this->db->set('sct_createdby', $this->usr->usr_id);
 			$this->db->set('sct_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('sct_ispublished', 1);
 			$this->db->insert('sct');
@@ -83,7 +83,7 @@ class sections extends CI_Controller {
 			} else {
 				$this->db->set('lay_id', $this->input->post('lay_id'));
 				$this->db->set('sct_code', $this->input->post('sct_code'));
-				$this->db->set('sct_modifiedby', $this->usr[0]->usr_id);
+				$this->db->set('sct_modifiedby', $this->usr->usr_id);
 				$this->db->set('sct_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('sct_id', $this->sct_id);
 				$this->db->update('sct');

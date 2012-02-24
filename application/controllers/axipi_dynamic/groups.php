@@ -20,8 +20,8 @@ class groups extends CI_Controller {
 		$filters['groups_grp_code'] = array('grp.grp_code', 'like');
 		$flt = build_filters($filters);
 
-		$results_count = $this->groups_model->get_all_groups($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results_count[0]->count, 30);
+		$results = $this->groups_model->get_all_groups($flt);
+		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
 		$data['pagination'] = $build_pagination['output'];
@@ -49,7 +49,7 @@ class groups extends CI_Controller {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_create', $data, true);
 		} else {
 			$this->db->set('grp_code', $this->input->post('grp_code'));
-			$this->db->set('grp_createdby', $this->usr[0]->usr_id);
+			$this->db->set('grp_createdby', $this->usr->usr_id);
 			$this->db->set('grp_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('grp_ispublished', 1);
 			$this->db->insert('grp');
@@ -77,7 +77,7 @@ class groups extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_update', $data, true);
 			} else {
 				$this->db->set('grp_code', $this->input->post('grp_code'));
-				$this->db->set('grp_modifiedby', $this->usr[0]->usr_id);
+				$this->db->set('grp_modifiedby', $this->usr->usr_id);
 				$this->db->set('grp_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('grp_id', $this->grp_id);
 				$this->db->update('grp');

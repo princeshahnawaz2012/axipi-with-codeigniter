@@ -71,74 +71,74 @@ class axipi_library {
 	}
 	function get_head() {
 		$head = array();
-		if($this->CI->lay[0]->lay_type == 'text/html') {
+		if($this->CI->lay->lay_type == 'text/html') {
 			$titles = array();
-			/*$titles[] = $this->CI->sct[0]->sct_title;
-			foreach($this->CI->itm[0]->itm_tree as $value) {
+			/*$titles[] = $this->CI->sct->sct_title;
+			foreach($this->CI->itm->itm_tree as $value) {
 				$titles[] = $value['title'];
 			}
-			if($this->CI->itm[0]->itm_titlehead != '' && $this->CI->itm[0]->itm_titleheadfull == 1) {
+			if($this->CI->itm->itm_titlehead != '' && $this->CI->itm->itm_titleheadfull == 1) {
 				$titles = array();
-				$titles[] = $this->CI->itm[0]->itm_titlehead;
+				$titles[] = $this->CI->itm->itm_titlehead;
 			} else {
 				$titles = array_reverse($titles);
-				if($this->CI->itm[0]->itm_titlehead != '' && $this->CI->itm[0]->itm_titleheadfull == 0) {
-					$titles[0] = $this->CI->itm[0]->itm_titlehead;
+				if($this->CI->itm->itm_titlehead != '' && $this->CI->itm->itm_titleheadfull == 0) {
+					$titles[0] = $this->CI->itm->itm_titlehead;
 				}
 			}*/
-			$titles[] = $this->CI->itm[0]->itm_title;
+			$titles[] = $this->CI->itm->itm_title;
 			$head[] = '<title>'.implode(' | ', $titles).'</title>';
 
 			$head[] = '<meta charset="UTF-8">';
-			/*if($this->CI->itm[0]->itm_description != '') {
-				$head[] = '<meta content="'.$this->CI->data->display_in_field($this->CI->itm[0]->itm_description).'" name="description">';
-			} elseif($this->CI->sct[0]->sct_description != '') {
-				$head[] = '<meta content="'.$this->CI->data->display_in_field($this->CI->sct[0]->sct_description).'" name="description">';
+			/*if($this->CI->itm->itm_description != '') {
+				$head[] = '<meta content="'.$this->CI->data->display_in_field($this->CI->itm->itm_description).'" name="description">';
+			} elseif($this->CI->sct->sct_description != '') {
+				$head[] = '<meta content="'.$this->CI->data->display_in_field($this->CI->sct->sct_description).'" name="description">';
 			}
-			if($this->CI->itm[0]->itm_keywords != '') {
-				$head[] = '<meta content="'.$this->CI->data->display_in_field($this->CI->itm[0]->itm_keywords).'" name="keywords">';
-			} elseif($this->CI->sct[0]->sct_keywords != '') {
-				$head[] = '<meta content="'.$this->CI->data->display_in_field($this->CI->sct[0]->sct_keywords).'" name="keywords">';
+			if($this->CI->itm->itm_keywords != '') {
+				$head[] = '<meta content="'.$this->CI->data->display_in_field($this->CI->itm->itm_keywords).'" name="keywords">';
+			} elseif($this->CI->sct->sct_keywords != '') {
+				$head[] = '<meta content="'.$this->CI->data->display_in_field($this->CI->sct->sct_keywords).'" name="keywords">';
 			}*/
-			/*if(isset($this->CI->itm[0]->itm_stg']['meta-robots']) == 1 && $this->CI->itm[0]->itm_stg']['meta-robots'] != '') {
-				$head[] = '<meta content="'.$this->CI->itm[0]->itm_stg']['meta-robots'].'" name="robots">';
+			/*if(isset($this->CI->itm->itm_stg']['meta-robots']) == 1 && $this->CI->itm->itm_stg']['meta-robots'] != '') {
+				$head[] = '<meta content="'.$this->CI->itm->itm_stg']['meta-robots'].'" name="robots">';
 			} else {
 				$robots = '<meta content="index,follow" name="robots">';
 			}*/
 
-			/*if($this->CI->stg[0]->cdn-url'] != '') {
-				$this->base_url = $this->CI->stg[0]->cdn-url'].'/';
+			/*if($this->CI->stg->cdn-url'] != '') {
+				$this->base_url = $this->CI->stg->cdn-url'].'/';
 			} else {
 				$this->base_url = '';
 			}*/
-			if(file_exists('styles/sct_code/'.$this->CI->sct[0]->sct_code.'.css')) {
-				$head[] = '<link href="'.$this->base_url.'styles/sct_code/'.$this->CI->sct[0]->sct_code.'.css" rel="stylesheet" type="text/css">';
-			} elseif(file_exists('styles/sct_code/'.$this->CI->sct[0]->sct_code.'.dist.css')) {
-				$head[] = '<link href="'.$this->base_url.'styles/sct_code/'.$this->CI->sct[0]->sct_code.'.dist.css" rel="stylesheet" type="text/css">';
+			if(file_exists('styles/sct_code/'.$this->CI->sct->sct_code.'.css')) {
+				$head[] = '<link href="'.$this->base_url.'styles/sct_code/'.$this->CI->sct->sct_code.'.css" rel="stylesheet" type="text/css">';
+			} elseif(file_exists('styles/sct_code/'.$this->CI->sct->sct_code.'.dist.css')) {
+				$head[] = '<link href="'.$this->base_url.'styles/sct_code/'.$this->CI->sct->sct_code.'.dist.css" rel="stylesheet" type="text/css">';
 			}
-			if(file_exists('styles/sct_virtualcode/'.$this->CI->sct[0]->sct_virtualcode.'.css')) {
-				$head[] = '<link href="'.$this->base_url.'styles/sct_virtualcode/'.$this->CI->sct[0]->sct_virtualcode.'.css" rel="stylesheet" type="text/css">';
+			if(file_exists('styles/sct_virtualcode/'.$this->CI->sct->sct_virtualcode.'.css')) {
+				$head[] = '<link href="'.$this->base_url.'styles/sct_virtualcode/'.$this->CI->sct->sct_virtualcode.'.css" rel="stylesheet" type="text/css">';
 			}
-			if(file_exists('styles/lay_code/'.$this->CI->lay[0]->lay_code.'.css')) {
-				$head[] = '<link href="'.$this->base_url.'styles/lay_code/'.$this->CI->lay[0]->lay_code.'.css" rel="stylesheet" type="text/css">';
+			if(file_exists('styles/lay_code/'.$this->CI->lay->lay_code.'.css')) {
+				$head[] = '<link href="'.$this->base_url.'styles/lay_code/'.$this->CI->lay->lay_code.'.css" rel="stylesheet" type="text/css">';
 			}
-			/*if(file_exists('styles/hst_environment/'.$this->CI->hst[0]->hst_environment.'.css')) {
-				$head[] = '<link href="'.$this->base_url.'styles/hst_environment/'.$this->CI->hst[0]->hst_environment.'.css" rel="stylesheet" type="text/css">';
+			/*if(file_exists('styles/hst_environment/'.$this->CI->hst->hst_environment.'.css')) {
+				$head[] = '<link href="'.$this->base_url.'styles/hst_environment/'.$this->CI->hst->hst_environment.'.css" rel="stylesheet" type="text/css">';
 			}
 			if(file_exists('styles/hst_code/'.$_SERVER['HTTP_HOST'].'.css')) {
 				$head[] = '<link href="'.$this->base_url.'styles/hst_code/'.$_SERVER['HTTP_HOST'].'.css" rel="stylesheet" type="text/css">';
 			}*/
-			if(file_exists('styles/cmp_code/'.$this->CI->cmp[0]->cmp_code.'.css')) {
-				$head[] = '<link href="'.$this->base_url.'styles/cmp_code/'.$this->CI->cmp[0]->cmp_code.'.css" rel="stylesheet" type="text/css">';
+			if(file_exists('styles/cmp_code/'.$this->CI->cmp->cmp_code.'.css')) {
+				$head[] = '<link href="'.$this->base_url.'styles/cmp_code/'.$this->CI->cmp->cmp_code.'.css" rel="stylesheet" type="text/css">';
 			}
-			if(file_exists('styles/itm_virtualcode/'.$this->CI->itm[0]->itm_virtualcode.'.css')) {
-				$head[] = '<link href="'.$this->base_url.'styles/itm_virtualcode/'.$this->CI->itm[0]->itm_virtualcode.'.css" rel="stylesheet" type="text/css">';
+			if(file_exists('styles/itm_virtualcode/'.$this->CI->itm->itm_virtualcode.'.css')) {
+				$head[] = '<link href="'.$this->base_url.'styles/itm_virtualcode/'.$this->CI->itm->itm_virtualcode.'.css" rel="stylesheet" type="text/css">';
 			}
-			if(file_exists('styles/itm_code/'.$this->CI->itm[0]->itm_code.'.css')) {
-				$head[] = '<link href="'.$this->base_url.'styles/itm_code/'.$this->CI->itm[0]->itm_code.'.css" rel="stylesheet" type="text/css">';
+			if(file_exists('styles/itm_code/'.$this->CI->itm->itm_code.'.css')) {
+				$head[] = '<link href="'.$this->base_url.'styles/itm_code/'.$this->CI->itm->itm_code.'.css" rel="stylesheet" type="text/css">';
 			}
-			/*if(file_exists('styles/lng_code/'.$this->CI->lng[0]->lng_code.'.css')) {
-				$head[] = '<link href="'.$this->base_url.'styles/lng_code/'.$this->CI->lng[0]->lng_code.'.css" rel="stylesheet" type="text/css">';
+			/*if(file_exists('styles/lng_code/'.$this->CI->lng->lng_code.'.css')) {
+				$head[] = '<link href="'.$this->base_url.'styles/lng_code/'.$this->CI->lng->lng_code.'.css" rel="stylesheet" type="text/css">';
 			}*/
 		}
 		$head = array_merge($head, $this->CI->head);
@@ -146,7 +146,7 @@ class axipi_library {
 	}
 	function get_foot() {
 		$foot = array();
-		if($this->CI->lay[0]->lay_type == 'text/html') {
+		if($this->CI->lay->lay_type == 'text/html') {
 			$this->jquery = array_unique($this->jquery);
 			if(count($this->jquery) != 0) {
 				foreach($this->jquery as $v) {
@@ -156,26 +156,26 @@ class axipi_library {
 						$foot[] = '<script type="text/javascript" src="'.$this->base_url.'thirdparty/jquery/scripts/'.$v.'.js" charset="UTF-8"></script>';
 					}
 				}
-				if(file_exists('scripts/sct_code/'.$this->CI->sct[0]->sct_code.'.js')) {
-					$foot[] = '<script src="'.$this->base_url.'scripts/sct_code/'.$this->CI->sct[0]->sct_code.'.js" type="text/javascript"></script>';
-				} elseif(file_exists('scripts/sct_code/'.$this->CI->sct[0]->sct_code.'.dist.js')) {
-					$foot[] = '<script src="'.$this->base_url.'scripts/sct_code/'.$this->CI->sct[0]->sct_code.'.dist.js" type="text/javascript"></script>';
+				if(file_exists('scripts/sct_code/'.$this->CI->sct->sct_code.'.js')) {
+					$foot[] = '<script src="'.$this->base_url.'scripts/sct_code/'.$this->CI->sct->sct_code.'.js" type="text/javascript"></script>';
+				} elseif(file_exists('scripts/sct_code/'.$this->CI->sct->sct_code.'.dist.js')) {
+					$foot[] = '<script src="'.$this->base_url.'scripts/sct_code/'.$this->CI->sct->sct_code.'.dist.js" type="text/javascript"></script>';
 				}
-				if(file_exists('scripts/sct_virtualcode/'.$this->CI->sct[0]->sct_virtualcode.'.js')) {
-					$foot[] = '<script src="'.$this->base_url.'scripts/sct_virtualcode/'.$this->CI->sct[0]->sct_virtualcode.'.js" type="text/javascript"></script>';
-				} elseif(isset($this->CI->sct[0]->sct_virtualcode) == 1 && file_exists('scripts/sct_virtualcode/'.$this->CI->sct[0]->sct_virtualcode.'.dist.js')) {
-					$foot[] = '<script src="'.$this->base_url.'scripts/sct_virtualcode/'.$this->CI->sct[0]->sct_virtualcode.'.dist.js" type="text/javascript"></script>';
+				if(file_exists('scripts/sct_virtualcode/'.$this->CI->sct->sct_virtualcode.'.js')) {
+					$foot[] = '<script src="'.$this->base_url.'scripts/sct_virtualcode/'.$this->CI->sct->sct_virtualcode.'.js" type="text/javascript"></script>';
+				} elseif(isset($this->CI->sct->sct_virtualcode) == 1 && file_exists('scripts/sct_virtualcode/'.$this->CI->sct->sct_virtualcode.'.dist.js')) {
+					$foot[] = '<script src="'.$this->base_url.'scripts/sct_virtualcode/'.$this->CI->sct->sct_virtualcode.'.dist.js" type="text/javascript"></script>';
 				}
-				if(file_exists('scripts/cmp_code/'.$this->CI->cmp[0]->cmp_code.'.js')) {
-					$foot[] = '<script src="'.$this->base_url.'scripts/cmp_code/'.$this->CI->cmp[0]->cmp_code.'.js" type="text/javascript"></script>';
-				} elseif(file_exists('scripts/cmp_code/'.$this->CI->cmp[0]->cmp_code.'.dist.js')) {
-					$foot[] = '<script src="'.$this->base_url.'scripts/cmp_code/'.$this->CI->cmp[0]->cmp_code.'.dist.js" type="text/javascript"></script>';
+				if(file_exists('scripts/cmp_code/'.$this->CI->cmp->cmp_code.'.js')) {
+					$foot[] = '<script src="'.$this->base_url.'scripts/cmp_code/'.$this->CI->cmp->cmp_code.'.js" type="text/javascript"></script>';
+				} elseif(file_exists('scripts/cmp_code/'.$this->CI->cmp->cmp_code.'.dist.js')) {
+					$foot[] = '<script src="'.$this->base_url.'scripts/cmp_code/'.$this->CI->cmp->cmp_code.'.dist.js" type="text/javascript"></script>';
 				}
-				if(file_exists('scripts/itm_virtualcode/'.$this->CI->itm[0]->itm_virtualcode.'.js')) {
-					$foot[] = '<script src="'.$this->base_url.'scripts/itm_virtualcode/'.$this->CI->itm[0]->itm_virtualcode.'.js" type="text/javascript"></script>';
+				if(file_exists('scripts/itm_virtualcode/'.$this->CI->itm->itm_virtualcode.'.js')) {
+					$foot[] = '<script src="'.$this->base_url.'scripts/itm_virtualcode/'.$this->CI->itm->itm_virtualcode.'.js" type="text/javascript"></script>';
 				}
-				if(file_exists('scripts/itm_code/'.$this->CI->itm[0]->itm_code.'.js')) {
-					$foot[] = '<script src="'.$this->base_url.'scripts/itm_code/'.$this->CI->itm[0]->itm_code.'.js" type="text/javascript"></script>';
+				if(file_exists('scripts/itm_code/'.$this->CI->itm->itm_code.'.js')) {
+					$foot[] = '<script src="'.$this->base_url.'scripts/itm_code/'.$this->CI->itm->itm_code.'.js" type="text/javascript"></script>';
 				}
 			}
 		}
@@ -187,7 +187,7 @@ class axipi_library {
 	}
 	function get_debug() {
 		$debug = '';
-		if($this->CI->lay[0]->lay_type == 'text/html') {
+		if($this->CI->lay->lay_type == 'text/html') {
 			function loop_v($data) {
 				$data = get_object_vars($data);
 				ksort($data);
@@ -236,40 +236,40 @@ class axipi_library {
 			$debug .= '<div class="column1">';
 		
 			$debug .= '<h2>itm</h2>';
-			$debug .= loop_v($this->CI->itm[0]);
+			$debug .= loop_v($this->CI->itm);
 		
 			$debug .= '</div>';
 		
 			$debug .= '<div class="column1">';
 		
 			$debug .= '<h2>sct</h2>';
-			$debug .= loop_v($this->CI->sct[0]);
+			$debug .= loop_v($this->CI->sct);
 		
 			$debug .= '<h2>hst</h2>';
-			//$debug .= loop_v($this->CI->hst[0]);
+			//$debug .= loop_v($this->CI->hst);
 		
 			$debug .= '<h2>cmp</h2>';
-			$debug .= loop_v($this->CI->cmp[0]);
+			$debug .= loop_v($this->CI->cmp);
 		
 			$debug .= '</div>';
 		
 			$debug .= '<div class="column1">';
 		
 			$debug .= '<h2>usr</h2>';
-			//$debug .= loop_v($this->CI->usr[0]);
+			$debug .= loop_v($this->CI->usr);
 		
 			$debug .= '</div>';
 		
 			$debug .= '<div class="column1 columnlast">';
 		
 			$debug .= '<h2>lng</h2>';
-			$debug .= loop_v($this->CI->lng[0]);
+			$debug .= loop_v($this->CI->lng);
 		
 			$debug .= '<h2>lay</h2>';
-			$debug .= loop_v($this->CI->lay[0]);
+			$debug .= loop_v($this->CI->lay);
 		
 			$debug .= '<h2>stg</h2>';
-			//$debug .= loop_v($this->CI->stg[0]);
+			//$debug .= loop_v($this->CI->stg);
 		
 			$debug .= '</div>';
 		

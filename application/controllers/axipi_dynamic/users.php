@@ -20,8 +20,8 @@ class users extends CI_Controller {
 		$filters['users_usr_email'] = array('usr.usr_email', 'like');
 		$flt = build_filters($filters);
 
-		$results_count = $this->users_model->get_all_users($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results_count[0]->count, 30);
+		$results = $this->users_model->get_all_users($flt);
+		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
 		$data['pagination'] = $build_pagination['output'];
@@ -49,7 +49,7 @@ class users extends CI_Controller {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/users/users_create', $data, true);
 		} else {
 			$this->db->set('usr_email', $this->input->post('usr_email'));
-			$this->db->set('usr_createdby', $this->usr[0]->usr_id);
+			$this->db->set('usr_createdby', $this->usr->usr_id);
 			$this->db->set('usr_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('usr_ispublished', 1);
 			$this->db->insert('usr');
@@ -77,7 +77,7 @@ class users extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/users/users_update', $data, true);
 			} else {
 				$this->db->set('usr_email', $this->input->post('usr_email'));
-				$this->db->set('usr_modifiedby', $this->usr[0]->usr_id);
+				$this->db->set('usr_modifiedby', $this->usr->usr_id);
 				$this->db->set('usr_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('usr_id', $this->usr_id);
 				$this->db->update('usr');

@@ -19,7 +19,7 @@ class hosts_model extends CI_Model {
     }
     function get_all_hosts($flt) {
         $query = $this->db->query('SELECT COUNT(hst.hst_id) AS count FROM '.$this->db->dbprefix('hst').' AS hst WHERE '.implode(' AND ', $flt));
-        return $query->result();
+        return $query->row();
     }
     function get_pagination_hosts($flt, $num, $offset) {
         $query = $this->db->query('SELECT hst.hst_id, hst.hst_code, hst.hst_url, hst.hst_environment, hst.hst_islocked, hst.hst_ispublished, lay.lay_code FROM '.$this->db->dbprefix('hst').' AS hst LEFT JOIN '.$this->db->dbprefix('lay').' AS lay ON lay.lay_id = hst.lay_id WHERE '.implode(' AND ', $flt).' GROUP BY hst.hst_id ORDER BY hst.hst_id DESC LIMIT '.$offset.', '.$num);
@@ -27,6 +27,6 @@ class hosts_model extends CI_Model {
     }
     function get_host($hst_id) {
         $query = $this->db->query('SELECT hst.*, lay.lay_code  FROM '.$this->db->dbprefix('hst').' AS hst LEFT JOIN '.$this->db->dbprefix('lay').' AS lay ON lay.lay_id = hst.lay_id WHERE hst.hst_id = ? GROUP BY hst.hst_id', array($hst_id));
-        return $query->result();
+        return $query->row();
     }
 }

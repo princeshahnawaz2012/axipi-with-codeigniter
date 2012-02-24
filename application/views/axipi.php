@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<?php echo $this->lng[0]->lng_code; ?>">
+<html lang="<?php echo $this->lng->lng_code; ?>">
 <head>
 <?php echo $this->axipi_library->get_head(); ?>
 </head>

@@ -20,8 +20,8 @@ class layouts extends CI_Controller {
 		$filters['layouts_lay_code'] = array('lay.lay_code', 'like');
 		$flt = build_filters($filters);
 
-		$results_count = $this->layouts_model->get_all_layouts($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results_count[0]->count, 30);
+		$results = $this->layouts_model->get_all_layouts($flt);
+		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
 		$data['pagination'] = $build_pagination['output'];
@@ -49,7 +49,7 @@ class layouts extends CI_Controller {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/layouts/layouts_create', $data, true);
 		} else {
 			$this->db->set('lay_code', $this->input->post('lay_code'));
-			$this->db->set('lay_createdby', $this->usr[0]->usr_id);
+			$this->db->set('lay_createdby', $this->usr->usr_id);
 			$this->db->set('lay_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('lay_ispublished', 1);
 			$this->db->insert('lay');
@@ -77,7 +77,7 @@ class layouts extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/layouts/layouts_update', $data, true);
 			} else {
 				$this->db->set('lay_code', $this->input->post('lay_code'));
-				$this->db->set('lay_modifiedby', $this->usr[0]->usr_id);
+				$this->db->set('lay_modifiedby', $this->usr->usr_id);
 				$this->db->set('lay_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('lay_id', $this->lay_id);
 				$this->db->update('lay');

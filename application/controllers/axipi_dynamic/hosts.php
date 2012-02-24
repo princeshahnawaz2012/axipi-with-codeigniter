@@ -20,8 +20,8 @@ class hosts extends CI_Controller {
 		$filters['hosts_hst_code'] = array('hst.hst_code', 'like');
 		$flt = build_filters($filters);
 
-		$results_count = $this->hosts_model->get_all_hosts($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results_count[0]->count, 30);
+		$results = $this->hosts_model->get_all_hosts($flt);
+		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
 		$data['pagination'] = $build_pagination['output'];
@@ -56,7 +56,7 @@ class hosts extends CI_Controller {
 			$this->db->set('hst_code', $this->input->post('hst_code'));
 			$this->db->set('hst_url', $this->input->post('hst_url'));
 			$this->db->set('hst_environment', $this->input->post('hst_environment'));
-			$this->db->set('hst_createdby', $this->usr[0]->usr_id);
+			$this->db->set('hst_createdby', $this->usr->usr_id);
 			$this->db->set('hst_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('hst_ispublished', 1);
 			$this->db->insert('hst');
@@ -90,7 +90,7 @@ class hosts extends CI_Controller {
 				$this->db->set('hst_code', $this->input->post('hst_code'));
 				$this->db->set('hst_url', $this->input->post('hst_url'));
 				$this->db->set('hst_environment', $this->input->post('hst_environment'));
-				$this->db->set('hst_modifiedby', $this->usr[0]->usr_id);
+				$this->db->set('hst_modifiedby', $this->usr->usr_id);
 				$this->db->set('hst_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('hst_id', $this->hst_id);
 				$this->db->update('hst');

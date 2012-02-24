@@ -20,8 +20,8 @@ class zones extends CI_Controller {
 		$filters['zones_zon_code'] = array('zon.zon_code', 'like');
 		$flt = build_filters($filters);
 
-		$results_count = $this->zones_model->get_all_zones($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results_count[0]->count, 30);
+		$results = $this->zones_model->get_all_zones($flt);
+		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
 		$data['pagination'] = $build_pagination['output'];
@@ -55,7 +55,7 @@ class zones extends CI_Controller {
 			$this->db->set('lay_id', $this->input->post('lay_id'));
 			$this->db->set('zon_code', $this->input->post('zon_code'));
 			$this->db->set('zon_ordering', $this->input->post('zon_ordering'));
-			$this->db->set('zon_createdby', $this->usr[0]->usr_id);
+			$this->db->set('zon_createdby', $this->usr->usr_id);
 			$this->db->set('zon_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('zon_ispublished', 1);
 			$this->db->insert('zon');
@@ -88,7 +88,7 @@ class zones extends CI_Controller {
 				$this->db->set('lay_id', $this->input->post('lay_id'));
 				$this->db->set('zon_code', $this->input->post('zon_code'));
 				$this->db->set('zon_ordering', $this->input->post('zon_ordering'));
-				$this->db->set('zon_modifiedby', $this->usr[0]->usr_id);
+				$this->db->set('zon_modifiedby', $this->usr->usr_id);
 				$this->db->set('zon_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('zon_id', $this->zon_id);
 				$this->db->update('zon');

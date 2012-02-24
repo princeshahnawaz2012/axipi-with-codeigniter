@@ -79,7 +79,7 @@ class folders extends CI_Controller {
 		}
 
 		$output = '<div class="box1">';
-		$output .= '<h1>'.$this->itm[0]->itm_title.'</h1>';
+		$output .= '<h1>'.$this->itm->itm_title.'</h1>';
 		$output .= '<div class="display">';
 		
 		$output .= '<table>';

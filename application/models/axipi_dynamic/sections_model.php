@@ -19,7 +19,7 @@ class sections_model extends CI_Model {
     }
     function get_all_sections($flt) {
         $query = $this->db->query('SELECT COUNT(sct.sct_id) AS count FROM '.$this->db->dbprefix('sct').' AS sct WHERE '.implode(' AND ', $flt));
-        return $query->result();
+        return $query->row();
     }
     function get_pagination_sections($flt, $num, $offset) {
         $query = $this->db->query('SELECT sct.sct_id, sct.sct_code, sct.sct_islocked, sct.sct_ispublished, lay.lay_code, COUNT(DISTINCT(items.itm_id)) AS count_items FROM '.$this->db->dbprefix('sct').' AS sct LEFT JOIN '.$this->db->dbprefix('itm').' AS items ON items.sct_id = sct.sct_id LEFT JOIN '.$this->db->dbprefix('lay').' AS lay ON lay.lay_id = sct.lay_id WHERE '.implode(' AND ', $flt).' GROUP BY sct.sct_id ORDER BY sct.sct_id DESC LIMIT '.$offset.', '.$num);
@@ -27,6 +27,6 @@ class sections_model extends CI_Model {
     }
     function get_section($sct_id) {
         $query = $this->db->query('SELECT sct.*, lay.lay_code FROM '.$this->db->dbprefix('sct').' AS sct LEFT JOIN '.$this->db->dbprefix('lay').' AS lay ON lay.lay_id = sct.lay_id WHERE sct.sct_id = ? GROUP BY sct.sct_id', array($sct_id));
-        return $query->result();
+        return $query->row();
     }
 }

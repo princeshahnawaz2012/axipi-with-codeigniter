@@ -12,9 +12,9 @@ if($grp) {
 </div>
 
 <div class="box1">
-<h1><?php echo $grp[0]->grp_code; ?></h1>
+<h1><?php echo $grp->grp_code; ?></h1>
 <ul>
-<li><a href="<?php echo current_url(); ?>?a=read&amp;grp_id=<?php echo $grp[0]->grp_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
+<li><a href="<?php echo current_url(); ?>?a=read&amp;grp_id=<?php echo $grp->grp_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
 <li><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>
 <div class="display">
@@ -23,10 +23,10 @@ if($grp) {
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open(current_url().'?a=update&amp;grp_id='.$grp[0]->grp_id); ?>
+<?php echo form_open(current_url().'?a=update&amp;grp_id='.$grp->grp_id); ?>
 
 <div class="column1">
-<p><?php echo form_label($this->lang->line('grp_code').' *', 'grp_code'); ?><?php echo form_input('grp_code', set_value('grp_code', $grp[0]->grp_code), 'id="grp_code" class="inputtext"'); ?></p>
+<p><?php echo form_label($this->lang->line('grp_code').' *', 'grp_code'); ?><?php echo form_input('grp_code', set_value('grp_code', $grp->grp_code), 'id="grp_code" class="inputtext"'); ?></p>
 </div>
 
 <div class="column1 columnlast">
