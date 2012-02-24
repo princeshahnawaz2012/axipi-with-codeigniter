@@ -18,7 +18,7 @@
 
 <?php echo form_open(current_url()); ?>
 <div class="filters">
-<div><?php echo form_label($this->lang->line('lay_code'), 'layouts_lay_code'); ?><?php echo form_input('layouts_lay_code', set_value('layouts_lay_code', $this->session->userdata('layouts_lay_code')), 'class="inputtext"'); ?></div>
+<div><?php echo form_label($this->lang->line('lay_code'), 'layouts_lay_code'); ?><?php echo form_input('layouts_lay_code', set_value('layouts_lay_code', $this->session->userdata('layouts_lay_code')), 'id="layouts_lay_code" class="inputtext"'); ?></div>
 <div><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></div>
 </div>
 </form>

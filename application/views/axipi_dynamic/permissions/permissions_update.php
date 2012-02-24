@@ -26,7 +26,7 @@ if($per) {
 <?php echo form_open(current_url().'?a=update&amp;per_id='.$per[0]->per_id); ?>
 
 <div class="column1">
-<p><?php echo form_label($this->lang->line('per_code').' *', 'per_code'); ?><?php echo form_input('per_code', set_value('per_code', $per[0]->per_code), 'class="inputtext"'); ?></p>
+<p><?php echo form_label($this->lang->line('per_code').' *', 'per_code'); ?><?php echo form_input('per_code', set_value('per_code', $per[0]->per_code), 'id="per_code" class="inputtext"'); ?></p>
 </div>
 
 <div class="column1 columnlast">

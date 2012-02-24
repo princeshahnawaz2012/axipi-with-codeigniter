@@ -26,8 +26,8 @@ if($lng) {
 <?php echo form_open(current_url().'?a=update&amp;lng_id='.$lng[0]->lng_id); ?>
 
 <div class="column1">
-<p><?php echo form_label($this->lang->line('lng_code').' *', 'lng_code'); ?><?php echo form_input('lng_code', set_value('lng_code', $lng[0]->lng_code), 'class="inputtext"'); ?></p>
-<p><?php echo form_label($this->lang->line('lng_title').' *', 'lng_title'); ?><?php echo form_input('lng_title', set_value('lng_title', $lng[0]->lng_title), 'class="inputtext"'); ?></p>
+<p><?php echo form_label($this->lang->line('lng_code').' *', 'lng_code'); ?><?php echo form_input('lng_code', set_value('lng_code', $lng[0]->lng_code), 'id="lng_code" class="inputtext"'); ?></p>
+<p><?php echo form_label($this->lang->line('lng_title').' *', 'lng_title'); ?><?php echo form_input('lng_title', set_value('lng_title', $lng[0]->lng_title), 'id="lng_title" class="inputtext"'); ?></p>
 </div>
 
 <div class="column1 columnlast">

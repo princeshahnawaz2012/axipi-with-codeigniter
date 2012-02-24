@@ -21,8 +21,8 @@
 <?php echo form_open(current_url().'?a=create'); ?>
 
 <div class="column1">
-<p><?php echo form_label($this->lang->line('lng_code').' *', 'lng_code'); ?><?php echo form_input('lng_code', set_value('lng_code'), 'class="inputtext"'); ?></p>
-<p><?php echo form_label($this->lang->line('lng_title').' *', 'lng_title'); ?><?php echo form_input('lng_title', set_value('lng_title'), 'class="inputtext"'); ?></p>
+<p><?php echo form_label($this->lang->line('lng_code').' *', 'lng_code'); ?><?php echo form_input('lng_code', set_value('lng_code'), 'id="lng_code" class="inputtext"'); ?></p>
+<p><?php echo form_label($this->lang->line('lng_title').' *', 'lng_title'); ?><?php echo form_input('lng_title', set_value('lng_title'), 'id="lng_title" class="inputtext"'); ?></p>
 </div>
 
 <div class="column1 columnlast">

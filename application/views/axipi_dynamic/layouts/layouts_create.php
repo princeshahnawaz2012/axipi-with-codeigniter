@@ -21,7 +21,7 @@
 <?php echo form_open(current_url().'?a=create'); ?>
 
 <div class="column1">
-<p><?php echo form_label($this->lang->line('lay_code').' *', 'lay_code'); ?><?php echo form_input('lay_code', set_value('lay_code'), 'class="inputtext"'); ?></p>
+<p><?php echo form_label($this->lang->line('lay_code').' *', 'lay_code'); ?><?php echo form_input('lay_code', set_value('lay_code'), 'id="lay_code" class="inputtext"'); ?></p>
 </div>
 
 <div class="column1 columnlast">

@@ -18,7 +18,7 @@
 
 <?php echo form_open(current_url()); ?>
 <div class="filters">
-<div><?php echo form_label($this->lang->line('grp_code'), 'groups_grp_code'); ?><?php echo form_input('groups_grp_code', set_value('groups_grp_code', $this->session->userdata('groups_grp_code')), 'class="inputtext"'); ?></div>
+<div><?php echo form_label($this->lang->line('grp_code'), 'groups_grp_code'); ?><?php echo form_input('groups_grp_code', set_value('groups_grp_code', $this->session->userdata('groups_grp_code')), 'id="groups_grp_code" class="inputtext"'); ?></div>
 <div><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></div>
 </div>
 </form>

@@ -21,7 +21,7 @@
 <?php echo form_open(current_url().'?a=create'); ?>
 
 <div class="column1">
-<p><?php echo form_label($this->lang->line('grp_code').' *', 'grp_code'); ?><?php echo form_input('grp_code', set_value('grp_code'), 'class="inputtext"'); ?></p>
+<p><?php echo form_label($this->lang->line('grp_code').' *', 'grp_code'); ?><?php echo form_input('grp_code', set_value('grp_code'), 'id="grp_code" class="inputtext"'); ?></p>
 </div>
 
 <div class="column1 columnlast">

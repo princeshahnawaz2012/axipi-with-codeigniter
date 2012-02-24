@@ -26,7 +26,7 @@ if($usr) {
 <?php echo form_open(current_url().'?a=update&amp;usr_id='.$usr[0]->usr_id); ?>
 
 <div class="column1">
-<p><?php echo form_label($this->lang->line('usr_email').' *', 'usr_email'); ?><?php echo form_input('usr_email', set_value('usr_email', $usr[0]->usr_email), 'class="inputtext"'); ?></p>
+<p><?php echo form_label($this->lang->line('usr_email').' *', 'usr_email'); ?><?php echo form_input('usr_email', set_value('usr_email', $usr[0]->usr_email), 'id="usr_email" class="inputtext"'); ?></p>
 </div>
 
 <div class="column1 columnlast">

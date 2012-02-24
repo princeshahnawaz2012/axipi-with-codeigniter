@@ -27,7 +27,7 @@ if($per) {
 <?php echo form_open(current_url().'?a=delete&amp;per_id='.$per[0]->per_id); ?>
 
 <div class="column1">
-<p><?php echo form_label($this->lang->line('confirm').' *', 'confirm'); ?><?php echo form_checkbox('confirm', 1, false, 'class="inputcheckbox"'); ?></p>
+<p><?php echo form_label($this->lang->line('confirm').' *', 'confirm'); ?><?php echo form_checkbox('confirm', 1, false, 'id="confirm" class="inputcheckbox"'); ?></p>
 <p><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></p>
 </div>
 

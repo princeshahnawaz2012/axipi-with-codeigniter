@@ -18,8 +18,8 @@
 
 <?php echo form_open(current_url()); ?>
 <div class="filters">
-<div><?php echo form_label($this->lang->line('cou_alpha2'), 'countries_cou_alpha2'); ?><?php echo form_input('countries_cou_alpha2', set_value('countries_cou_alpha2', $this->session->userdata('countries_cou_alpha2')), 'class="inputtext"'); ?></div>
-<div><?php echo form_label($this->lang->line('cou_alpha3'), 'countries_cou_alpha3'); ?><?php echo form_input('countries_cou_alpha3', set_value('countries_cou_alpha3', $this->session->userdata('countries_cou_alpha3')), 'class="inputtext"'); ?></div>
+<div><?php echo form_label($this->lang->line('cou_alpha2'), 'countries_cou_alpha2'); ?><?php echo form_input('countries_cou_alpha2', set_value('countries_cou_alpha2', $this->session->userdata('countries_cou_alpha2')), 'id="countries_cou_alpha2" class="inputtext"'); ?></div>
+<div><?php echo form_label($this->lang->line('cou_alpha3'), 'countries_cou_alpha3'); ?><?php echo form_input('countries_cou_alpha3', set_value('countries_cou_alpha3', $this->session->userdata('countries_cou_alpha3')), 'id="countries_cou_alpha3" class="inputtext"'); ?></div>
 <div><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></div>
 </div>
 </form>

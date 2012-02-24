@@ -18,7 +18,7 @@
 
 <?php echo form_open(current_url()); ?>
 <div class="filters">
-<div><?php echo form_label($this->lang->line('lng_code'), 'languages_lng_code'); ?><?php echo form_input('languages_lng_code', set_value('languages_lng_code', $this->session->userdata('languages_lng_code')), 'class="inputtext"'); ?></div>
+<div><?php echo form_label($this->lang->line('lng_code'), 'languages_lng_code'); ?><?php echo form_input('languages_lng_code', set_value('languages_lng_code', $this->session->userdata('languages_lng_code')), 'id="languages_lng_code" class="inputtext"'); ?></div>
 <div><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></div>
 </div>
 </form>

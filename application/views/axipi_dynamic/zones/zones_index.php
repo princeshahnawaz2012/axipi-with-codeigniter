@@ -18,7 +18,7 @@
 
 <?php echo form_open(current_url()); ?>
 <div class="filters">
-<div><?php echo form_label($this->lang->line('zon_code'), 'zones_zon_code'); ?><?php echo form_input('zones_zon_code', set_value('zones_zon_code', $this->session->userdata('zones_zon_code')), 'class="inputtext"'); ?></div>
+<div><?php echo form_label($this->lang->line('zon_code'), 'zones_zon_code'); ?><?php echo form_input('zones_zon_code', set_value('zones_zon_code', $this->session->userdata('zones_zon_code')), 'id="zones_zon_code" class="inputtext"'); ?></div>
 <div><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></div>
 </div>
 </form>

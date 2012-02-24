@@ -26,9 +26,9 @@ if($zon) {
 <?php echo form_open(current_url().'?a=update&amp;zon_id='.$zon[0]->zon_id); ?>
 
 <div class="column1">
-<p><?php echo form_label($this->lang->line('lay_code').' *', 'lay_id'); ?><?php echo form_dropdown('lay_id', $select_layout, set_value('lay_id', $zon[0]->lay_id), 'class="select"'); ?></p>
-<p><?php echo form_label($this->lang->line('zon_code').' *', 'zon_code'); ?><?php echo form_input('zon_code', set_value('zon_code', $zon[0]->zon_code), 'class="inputtext"'); ?></p>
-<p><?php echo form_label($this->lang->line('zon_ordering').' *', 'zon_ordering'); ?><?php echo form_input('zon_ordering', set_value('zon_ordering', $zon[0]->zon_ordering), 'class="inputtext numericfield"'); ?></p>
+<p><?php echo form_label($this->lang->line('lay_code').' *', 'lay_id'); ?><?php echo form_dropdown('lay_id', $select_layout, set_value('lay_id', $zon[0]->lay_id), 'id="lay_id" class="select"'); ?></p>
+<p><?php echo form_label($this->lang->line('zon_code').' *', 'zon_code'); ?><?php echo form_input('zon_code', set_value('zon_code', $zon[0]->zon_code), 'id="zon_code" class="inputtext"'); ?></p>
+<p><?php echo form_label($this->lang->line('zon_ordering').' *', 'zon_ordering'); ?><?php echo form_input('zon_ordering', set_value('zon_ordering', $zon[0]->zon_ordering), 'id="zon_ordering" class="inputtext numericfield"'); ?></p>
 </div>
 
 <div class="column1 columnlast">

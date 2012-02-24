@@ -26,8 +26,8 @@ if($cou) {
 <?php echo form_open(current_url().'?a=update&amp;cou_id='.$cou[0]->cou_id); ?>
 
 <div class="column1">
-<p><?php echo form_label($this->lang->line('cou_alpha2').' *', 'cou_alpha2'); ?><?php echo form_input('cou_alpha2', set_value('cou_alpha2', $cou[0]->cou_alpha2), 'class="inputtext"'); ?></p>
-<p><?php echo form_label($this->lang->line('cou_alpha3').' *', 'cou_alpha3'); ?><?php echo form_input('cou_alpha3', set_value('cou_alpha3', $cou[0]->cou_alpha3), 'class="inputtext"'); ?></p>
+<p><?php echo form_label($this->lang->line('cou_alpha2').' *', 'cou_alpha2'); ?><?php echo form_input('cou_alpha2', set_value('cou_alpha2', $cou[0]->cou_alpha2), 'id="cou_alpha2" class="inputtext"'); ?></p>
+<p><?php echo form_label($this->lang->line('cou_alpha3').' *', 'cou_alpha3'); ?><?php echo form_input('cou_alpha3', set_value('cou_alpha3', $cou[0]->cou_alpha3), 'id="cou_alpha3" class="inputtext"'); ?></p>
 </div>
 
 <div class="column1 columnlast">

@@ -26,7 +26,7 @@ if($cmp) {
 <?php echo form_open(current_url().'?a=update&amp;cmp_id='.$cmp[0]->cmp_id); ?>
 
 <div class="column1">
-<p><?php echo form_label($this->lang->line('cmp_code').' *', 'cmp_code'); ?><?php echo form_input('cmp_code', set_value('cmp_code', $cmp[0]->cmp_code), 'class="inputtext"'); ?></p>
+<p><?php echo form_label($this->lang->line('cmp_code').' *', 'cmp_code'); ?><?php echo form_input('cmp_code', set_value('cmp_code', $cmp[0]->cmp_code), 'id="cmp_code" class="inputtext"'); ?></p>
 </div>
 
 <div class="column1 columnlast">
