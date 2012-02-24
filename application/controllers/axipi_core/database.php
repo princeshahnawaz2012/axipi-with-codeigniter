@@ -36,13 +36,13 @@ class database extends CI_Controller {
 			} else {
 				$engine = $row->Type;
 			}
-			if($engine == 'InnoDB') {
+			/*if($engine == 'InnoDB') {
 				$sql_select = 'SELECT COUNT(*) AS id FROM '.$row->Name;
 				$total = $this->dtb->query_select($sql_select);
 				$rows = $total['r']['id'][0];
-			} else {
+			} else {*/
 				$rows = $row->Rows;
-			}
+			//}
 			$output .= '<tr>';
 			$output .= '<td>'.$row->Name.'</td>';
 			if(!file_exists('application/controllers/axipi_dynamic/'.$row->Comment.'.php')) {

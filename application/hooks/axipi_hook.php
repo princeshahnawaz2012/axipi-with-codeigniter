@@ -10,9 +10,10 @@ class axipi_hook {
 			$this->CI->usr->groups[1002] = 'connected';
 		} else {
 			$this->CI->usr = array();
-			$this->CI->usr[0] = new stdClass();
+			$this->CI->usr = new stdClass();
 			$this->CI->usr->usr_id = 0;
 			$this->CI->usr->usr_access = 'guest';
+			$this->CI->usr->groups = array();
 			$this->CI->usr->groups[1001] = 'guest';
 		}
 		$this->CI->usr->count_groups = count($this->CI->usr->groups);

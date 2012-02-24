@@ -8,7 +8,7 @@ class users_model extends CI_Model {
 		$this->session->unset_userdata('usr_id');
         $query = $this->db->query('SELECT usr.usr_id, usr.usr_logincount, usr.usr_protectedpassword FROM '.$this->db->dbprefix('usr').' AS usr WHERE usr.usr_email = ? GROUP BY usr.usr_id', array($email));
 		if($query->num_rows() > 0) {
-			$usr = $query->result();
+			$usr = $query->row();
 			if(md5($password) == $usr->usr_protectedpassword) {
 				$this->db->set('usr_loginlast', date('Y-m-d H:i:s'));
 				$this->db->set('usr_logincount', $usr->usr_logincount + 1);
