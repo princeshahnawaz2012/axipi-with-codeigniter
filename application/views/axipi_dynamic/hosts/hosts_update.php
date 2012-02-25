@@ -33,6 +33,8 @@ if($hst) {
 </div>
 
 <div class="column1 columnlast">
+<p><?php echo form_label($this->lang->line('hst_gzhandler'), 'hst_gzhandler'); ?><?php echo form_checkbox('hst_gzhandler', 1, set_value('hst_gzhandler', $hst->hst_gzhandler), 'id="hst_gzhandler" class="inputcheckbox"'); ?></p>
+<p><?php echo form_label($this->lang->line('hst_debug'), 'hst_debug'); ?><?php echo form_checkbox('hst_debug', 1, set_value('hst_debug', $hst->hst_debug), 'id="hst_debug" class="inputcheckbox"'); ?></p>
 <p><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></p>
 </div>
 

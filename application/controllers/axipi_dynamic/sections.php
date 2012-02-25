@@ -14,7 +14,7 @@ class sections extends CI_Controller {
 		}
 	}
 	public function index() {
-		$this->load->helper(array('axipi', 'form'));
+		$this->load->helper(array('form'));
 
 		$filters = array();
 		$filters['sections_sct_code'] = array('sct.sct_code', 'like');
@@ -29,8 +29,12 @@ class sections extends CI_Controller {
 		$data['results'] = $this->sections_model->get_pagination_sections($flt, $build_pagination['limit'], $build_pagination['start']);
 		$this->zones['content'] = $this->load->view('axipi_dynamic/sections/sections_index', $data, true);
 	}
-	public function rule_sct_code($sct_code) {
-		$query = $this->db->query('SELECT sct.sct_code FROM '.$this->db->dbprefix('sct').' AS sct WHERE sct.sct_code = ? GROUP BY sct.sct_id', array($sct_code));
+	public function rule_sct_code($sct_code, $current = '') {
+		if($current != '') {
+			$query = $this->db->query('SELECT sct.sct_code FROM '.$this->db->dbprefix('sct').' AS sct WHERE sct.sct_code = ? AND sct.sct_code != ? GROUP BY sct.sct_id', array($sct_code, $current));
+		} else {
+			$query = $this->db->query('SELECT sct.sct_code FROM '.$this->db->dbprefix('sct').' AS sct WHERE sct.sct_code = ? GROUP BY sct.sct_id', array($sct_code));
+		}
 		if($query->num_rows() > 0) {
 			$this->form_validation->set_message('rule_sct_code', $this->lang->line('value_already_used'));
 			return FALSE;
@@ -75,7 +79,7 @@ class sections extends CI_Controller {
 			$data['sct'] = $this->sections_model->get_section($this->sct_id);
 			$data['select_layout'] = $this->sections_model->select_layout();
 
-			$this->form_validation->set_rules('sct_code', 'lang:sct_code', 'max_length[100]');
+			$this->form_validation->set_rules('sct_code', 'lang:sct_code', 'required|max_length[100]|callback_rule_sct_code['.$data['sct']->sct_code.']');
 			$this->form_validation->set_rules('lay_id', 'lang:lay_code', 'required');
 
 			if($this->form_validation->run() == FALSE) {

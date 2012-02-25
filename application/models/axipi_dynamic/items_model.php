@@ -46,6 +46,19 @@ class items_model extends CI_Model {
 		$this->db->cache_off();
         return $select_language;
     }
+    function select_layout() {
+		$select_layout = array();
+		$select_layout[''] = '--';
+		$this->db->cache_on();
+        $query = $this->db->query('SELECT lay.lay_id, lay.lay_code FROM '.$this->db->dbprefix('lay').' AS lay WHERE 1 GROUP BY lay.lay_id ORDER BY lay.lay_code ASC');
+		if($query->num_rows() > 0) {
+			foreach($query->result() as $row) {
+				$select_layout[$row->lay_id] = $row->lay_code;
+			}
+		}
+		$this->db->cache_off();
+        return $select_layout;
+    }
     function get_all_items($flt) {
         $query = $this->db->query('SELECT COUNT(itm.itm_id) AS count FROM '.$this->db->dbprefix('itm').' AS itm LEFT JOIN '.$this->db->dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id LEFT JOIN '.$this->db->dbprefix('sct').' AS sct ON sct.sct_id = itm.sct_id LEFT JOIN '.$this->db->dbprefix('lng').' AS lng ON lng.lng_id = itm.lng_id WHERE '.implode(' AND ', $flt));
         return $query->row();
@@ -56,6 +69,8 @@ class items_model extends CI_Model {
     }
     function get_item($itm_id) {
         $query = $this->db->query('SELECT itm.*, cmp.cmp_code, sct.sct_code, lng.lng_code, COUNT(DISTINCT(items.itm_id)) AS count_items FROM '.$this->db->dbprefix('itm').' AS itm LEFT JOIN '.$this->db->dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id LEFT JOIN '.$this->db->dbprefix('sct').' AS sct ON sct.sct_id = itm.sct_id LEFT JOIN '.$this->db->dbprefix('lng').' AS lng ON lng.lng_id = itm.lng_id LEFT JOIN itm AS items ON items.itm_parent = itm.itm_id WHERE itm.itm_id = ? GROUP BY itm.itm_id', array($itm_id));
-        return $query->row();
+		$itm = $query->row();
+		list($itm->itm_publishstartdate, $itm->itm_publishstarttime) = explode(' ', $itm->itm_publishstartdate);
+        return $itm;
     }
 }

@@ -24,4 +24,11 @@ if( ! function_exists('build_filters')) {
 		}
 		return $flt;
 	}
+	function tinyint2boolean($value) {
+		if($value == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

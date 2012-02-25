@@ -64,7 +64,7 @@ $autoload['libraries'] = array('axipi_library', 'session');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url');
+$autoload['helper'] = array('axipi_helper', 'url');
 
 
 /*

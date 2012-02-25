@@ -38,17 +38,17 @@
 </thead>
 <tbody>
 
-<?php foreach($results as $result):?>
+<?php foreach($results as $result) { ?>
 <tr>
 <td><a href="<?php echo current_url(); ?>?a=read&amp;usr_id=<?php echo $result->usr_id;?>"><?php echo $result->usr_id;?></a></td>
 <td><?php echo $result->usr_email; ?></td>
-<td><?php echo $result->count_groups; ?>  (<?php echo $result->groups; ?>)</td>
+<td><?php echo $result->count_groups; ?><?php if($result->count_groups > 0) { ?> (<?php echo $result->groups; ?>)<?php } ?></td>
 <th>
 <a href="<?php echo current_url(); ?>?a=update&amp;usr_id=<?php echo $result->usr_id;?>"><?php echo $this->lang->line('update'); ?></a>
 <?php if($result->count_groups == 0 && $result->usr_islocked == 0) { ?><a href="<?php echo current_url(); ?>?a=delete&amp;usr_id=<?php echo $result->usr_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
 </th>
 </tr>
-<?php endforeach;?>
+<?php } ?>
 
 </tbody>
 </table>

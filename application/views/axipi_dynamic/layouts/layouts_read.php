@@ -23,6 +23,7 @@ if($lay) {
 
 <div class="column1">
 <p><span class="label"><?php echo $this->lang->line('lay_code'); ?></span><?php echo $lay->lay_code; ?></p>
+<p><span class="label"><?php echo $this->lang->line('lay_type'); ?></span><?php echo $lay->lay_type; ?></p>
 </div>
 
 <div class="column1 columnlast">

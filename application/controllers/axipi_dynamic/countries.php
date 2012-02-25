@@ -14,7 +14,7 @@ class countries extends CI_Controller {
 		}
 	}
 	public function index() {
-		$this->load->helper(array('axipi', 'form'));
+		$this->load->helper(array('form'));
 
 		$filters = array();
 		$filters['countries_cou_alpha2'] = array('cou.cou_alpha2', 'like');
@@ -30,10 +30,27 @@ class countries extends CI_Controller {
 		$data['results'] = $this->countries_model->get_pagination_countries($flt, $build_pagination['limit'], $build_pagination['start']);
 		$this->zones['content'] = $this->load->view('axipi_dynamic/countries/countries_index', $data, true);
 	}
-	public function rule_cou_alpha2($cou_alpha2) {
-		$query = $this->db->query('SELECT cou.cou_alpha2 FROM '.$this->db->dbprefix('cou').' AS cou WHERE cou.cou_alpha2 = ? country BY cou.cou_id', array($cou_alpha2));
+	public function rule_cou_alpha2($cou_alpha2, $current = '') {
+		if($current != '') {
+			$query = $this->db->query('SELECT cou.cou_alpha2 FROM '.$this->db->dbprefix('cou').' AS cou WHERE cou.cou_alpha2 = ? AND cou.cou_alpha2 != ? GROUP BY cou.cou_id', array($cou_alpha2, $current));
+		} else {
+			$query = $this->db->query('SELECT cou.cou_alpha2 FROM '.$this->db->dbprefix('cou').' AS cou WHERE cou.cou_alpha2 = ? GROUP BY cou.cou_id', array($cou_alpha2));
+		}
 		if($query->num_rows() > 0) {
 			$this->form_validation->set_message('rule_cou_alpha2', $this->lang->line('value_already_used'));
+			return FALSE;
+		} else {
+			return TRUE;
+		}
+	}
+	public function rule_cou_alpha3($cou_alpha3, $current = '') {
+		if($current != '') {
+			$query = $this->db->query('SELECT cou.cou_alpha3 FROM '.$this->db->dbprefix('cou').' AS cou WHERE cou.cou_alpha3 = ? AND cou.cou_alpha3 != ? GROUP BY cou.cou_id', array($cou_alpha3, $current));
+		} else {
+			$query = $this->db->query('SELECT cou.cou_alpha3 FROM '.$this->db->dbprefix('cou').' AS cou WHERE cou.cou_alpha3 = ? GROUP BY cou.cou_id', array($cou_alpha3));
+		}
+		if($query->num_rows() > 0) {
+			$this->form_validation->set_message('rule_cou_alpha3', $this->lang->line('value_already_used'));
 			return FALSE;
 		} else {
 			return TRUE;
@@ -44,7 +61,8 @@ class countries extends CI_Controller {
 		$this->load->library('form_validation');
 		$data = array();
 
-		$this->form_validation->set_rules('cou_alpha2', 'lang:cou_alpha2', 'required|max_length[100]|callback_rule_cou_alpha2');
+		$this->form_validation->set_rules('cou_alpha2', 'lang:cou_alpha2', 'required|exact_length[2]|callback_rule_cou_alpha2');
+		$this->form_validation->set_rules('cou_alpha3', 'lang:cou_alpha3', 'required|exact_length[3]|callback_rule_cou_alpha3');
 
 		if($this->form_validation->run() == FALSE) {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/countries/countries_create', $data, true);
@@ -73,7 +91,8 @@ class countries extends CI_Controller {
 			$data = array();
 			$data['cou'] = $this->countries_model->get_country($this->cou_id);
 
-			$this->form_validation->set_rules('cou_alpha2', 'lang:cou_alpha2', 'max_length[100]');
+			$this->form_validation->set_rules('cou_alpha2', 'lang:cou_alpha2', 'required|exact_length[2]|callback_rule_cou_alpha2['.$data['cou']->cou_alpha2.']');
+			$this->form_validation->set_rules('cou_alpha3', 'lang:cou_alpha3', 'required|exact_length[3]|callback_rule_cou_alpha3['.$data['cou']->cou_alpha3.']');
 
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/countries/countries_update', $data, true);

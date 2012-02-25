@@ -23,6 +23,8 @@ if($usr) {
 
 <div class="column1">
 <p><span class="label"><?php echo $this->lang->line('usr_email'); ?></span><?php echo $usr->usr_email; ?></p>
+<p><span class="label"><?php echo $this->lang->line('usr_firstname'); ?></span><?php echo $usr->usr_firstname; ?></p>
+<p><span class="label"><?php echo $this->lang->line('usr_lastname'); ?></span><?php echo $usr->usr_lastname; ?></p>
 </div>
 
 <div class="column1 columnlast">

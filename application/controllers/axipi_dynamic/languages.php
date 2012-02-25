@@ -14,7 +14,7 @@ class languages extends CI_Controller {
 		}
 	}
 	public function index() {
-		$this->load->helper(array('axipi', 'form'));
+		$this->load->helper(array('form'));
 
 		$filters = array();
 		$filters['languages_lng_code'] = array('lng.lng_code', 'like');
@@ -29,8 +29,12 @@ class languages extends CI_Controller {
 		$data['results'] = $this->languages_model->get_pagination_languages($flt, $build_pagination['limit'], $build_pagination['start']);
 		$this->zones['content'] = $this->load->view('axipi_dynamic/languages/languages_index', $data, true);
 	}
-	public function rule_lng_code($lng_code) {
-		$query = $this->db->query('SELECT lng.lng_code FROM '.$this->db->dbprefix('lng').' AS lng WHERE lng.lng_code = ? GROUP BY lng.lng_id', array($lng_code));
+	public function rule_lng_code($lng_code, $current = '') {
+		if($current != '') {
+			$query = $this->db->query('SELECT lng.lng_code FROM '.$this->db->dbprefix('lng').' AS lng WHERE lng.lng_code = ? AND lng.lng_code != ? GROUP BY lng.lng_id', array($lng_code, $current));
+		} else {
+			$query = $this->db->query('SELECT lng.lng_code FROM '.$this->db->dbprefix('lng').' AS lng WHERE lng.lng_code = ? GROUP BY lng.lng_id', array($lng_code));
+		}
 		if($query->num_rows() > 0) {
 			$this->form_validation->set_message('rule_lng_code', $this->lang->line('value_already_used'));
 			return FALSE;
@@ -73,7 +77,7 @@ class languages extends CI_Controller {
 			$data = array();
 			$data['lng'] = $this->languages_model->get_language($this->lng_id);
 
-			$this->form_validation->set_rules('lng_code', 'lang:lng_code', 'required|exact_length[2]');
+			$this->form_validation->set_rules('lng_code', 'lang:lng_code', 'required|exact_length[2]|callback_rule_lng_code['.$data['lng']->lng_code.']');
 			$this->form_validation->set_rules('lng_title', 'lang:lng_title', 'required|max_length[255]');
 
 			if($this->form_validation->run() == FALSE) {

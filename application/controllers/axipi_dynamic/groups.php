@@ -14,7 +14,7 @@ class groups extends CI_Controller {
 		}
 	}
 	public function index() {
-		$this->load->helper(array('axipi', 'form'));
+		$this->load->helper(array('form'));
 
 		$filters = array();
 		$filters['groups_grp_code'] = array('grp.grp_code', 'like');
@@ -29,8 +29,12 @@ class groups extends CI_Controller {
 		$data['results'] = $this->groups_model->get_pagination_groups($flt, $build_pagination['limit'], $build_pagination['start']);
 		$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_index', $data, true);
 	}
-	public function rule_grp_code($grp_code) {
-		$query = $this->db->query('SELECT grp.grp_code FROM '.$this->db->dbprefix('grp').' AS grp WHERE grp.grp_code = ? GROUP BY grp.grp_id', array($grp_code));
+	public function rule_grp_code($grp_code, $current = '') {
+		if($current != '') {
+			$query = $this->db->query('SELECT grp.grp_code FROM '.$this->db->dbprefix('grp').' AS grp WHERE grp.grp_code = ? AND grp.grp_code != ? GROUP BY grp.grp_id', array($grp_code, $current));
+		} else {
+			$query = $this->db->query('SELECT grp.grp_code FROM '.$this->db->dbprefix('grp').' AS grp WHERE grp.grp_code = ? GROUP BY grp.grp_id', array($grp_code));
+		}
 		if($query->num_rows() > 0) {
 			$this->form_validation->set_message('rule_grp_code', $this->lang->line('value_already_used'));
 			return FALSE;
@@ -71,7 +75,7 @@ class groups extends CI_Controller {
 			$data = array();
 			$data['grp'] = $this->groups_model->get_group($this->grp_id);
 
-			$this->form_validation->set_rules('grp_code', 'lang:grp_code', 'max_length[100]');
+			$this->form_validation->set_rules('grp_code', 'lang:grp_code', 'required|max_length[100]|callback_rule_grp_code['.$data['grp']->grp_code.']');
 
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_update', $data, true);

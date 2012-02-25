@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 
-<?php foreach($results as $result):?>
+<?php foreach($results as $result) { ?>
 <tr>
 <td><a href="<?php echo current_url(); ?>?a=read&amp;grp_id=<?php echo $result->grp_id;?>"><?php echo $result->grp_id;?></a></td>
 <td><?php echo $result->grp_code; ?></td>
@@ -50,7 +50,7 @@
 <?php if($result->count_items == 0 && $result->grp_islocked == 0) { ?><a href="<?php echo current_url(); ?>?a=delete&amp;grp_id=<?php echo $result->grp_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
 </th>
 </tr>
-<?php endforeach;?>
+<?php } ?>
 
 </tbody>
 </table>

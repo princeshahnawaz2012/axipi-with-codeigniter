@@ -14,7 +14,7 @@ class items extends CI_Controller {
 		}
 	}
 	public function index() {
-		$this->load->helper(array('axipi', 'form'));
+		$this->load->helper(array('form'));
 
 		$filters = array();
 		$filters['items_itm_code'] = array('itm.itm_code', 'like');
@@ -35,8 +35,12 @@ class items extends CI_Controller {
 		$data['select_language'] = $this->items_model->select_language();
 		$this->zones['content'] = $this->load->view('axipi_dynamic/items/items_index', $data, true);
 	}
-	public function rule_itm_code($itm_code) {
-		$query = $this->db->query('SELECT itm.itm_code FROM '.$this->db->dbprefix('itm').' AS itm WHERE itm.itm_code = ? GROUP BY itm.itm_id', array($itm_code));
+	public function rule_itm_code($itm_code, $current = '') {
+		if($current != '') {
+			$query = $this->db->query('SELECT itm.itm_code FROM '.$this->db->dbprefix('itm').' AS itm WHERE itm.itm_code = ? AND itm.itm_code != ? GROUP BY itm.itm_id', array($itm_code, $current));
+		} else {
+			$query = $this->db->query('SELECT itm.itm_code FROM '.$this->db->dbprefix('itm').' AS itm WHERE itm.itm_code = ? GROUP BY itm.itm_id', array($itm_code));
+		}
 		if($query->num_rows() > 0) {
 			$this->form_validation->set_message('rule_itm_code', $this->lang->line('value_already_used'));
 			return FALSE;
@@ -51,6 +55,7 @@ class items extends CI_Controller {
 		$data['select_component'] = $this->items_model->select_component();
 		$data['select_section'] = $this->items_model->select_section();
 		$data['select_language'] = $this->items_model->select_language();
+		$data['select_layout'] = $this->items_model->select_layout();
 
 		$this->form_validation->set_rules('sct_id', 'lang:sct_code', 'required');
 		$this->form_validation->set_rules('itm_code', 'lang:itm_code', 'required|max_length[100]|callback_rule_itm_code');
@@ -65,6 +70,7 @@ class items extends CI_Controller {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/items/items_create', $data, true);
 		} else {
 			$this->db->set('sct_id', $this->input->post('sct_id'));
+			$this->db->set('lay_id', $this->input->post('lay_id'));
 			$this->db->set('itm_code', $this->input->post('itm_code'));
 			$this->db->set('itm_virtualcode', $this->input->post('itm_virtualcode'));
 			$this->db->set('itm_title', $this->input->post('itm_title'));
@@ -72,7 +78,13 @@ class items extends CI_Controller {
 			$this->db->set('itm_content', $this->input->post('itm_content'));
 			$this->db->set('itm_summary', $this->input->post('itm_summary'));
 			$this->db->set('itm_link', $this->input->post('itm_link'));
+			$this->db->set('itm_description', $this->input->post('itm_description'));
+			$this->db->set('itm_keywords', $this->input->post('itm_keywords'));
+			$this->db->set('itm_ordering', $this->input->post('itm_ordering'));
+			$this->db->set('itm_access', $this->input->post('itm_access'));
+			$this->db->set('itm_version', 1);
 			$this->db->set('lng_id', $this->input->post('lng_id'));
+			$this->db->set('itm_publishstartdate', $this->input->post('itm_publishstartdate').' '.$this->input->post('itm_publishstarttime'));
 			$this->db->set('itm_createdby', $this->usr->usr_id);
 			$this->db->set('itm_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('itm_ispublished', 1);
@@ -96,9 +108,10 @@ class items extends CI_Controller {
 			$data['select_component'] = $this->items_model->select_component();
 			$data['select_section'] = $this->items_model->select_section();
 			$data['select_language'] = $this->items_model->select_language();
+			$data['select_layout'] = $this->items_model->select_layout();
 
 			$this->form_validation->set_rules('sct_id', 'lang:sct_code', 'required');
-			$this->form_validation->set_rules('itm_code', 'lang:itm_code', 'required|max_length[100]');
+			$this->form_validation->set_rules('itm_code', 'lang:itm_code', 'required|max_length[100]|callback_rule_itm_code['.$data['itm']->itm_code.']');
 			$this->form_validation->set_rules('itm_virtualcode', 'lang:itm_virtualcode', 'max_length[100]');
 			$this->form_validation->set_rules('itm_title', 'lang:itm_title', 'required|max_length[255]');
 			$this->form_validation->set_rules('cmp_id', 'lang:cmp_code', 'required');
@@ -110,6 +123,7 @@ class items extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/items/items_update', $data, true);
 			} else {
 				$this->db->set('sct_id', $this->input->post('sct_id'));
+				$this->db->set('lay_id', $this->input->post('lay_id'));
 				$this->db->set('itm_code', $this->input->post('itm_code'));
 				$this->db->set('itm_virtualcode', $this->input->post('itm_virtualcode'));
 				$this->db->set('itm_title', $this->input->post('itm_title'));
@@ -117,7 +131,13 @@ class items extends CI_Controller {
 				$this->db->set('itm_content', $this->input->post('itm_content'));
 				$this->db->set('itm_summary', $this->input->post('itm_summary'));
 				$this->db->set('itm_link', $this->input->post('itm_link'));
+				$this->db->set('itm_description', $this->input->post('itm_description'));
+				$this->db->set('itm_keywords', $this->input->post('itm_keywords'));
+				$this->db->set('itm_ordering', $this->input->post('itm_ordering'));
+				$this->db->set('itm_access', $this->input->post('itm_access'));
+				$this->db->set('itm_version', $data['itm']->itm_version + 1);
 				$this->db->set('lng_id', $this->input->post('lng_id'));
+				$this->db->set('itm_publishstartdate', $this->input->post('itm_publishstartdate').' '.$this->input->post('itm_publishstarttime'));
 				$this->db->set('itm_modifiedby', $this->usr->usr_id);
 				$this->db->set('itm_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('itm_id', $this->itm_id);

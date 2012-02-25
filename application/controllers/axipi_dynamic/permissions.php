@@ -14,7 +14,7 @@ class permissions extends CI_Controller {
 		}
 	}
 	public function index() {
-		$this->load->helper(array('axipi', 'form'));
+		$this->load->helper(array('form'));
 
 		$filters = array();
 		$filters['permissions_per_code'] = array('per.per_code', 'like');
@@ -29,8 +29,12 @@ class permissions extends CI_Controller {
 		$data['results'] = $this->permissions_model->get_pagination_permissions($flt, $build_pagination['limit'], $build_pagination['start']);
 		$this->zones['content'] = $this->load->view('axipi_dynamic/permissions/permissions_index', $data, true);
 	}
-	public function rule_per_code($per_code) {
-		$query = $this->db->query('SELECT per.per_code FROM '.$this->db->dbprefix('per').' AS per WHERE per.per_code = ? GROUP BY per.per_id', array($per_code));
+	public function rule_per_code($per_code, $current = '') {
+		if($current != '') {
+			$query = $this->db->query('SELECT per.per_code FROM '.$this->db->dbprefix('per').' AS per WHERE per.per_code = ? AND per.per_code != ? GROUP BY per.per_id', array($per_code, $current));
+		} else {
+			$query = $this->db->query('SELECT per.per_code FROM '.$this->db->dbprefix('per').' AS per WHERE per.per_code = ? GROUP BY per.per_id', array($per_code));
+		}
 		if($query->num_rows() > 0) {
 			$this->form_validation->set_message('rule_per_code', $this->lang->line('value_already_used'));
 			return FALSE;
@@ -71,7 +75,7 @@ class permissions extends CI_Controller {
 			$data = array();
 			$data['per'] = $this->permissions_model->get_permission($this->per_id);
 
-			$this->form_validation->set_rules('per_code', 'lang:per_code', 'max_length[100]');
+			$this->form_validation->set_rules('per_code', 'lang:per_code', 'required|max_length[100]|callback_rule_per_code['.$data['per']->per_code.']');
 
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/permissions/permissions_update', $data, true);

@@ -27,6 +27,7 @@ if($lay) {
 
 <div class="column1">
 <p><?php echo form_label($this->lang->line('lay_code').' *', 'lay_code'); ?><?php echo form_input('lay_code', set_value('lay_code', $lay->lay_code), 'id="lay_code" class="inputtext"'); ?></p>
+<p><?php echo form_label($this->lang->line('lay_type').' *', 'lay_type'); ?><?php echo form_input('lay_type', set_value('lay_type', $lay->lay_type), 'id="lay_type" class="inputtext"'); ?></p>
 </div>
 
 <div class="column1 columnlast">

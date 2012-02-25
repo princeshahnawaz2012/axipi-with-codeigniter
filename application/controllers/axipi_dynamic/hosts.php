@@ -14,7 +14,7 @@ class hosts extends CI_Controller {
 		}
 	}
 	public function index() {
-		$this->load->helper(array('axipi', 'form'));
+		$this->load->helper(array('form'));
 
 		$filters = array();
 		$filters['hosts_hst_code'] = array('hst.hst_code', 'like');
@@ -29,8 +29,12 @@ class hosts extends CI_Controller {
 		$data['results'] = $this->hosts_model->get_pagination_hosts($flt, $build_pagination['limit'], $build_pagination['start']);
 		$this->zones['content'] = $this->load->view('axipi_dynamic/hosts/hosts_index', $data, true);
 	}
-	public function rule_hst_code($hst_code) {
-		$query = $this->db->query('SELECT hst.hst_code FROM '.$this->db->dbprefix('hst').' AS hst WHERE hst.hst_code = ? GROUP BY hst.hst_id', array($hst_code));
+	public function rule_hst_code($hst_code, $current = '') {
+		if($current != '') {
+			$query = $this->db->query('SELECT hst.hst_code FROM '.$this->db->dbprefix('hst').' AS hst WHERE hst.hst_code = ? AND hst.hst_code != ? GROUP BY hst.hst_id', array($hst_code, $current));
+		} else {
+			$query = $this->db->query('SELECT hst.hst_code FROM '.$this->db->dbprefix('hst').' AS hst WHERE hst.hst_code = ? GROUP BY hst.hst_id', array($hst_code));
+		}
 		if($query->num_rows() > 0) {
 			$this->form_validation->set_message('rule_hst_code', $this->lang->line('value_already_used'));
 			$this->form_validation->set_rules('hst_url', 'lang:hst_url', 'max_length[255]');
@@ -55,6 +59,8 @@ class hosts extends CI_Controller {
 			$this->db->set('lay_id', $this->input->post('lay_id'));
 			$this->db->set('hst_code', $this->input->post('hst_code'));
 			$this->db->set('hst_url', $this->input->post('hst_url'));
+			$this->db->set('hst_debug', $this->input->post('hst_debug'));
+			$this->db->set('hst_gzhandler', $this->input->post('hst_gzhandler'));
 			$this->db->set('hst_environment', $this->input->post('hst_environment'));
 			$this->db->set('hst_createdby', $this->usr->usr_id);
 			$this->db->set('hst_datecreated', date('Y-m-d H:i:s'));
@@ -79,7 +85,7 @@ class hosts extends CI_Controller {
 			$data['hst'] = $this->hosts_model->get_host($this->hst_id);
 			$data['select_layout'] = $this->hosts_model->select_layout();
 
-			$this->form_validation->set_rules('hst_code', 'lang:hst_code', 'required|max_length[100]');
+			$this->form_validation->set_rules('hst_code', 'lang:hst_code', 'required|max_length[100]|callback_rule_hst_code['.$data['hst']->hst_code.']');
 			$this->form_validation->set_rules('hst_url', 'lang:hst_url', 'required|max_length[255]');
 			$this->form_validation->set_rules('hst_environment', 'lang:hst_environment', 'max_length[100]');
 
@@ -89,6 +95,8 @@ class hosts extends CI_Controller {
 				$this->db->set('lay_id', $this->input->post('lay_id'));
 				$this->db->set('hst_code', $this->input->post('hst_code'));
 				$this->db->set('hst_url', $this->input->post('hst_url'));
+				$this->db->set('hst_debug', $this->input->post('hst_debug'));
+				$this->db->set('hst_gzhandler', $this->input->post('hst_gzhandler'));
 				$this->db->set('hst_environment', $this->input->post('hst_environment'));
 				$this->db->set('hst_modifiedby', $this->usr->usr_id);
 				$this->db->set('hst_datemodified', date('Y-m-d H:i:s'));

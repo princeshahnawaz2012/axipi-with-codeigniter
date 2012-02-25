@@ -190,7 +190,10 @@ class axipi_library {
 		$debug = '';
 		if($this->CI->lay->lay_type == 'text/html') {
 			function loop_v($data) {
-				$data = get_object_vars($data);
+				if(is_array($data)) {
+				} else {
+					$data = get_object_vars($data);
+				}
 				ksort($data);
 				$output = '<ul>';
 				foreach($data as $k => $v) {
@@ -209,73 +212,75 @@ class axipi_library {
 				$output .= '</ul>';
 				return $output;
 			}
-		
-			$debug = '<div id="box-debug">';
-			$debug .= '<h1>Debug</h1>';
-			$debug .= '<div class="display">';
-		
-			$debug .= '<p>elapsed time: '.$this->CI->benchmark->elapsed_time().'</p>';
-			if(function_exists('memory_get_peak_usage')) {
-				$debug .= '<p>memory peak usage: '.number_format(memory_get_peak_usage(), 0, '.', ' ').'</p>';
-			}
-			if(function_exists('memory_get_usage')) {
-				$debug .= '<p>memory usage: '.number_format(memory_get_usage(), 0, '.', ' ').'</p>';
-			}
 
-			if(count($this->debug) != 0) {
-				$debug .= '<ul>';
-				foreach($this->debug as $item) {
-					$debug .= '<li>'.$item.'</li>';
+			if($this->CI->hst->hst_debug == 1) {
+				$debug = '<div id="box-debug">';
+				$debug .= '<h1>Debug</h1>';
+				$debug .= '<div class="display">';
+			
+				$debug .= '<p>elapsed time: '.$this->CI->benchmark->elapsed_time().'</p>';
+				if(function_exists('memory_get_peak_usage')) {
+					$debug .= '<p>memory peak usage: '.number_format(memory_get_peak_usage(), 0, '.', ' ').'</p>';
 				}
-				$debug .= '</ul>';
+				if(function_exists('memory_get_usage')) {
+					$debug .= '<p>memory usage: '.number_format(memory_get_usage(), 0, '.', ' ').'</p>';
+				}
+	
+				if(count($this->debug) != 0) {
+					$debug .= '<ul>';
+					foreach($this->debug as $item) {
+						$debug .= '<li>'.$item.'</li>';
+					}
+					$debug .= '</ul>';
+				}
+	
+				/*$this->CI->output->enable_profiler(TRUE);
+				$sections = array('benchmarks', 'config', 'controller_info', 'get', 'http_headers', 'memory_usage', 'post', 'queries', 'uri_string', 'query_toggle_count');
+				$debug .= $this->CI->output->set_profiler_sections($sections);*/
+	
+				$debug .= '<div class="column1">';
+			
+				$debug .= '<h2>itm</h2>';
+				$debug .= loop_v($this->CI->itm);
+			
+				$debug .= '</div>';
+			
+				$debug .= '<div class="column1">';
+			
+				$debug .= '<h2>sct</h2>';
+				$debug .= loop_v($this->CI->sct);
+			
+				$debug .= '<h2>hst</h2>';
+				$debug .= loop_v($this->CI->hst);
+			
+				$debug .= '<h2>cmp</h2>';
+				$debug .= loop_v($this->CI->cmp);
+			
+				$debug .= '</div>';
+			
+				$debug .= '<div class="column1">';
+			
+				$debug .= '<h2>usr</h2>';
+				$debug .= loop_v($this->CI->usr);
+			
+				$debug .= '</div>';
+			
+				$debug .= '<div class="column1 columnlast">';
+			
+				$debug .= '<h2>lng</h2>';
+				$debug .= loop_v($this->CI->lng);
+			
+				$debug .= '<h2>lay</h2>';
+				$debug .= loop_v($this->CI->lay);
+			
+				$debug .= '<h2>stg</h2>';
+				//$debug .= loop_v($this->CI->stg);
+			
+				$debug .= '</div>';
+			
+				$debug .= '</div>';
+				$debug .= '</div>';
 			}
-
-			/*$this->CI->output->enable_profiler(TRUE);
-			$sections = array('benchmarks', 'config', 'controller_info', 'get', 'http_headers', 'memory_usage', 'post', 'queries', 'uri_string', 'query_toggle_count');
-			$debug .= $this->CI->output->set_profiler_sections($sections);*/
-
-			$debug .= '<div class="column1">';
-		
-			$debug .= '<h2>itm</h2>';
-			$debug .= loop_v($this->CI->itm);
-		
-			$debug .= '</div>';
-		
-			$debug .= '<div class="column1">';
-		
-			$debug .= '<h2>sct</h2>';
-			$debug .= loop_v($this->CI->sct);
-		
-			$debug .= '<h2>hst</h2>';
-			//$debug .= loop_v($this->CI->hst);
-		
-			$debug .= '<h2>cmp</h2>';
-			$debug .= loop_v($this->CI->cmp);
-		
-			$debug .= '</div>';
-		
-			$debug .= '<div class="column1">';
-		
-			$debug .= '<h2>usr</h2>';
-			$debug .= loop_v($this->CI->usr);
-		
-			$debug .= '</div>';
-		
-			$debug .= '<div class="column1 columnlast">';
-		
-			$debug .= '<h2>lng</h2>';
-			$debug .= loop_v($this->CI->lng);
-		
-			$debug .= '<h2>lay</h2>';
-			$debug .= loop_v($this->CI->lay);
-		
-			$debug .= '<h2>stg</h2>';
-			//$debug .= loop_v($this->CI->stg);
-		
-			$debug .= '</div>';
-		
-			$debug .= '</div>';
-			$debug .= '</div>';
 		}
 		return $debug."\r\n";
 	}

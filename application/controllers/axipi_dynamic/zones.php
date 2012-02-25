@@ -14,7 +14,7 @@ class zones extends CI_Controller {
 		}
 	}
 	public function index() {
-		$this->load->helper(array('axipi', 'form'));
+		$this->load->helper(array('form'));
 
 		$filters = array();
 		$filters['zones_zon_code'] = array('zon.zon_code', 'like');

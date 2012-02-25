@@ -39,7 +39,7 @@
 </thead>
 <tbody>
 
-<?php foreach($results as $result):?>
+<?php foreach($results as $result) { ?>
 <tr>
 <td><a href="<?php echo current_url(); ?>?a=read&amp;sct_id=<?php echo $result->sct_id;?>"><?php echo $result->sct_id;?></a></td>
 <td><?php echo $result->sct_code; ?></td>
@@ -50,7 +50,7 @@
 <?php if($result->count_items == 0 && $result->sct_islocked == 0) { ?><a href="<?php echo current_url(); ?>?a=delete&amp;sct_id=<?php echo $result->sct_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
 </th>
 </tr>
-<?php endforeach;?>
+<?php } ?>
 
 </tbody>
 </table>

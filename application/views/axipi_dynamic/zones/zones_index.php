@@ -40,7 +40,7 @@
 </thead>
 <tbody>
 
-<?php foreach($results as $result):?>
+<?php foreach($results as $result) { ?>
 <tr>
 <td><a href="<?php echo current_url(); ?>?a=read&amp;zon_id=<?php echo $result->zon_id;?>"><?php echo $result->zon_id;?></a></td>
 <td><?php echo $result->zon_code; ?></td>
@@ -52,7 +52,7 @@
 <?php if($result->zon_islocked == 0) { ?><a href="<?php echo current_url(); ?>?a=delete&amp;zon_id=<?php echo $result->zon_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
 </th>
 </tr>
-<?php endforeach;?>
+<?php } ?>
 
 </tbody>
 </table>

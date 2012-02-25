@@ -41,7 +41,7 @@
 </thead>
 <tbody>
 
-<?php foreach($results as $result):?>
+<?php foreach($results as $result) { ?>
 <tr>
 <td><a href="<?php echo current_url(); ?>?a=read&amp;cou_id=<?php echo $result->cou_id;?>"><?php echo $result->cou_id;?></a></td>
 <td><?php echo $result->cou_alpha2; ?></td>
@@ -53,7 +53,7 @@
 <?php if($result->count_items == 0 && $result->count_users == 0 && $result->cou_islocked == 0) { ?><a href="<?php echo current_url(); ?>?a=delete&amp;cou_id=<?php echo $result->cou_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
 </th>
 </tr>
-<?php endforeach;?>
+<?php } ?>
 
 </tbody>
 </table>

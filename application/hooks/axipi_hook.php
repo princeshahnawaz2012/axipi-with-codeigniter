@@ -3,13 +3,22 @@
 class axipi_hook {
 	public function post_controller_constructor() {
 		$this->CI =& get_instance();
+
+		$query = $this->CI->db->query('SELECT * FROM '.$this->CI->db->dbprefix('hst').' AS hst WHERE hst.hst_code = ?', array($_SERVER['HTTP_HOST']));
+		if($query->num_rows() > 0) {
+			$this->CI->hst = $query->row();
+			$this->CI->config->set_item('compress_output', tinyint2boolean($this->CI->hst->hst_gzhandler));
+		} else {
+			$this->CI->hst = new stdClass();
+			$this->CI->hst->hst_debug = 0;
+		}
+
 		if($this->CI->session->userdata('usr_id')) {
 			$this->CI->usr = $this->CI->users_model->get_user($this->CI->session->userdata('usr_id'));
 			$this->CI->usr->usr_access = 'connected';
 			$this->CI->usr->groups = $this->CI->users_model->get_groups($this->CI->session->userdata('usr_id'));
 			$this->CI->usr->groups[1002] = 'connected';
 		} else {
-			$this->CI->usr = array();
 			$this->CI->usr = new stdClass();
 			$this->CI->usr->usr_id = 0;
 			$this->CI->usr->usr_access = 'guest';

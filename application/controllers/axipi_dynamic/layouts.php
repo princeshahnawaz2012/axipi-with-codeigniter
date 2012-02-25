@@ -14,7 +14,7 @@ class layouts extends CI_Controller {
 		}
 	}
 	public function index() {
-		$this->load->helper(array('axipi', 'form'));
+		$this->load->helper(array('form'));
 
 		$filters = array();
 		$filters['layouts_lay_code'] = array('lay.lay_code', 'like');
@@ -29,8 +29,12 @@ class layouts extends CI_Controller {
 		$data['results'] = $this->layouts_model->get_pagination_layouts($flt, $build_pagination['limit'], $build_pagination['start']);
 		$this->zones['content'] = $this->load->view('axipi_dynamic/layouts/layouts_index', $data, true);
 	}
-	public function rule_lay_code($lay_code) {
-		$query = $this->db->query('SELECT lay.lay_code FROM '.$this->db->dbprefix('lay').' AS lay WHERE lay.lay_code = ? GROUP BY lay.lay_id', array($lay_code));
+	public function rule_lay_code($lay_code, $current = '') {
+		if($current != '') {
+			$query = $this->db->query('SELECT lay.lay_code FROM '.$this->db->dbprefix('lay').' AS lay WHERE lay.lay_code = ? AND lay.lay_code != ? GROUP BY lay.lay_id', array($lay_code, $current));
+		} else {
+			$query = $this->db->query('SELECT lay.lay_code FROM '.$this->db->dbprefix('lay').' AS lay WHERE lay.lay_code = ? GROUP BY lay.lay_id', array($lay_code));
+		}
 		if($query->num_rows() > 0) {
 			$this->form_validation->set_message('rule_lay_code', $this->lang->line('value_already_used'));
 			return FALSE;
@@ -44,11 +48,13 @@ class layouts extends CI_Controller {
 		$data = array();
 
 		$this->form_validation->set_rules('lay_code', 'lang:lay_code', 'required|max_length[100]|callback_rule_lay_code');
+		$this->form_validation->set_rules('lay_type', 'lang:lay_type', 'required|max_length[100]');
 
 		if($this->form_validation->run() == FALSE) {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/layouts/layouts_create', $data, true);
 		} else {
 			$this->db->set('lay_code', $this->input->post('lay_code'));
+			$this->db->set('lay_type', $this->input->post('lay_type'));
 			$this->db->set('lay_createdby', $this->usr->usr_id);
 			$this->db->set('lay_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('lay_ispublished', 1);
@@ -71,12 +77,14 @@ class layouts extends CI_Controller {
 			$data = array();
 			$data['lay'] = $this->layouts_model->get_layout($this->lay_id);
 
-			$this->form_validation->set_rules('lay_code', 'lang:lay_code', 'max_length[100]');
+			$this->form_validation->set_rules('lay_code', 'lang:lay_code', 'required|max_length[100]|callback_rule_lay_code['.$data['lay']->lay_code.']');
+			$this->form_validation->set_rules('lay_type', 'lang:lay_type', 'required|max_length[100]');
 
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/layouts/layouts_update', $data, true);
 			} else {
 				$this->db->set('lay_code', $this->input->post('lay_code'));
+				$this->db->set('lay_type', $this->input->post('lay_type'));
 				$this->db->set('lay_modifiedby', $this->usr->usr_id);
 				$this->db->set('lay_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('lay_id', $this->lay_id);

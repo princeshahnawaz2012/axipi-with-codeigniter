@@ -34,25 +34,29 @@
 <th><?php echo $this->lang->line('hst_code'); ?></th>
 <th><?php echo $this->lang->line('hst_url'); ?></th>
 <th><?php echo $this->lang->line('hst_environment'); ?></th>
+<th><?php echo $this->lang->line('hst_gzhandler'); ?></th>
+<th><?php echo $this->lang->line('hst_debug'); ?></th>
 <th><?php echo $this->lang->line('lay_code'); ?></th>
 <th>&nbsp;</th>
 </tr>
 </thead>
 <tbody>
 
-<?php foreach($results as $result):?>
+<?php foreach($results as $result) { ?>
 <tr>
 <td><a href="<?php echo current_url(); ?>?a=read&amp;hst_id=<?php echo $result->hst_id;?>"><?php echo $result->hst_id;?></a></td>
 <td><?php echo $result->hst_code; ?></td>
 <td><?php echo $result->hst_url; ?></td>
 <td><?php echo $result->hst_environment; ?></td>
+<td><?php echo $result->hst_gzhandler; ?></td>
+<td><?php echo $result->hst_debug; ?></td>
 <td><?php echo $result->lay_code; ?></td>
 <th>
 <a href="<?php echo current_url(); ?>?a=update&amp;hst_id=<?php echo $result->hst_id;?>"><?php echo $this->lang->line('update'); ?></a>
 <?php if($result->hst_islocked == 0) { ?><a href="<?php echo current_url(); ?>?a=delete&amp;hst_id=<?php echo $result->hst_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
 </th>
 </tr>
-<?php endforeach;?>
+<?php } ?>
 
 </tbody>
 </table>

@@ -14,7 +14,7 @@ class components extends CI_Controller {
 		}
 	}
 	public function index() {
-		$this->load->helper(array('axipi', 'form'));
+		$this->load->helper(array('form'));
 
 		$filters = array();
 		$filters['components_cmp_code'] = array('cmp.cmp_code', 'like');
@@ -29,8 +29,12 @@ class components extends CI_Controller {
 		$data['results'] = $this->components_model->get_pagination_components($flt, $build_pagination['limit'], $build_pagination['start']);
 		$this->zones['content'] = $this->load->view('axipi_dynamic/components/components_index', $data, true);
 	}
-	public function rule_cmp_code($cmp_code) {
-		$query = $this->db->query('SELECT cmp.cmp_code FROM '.$this->db->dbprefix('cmp').' AS cmp WHERE cmp.cmp_code = ? GROUP BY cmp.cmp_id', array($cmp_code));
+	public function rule_cmp_code($cmp_code, $current = '') {
+		if($current != '') {
+			$query = $this->db->query('SELECT cmp.cmp_code FROM '.$this->db->dbprefix('cmp').' AS cmp WHERE cmp.cmp_code = ? AND cmp.cmp_code != ? GROUP BY cmp.cmp_id', array($cmp_code, $current));
+		} else {
+			$query = $this->db->query('SELECT cmp.cmp_code FROM '.$this->db->dbprefix('cmp').' AS cmp WHERE cmp.cmp_code = ? GROUP BY cmp.cmp_id', array($cmp_code));
+		}
 		if($query->num_rows() > 0) {
 			$this->form_validation->set_message('rule_cmp_code', $this->lang->line('value_already_used'));
 			return FALSE;
@@ -71,7 +75,7 @@ class components extends CI_Controller {
 			$data = array();
 			$data['cmp'] = $this->components_model->get_component($this->cmp_id);
 
-			$this->form_validation->set_rules('cmp_code', 'lang:cmp_code', 'max_length[100]');
+			$this->form_validation->set_rules('cmp_code', 'lang:cmp_code', 'required|max_length[100]|callback_rule_cmp_code['.$data['cmp']->cmp_code.']');
 
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/components/components_update', $data, true);
