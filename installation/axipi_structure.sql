@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `cou` (
   `cou_unpublishedby` int(10) unsigned DEFAULT NULL,
   `cou_dateunpublished` datetime DEFAULT NULL,
   `cou_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `cou_islocked` tinyint(1) unsigned NOT NULL,
+  `cou_islocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`cou_id`),
   UNIQUE KEY `cou_alpha2` (`cou_alpha2`),
   UNIQUE KEY `cou_alpha3` (`cou_alpha3`)
