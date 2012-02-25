@@ -103,6 +103,20 @@ class groups extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_delete', $data, true);
 			} else {
 				$this->db->where('grp_id', $this->grp_id);
+				$this->db->delete('grp_itm');
+
+				$this->db->where('grp_id', $this->grp_id);
+				$this->db->delete('grp_trl');
+
+				$this->db->where('grp_id', $this->grp_id);
+				$this->db->where('grp_per_islocked', 0);
+				$this->db->delete('grp_per');
+
+				$this->db->where('grp_id', $this->grp_id);
+				$this->db->where('grp_usr_islocked', 0);
+				$this->db->delete('grp_usr');
+
+				$this->db->where('grp_id', $this->grp_id);
 				$this->db->where('grp_islocked', 0);
 				$this->db->delete('grp');
 				$this->msg[] = $this->lang->line('deleted');

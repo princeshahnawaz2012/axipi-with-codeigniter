@@ -160,8 +160,23 @@ class items extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/items/items_delete', $data, true);
 			} else {
 				$this->db->where('itm_id', $this->itm_id);
+				$this->db->delete('grp_itm');
+
+				$this->db->where('itm_id', $this->itm_id);
+				$this->db->delete('itm_rel');
+
+				$this->db->where('rel_id', $this->itm_id);
+				$this->db->delete('itm_rel');
+
+				$this->db->where('itm_id', $this->itm_id);
+				$this->db->delete('itm_stg');
+
+				$this->db->where('itm_id', $this->itm_id);
+				$this->db->delete('itm_zon');
+
+				$this->db->where('itm_id', $this->itm_id);
 				$this->db->where('itm_islocked', 0);
-				$this->db->delete('itm'); 
+				$this->db->delete('itm');
 				$this->index();
 				$this->msg[] = $this->lang->line('deleted');
 			}

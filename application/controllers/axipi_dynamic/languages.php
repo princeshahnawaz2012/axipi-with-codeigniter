@@ -107,6 +107,30 @@ class languages extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/languages/languages_delete', $data, true);
 			} else {
 				$this->db->where('lng_id', $this->lng_id);
+				$this->db->delete('cou_trl');
+
+				$this->db->where('lng_id', $this->lng_id);
+				$this->db->delete('grp_trl');
+
+				$this->db->where('lng_id', $this->lng_id);
+				$this->db->delete('hst_trl');
+
+				$this->db->where('lng_id', $this->lng_id);
+				$this->db->delete('lng_stg');
+
+				$this->db->where('lng_id', $this->lng_id);
+				$this->db->delete('per_trl');
+
+				$this->db->where('lng_id', $this->lng_id);
+				$this->db->delete('sct_trl');
+
+				$this->db->where('lng_id', $this->lng_id);
+				$this->db->delete('stg_trl');
+
+				$this->db->where('lng_id', $this->lng_id);
+				$this->db->delete('trl_zon');
+
+				$this->db->where('lng_id', $this->lng_id);
 				$this->db->where('lng_islocked', 0);
 				$this->db->delete('lng');
 				$this->msg[] = $this->lang->line('deleted');

@@ -34,6 +34,7 @@
 <th><a class="sort_desc" href="#"><?php echo $this->lang->line('cou_id'); ?></a></th>
 <th><?php echo $this->lang->line('cou_alpha2'); ?></th>
 <th><?php echo $this->lang->line('cou_alpha3'); ?></th>
+<th><?php echo $this->lang->line('subdivisions'); ?></th>
 <th><?php echo $this->lang->line('items'); ?></th>
 <th><?php echo $this->lang->line('users'); ?></th>
 <th>&nbsp;</th>
@@ -46,6 +47,7 @@
 <td><a href="<?php echo current_url(); ?>?a=read&amp;cou_id=<?php echo $result->cou_id;?>"><?php echo $result->cou_id;?></a></td>
 <td><?php echo $result->cou_alpha2; ?></td>
 <td><?php echo $result->cou_alpha3; ?></td>
+<td><?php echo $result->count_subdivisions; ?></td>
 <td><?php echo $result->count_items; ?></td>
 <td><?php echo $result->count_users; ?></td>
 <th>

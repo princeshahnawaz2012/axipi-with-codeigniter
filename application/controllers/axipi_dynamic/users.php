@@ -6,6 +6,7 @@ class users extends CI_Controller {
 
 		$this->load->language('axipi_dynamic');
 		$this->load->model('axipi_dynamic/users_model', '', true);
+		$this->axipi_library->jquery_load('jquery');
 
 		if($this->input->get('usr_id')) {
 			$this->usr_id = $this->input->get('usr_id');
@@ -119,6 +120,16 @@ class users extends CI_Controller {
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/users/users_delete', $data, true);
 			} else {
+				$this->db->where('usr_id', $this->usr_id);
+				$this->db->delete('cnt_usr');
+
+				$this->db->where('usr_id', $this->usr_id);
+				$this->db->delete('stg_usr');
+
+				$this->db->where('usr_id', $this->usr_id);
+				$this->db->where('grp_usr_islocked', 0);
+				$this->db->delete('grp_usr');
+
 				$this->db->where('usr_id', $this->usr_id);
 				$this->db->where('usr_islocked', 0);
 				$this->db->delete('usr');

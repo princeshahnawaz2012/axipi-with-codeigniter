@@ -109,6 +109,12 @@ class sections extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/sections/sections_delete', $data, true);
 			} else {
 				$this->db->where('sct_id', $this->sct_id);
+				$this->db->delete('sct_trl');
+
+				$this->db->where('sct_id', $this->sct_id);
+				$this->db->delete('sct_stg');
+
+				$this->db->where('sct_id', $this->sct_id);
 				$this->db->where('sct_islocked', 0);
 				$this->db->delete('sct');
 				$this->msg[] = $this->lang->line('deleted');

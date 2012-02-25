@@ -107,6 +107,9 @@ class layouts extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/layouts/layouts_delete', $data, true);
 			} else {
 				$this->db->where('lay_id', $this->lay_id);
+				$this->db->delete('zon');
+
+				$this->db->where('lay_id', $this->lay_id);
 				$this->db->where('lay_islocked', 0);
 				$this->db->delete('lay');
 				$this->msg[] = $this->lang->line('deleted');

@@ -111,7 +111,7 @@ class zones extends CI_Controller {
 			} else {
 				$this->db->where('zon_id', $this->zon_id);
 				$this->db->where('zon_islocked', 0);
-				$this->db->delete('zon'); 
+				$this->db->delete('zon');
 				$this->index();
 				$this->msg[] = $this->lang->line('deleted');
 			}

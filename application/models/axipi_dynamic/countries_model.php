@@ -9,7 +9,7 @@ class countries_model extends CI_Model {
         return $query->row();
     }
     function get_pagination_countries($flt, $num, $offset) {
-        $query = $this->db->query('SELECT cou.cou_id, cou.cou_alpha2, cou.cou_alpha3, cou.cou_islocked, cou.cou_ispublished, COUNT(DISTINCT(itm.itm_id)) AS count_items, COUNT(DISTINCT(usr.usr_id)) AS count_users FROM '.$this->db->dbprefix('cou').' AS cou LEFT JOIN '.$this->db->dbprefix('itm').' AS itm ON itm.cou_id = cou.cou_id LEFT JOIN '.$this->db->dbprefix('usr').' AS usr ON usr.cou_id = cou.cou_id WHERE '.implode(' AND ', $flt).' GROUP BY cou.cou_id ORDER BY cou.cou_id DESC LIMIT '.$offset.', '.$num);
+        $query = $this->db->query('SELECT cou.cou_id, cou.cou_alpha2, cou.cou_alpha3, cou.cou_islocked, cou.cou_ispublished, COUNT(DISTINCT(cou_sub.cou_sub_id)) AS count_subdivisions, COUNT(DISTINCT(itm.itm_id)) AS count_items, COUNT(DISTINCT(usr.usr_id)) AS count_users FROM '.$this->db->dbprefix('cou').' AS cou LEFT JOIN '.$this->db->dbprefix('cou_sub').' AS cou_sub ON cou_sub.cou_id = cou.cou_id LEFT JOIN '.$this->db->dbprefix('itm').' AS itm ON itm.cou_id = cou.cou_id LEFT JOIN '.$this->db->dbprefix('usr').' AS usr ON usr.cou_id = cou.cou_id WHERE '.implode(' AND ', $flt).' GROUP BY cou.cou_id ORDER BY cou.cou_id DESC LIMIT '.$offset.', '.$num);
         return $query->result();
     }
     function get_country($cou_id) {

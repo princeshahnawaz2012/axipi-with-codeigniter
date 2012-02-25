@@ -120,6 +120,12 @@ class hosts extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/hosts/hosts_delete', $data, true);
 			} else {
 				$this->db->where('hst_id', $this->hst_id);
+				$this->db->delete('hst_trl');
+
+				$this->db->where('hst_id', $this->hst_id);
+				$this->db->delete('hst_stg');
+
+				$this->db->where('hst_id', $this->hst_id);
 				$this->db->where('hst_islocked', 0);
 				$this->db->delete('hst');
 				$this->msg[] = $this->lang->line('deleted');

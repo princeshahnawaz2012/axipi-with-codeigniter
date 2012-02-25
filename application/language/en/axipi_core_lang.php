@@ -172,6 +172,7 @@ $lang['select'] = 'Select';
 $lang['setting'] = 'Setting';
 $lang['settings-short'] = 'Stg.';
 $lang['settings'] = 'Settings';
+$lang['subdivisions'] = 'Subdivisions';
 $lang['title-copy'] = 'Copy of %1$s';
 $lang['tree-root'] = 'Root';
 $lang['update-short'] = 'Upd.';

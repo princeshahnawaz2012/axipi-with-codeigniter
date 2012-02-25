@@ -103,6 +103,13 @@ class permissions extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/permissions/permissions_delete', $data, true);
 			} else {
 				$this->db->where('per_id', $this->per_id);
+				$this->db->delete('per_trl');
+
+				$this->db->where('per_id', $this->per_id);
+				$this->db->where('grp_per_islocked', 0);
+				$this->db->delete('grp_per');
+
+				$this->db->where('per_id', $this->per_id);
 				$this->db->where('per_islocked', 0);
 				$this->db->delete('per');
 				$this->msg[] = $this->lang->line('deleted');

@@ -5,8 +5,7 @@ if($usr) {
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
-<li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('users'); ?></a></li>
-<li><?php echo $this->lang->line('update'); ?></li>
+<li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->itm->itm_title; ?></a></li>
 </ul>
 </div>
 </div>
@@ -14,12 +13,9 @@ if($usr) {
 <div class="box1">
 <h1><?php echo $usr->usr_email; ?></h1>
 <ul>
-<li><a href="<?php echo current_url(); ?>?a=read&amp;usr_id=<?php echo $usr->usr_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
-<li><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('index'); ?></a></li>
+<li><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('cancel'); ?></a></li>
 </ul>
 <div class="display">
-
-<h2><?php echo $this->lang->line('update'); ?></h2>
 
 <?php echo validation_errors(); ?>
 

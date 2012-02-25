@@ -103,6 +103,9 @@ class components extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/components/components_delete', $data, true);
 			} else {
 				$this->db->where('cmp_id', $this->cmp_id);
+				$this->db->delete('cmp_stg');
+
+				$this->db->where('cmp_id', $this->cmp_id);
 				$this->db->where('cmp_islocked', 0);
 				$this->db->delete('cmp');
 				$this->msg[] = $this->lang->line('deleted');

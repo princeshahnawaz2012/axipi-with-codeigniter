@@ -121,6 +121,12 @@ class countries extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/countries/countries_delete', $data, true);
 			} else {
 				$this->db->where('cou_id', $this->cou_id);
+				$this->db->delete('cou_sub');
+
+				$this->db->where('cou_id', $this->cou_id);
+				$this->db->delete('cou_trl');
+
+				$this->db->where('cou_id', $this->cou_id);
 				$this->db->where('cou_islocked', 0);
 				$this->db->delete('cou');
 				$this->msg[] = $this->lang->line('deleted');
