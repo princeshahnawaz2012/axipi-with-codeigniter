@@ -23,6 +23,26 @@ class axipi_library {
 		}
 		$key = md5($e_type.' | '.$e_message.' | '.$e_file.' | '.$e_line);
 		$this->debug[$key] = $e_type.' | '.$e_message.' | '.$e_file.' | '.$e_line;
+		$this->watchdog(array('e_type'=>$e_type, 'e_message'=>$e_message, 'e_file'=>$e_file, 'e_line'=>$e_line));
+	}
+	function watchdog($data) {
+		$wtd_content = '';
+		foreach($data as $k => $v) {
+			$wtd_content .= $k.':'."\r\n";
+			$wtd_content .= $v."\r\n";
+		}
+		$wtd_key = md5($wtd_content);
+        $query = $this->CI->db->query('SELECT wtd_id FROM '.$this->CI->db->dbprefix('wtd').' AS wtd WHERE wtd.wtd_key = ? GROUP BY wtd.wtd_id', array($wtd_key));
+		if($query->num_rows() > 0) {
+			$this->CI->db->set('wtd_datemodified', date('Y-m-d H:i:s'));
+			$this->CI->db->where('wtd_key', $wtd_key);
+			$this->CI->db->update('wtd');
+		} else {
+			$this->CI->db->set('wtd_key', $wtd_key);
+			$this->CI->db->set('wtd_content', $wtd_content);
+			$this->CI->db->set('wtd_datecreated', date('Y-m-d H:i:s'));
+			$this->CI->db->insert('wtd');
+		}
 	}
 	function debug($data) {
 		$this->debug[] = '<p><textarea>'.print_r($data, 1).'</textarea></p>';

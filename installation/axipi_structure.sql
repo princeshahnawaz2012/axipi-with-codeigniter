@@ -283,12 +283,12 @@ CREATE TABLE IF NOT EXISTS `hst` (
   `hst_unpublishedby` int(10) unsigned DEFAULT NULL,
   `hst_dateunpublished` datetime DEFAULT NULL,
   `hst_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `hst_islocked` tinyint(1) unsigned NOT NULL,
+  `hst_usr_islocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`hst_id`),
   UNIQUE KEY `hst_code` (`hst_code`),
   KEY `lay_id` (`lay_id`),
   KEY `hst_ispublished` (`hst_ispublished`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='hosts' AUTO_INCREMENT=1001 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='hosts' AUTO_INCREMENT=1000 ;
 
 -- --------------------------------------------------------
 
