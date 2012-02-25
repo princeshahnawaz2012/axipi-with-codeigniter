@@ -74,6 +74,7 @@ class database extends CI_Controller {
 		foreach($query->result() as $row) {
 			$this->db->query('OPTIMIZE TABLE '.$row->Name);
 		}
+		$this->msg[] = 'Optimized';
 		$this->index();
 	}
 }
