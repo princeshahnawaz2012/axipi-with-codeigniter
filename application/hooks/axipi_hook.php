@@ -4,6 +4,17 @@ class axipi_hook {
 	public function post_controller_constructor() {
 		$this->CI =& get_instance();
 
+		$query = $this->CI->db->query('SELECT * FROM '.$this->CI->db->dbprefix('lng').' AS lng WHERE lng_id = ?', array($this->CI->itm->lng_id));
+		$this->CI->lng = $query->row();
+
+		$this->CI->config->set_item('language', $this->CI->lng->lng_code);
+
+		$query = $this->CI->db->query('SELECT * FROM '.$this->CI->db->dbprefix('sct').' AS sct WHERE sct_id = ?', array($this->CI->itm->sct_id));
+		$this->CI->sct = $query->row();
+
+		$query = $this->CI->db->query('SELECT * FROM '.$this->CI->db->dbprefix('lay').' AS lay WHERE lay_id = ?', array($this->CI->sct->lay_id));
+		$this->CI->lay = $query->row();
+
 		$query = $this->CI->db->query('SELECT * FROM '.$this->CI->db->dbprefix('hst').' AS hst WHERE hst.hst_code = ?', array($_SERVER['HTTP_HOST']));
 		if($query->num_rows() > 0) {
 			$this->CI->hst = $query->row();

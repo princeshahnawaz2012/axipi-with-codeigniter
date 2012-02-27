@@ -253,11 +253,14 @@ class axipi_library {
 					}
 					$debug .= '</ul>';
 				}
-	
-				/*$this->CI->output->enable_profiler(TRUE);
-				$sections = array('benchmarks', 'config', 'controller_info', 'get', 'http_headers', 'memory_usage', 'post', 'queries', 'uri_string', 'query_toggle_count');
-				$debug .= $this->CI->output->set_profiler_sections($sections);*/
-	
+
+				$debug .= '<h2>queries ('.count($this->CI->db->queries).')</h2>';
+				$debug .= '<ul>';
+				foreach($this->CI->db->queries as $query) {
+					$debug .= '<li>'.$query.'</li>';
+				}
+				$debug .= '</ul>';
+
 				$debug .= '<div class="column1">';
 			
 				$debug .= '<h2>itm</h2>';

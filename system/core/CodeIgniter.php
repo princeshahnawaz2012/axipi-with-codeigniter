@@ -325,15 +325,6 @@
 	$query = $db->query('SELECT * FROM '.$db->dbprefix('cmp').' AS cmp WHERE cmp_id = ?', array($itm->cmp_id));
 	$cmp = $query->row();
 
-	$query = $db->query('SELECT * FROM '.$db->dbprefix('lng').' AS lng WHERE lng_id = ?', array($itm->lng_id));
-	$lng = $query->row();
-
-	$query = $db->query('SELECT * FROM '.$db->dbprefix('sct').' AS sct WHERE sct_id = ?', array($itm->sct_id));
-	$sct = $query->row();
-
-	$query = $db->query('SELECT * FROM '.$db->dbprefix('lay').' AS lay WHERE lay_id = ?', array($sct->lay_id));
-	$lay = $query->row();
-
 	list($directory, $class) = explode('/', $cmp->cmp_code);
 	if(file_exists(APPPATH.'controllers/'.$cmp->cmp_code.EXT)) {
 		require_once(APPPATH.'controllers/'.$cmp->cmp_code.EXT);
@@ -346,8 +337,6 @@
 			$method = 'index';
 		}
 		$RTR->set_method($method);
-
-		$CFG->set_item('language', $lng->lng_code);
 	} else {
 		require_once(APPPATH.'controllers/axipi_core/error404'.EXT);
 		$class = 'error404';
@@ -361,9 +350,6 @@
 	$CI->db = $db;
 	$CI->itm = $itm;
 	$CI->cmp = $cmp;
-	$CI->lng = $lng;
-	$CI->sct = $sct;
-	$CI->lay = $lay;
 
 /*
  * ------------------------------------------------------
