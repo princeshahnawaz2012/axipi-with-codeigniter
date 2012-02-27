@@ -22,6 +22,7 @@
 
 <div class="column1">
 <p><?php echo form_label($this->lang->line('sct_code').' *', 'sct_id'); ?><?php echo form_dropdown('sct_id', $select_section, set_value('sct_id'), 'id="sct_id" class="select"'); ?></p>
+<p><?php echo form_label($this->lang->line('itm_parent'), 'itm_parent'); ?><?php echo form_dropdown('itm_parent', $select_item_parent, set_value('itm_parent'), 'id="itm_parent" class="select"'); ?></p>
 <p><?php echo form_label($this->lang->line('itm_code'), 'itm_code'); ?><?php echo form_input('itm_code', set_value('itm_code'), 'id="itm_code" class="inputtext"'); ?></p>
 <p><?php echo form_label($this->lang->line('itm_virtualcode'), 'itm_virtualcode'); ?><?php echo form_input('itm_virtualcode', set_value('itm_virtualcode'), 'id="itm_virtualcode" class="inputtext"'); ?></p>
 <p><?php echo form_label($this->lang->line('itm_title').' *', 'itm_title'); ?><?php echo form_input('itm_title', set_value('itm_title'), 'id="itm_title" class="inputtext"'); ?></p>

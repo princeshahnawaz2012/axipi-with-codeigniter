@@ -4,6 +4,22 @@ class items_model extends CI_Model {
     function __construct() {
         parent::__construct();
     }
+    function select_item_parent() {
+		$select_item_parent = array();
+		$select_item_parent[''] = '--';
+		//$this->db->cache_on();
+        $query = $this->db->query('SELECT itm.itm_id, itm.itm_code AS itm_code, CONCAT(sct.sct_code, \' (\', lng.lng_code, \')\') AS optgroup FROM '.$this->db->dbprefix('itm').' AS itm LEFT JOIN '.$this->db->dbprefix('sct').' AS sct ON sct.sct_id = itm.sct_id LEFT JOIN '.$this->db->dbprefix('lng').' AS lng ON lng.lng_id = itm.lng_id WHERE 1 GROUP BY itm.itm_id ORDER BY sct.sct_code ASC, itm.itm_title ASC');
+		if($query->num_rows() > 0) {
+			foreach($query->result() as $row) {
+				if(isset($select_item_parent[$row->optgroup]) == 0) {
+					$select_item_parent[$row->optgroup] = array();
+				}
+				$select_item_parent[$row->optgroup][$row->itm_id] = $row->itm_code;
+			}
+		}
+		//$this->db->cache_off();
+        return $select_item_parent;
+    }
     function select_component() {
 		$select_component = array();
 		$select_component[''] = '--';

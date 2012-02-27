@@ -52,6 +52,7 @@ class items extends CI_Controller {
 		$this->load->helper(array('form'));
 		$this->load->library('form_validation');
 		$data = array();
+		$data['select_item_parent'] = $this->items_model->select_item_parent();
 		$data['select_component'] = $this->items_model->select_component();
 		$data['select_section'] = $this->items_model->select_section();
 		$data['select_language'] = $this->items_model->select_language();
@@ -70,6 +71,7 @@ class items extends CI_Controller {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/items/items_create', $data, true);
 		} else {
 			$this->db->set('sct_id', $this->input->post('sct_id'));
+			$this->db->set('itm_parent', $this->input->post('itm_parent'));
 			$this->db->set('lay_id', $this->input->post('lay_id'));
 			$this->db->set('itm_code', $this->input->post('itm_code'));
 			$this->db->set('itm_virtualcode', $this->input->post('itm_virtualcode'));
@@ -105,6 +107,7 @@ class items extends CI_Controller {
 			$this->load->library('form_validation');
 			$data = array();
 			$data['itm'] = $this->items_model->get_item($this->itm_id);
+			$data['select_item_parent'] = $this->items_model->select_item_parent();
 			$data['select_component'] = $this->items_model->select_component();
 			$data['select_section'] = $this->items_model->select_section();
 			$data['select_language'] = $this->items_model->select_language();
@@ -123,6 +126,7 @@ class items extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/items/items_update', $data, true);
 			} else {
 				$this->db->set('sct_id', $this->input->post('sct_id'));
+				$this->db->set('itm_parent', $this->input->post('itm_parent'));
 				$this->db->set('lay_id', $this->input->post('lay_id'));
 				$this->db->set('itm_code', $this->input->post('itm_code'));
 				$this->db->set('itm_virtualcode', $this->input->post('itm_virtualcode'));
