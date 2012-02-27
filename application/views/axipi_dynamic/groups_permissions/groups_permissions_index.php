@@ -23,6 +23,8 @@
 </div>
 </form>
 
+<?php if($results) { ?>
+
 <div class="paging">
 <?php echo $pagination; ?>
 </div>
@@ -55,6 +57,8 @@
 <div class="paging">
 <?php echo $pagination; ?>
 </div>
+
+<?php } ?>
 
 </div>
 </div>

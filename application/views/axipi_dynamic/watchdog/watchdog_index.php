@@ -16,6 +16,8 @@
 
 <h2><?php echo $this->lang->line('index'); ?></h2>
 
+<?php if($results) { ?>
+
 <div class="paging">
 <?php echo $pagination; ?>
 </div>
@@ -44,6 +46,8 @@
 <div class="paging">
 <?php echo $pagination; ?>
 </div>
+
+<?php } ?>
 
 </div>
 </div>

@@ -5,7 +5,7 @@ class logout extends CI_Controller {
 		parent::__construct();
 	}
 	public function index() {
-		$this->session->unset_userdata('usr_id');
+		$this->session->sess_destroy();
 		redirect('axipi');
 	}
 }
