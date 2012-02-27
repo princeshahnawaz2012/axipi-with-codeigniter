@@ -32,6 +32,7 @@
 <tr>
 <th><a class="sort_desc" href="#"><?php echo $this->lang->line('grp_id'); ?></a></th>
 <th><?php echo $this->lang->line('grp_code'); ?></th>
+<th><?php echo $this->lang->line('permissions'); ?></th>
 <th><?php echo $this->lang->line('items'); ?></th>
 <th><?php echo $this->lang->line('users'); ?></th>
 <th>&nbsp;</th>
@@ -43,6 +44,7 @@
 <tr>
 <td><a href="<?php echo current_url(); ?>?a=read&amp;grp_id=<?php echo $result->grp_id;?>"><?php echo $result->grp_id;?></a></td>
 <td><?php echo $result->grp_code; ?></td>
+<td><?php echo $result->count_permissions; ?></td>
 <td><?php echo $result->count_items; ?></td>
 <td><?php echo $result->count_users; ?></td>
 <th>

@@ -1,7 +1,7 @@
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
-<li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('watchdog'); ?></a></li>
+<li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->itm->itm_title; ?></a></li>
 <li><?php echo $this->lang->line('index'); ?></li>
 </ul>
 </div>

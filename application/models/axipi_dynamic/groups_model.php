@@ -9,7 +9,7 @@ class groups_model extends CI_Model {
         return $query->row();
     }
     function get_pagination_groups($flt, $num, $offset) {
-        $query = $this->db->query('SELECT grp.grp_id, grp.grp_code, grp.grp_islocked, grp.grp_ispublished, COUNT(DISTINCT(grp_itm.itm_id)) AS count_items, COUNT(DISTINCT(grp_usr.usr_id)) AS count_users FROM '.$this->db->dbprefix('grp').' AS grp LEFT JOIN '.$this->db->dbprefix('grp_itm').' AS grp_itm ON grp_itm.grp_id = grp.grp_id LEFT JOIN '.$this->db->dbprefix('grp_usr').' AS grp_usr ON grp_usr.grp_id = grp.grp_id WHERE '.implode(' AND ', $flt).' GROUP BY grp.grp_id ORDER BY grp.grp_id DESC LIMIT '.$offset.', '.$num);
+        $query = $this->db->query('SELECT grp.grp_id, grp.grp_code, grp.grp_islocked, grp.grp_ispublished, COUNT(DISTINCT(grp_per.per_id)) AS count_permissions, COUNT(DISTINCT(grp_itm.itm_id)) AS count_items, COUNT(DISTINCT(grp_usr.usr_id)) AS count_users FROM '.$this->db->dbprefix('grp').' AS grp LEFT JOIN '.$this->db->dbprefix('grp_per').' AS grp_per ON grp_per.grp_id = grp.grp_id LEFT JOIN '.$this->db->dbprefix('grp_itm').' AS grp_itm ON grp_itm.grp_id = grp.grp_id LEFT JOIN '.$this->db->dbprefix('grp_usr').' AS grp_usr ON grp_usr.grp_id = grp.grp_id WHERE '.implode(' AND ', $flt).' GROUP BY grp.grp_id ORDER BY grp.grp_id DESC LIMIT '.$offset.', '.$num);
         return $query->result();
     }
     function get_groups_is($is) {
