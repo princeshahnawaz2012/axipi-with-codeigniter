@@ -18,6 +18,7 @@ class zones extends CI_Controller {
 
 		$filters = array();
 		$filters['zones_zon_code'] = array('zon.zon_code', 'like');
+		$filters['zones_lay_id'] = array('zon.lay_id', 'equal');
 		$flt = build_filters($filters);
 
 		$results = $this->zones_model->get_all_zones($flt);
