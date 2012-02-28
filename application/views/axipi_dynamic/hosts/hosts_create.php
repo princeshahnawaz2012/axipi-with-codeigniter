@@ -33,6 +33,13 @@
 <p><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></p>
 </div>
 
+<?php if($translations) { ?>
+<?php foreach($translations as $trl) { ?>
+<h2><?php echo $trl->lng_title; ?> (<?php echo $trl->lng_code; ?>)</h2>
+<p><?php echo form_label($this->lang->line('hst_trl_defaultitem').' *', 'defaultitem'.$trl->lng_id); ?><?php echo form_dropdown('defaultitem'.$trl->lng_id, $select_hst_trl_defaultitem, set_value('defaultitem'.$trl->lng_id, $trl->hst_trl_defaultitem), 'id="defaultitem'.$trl->lng_id.'" class="select"'); ?></p>
+<?php } ?>
+<?php } ?>
+
 </form>
 
 </div>

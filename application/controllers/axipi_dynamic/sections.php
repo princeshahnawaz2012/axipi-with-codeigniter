@@ -47,9 +47,13 @@ class sections extends CI_Controller {
 		$this->load->library('form_validation');
 		$data = array();
 		$data['select_layout'] = $this->sections_model->select_layout();
+		$data['translations'] = $this->sections_model->get_translations($this->sct_id);
 
 		$this->form_validation->set_rules('sct_code', 'lang:sct_code', 'required|max_length[100]|callback_rule_sct_code');
 		$this->form_validation->set_rules('lay_id', 'lang:lay_code', 'required');
+		foreach($data['translations'] as $trl) {
+			$this->form_validation->set_rules('title'.$trl->lng_id, 'lang:sct_trl_title', 'required');
+		}
 
 		if($this->form_validation->run() == FALSE) {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/sections/sections_create', $data, true);
@@ -60,6 +64,17 @@ class sections extends CI_Controller {
 			$this->db->set('sct_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('sct_ispublished', 1);
 			$this->db->insert('sct');
+			$sct_id = $this->db->insert_id();
+
+			foreach($data['translations'] as $trl) {
+				$this->db->set('sct_trl_title', $this->input->post('title'.$trl->lng_id));
+				$this->db->set('sct_trl_description', $this->input->post('description'.$trl->lng_id));
+				$this->db->set('sct_trl_keywords', $this->input->post('keywords'.$trl->lng_id));
+				$this->db->set('sct_id', $sct_id);
+				$this->db->set('lng_id', $trl->lng_id);
+				$this->db->insert('sct_trl');
+			}
+
 			$this->msg[] = $this->lang->line('created');
 			$this->index();
 		}
@@ -68,6 +83,7 @@ class sections extends CI_Controller {
 		if($this->sct_id != 0) {
 			$data = array();
 			$data['sct'] = $this->sections_model->get_section($this->sct_id);
+			$data['translations'] = $this->sections_model->get_translations($this->sct_id);
 			$this->zones['content'] = $this->load->view('axipi_dynamic/sections/sections_read', $data, true);
 		}
 	}
@@ -78,9 +94,13 @@ class sections extends CI_Controller {
 			$data = array();
 			$data['sct'] = $this->sections_model->get_section($this->sct_id);
 			$data['select_layout'] = $this->sections_model->select_layout();
+			$data['translations'] = $this->sections_model->get_translations($this->sct_id);
 
 			$this->form_validation->set_rules('sct_code', 'lang:sct_code', 'required|max_length[100]|callback_rule_sct_code['.$data['sct']->sct_code.']');
 			$this->form_validation->set_rules('lay_id', 'lang:lay_code', 'required');
+			foreach($data['translations'] as $trl) {
+				$this->form_validation->set_rules('title'.$trl->lng_id, 'lang:sct_trl_title', 'required');
+			}
 
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/sections/sections_update', $data, true);
@@ -91,6 +111,25 @@ class sections extends CI_Controller {
 				$this->db->set('sct_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('sct_id', $this->sct_id);
 				$this->db->update('sct');
+
+				foreach($data['translations'] as $trl) {
+					if($trl->sct_id) {
+						$this->db->set('sct_trl_title', $this->input->post('title'.$trl->lng_id));
+						$this->db->set('sct_trl_description', $this->input->post('description'.$trl->lng_id));
+						$this->db->set('sct_trl_keywords', $this->input->post('keywords'.$trl->lng_id));
+						$this->db->where('sct_id', $this->sct_id);
+						$this->db->where('lng_id', $trl->lng_id);
+						$this->db->update('sct_trl');
+					} else {
+						$this->db->set('sct_trl_title', $this->input->post('title'.$trl->lng_id));
+						$this->db->set('sct_trl_description', $this->input->post('description'.$trl->lng_id));
+						$this->db->set('sct_trl_keywords', $this->input->post('keywords'.$trl->lng_id));
+						$this->db->set('sct_id', $this->sct_id);
+						$this->db->set('lng_id', $trl->lng_id);
+						$this->db->insert('sct_trl');
+					}
+				}
+
 				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}

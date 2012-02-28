@@ -25,6 +25,10 @@ class sections_model extends CI_Model {
         $query = $this->db->query('SELECT sct.sct_id, sct.sct_code, sct.sct_islocked, sct.sct_ispublished, lay.lay_code, COUNT(DISTINCT(items.itm_id)) AS count_items FROM '.$this->db->dbprefix('sct').' AS sct LEFT JOIN '.$this->db->dbprefix('itm').' AS items ON items.sct_id = sct.sct_id LEFT JOIN '.$this->db->dbprefix('lay').' AS lay ON lay.lay_id = sct.lay_id WHERE '.implode(' AND ', $flt).' GROUP BY sct.sct_id ORDER BY sct.sct_id DESC LIMIT '.$offset.', '.$num);
         return $query->result();
     }
+    function get_translations($sct_id) {
+        $query = $this->db->query('SELECT sct_trl.*, lng.lng_title, lng.lng_code, lng.lng_id FROM '.$this->db->dbprefix('lng').' AS lng LEFT JOIN '.$this->db->dbprefix('sct_trl').' AS sct_trl ON sct_trl.lng_id = lng.lng_id AND sct_trl.sct_id = ?', array($sct_id));
+		return $query->result();
+    }
     function get_section($sct_id) {
         $query = $this->db->query('SELECT sct.*, lay.lay_code FROM '.$this->db->dbprefix('sct').' AS sct LEFT JOIN '.$this->db->dbprefix('lay').' AS lay ON lay.lay_id = sct.lay_id WHERE sct.sct_id = ? GROUP BY sct.sct_id', array($sct_id));
         return $query->row();
