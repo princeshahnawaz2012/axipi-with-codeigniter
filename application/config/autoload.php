@@ -109,7 +109,7 @@ $autoload['language'] = array('axipi_core');
 |
 */
 
-$autoload['model'] = array('axipi_dynamic/users_model');
+$autoload['model'] = array('axipi_dynamic/items_model', 'axipi_dynamic/users_model');
 
 
 /* End of file autoload.php */

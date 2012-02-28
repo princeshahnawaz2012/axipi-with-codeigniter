@@ -81,6 +81,11 @@ class axipi_hook {
 				}
 			}
 		}
+		$this->CI->itm->tree = array();
+		$this->CI->itm->tree[] = array('itm_id'=>$this->CI->itm->itm_id, 'itm_code'=>$this->CI->itm->itm_code, 'cmp_id'=>$this->CI->itm->cmp_id, 'itm_title'=>$this->CI->itm->itm_title);
+		if($this->CI->itm->itm_parent != '') {
+			$this->CI->itm->tree = array_merge($this->CI->itm->tree, $this->CI->items_model->get_tree($this->CI->itm->itm_parent));
+		}
 		$this->CI->output->set_content_type($this->CI->lay->lay_type);
 	}
 	public function post_controller() {
