@@ -105,18 +105,27 @@ class settings extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/settings/settings_delete', $data, true);
 			} else {
 				$this->db->where('stg_id', $this->stg_id);
-				$this->db->delete('stg_itm');
+				//$this->db->where('cmp_stg_islocked', 0);
+				$this->db->delete('cmp_stg');
+
+				$this->db->where('stg_id', $this->stg_id);
+				//$this->db->where('hst_stg_islocked', 0);
+				$this->db->delete('hst_stg');
+
+				$this->db->where('stg_id', $this->stg_id);
+				//$this->db->where('itm_stg_islocked', 0);
+				$this->db->delete('itm_stg');
+
+				$this->db->where('stg_id', $this->stg_id);
+				//$this->db->where('lng_stg_islocked', 0);
+				$this->db->delete('lng_stg');
+
+				$this->db->where('stg_id', $this->stg_id);
+				//$this->db->where('stg_usr_islocked', 0);
+				$this->db->delete('stg_usr');
 
 				$this->db->where('stg_id', $this->stg_id);
 				$this->db->delete('stg_trl');
-
-				$this->db->where('stg_id', $this->stg_id);
-				$this->db->where('stg_per_islocked', 0);
-				$this->db->delete('stg_per');
-
-				$this->db->where('stg_id', $this->stg_id);
-				$this->db->where('stg_usr_islocked', 0);
-				$this->db->delete('stg_usr');
 
 				$this->db->where('stg_id', $this->stg_id);
 				$this->db->where('stg_islocked', 0);

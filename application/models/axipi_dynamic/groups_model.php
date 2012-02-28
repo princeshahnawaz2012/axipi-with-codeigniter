@@ -26,6 +26,26 @@ class groups_model extends CI_Model {
 		}
         return $groups_saved;
     }
+    function get_groups_saved_permission($flt) {
+		$groups_saved = array();
+        $query = $this->db->query('SELECT grp.grp_id, per.per_id FROM '.$this->db->dbprefix('grp_per').' AS grp_per LEFT JOIN '.$this->db->dbprefix('grp').' AS grp ON grp.grp_id = grp_per.grp_id LEFT JOIN '.$this->db->dbprefix('per').' AS per ON per.per_id = grp_per.per_id WHERE '.implode(' AND ', $flt).' AND grp.grp_ispermission = \'1\'');
+		if($query->num_rows() > 0) {
+			foreach($query->result() as $row) {
+				$groups_saved[$row->per_id][$row->grp_id] = 1;
+			}
+		}
+        return $groups_saved;
+    }
+    function get_groups_saved_user($flt) {
+		$groups_saved = array();
+        $query = $this->db->query('SELECT grp.grp_id, usr.usr_id FROM '.$this->db->dbprefix('grp_usr').' AS grp_usr LEFT JOIN '.$this->db->dbprefix('grp').' AS grp ON grp.grp_id = grp_usr.grp_id LEFT JOIN '.$this->db->dbprefix('usr').' AS usr ON usr.usr_id = grp_usr.usr_id WHERE '.implode(' AND ', $flt).' AND grp.grp_isuser = \'1\'');
+		if($query->num_rows() > 0) {
+			foreach($query->result() as $row) {
+				$groups_saved[$row->usr_id][$row->grp_id] = 1;
+			}
+		}
+        return $groups_saved;
+    }
     function get_group($grp_id) {
         $query = $this->db->query('SELECT grp.* FROM '.$this->db->dbprefix('grp').' AS grp WHERE grp.grp_id = ? GROUP BY grp.grp_id', array($grp_id));
         return $query->row();

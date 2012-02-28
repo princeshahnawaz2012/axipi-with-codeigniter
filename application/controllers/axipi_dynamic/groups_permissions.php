@@ -12,7 +12,7 @@ class groups_permissions extends CI_Controller {
 		$this->load->helper(array('form'));
 
 		$filters = array();
-		$filters['permissions_per_code'] = array('per.per_code', 'like');
+		$filters['groups_permissions_per_code'] = array('per.per_code', 'like');
 		$flt = build_filters($filters);
 
 		$results = $this->permissions_model->get_all_permissions($flt);
@@ -22,7 +22,33 @@ class groups_permissions extends CI_Controller {
 		$data['pagination'] = $build_pagination['output'];
 		$data['position'] = $build_pagination['position'];
 		$data['results'] = $this->permissions_model->get_pagination_permissions($flt, $build_pagination['limit'], $build_pagination['start']);
+		$data['groups_saved'] = $this->groups_model->get_groups_saved_permission($flt);
 		$data['groups'] = $this->groups_model->get_groups_is('permission');
+
+		if($this->input->post('submit_groups')) {
+			foreach($data['results'] as $result) {
+				foreach($data['groups'] as $group) {
+					if($result->per_islocked == 1 && $group->grp_islocked == 1) {
+					} else {
+						if(isset($data['groups_saved'][$result->per_id][$group->grp_id]) == 1 && !$this->input->post($result->per_id.$group->grp_id)) {
+							$this->db->where('per_id', $result->per_id);
+							$this->db->where('grp_id', $group->grp_id);
+							$this->db->delete('grp_per');
+							unset($data['groups_saved'][$result->per_id][$group->grp_id]);
+						} else if(isset($data['groups_saved'][$result->per_id][$group->grp_id]) == 0 && $this->input->post($result->per_id.$group->grp_id)) {
+							$this->db->set('per_id', $result->per_id);
+							$this->db->set('grp_id', $group->grp_id);
+							$this->db->set('grp_per_createdby', $this->usr->usr_id);
+							$this->db->set('grp_per_datecreated', date('Y-m-d H:i:s'));
+							$this->db->set('grp_per_ispublished', 1);
+							$this->db->insert('grp_per');
+							$data['groups_saved'][$result->per_id][$group->grp_id] = 1;
+						}
+					}
+				}
+			}
+		}
+
 		$this->zones['content'] = $this->load->view('axipi_dynamic/groups_permissions/groups_permissions_index', $data, true);
 	}
 }
