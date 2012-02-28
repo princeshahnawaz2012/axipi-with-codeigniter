@@ -33,9 +33,6 @@ if($hst) {
 <div class="column1 columnlast">
 </div>
 
-</div>
-</div>
-
 <?php if($translations) { ?>
 <?php foreach($translations as $trl) { ?>
 <h2><?php echo $trl->lng_title; ?> (<?php echo $trl->lng_code; ?>)</h2>
@@ -43,6 +40,8 @@ if($hst) {
 <?php } ?>
 <?php } ?>
 
+</div>
+</div>
 
 <?php
 } else {

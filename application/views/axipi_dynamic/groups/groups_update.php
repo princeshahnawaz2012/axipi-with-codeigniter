@@ -33,6 +33,13 @@ if($grp) {
 <p><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></p>
 </div>
 
+<?php if($translations) { ?>
+<?php foreach($translations as $trl) { ?>
+<h2><?php echo $trl->lng_title; ?> (<?php echo $trl->lng_code; ?>)</h2>
+<p><?php echo form_label($this->lang->line('grp_trl_title').' *', 'title'.$trl->lng_id); ?><?php echo form_input('title'.$trl->lng_id, set_value('title'.$trl->lng_id, $trl->grp_trl_title), 'id="title'.$trl->lng_id.'" class="inputtext"'); ?></p>
+<?php } ?>
+<?php } ?>
+
 </form>
 
 </div>

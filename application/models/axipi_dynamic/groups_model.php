@@ -46,6 +46,10 @@ class groups_model extends CI_Model {
 		}
         return $groups_saved;
     }
+    function get_translations($grp_id) {
+        $query = $this->db->query('SELECT grp_trl.*, lng.lng_title, lng.lng_code, lng.lng_id FROM '.$this->db->dbprefix('lng').' AS lng LEFT JOIN '.$this->db->dbprefix('grp_trl').' AS grp_trl ON grp_trl.lng_id = lng.lng_id AND grp_trl.grp_id = ?', array($grp_id));
+		return $query->result();
+    }
     function get_group($grp_id) {
         $query = $this->db->query('SELECT grp.* FROM '.$this->db->dbprefix('grp').' AS grp WHERE grp.grp_id = ? GROUP BY grp.grp_id', array($grp_id));
         return $query->row();

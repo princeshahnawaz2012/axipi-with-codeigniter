@@ -29,9 +29,6 @@ if($sct) {
 <div class="column1 columnlast">
 </div>
 
-</div>
-</div>
-
 <?php if($translations) { ?>
 <?php foreach($translations as $trl) { ?>
 <h2><?php echo $trl->lng_title; ?> (<?php echo $trl->lng_code; ?>)</h2>
@@ -40,6 +37,9 @@ if($sct) {
 <p><span class="label"><?php echo $this->lang->line('sct_trl_keywords'); ?></span><?php echo $trl->sct_trl_keywords; ?></p>
 <?php } ?>
 <?php } ?>
+
+</div>
+</div>
 
 <?php
 } else {

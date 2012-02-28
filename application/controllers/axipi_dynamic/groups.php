@@ -46,8 +46,12 @@ class groups extends CI_Controller {
 		$this->load->helper(array('form'));
 		$this->load->library('form_validation');
 		$data = array();
+		$data['translations'] = $this->groups_model->get_translations($this->grp_id);
 
 		$this->form_validation->set_rules('grp_code', 'lang:grp_code', 'required|max_length[100]|callback_rule_grp_code');
+		foreach($data['translations'] as $trl) {
+			$this->form_validation->set_rules('title'.$trl->lng_id, 'lang:grp_trl_title', 'required');
+		}
 
 		if($this->form_validation->run() == FALSE) {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_create', $data, true);
@@ -57,6 +61,15 @@ class groups extends CI_Controller {
 			$this->db->set('grp_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('grp_ispublished', 1);
 			$this->db->insert('grp');
+			$grp_id = $this->db->insert_id();
+
+			foreach($data['translations'] as $trl) {
+				$this->db->set('grp_trl_title', $this->input->post('title'.$trl->lng_id));
+				$this->db->set('grp_id', $grp_id);
+				$this->db->set('lng_id', $trl->lng_id);
+				$this->db->insert('grp_trl');
+			}
+
 			$this->msg[] = $this->lang->line('created');
 			$this->index();
 		}
@@ -65,6 +78,7 @@ class groups extends CI_Controller {
 		if($this->grp_id != 0) {
 			$data = array();
 			$data['grp'] = $this->groups_model->get_group($this->grp_id);
+			$data['translations'] = $this->groups_model->get_translations($this->grp_id);
 			$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_read', $data, true);
 		}
 	}
@@ -74,8 +88,12 @@ class groups extends CI_Controller {
 			$this->load->library('form_validation');
 			$data = array();
 			$data['grp'] = $this->groups_model->get_group($this->grp_id);
+			$data['translations'] = $this->groups_model->get_translations($this->grp_id);
 
 			$this->form_validation->set_rules('grp_code', 'lang:grp_code', 'required|max_length[100]|callback_rule_grp_code['.$data['grp']->grp_code.']');
+			foreach($data['translations'] as $trl) {
+				$this->form_validation->set_rules('title'.$trl->lng_id, 'lang:grp_trl_title', 'required');
+			}
 
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_update', $data, true);
@@ -85,6 +103,21 @@ class groups extends CI_Controller {
 				$this->db->set('grp_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('grp_id', $this->grp_id);
 				$this->db->update('grp');
+
+				foreach($data['translations'] as $trl) {
+					if($trl->grp_id) {
+						$this->db->set('grp_trl_title', $this->input->post('title'.$trl->lng_id));
+						$this->db->where('grp_id', $this->grp_id);
+						$this->db->where('lng_id', $trl->lng_id);
+						$this->db->update('grp_trl');
+					} else {
+						$this->db->set('grp_trl_title', $this->input->post('title'.$trl->lng_id));
+						$this->db->set('grp_id', $this->grp_id);
+						$this->db->set('lng_id', $trl->lng_id);
+						$this->db->insert('grp_trl');
+					}
+				}
+
 				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}
