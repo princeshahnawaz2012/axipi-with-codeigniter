@@ -27,9 +27,9 @@ dt{font-family:"Lucida Grande","Century Gothic",sans-serif;margin-top:5px;}
 table{border-collapse:collapse;border-spacing:0px;clear:both;margin:5px 0px;width:100%;}
 table th, table td{border-bottom:1px solid #E7E7E7;font-size:12px;padding:4px 6px 4px 0px;text-align:left;vertical-align:middle;}
 thead th{font-family:"Lucida Grande","Century Gothic",sans-serif;white-space:nowrap;}
-thead tr th a.sort_asc:link, thead tr th a.sort_asc:visited{background-color:#777777;color:#FFFFFF;padding:2px;text-decoration:none;}
+thead tr th span.sort_asc, thead tr th a.sort_asc:link, thead tr th a.sort_asc:visited{background-color:#777777;color:#FFFFFF;padding:2px;text-decoration:none;}
 thead tr th a.sort_asc:hover{background-color:#333333;}
-thead tr th a.sort_desc:link, thead tr th a.sort_desc:visited{background-color:#333333;color:#FFFFFF;padding:2px;text-decoration:none;}
+thead tr th span.sort_desc, thead tr th a.sort_desc:link, thead tr th a.sort_desc:visited{background-color:#333333;color:#FFFFFF;padding:2px;text-decoration:none;}
 thead tr th a.sort_desc:hover{background-color:#777777;}
 tbody th{padding-right:0px;white-space:nowrap;}
 tbody tr:nth-child(odd) th, tbody tr:nth-child(odd) td{background-color:#FFFFFF;}

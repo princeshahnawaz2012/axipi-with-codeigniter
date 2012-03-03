@@ -32,9 +32,9 @@
 <table>
 <thead>
 <tr>
-<th><a class="sort_desc" href="#"><?php echo $this->lang->line('cmp_id'); ?></a></th>
-<th><?php echo $this->lang->line('cmp_code'); ?></th>
-<th><?php echo $this->lang->line('items'); ?></th>
+<th><?php display_column('components', $columns[0], $this->lang->line('cmp_id')); ?></th>
+<th><?php display_column('components', $columns[1], $this->lang->line('cmp_code')); ?></th>
+<th><?php display_column('components', $columns[2], $this->lang->line('items')); ?></th>
 <th>&nbsp;</th>
 </tr>
 </thead>

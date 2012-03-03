@@ -24,13 +24,25 @@ class items extends CI_Controller {
 		$filters['items_lng_id'] = array('itm.lng_id', 'equal');
 		$flt = build_filters($filters);
 
+		$columns = array();
+		$columns[] = 'itm.itm_id';
+		$columns[] = 'itm.itm_code';
+		$columns[] = 'itm.itm_title';
+		$columns[] = 'sct.sct_code';
+		$columns[] = 'cmp.cmp_code';
+		$columns[] = 'lng.lng_code';
+		$columns[] = 'itm.itm_ispublished';
+		$columns[] = 'itm.itm_access';
+		$col = build_columns('items', $columns, 'itm.itm_id', 'DESC');
+
 		$results = $this->items_model->get_all_items($flt);
 		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
+		$data['columns'] = $col;
 		$data['pagination'] = $build_pagination['output'];
 		$data['position'] = $build_pagination['position'];
-		$data['results'] = $this->items_model->get_pagination_items($flt, $build_pagination['limit'], $build_pagination['start']);
+		$data['results'] = $this->items_model->get_pagination_items($flt, $build_pagination['limit'], $build_pagination['start'], 'items');
 		$data['select_section'] = $this->items_model->select_section();
 		$data['select_language'] = $this->items_model->select_language();
 		$this->zones['content'] = $this->load->view('axipi_dynamic/items/items_index', $data, true);

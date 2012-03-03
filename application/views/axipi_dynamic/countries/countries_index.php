@@ -33,12 +33,12 @@
 <table>
 <thead>
 <tr>
-<th><a class="sort_desc" href="#"><?php echo $this->lang->line('cou_id'); ?></a></th>
-<th><?php echo $this->lang->line('cou_alpha2'); ?></th>
-<th><?php echo $this->lang->line('cou_alpha3'); ?></th>
-<th><?php echo $this->lang->line('subdivisions'); ?></th>
-<th><?php echo $this->lang->line('items'); ?></th>
-<th><?php echo $this->lang->line('users'); ?></th>
+<th><?php display_column('countries', $columns[0], $this->lang->line('cou_id')); ?></th>
+<th><?php display_column('countries', $columns[1], $this->lang->line('cou_alpha2')); ?></th>
+<th><?php display_column('countries', $columns[2], $this->lang->line('cou_alpha3')); ?></th>
+<th><?php display_column('countries', $columns[3], $this->lang->line('subdivisions')); ?></th>
+<th><?php display_column('countries', $columns[4], $this->lang->line('items')); ?></th>
+<th><?php display_column('countries', $columns[5], $this->lang->line('users')); ?></th>
 <th>&nbsp;</th>
 </tr>
 </thead>

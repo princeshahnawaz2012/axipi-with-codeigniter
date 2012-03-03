@@ -20,13 +20,20 @@ class components extends CI_Controller {
 		$filters['components_cmp_code'] = array('cmp.cmp_code', 'like');
 		$flt = build_filters($filters);
 
+		$columns = array();
+		$columns[] = 'cmp.cmp_id';
+		$columns[] = 'cmp.cmp_code';
+		$columns[] = 'count_items';
+		$col = build_columns('components', $columns, 'cmp.cmp_id', 'DESC');
+
 		$results = $this->components_model->get_all_components($flt);
 		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
+		$data['columns'] = $col;
 		$data['pagination'] = $build_pagination['output'];
 		$data['position'] = $build_pagination['position'];
-		$data['results'] = $this->components_model->get_pagination_components($flt, $build_pagination['limit'], $build_pagination['start']);
+		$data['results'] = $this->components_model->get_pagination_components($flt, $build_pagination['limit'], $build_pagination['start'], 'components');
 		$this->zones['content'] = $this->load->view('axipi_dynamic/components/components_index', $data, true);
 	}
 	public function rule_cmp_code($cmp_code, $current = '') {

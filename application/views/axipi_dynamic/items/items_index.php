@@ -36,14 +36,14 @@
 <table>
 <thead>
 <tr>
-<th><a class="sort_desc" href="#"><?php echo $this->lang->line('itm_id'); ?></a></th>
-<th><?php echo $this->lang->line('itm_code'); ?></th>
-<th><?php echo $this->lang->line('itm_title'); ?></th>
-<th><?php echo $this->lang->line('sct_code'); ?></th>
-<th><?php echo $this->lang->line('cmp_code'); ?></th>
-<th><?php echo $this->lang->line('lng_code'); ?></th>
-<th><?php echo $this->lang->line('itm_ispublished'); ?></th>
-<th><?php echo $this->lang->line('itm_access'); ?></th>
+<th><?php display_column('items', $columns[0], $this->lang->line('itm_id')); ?></th>
+<th><?php display_column('items', $columns[1], $this->lang->line('itm_code')); ?></th>
+<th><?php display_column('items', $columns[2], $this->lang->line('itm_title')); ?></th>
+<th><?php display_column('items', $columns[3], $this->lang->line('sct_code')); ?></th>
+<th><?php display_column('items', $columns[4], $this->lang->line('cmp_code')); ?></th>
+<th><?php display_column('items', $columns[5], $this->lang->line('lng_code')); ?></th>
+<th><?php display_column('items', $columns[6], $this->lang->line('itm_ispublished')); ?></th>
+<th><?php display_column('items', $columns[7], $this->lang->line('itm_access')); ?></th>
 <th>&nbsp;</th>
 </tr>
 </thead>

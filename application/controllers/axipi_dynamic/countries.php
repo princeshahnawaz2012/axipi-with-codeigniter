@@ -21,13 +21,23 @@ class countries extends CI_Controller {
 		$filters['countries_cou_alpha3'] = array('cou.cou_alpha3', 'like');
 		$flt = build_filters($filters);
 
+		$columns = array();
+		$columns[] = 'cou.cou_id';
+		$columns[] = 'cou.cou_alpha2';
+		$columns[] = 'cou.cou_alpha3';
+		$columns[] = 'count_subdivisions';
+		$columns[] = 'count_items';
+		$columns[] = 'count_users';
+		$col = build_columns('countries', $columns, 'cou.cou_id', 'DESC');
+
 		$results = $this->countries_model->get_all_countries($flt);
 		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
+		$data['columns'] = $col;
 		$data['pagination'] = $build_pagination['output'];
 		$data['position'] = $build_pagination['position'];
-		$data['results'] = $this->countries_model->get_pagination_countries($flt, $build_pagination['limit'], $build_pagination['start']);
+		$data['results'] = $this->countries_model->get_pagination_countries($flt, $build_pagination['limit'], $build_pagination['start'], 'countries');
 		$this->zones['content'] = $this->load->view('axipi_dynamic/countries/countries_index', $data, true);
 	}
 	public function rule_cou_alpha2($cou_alpha2, $current = '') {
