@@ -38,9 +38,10 @@
 <table>
 <thead>
 <tr>
-<th><a class="sort_desc" href="#"><?php echo $this->lang->line('itm_id'); ?></a></th>
-<th><?php echo $this->lang->line('itm_code'); ?></th>
-<th><?php echo $this->lang->line('cmp_code'); ?></th>
+<th><?php display_column('groups_items', $columns[0], $this->lang->line('itm_id')); ?></th>
+<th><?php display_column('groups_items', $columns[1], $this->lang->line('itm_code')); ?></th>
+<th><?php display_column('groups_items', $columns[2], $this->lang->line('itm_title')); ?></th>
+<th><?php display_column('groups_items', $columns[3], $this->lang->line('cmp_code')); ?></th>
 <?php foreach($groups as $group) { ?>
 <th><?php echo $group->grp_code; ?></th>
 <?php } ?>
@@ -52,6 +53,7 @@
 <tr>
 <td><?php echo $result->itm_id;?></td>
 <td><?php echo $result->itm_code; ?></td>
+<td><?php echo $result->itm_title; ?></td>
 <td><?php echo $result->cmp_code; ?></td>
 <?php foreach($groups as $group) { ?>
 <?php if($result->itm_islocked == 1 && $group->grp_islocked == 1) { ?>

@@ -20,13 +20,21 @@ class groups_items extends CI_Controller {
 		$flt = build_filters($filters);
 		$flt[] = 'itm.itm_access = \'groups\'';
 
+		$columns = array();
+		$columns[] = 'itm.itm_id';
+		$columns[] = 'itm.itm_code';
+		$columns[] = 'itm.itm_title';
+		$columns[] = 'cmp.cmp_code';
+		$col = build_columns('groups_items', $columns, 'itm.itm_id', 'DESC');
+
 		$results = $this->items_model->get_all_items($flt);
 		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
+		$data['columns'] = $col;
 		$data['pagination'] = $build_pagination['output'];
 		$data['position'] = $build_pagination['position'];
-		$data['results'] = $this->items_model->get_pagination_items($flt, $build_pagination['limit'], $build_pagination['start']);
+		$data['results'] = $this->items_model->get_pagination_items($flt, $build_pagination['limit'], $build_pagination['start'], 'groups_items');
 		$data['groups_saved'] = $this->groups_model->get_groups_saved_item($flt);
 		$data['groups'] = $this->groups_model->get_groups_is('item');
 		$data['select_section'] = $this->items_model->select_section();
