@@ -32,11 +32,11 @@
 <table>
 <thead>
 <tr>
-<th><a class="sort_desc" href="#"><?php echo $this->lang->line('grp_id'); ?></a></th>
-<th><?php echo $this->lang->line('grp_code'); ?></th>
-<th><?php echo $this->lang->line('permissions'); ?></th>
-<th><?php echo $this->lang->line('items'); ?></th>
-<th><?php echo $this->lang->line('users'); ?></th>
+<th><?php display_column('groups', $columns[0], $this->lang->line('grp_id')); ?></th>
+<th><?php display_column('groups', $columns[1], $this->lang->line('grp_code')); ?></th>
+<th><?php display_column('groups', $columns[2], $this->lang->line('permissions')); ?></th>
+<th><?php display_column('groups', $columns[3], $this->lang->line('items')); ?></th>
+<th><?php display_column('groups', $columns[4], $this->lang->line('users')); ?></th>
 <th>&nbsp;</th>
 </tr>
 </thead>

@@ -32,9 +32,9 @@
 <table>
 <thead>
 <tr>
-<th><a class="sort_desc" href="#"><?php echo $this->lang->line('usr_id'); ?></a></th>
-<th><?php echo $this->lang->line('usr_email'); ?></th>
-<th><?php echo $this->lang->line('groups'); ?></th>
+<th><?php display_column('users', $columns[0], $this->lang->line('usr_id')); ?></th>
+<th><?php display_column('users', $columns[1], $this->lang->line('usr_email')); ?></th>
+<th><?php display_column('users', $columns[2], $this->lang->line('groups')); ?></th>
 <th>&nbsp;</th>
 </tr>
 </thead>

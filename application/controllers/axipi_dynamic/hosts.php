@@ -20,13 +20,24 @@ class hosts extends CI_Controller {
 		$filters['hosts_hst_code'] = array('hst.hst_code', 'like');
 		$flt = build_filters($filters);
 
+		$columns = array();
+		$columns[] = 'hst.hst_id';
+		$columns[] = 'hst.hst_code';
+		$columns[] = 'hst.hst_url';
+		$columns[] = 'hst.hst_environment';
+		$columns[] = 'hst.hst_gzhandler';
+		$columns[] = 'hst.hst_debug';
+		$columns[] = 'lay.lay_code';
+		$col = build_columns('hosts', $columns, 'hst.hst_id', 'DESC');
+
 		$results = $this->hosts_model->get_all_hosts($flt);
 		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
+		$data['columns'] = $col;
 		$data['pagination'] = $build_pagination['output'];
 		$data['position'] = $build_pagination['position'];
-		$data['results'] = $this->hosts_model->get_pagination_hosts($flt, $build_pagination['limit'], $build_pagination['start']);
+		$data['results'] = $this->hosts_model->get_pagination_hosts($flt, $build_pagination['limit'], $build_pagination['start'], 'hosts');
 		$this->zones['content'] = $this->load->view('axipi_dynamic/hosts/hosts_index', $data, true);
 	}
 	public function rule_hst_code($hst_code, $current = '') {

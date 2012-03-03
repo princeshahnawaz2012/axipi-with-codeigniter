@@ -32,10 +32,10 @@
 <table>
 <thead>
 <tr>
-<th><a class="sort_desc" href="#"><?php echo $this->lang->line('lay_id'); ?></a></th>
-<th><?php echo $this->lang->line('lay_code'); ?></th>
-<th><?php echo $this->lang->line('lay_type'); ?></th>
-<th><?php echo $this->lang->line('sections'); ?></th>
+<th><?php display_column('layouts', $columns[0], $this->lang->line('lay_id')); ?></th>
+<th><?php display_column('layouts', $columns[1], $this->lang->line('lay_code')); ?></th>
+<th><?php display_column('layouts', $columns[2], $this->lang->line('lay_type')); ?></th>
+<th><?php display_column('layouts', $columns[3], $this->lang->line('sections')); ?></th>
 <th>&nbsp;</th>
 </tr>
 </thead>

@@ -21,8 +21,8 @@ class zones_model extends CI_Model {
         $query = $this->db->query('SELECT COUNT(zon.zon_id) AS count FROM '.$this->db->dbprefix('zon').' AS zon WHERE '.implode(' AND ', $flt));
         return $query->row();
     }
-    function get_pagination_zones($flt, $num, $offset) {
-        $query = $this->db->query('SELECT zon.zon_id, zon.zon_code, zon.zon_ordering, zon.zon_islocked, zon.zon_ispublished, lay.lay_code, COUNT(DISTINCT(itm_zon.itm_id)) AS count_items FROM '.$this->db->dbprefix('zon').' AS zon LEFT JOIN '.$this->db->dbprefix('lay').' AS lay ON lay.lay_id = zon.lay_id LEFT JOIN '.$this->db->dbprefix('itm_zon').' AS itm_zon ON itm_zon.zon_id = zon.zon_id WHERE '.implode(' AND ', $flt).' GROUP BY zon.zon_id ORDER BY zon.zon_id DESC LIMIT '.$offset.', '.$num);
+    function get_pagination_zones($flt, $num, $offset, $column) {
+        $query = $this->db->query('SELECT zon.zon_id, zon.zon_code, zon.zon_ordering, zon.zon_islocked, zon.zon_ispublished, lay.lay_code, COUNT(DISTINCT(itm_zon.itm_id)) AS count_items FROM '.$this->db->dbprefix('zon').' AS zon LEFT JOIN '.$this->db->dbprefix('lay').' AS lay ON lay.lay_id = zon.lay_id LEFT JOIN '.$this->db->dbprefix('itm_zon').' AS itm_zon ON itm_zon.zon_id = zon.zon_id WHERE '.implode(' AND ', $flt).' GROUP BY zon.zon_id ORDER BY '.$this->session->userdata($column.'_col').' LIMIT '.$offset.', '.$num);
         return $query->result();
     }
     function get_zone($zon_id) {

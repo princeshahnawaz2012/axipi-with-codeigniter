@@ -21,8 +21,8 @@ class sections_model extends CI_Model {
         $query = $this->db->query('SELECT COUNT(sct.sct_id) AS count FROM '.$this->db->dbprefix('sct').' AS sct WHERE '.implode(' AND ', $flt));
         return $query->row();
     }
-    function get_pagination_sections($flt, $num, $offset) {
-        $query = $this->db->query('SELECT sct.sct_id, sct.sct_code, sct.sct_islocked, sct.sct_ispublished, lay.lay_code, COUNT(DISTINCT(items.itm_id)) AS count_items FROM '.$this->db->dbprefix('sct').' AS sct LEFT JOIN '.$this->db->dbprefix('itm').' AS items ON items.sct_id = sct.sct_id LEFT JOIN '.$this->db->dbprefix('lay').' AS lay ON lay.lay_id = sct.lay_id WHERE '.implode(' AND ', $flt).' GROUP BY sct.sct_id ORDER BY sct.sct_id DESC LIMIT '.$offset.', '.$num);
+    function get_pagination_sections($flt, $num, $offset, $column) {
+        $query = $this->db->query('SELECT sct.sct_id, sct.sct_code, sct.sct_islocked, sct.sct_ispublished, lay.lay_code, COUNT(DISTINCT(items.itm_id)) AS count_items FROM '.$this->db->dbprefix('sct').' AS sct LEFT JOIN '.$this->db->dbprefix('itm').' AS items ON items.sct_id = sct.sct_id LEFT JOIN '.$this->db->dbprefix('lay').' AS lay ON lay.lay_id = sct.lay_id WHERE '.implode(' AND ', $flt).' GROUP BY sct.sct_id ORDER BY '.$this->session->userdata($column.'_col').' LIMIT '.$offset.', '.$num);
         return $query->result();
     }
     function get_translations($sct_id) {

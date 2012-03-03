@@ -20,13 +20,21 @@ class layouts extends CI_Controller {
 		$filters['layouts_lay_code'] = array('lay.lay_code', 'like');
 		$flt = build_filters($filters);
 
+		$columns = array();
+		$columns[] = 'lay.lay_id';
+		$columns[] = 'lay.lay_code';
+		$columns[] = 'lay.lay_type';
+		$columns[] = 'count_sections';
+		$col = build_columns('layouts', $columns, 'lay.lay_id', 'DESC');
+
 		$results = $this->layouts_model->get_all_layouts($flt);
 		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
+		$data['columns'] = $col;
 		$data['pagination'] = $build_pagination['output'];
 		$data['position'] = $build_pagination['position'];
-		$data['results'] = $this->layouts_model->get_pagination_layouts($flt, $build_pagination['limit'], $build_pagination['start']);
+		$data['results'] = $this->layouts_model->get_pagination_layouts($flt, $build_pagination['limit'], $build_pagination['start'], 'layouts');
 		$this->zones['content'] = $this->load->view('axipi_dynamic/layouts/layouts_index', $data, true);
 	}
 	public function rule_lay_code($lay_code, $current = '') {

@@ -20,13 +20,22 @@ class languages extends CI_Controller {
 		$filters['languages_lng_code'] = array('lng.lng_code', 'like');
 		$flt = build_filters($filters);
 
+		$columns = array();
+		$columns[] = 'lng.lng_id';
+		$columns[] = 'lng.lng_code';
+		$columns[] = 'lng.lng_title';
+		$columns[] = 'count_items';
+		$columns[] = 'count_users';
+		$col = build_columns('languages', $columns, 'lng.lng_id', 'DESC');
+
 		$results = $this->languages_model->get_all_languages($flt);
 		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
+		$data['columns'] = $col;
 		$data['pagination'] = $build_pagination['output'];
 		$data['position'] = $build_pagination['position'];
-		$data['results'] = $this->languages_model->get_pagination_languages($flt, $build_pagination['limit'], $build_pagination['start']);
+		$data['results'] = $this->languages_model->get_pagination_languages($flt, $build_pagination['limit'], $build_pagination['start'], 'languages');
 		$this->zones['content'] = $this->load->view('axipi_dynamic/languages/languages_index', $data, true);
 	}
 	public function rule_lng_code($lng_code, $current = '') {

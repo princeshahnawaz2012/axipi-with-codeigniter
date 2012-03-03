@@ -15,13 +15,19 @@ class groups_permissions extends CI_Controller {
 		$filters['groups_permissions_per_code'] = array('per.per_code', 'like');
 		$flt = build_filters($filters);
 
+		$columns = array();
+		$columns[] = 'per.per_id';
+		$columns[] = 'per.per_code';
+		$col = build_columns('groups_permissions', $columns, 'per.per_id', 'DESC');
+
 		$results = $this->permissions_model->get_all_permissions($flt);
 		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
+		$data['columns'] = $col;
 		$data['pagination'] = $build_pagination['output'];
 		$data['position'] = $build_pagination['position'];
-		$data['results'] = $this->permissions_model->get_pagination_permissions($flt, $build_pagination['limit'], $build_pagination['start']);
+		$data['results'] = $this->permissions_model->get_pagination_permissions($flt, $build_pagination['limit'], $build_pagination['start'], 'groups_permissions');
 		$data['groups_saved'] = $this->groups_model->get_groups_saved_permission($flt);
 		$data['groups'] = $this->groups_model->get_groups_is('permission');
 

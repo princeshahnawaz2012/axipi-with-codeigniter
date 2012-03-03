@@ -20,13 +20,22 @@ class groups extends CI_Controller {
 		$filters['groups_grp_code'] = array('grp.grp_code', 'like');
 		$flt = build_filters($filters);
 
+		$columns = array();
+		$columns[] = 'grp.grp_id';
+		$columns[] = 'grp.grp_code';
+		$columns[] = 'count_permissions';
+		$columns[] = 'count_items';
+		$columns[] = 'count_users';
+		$col = build_columns('groups', $columns, 'grp.grp_id', 'DESC');
+
 		$results = $this->groups_model->get_all_groups($flt);
 		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
+		$data['columns'] = $col;
 		$data['pagination'] = $build_pagination['output'];
 		$data['position'] = $build_pagination['position'];
-		$data['results'] = $this->groups_model->get_pagination_groups($flt, $build_pagination['limit'], $build_pagination['start']);
+		$data['results'] = $this->groups_model->get_pagination_groups($flt, $build_pagination['limit'], $build_pagination['start'], 'groups');
 		$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_index', $data, true);
 	}
 	public function rule_grp_code($grp_code, $current = '') {

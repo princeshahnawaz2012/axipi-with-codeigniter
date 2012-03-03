@@ -34,8 +34,8 @@
 <table>
 <thead>
 <tr>
-<th><a class="sort_desc" href="#"><?php echo $this->lang->line('per_id'); ?></a></th>
-<th><?php echo $this->lang->line('per_code'); ?></th>
+<th><?php display_column('groups_permissions', $columns[0], $this->lang->line('per_id')); ?></th>
+<th><?php display_column('groups_permissions', $columns[1], $this->lang->line('per_code')); ?></th>
 <?php foreach($groups as $group) { ?>
 <th><?php echo $group->grp_code; ?></th>
 <?php } ?>

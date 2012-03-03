@@ -31,11 +31,11 @@
 <table>
 <thead>
 <tr>
-<th><a class="sort_desc" href="#"><?php echo $this->lang->line('zon_id'); ?></a></th>
-<th><?php echo $this->lang->line('zon_code'); ?></th>
-<th><?php echo $this->lang->line('lay_code'); ?></th>
-<th><?php echo $this->lang->line('zon_ordering'); ?></th>
-<th><?php echo $this->lang->line('items'); ?></th>
+<th><?php display_column('zones', $columns[0], $this->lang->line('zon_id')); ?></th>
+<th><?php display_column('zones', $columns[1], $this->lang->line('zon_code')); ?></th>
+<th><?php display_column('zones', $columns[2], $this->lang->line('lay_code')); ?></th>
+<th><?php display_column('zones', $columns[3], $this->lang->line('zon_ordering')); ?></th>
+<th><?php display_column('zones', $columns[4], $this->lang->line('items')); ?></th>
 <th>&nbsp;</th>
 </tr>
 </thead>

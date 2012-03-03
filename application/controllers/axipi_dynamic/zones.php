@@ -21,13 +21,22 @@ class zones extends CI_Controller {
 		$filters['zones_lay_id'] = array('zon.lay_id', 'equal');
 		$flt = build_filters($filters);
 
+		$columns = array();
+		$columns[] = 'zon.zon_id';
+		$columns[] = 'zon.zon_code';
+		$columns[] = 'lay.lay_code';
+		$columns[] = 'zon.zon_ordering';
+		$columns[] = 'count_items';
+		$col = build_columns('zones', $columns, 'zon.zon_id', 'DESC');
+
 		$results = $this->zones_model->get_all_zones($flt);
 		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
+		$data['columns'] = $col;
 		$data['pagination'] = $build_pagination['output'];
 		$data['position'] = $build_pagination['position'];
-		$data['results'] = $this->zones_model->get_pagination_zones($flt, $build_pagination['limit'], $build_pagination['start']);
+		$data['results'] = $this->zones_model->get_pagination_zones($flt, $build_pagination['limit'], $build_pagination['start'], 'zones');
 		$data['select_layout'] = $this->zones_model->select_layout();
 		$this->zones['content'] = $this->load->view('axipi_dynamic/zones/zones_index', $data, true);
 	}

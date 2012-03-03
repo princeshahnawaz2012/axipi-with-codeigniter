@@ -20,13 +20,21 @@ class sections extends CI_Controller {
 		$filters['sections_sct_code'] = array('sct.sct_code', 'like');
 		$flt = build_filters($filters);
 
+		$columns = array();
+		$columns[] = 'sct.sct_id';
+		$columns[] = 'sct.sct_code';
+		$columns[] = 'lay.lay_code';
+		$columns[] = 'count_items';
+		$col = build_columns('sections', $columns, 'sct.sct_id', 'DESC');
+
 		$results = $this->sections_model->get_all_sections($flt);
 		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
+		$data['columns'] = $col;
 		$data['pagination'] = $build_pagination['output'];
 		$data['position'] = $build_pagination['position'];
-		$data['results'] = $this->sections_model->get_pagination_sections($flt, $build_pagination['limit'], $build_pagination['start']);
+		$data['results'] = $this->sections_model->get_pagination_sections($flt, $build_pagination['limit'], $build_pagination['start'], 'sections');
 		$this->zones['content'] = $this->load->view('axipi_dynamic/sections/sections_index', $data, true);
 	}
 	public function rule_sct_code($sct_code, $current = '') {

@@ -34,8 +34,8 @@
 <table>
 <thead>
 <tr>
-<th><a class="sort_desc" href="#"><?php echo $this->lang->line('usr_id'); ?></a></th>
-<th><?php echo $this->lang->line('usr_email'); ?></th>
+<th><?php display_column('groups_users', $columns[0], $this->lang->line('usr_id')); ?></th>
+<th><?php display_column('groups_users', $columns[1], $this->lang->line('usr_email')); ?></th>
 <?php foreach($groups as $group) { ?>
 <th><?php echo $group->grp_code; ?></th>
 <?php } ?>

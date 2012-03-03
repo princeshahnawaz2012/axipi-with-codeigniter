@@ -32,9 +32,9 @@
 <table>
 <thead>
 <tr>
-<th><a class="sort_desc" href="#"><?php echo $this->lang->line('per_id'); ?></a></th>
-<th><?php echo $this->lang->line('per_code'); ?></th>
-<th><?php echo $this->lang->line('groups'); ?></th>
+<th><?php display_column('permissions', $columns[0], $this->lang->line('per_id')); ?></th>
+<th><?php display_column('permissions', $columns[1], $this->lang->line('per_code')); ?></th>
+<th><?php display_column('permissions', $columns[2], $this->lang->line('groups')); ?></th>
 <th>&nbsp;</th>
 </tr>
 </thead>

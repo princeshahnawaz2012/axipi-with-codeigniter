@@ -21,13 +21,20 @@ class users extends CI_Controller {
 		$filters['users_usr_email'] = array('usr.usr_email', 'like');
 		$flt = build_filters($filters);
 
+		$columns = array();
+		$columns[] = 'usr.usr_id';
+		$columns[] = 'usr.usr_email';
+		$columns[] = 'count_groups';
+		$col = build_columns('users', $columns, 'usr.usr_id', 'DESC');
+
 		$results = $this->users_model->get_all_users($flt);
 		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
+		$data['columns'] = $col;
 		$data['pagination'] = $build_pagination['output'];
 		$data['position'] = $build_pagination['position'];
-		$data['results'] = $this->users_model->get_pagination_users($flt, $build_pagination['limit'], $build_pagination['start']);
+		$data['results'] = $this->users_model->get_pagination_users($flt, $build_pagination['limit'], $build_pagination['start'], 'users');
 		$this->zones['content'] = $this->load->view('axipi_dynamic/users/users_index', $data, true);
 	}
 	public function rule_usr_email($usr_email, $current = '') {

@@ -15,13 +15,19 @@ class groups_users extends CI_Controller {
 		$filters['groups_users_usr_email'] = array('usr.usr_email', 'like');
 		$flt = build_filters($filters);
 
+		$columns = array();
+		$columns[] = 'usr.usr_id';
+		$columns[] = 'usr.usr_email';
+		$col = build_columns('groups_users', $columns, 'usr.usr_id', 'DESC');
+
 		$results = $this->users_model->get_all_users($flt);
 		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
+		$data['columns'] = $col;
 		$data['pagination'] = $build_pagination['output'];
 		$data['position'] = $build_pagination['position'];
-		$data['results'] = $this->users_model->get_pagination_users($flt, $build_pagination['limit'], $build_pagination['start']);
+		$data['results'] = $this->users_model->get_pagination_users($flt, $build_pagination['limit'], $build_pagination['start'], 'groups_users');
 		$data['groups_saved'] = $this->groups_model->get_groups_saved_user($flt);
 		$data['groups'] = $this->groups_model->get_groups_is('user');
 

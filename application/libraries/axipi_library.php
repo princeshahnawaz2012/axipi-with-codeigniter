@@ -72,7 +72,7 @@ class axipi_library {
 			$_GET['page'] = 0;
 		}
 		$start = ($this->CI->input->get('page') * $config['per_page']) - $config['per_page'];
-		if($start < 0) {
+		if($start < 0 || $this->CI->input->get('page') > $pages) {
 			$start = 0;
 			$_GET['page'] = 1;
 		}

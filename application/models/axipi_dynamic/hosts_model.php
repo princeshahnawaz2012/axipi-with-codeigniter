@@ -37,8 +37,8 @@ class hosts_model extends CI_Model {
         $query = $this->db->query('SELECT COUNT(hst.hst_id) AS count FROM '.$this->db->dbprefix('hst').' AS hst WHERE '.implode(' AND ', $flt));
         return $query->row();
     }
-    function get_pagination_hosts($flt, $num, $offset) {
-        $query = $this->db->query('SELECT hst.hst_id, hst.hst_code, hst.hst_url, hst.hst_environment, hst.hst_gzhandler, hst.hst_debug, hst.hst_islocked, hst.hst_ispublished, lay.lay_code FROM '.$this->db->dbprefix('hst').' AS hst LEFT JOIN '.$this->db->dbprefix('lay').' AS lay ON lay.lay_id = hst.lay_id WHERE '.implode(' AND ', $flt).' GROUP BY hst.hst_id ORDER BY hst.hst_id DESC LIMIT '.$offset.', '.$num);
+    function get_pagination_hosts($flt, $num, $offset, $column) {
+        $query = $this->db->query('SELECT hst.hst_id, hst.hst_code, hst.hst_url, hst.hst_environment, hst.hst_gzhandler, hst.hst_debug, hst.hst_islocked, hst.hst_ispublished, lay.lay_code FROM '.$this->db->dbprefix('hst').' AS hst LEFT JOIN '.$this->db->dbprefix('lay').' AS lay ON lay.lay_id = hst.lay_id WHERE '.implode(' AND ', $flt).' GROUP BY hst.hst_id ORDER BY '.$this->session->userdata($column.'_col').' LIMIT '.$offset.', '.$num);
         return $query->result();
     }
     function get_translations($hst_id) {
