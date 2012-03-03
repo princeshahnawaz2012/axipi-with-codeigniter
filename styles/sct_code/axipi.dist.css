@@ -92,8 +92,8 @@ option.selected{font-weight:bold;}
 .datefield{width:80px!important;}
 .timefield{width:60px!important;}
 .numericfield{width:50px!important;}
-.textarea{height:100px;resize:vertical;width:97%;}
-.textareabigger{height:200px;width:97%;}
+.textarea{height:100px;min-height:100px;resize:vertical;width:97%;}
+.textareabigger{height:200px;min-height:200px;resize:vertical;width:97%;}
 label, .label{cursor:text;display:block;font-family:"Lucida Grande","Century Gothic",sans-serif;margin-bottom:2px;position:relative;}
 a.label:link, a.label:visited{cursor:pointer;font-family:"Lucida Grande","Century Gothic",sans-serif;}
 form .error{color:#FF0000;}

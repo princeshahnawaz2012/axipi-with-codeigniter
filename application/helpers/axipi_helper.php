@@ -88,7 +88,7 @@ if( ! function_exists('display_column')) {
 				}
 			}
 		}
-		$link .= ' href="'.current_url().'?'.$reference.'_col='.$column.'">'.$lang.'</a>';
+		$link .= ' href="'.current_url().'?'.$reference.'_col='.urlencode($column).'">'.$lang.'</a>';
 		echo $link;
 	}
 }

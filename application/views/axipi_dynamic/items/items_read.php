@@ -27,6 +27,7 @@ if($itm) {
 <p><span class="label"><?php echo $this->lang->line('itm_virtualcode'); ?></span><?php echo $itm->itm_virtualcode; ?></p>
 <p><span class="label"><?php echo $this->lang->line('itm_title'); ?></span><?php echo $itm->itm_title; ?></p>
 <p><span class="label"><?php echo $this->lang->line('cmp_code'); ?></span><?php echo $itm->cmp_code; ?></p>
+<p><span class="label"><?php echo $this->lang->line('lng_code'); ?></span><?php echo $itm->lng_code; ?></p>
 </div>
 
 <div class="column1 columnlast">
