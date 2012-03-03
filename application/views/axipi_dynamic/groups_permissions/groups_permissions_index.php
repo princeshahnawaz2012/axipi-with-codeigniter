@@ -37,7 +37,7 @@
 <th><?php display_column('groups_permissions', $columns[0], $this->lang->line('per_id')); ?></th>
 <th><?php display_column('groups_permissions', $columns[1], $this->lang->line('per_code')); ?></th>
 <?php foreach($groups as $group) { ?>
-<th><?php echo $group->grp_code; ?></th>
+<th><?php echo $group->grp_trl_title; ?></th>
 <?php } ?>
 </tr>
 </thead>

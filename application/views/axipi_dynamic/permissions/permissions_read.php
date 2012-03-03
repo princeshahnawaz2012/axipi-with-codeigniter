@@ -28,6 +28,13 @@ if($per) {
 <div class="column1 columnlast">
 </div>
 
+<?php if($translations) { ?>
+<?php foreach($translations as $trl) { ?>
+<h2><?php echo $trl->lng_title; ?> (<?php echo $trl->lng_code; ?>)</h2>
+<p><span class="label"><?php echo $this->lang->line('per_trl_title'); ?></span><?php echo $trl->per_trl_title; ?></p>
+<?php } ?>
+<?php } ?>
+
 </div>
 </div>
 

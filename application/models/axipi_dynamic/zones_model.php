@@ -25,6 +25,10 @@ class zones_model extends CI_Model {
         $query = $this->db->query('SELECT zon.zon_id, zon.zon_code, zon.zon_ordering, zon.zon_islocked, zon.zon_ispublished, lay.lay_code, COUNT(DISTINCT(itm_zon.itm_id)) AS count_items FROM '.$this->db->dbprefix('zon').' AS zon LEFT JOIN '.$this->db->dbprefix('lay').' AS lay ON lay.lay_id = zon.lay_id LEFT JOIN '.$this->db->dbprefix('itm_zon').' AS itm_zon ON itm_zon.zon_id = zon.zon_id WHERE '.implode(' AND ', $flt).' GROUP BY zon.zon_id ORDER BY '.$this->session->userdata($column.'_col').' LIMIT '.$offset.', '.$num);
         return $query->result();
     }
+    function get_translations($zon_id) {
+        $query = $this->db->query('SELECT trl_zon.*, lng.lng_title, lng.lng_code, lng.lng_id FROM '.$this->db->dbprefix('lng').' AS lng LEFT JOIN '.$this->db->dbprefix('trl_zon').' AS trl_zon ON trl_zon.lng_id = lng.lng_id AND trl_zon.zon_id = ?', array($zon_id));
+		return $query->result();
+    }
     function get_zone($zon_id) {
         $query = $this->db->query('SELECT zon.*, lay.lay_code FROM '.$this->db->dbprefix('zon').' AS zon LEFT JOIN '.$this->db->dbprefix('lay').' AS lay ON lay.lay_id = zon.lay_id WHERE zon.zon_id = ? GROUP BY zon.zon_id', array($zon_id));
         return $query->row();

@@ -53,8 +53,12 @@ class permissions extends CI_Controller {
 		$this->load->helper(array('form'));
 		$this->load->library('form_validation');
 		$data = array();
+		$data['translations'] = $this->permissions_model->get_translations($this->per_id);
 
 		$this->form_validation->set_rules('per_code', 'lang:per_code', 'required|max_length[100]|callback_rule_per_code');
+		foreach($data['translations'] as $trl) {
+			$this->form_validation->set_rules('title'.$trl->lng_id, 'lang:per_trl_title', 'required');
+		}
 
 		if($this->form_validation->run() == FALSE) {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/permissions/permissions_create', $data, true);
@@ -64,6 +68,15 @@ class permissions extends CI_Controller {
 			$this->db->set('per_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('per_ispublished', 1);
 			$this->db->insert('per');
+			$per_id = $this->db->insert_id();
+
+			foreach($data['translations'] as $trl) {
+				$this->db->set('per_trl_title', $this->input->post('title'.$trl->lng_id));
+				$this->db->set('per_id', $per_id);
+				$this->db->set('lng_id', $trl->lng_id);
+				$this->db->insert('per_trl');
+			}
+
 			$this->msg[] = $this->lang->line('created');
 			$this->index();
 		}
@@ -72,6 +85,7 @@ class permissions extends CI_Controller {
 		if($this->per_id != 0) {
 			$data = array();
 			$data['per'] = $this->permissions_model->get_permission($this->per_id);
+			$data['translations'] = $this->permissions_model->get_translations($this->per_id);
 			$this->zones['content'] = $this->load->view('axipi_dynamic/permissions/permissions_read', $data, true);
 		}
 	}
@@ -81,8 +95,12 @@ class permissions extends CI_Controller {
 			$this->load->library('form_validation');
 			$data = array();
 			$data['per'] = $this->permissions_model->get_permission($this->per_id);
+			$data['translations'] = $this->permissions_model->get_translations($this->per_id);
 
 			$this->form_validation->set_rules('per_code', 'lang:per_code', 'required|max_length[100]|callback_rule_per_code['.$data['per']->per_code.']');
+			foreach($data['translations'] as $trl) {
+				$this->form_validation->set_rules('title'.$trl->lng_id, 'lang:per_trl_title', 'required');
+			}
 
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/permissions/permissions_update', $data, true);
@@ -92,6 +110,21 @@ class permissions extends CI_Controller {
 				$this->db->set('per_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('per_id', $this->per_id);
 				$this->db->update('per');
+
+				foreach($data['translations'] as $trl) {
+					if($trl->per_id) {
+						$this->db->set('per_trl_title', $this->input->post('title'.$trl->lng_id));
+						$this->db->where('per_id', $this->per_id);
+						$this->db->where('lng_id', $trl->lng_id);
+						$this->db->update('per_trl');
+					} else {
+						$this->db->set('per_trl_title', $this->input->post('title'.$trl->lng_id));
+						$this->db->set('per_id', $this->per_id);
+						$this->db->set('lng_id', $trl->lng_id);
+						$this->db->insert('per_trl');
+					}
+				}
+
 				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}

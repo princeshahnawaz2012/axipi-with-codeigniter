@@ -8,25 +8,15 @@ CREATE TABLE IF NOT EXISTS `cmp` (
   `cmp_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `lay_id` int(10) unsigned DEFAULT NULL,
   `cmp_code` varchar(100) NOT NULL,
-  `cmp_prepend` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `cmp_prependordering` mediumint(9) NOT NULL DEFAULT '0',
-  `cmp_append` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `cmp_appendordering` mediumint(9) NOT NULL DEFAULT '0',
   `cmp_ispage` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `cmp_isexcludepage` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `cmp_iselement` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `cmp_isexcludeelement` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `cmp_isdisplay` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `cmp_isrelation` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `cmp_issearch` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `cmp_createdby` int(10) unsigned DEFAULT NULL,
   `cmp_datecreated` datetime DEFAULT NULL,
   `cmp_modifiedby` int(10) unsigned DEFAULT NULL,
   `cmp_datemodified` datetime DEFAULT NULL,
-  `cmp_publishedby` int(10) unsigned DEFAULT NULL,
-  `cmp_datepublished` datetime DEFAULT NULL,
-  `cmp_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `cmp_dateunpublished` datetime DEFAULT NULL,
   `cmp_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `cmp_islocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`cmp_id`),
@@ -35,8 +25,7 @@ CREATE TABLE IF NOT EXISTS `cmp` (
   KEY `cmp_ispublished` (`cmp_ispublished`),
   KEY `cmp_ispage` (`cmp_ispage`),
   KEY `cmp_iszone` (`cmp_iselement`),
-  KEY `cmp_isrelation` (`cmp_isrelation`),
-  KEY `cmp_isdisplay` (`cmp_isdisplay`)
+  KEY `cmp_isrelation` (`cmp_isrelation`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='components' AUTO_INCREMENT=1137 ;
 
 -- --------------------------------------------------------
@@ -53,10 +42,6 @@ CREATE TABLE IF NOT EXISTS `cmp_stg` (
   `cmp_stg_datecreated` datetime DEFAULT NULL,
   `cmp_stg_modifiedby` int(10) unsigned DEFAULT NULL,
   `cmp_stg_datemodified` datetime DEFAULT NULL,
-  `cmp_stg_publishedby` int(10) unsigned DEFAULT NULL,
-  `cmp_stg_datepublished` datetime DEFAULT NULL,
-  `cmp_stg_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `cmp_stg_dateunpublished` datetime DEFAULT NULL,
   `cmp_stg_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`cmp_id`,`stg_id`),
   KEY `cmp_stg_ispublished` (`cmp_stg_ispublished`),
@@ -79,10 +64,6 @@ CREATE TABLE IF NOT EXISTS `cou` (
   `cou_datecreated` datetime DEFAULT NULL,
   `cou_modifiedby` int(10) unsigned DEFAULT NULL,
   `cou_datemodified` datetime DEFAULT NULL,
-  `cou_publishedby` int(10) unsigned DEFAULT NULL,
-  `cou_datepublished` datetime DEFAULT NULL,
-  `cou_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `cou_dateunpublished` datetime DEFAULT NULL,
   `cou_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `cou_islocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`cou_id`),
@@ -105,8 +86,6 @@ CREATE TABLE IF NOT EXISTS `cou_sub` (
   `cou_sub_datecreated` datetime DEFAULT NULL,
   `cou_sub_modifiedby` int(10) unsigned DEFAULT NULL,
   `cou_sub_datemodified` datetime DEFAULT NULL,
-  `cou_sub_publishedby` int(10) unsigned DEFAULT NULL,
-  `cou_sub_datepublished` datetime DEFAULT NULL,
   `cou_sub_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`cou_sub_id`),
   KEY `cou_sub_code` (`cou_sub_code`),
@@ -144,17 +123,11 @@ CREATE TABLE IF NOT EXISTS `grp` (
   `grp_isitem` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `grp_isuser` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `grp_ispermission` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `grp_isnotification` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `grp_isorganization` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `grp_ordering` mediumint(9) NOT NULL DEFAULT '0',
   `grp_createdby` int(10) unsigned DEFAULT NULL,
   `grp_datecreated` datetime DEFAULT NULL,
   `grp_modifiedby` int(10) unsigned DEFAULT NULL,
   `grp_datemodified` datetime DEFAULT NULL,
-  `grp_publishedby` int(10) unsigned DEFAULT NULL,
-  `grp_datepublished` datetime DEFAULT NULL,
-  `grp_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `grp_dateunpublished` datetime DEFAULT NULL,
   `grp_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `grp_islocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`grp_id`),
@@ -175,11 +148,8 @@ CREATE TABLE IF NOT EXISTS `grp_itm` (
   `grp_itm_datecreated` datetime DEFAULT NULL,
   `grp_itm_modifiedby` int(10) unsigned DEFAULT NULL,
   `grp_itm_datemodified` datetime DEFAULT NULL,
-  `grp_itm_publishedby` int(10) unsigned DEFAULT NULL,
-  `grp_itm_datepublished` datetime DEFAULT NULL,
-  `grp_itm_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `grp_itm_dateunpublished` datetime DEFAULT NULL,
   `grp_itm_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `grp_itm_islocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`grp_id`,`itm_id`),
   KEY `grp_itm_ispublished` (`grp_itm_ispublished`),
   KEY `grp_id` (`grp_id`),
@@ -199,10 +169,6 @@ CREATE TABLE IF NOT EXISTS `grp_per` (
   `grp_per_datecreated` datetime DEFAULT NULL,
   `grp_per_modifiedby` int(10) unsigned DEFAULT NULL,
   `grp_per_datemodified` datetime DEFAULT NULL,
-  `grp_per_publishedby` int(10) unsigned DEFAULT NULL,
-  `grp_per_datepublished` datetime DEFAULT NULL,
-  `grp_per_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `grp_per_dateunpublished` datetime DEFAULT NULL,
   `grp_per_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `grp_per_islocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`grp_id`,`per_id`),
@@ -239,24 +205,16 @@ CREATE TABLE IF NOT EXISTS `grp_trl` (
 CREATE TABLE IF NOT EXISTS `grp_usr` (
   `grp_id` int(10) unsigned NOT NULL,
   `usr_id` int(10) unsigned NOT NULL,
-  `grp_usr_title` varchar(100) DEFAULT NULL,
-  `grp_usr_keyregister` char(14) DEFAULT NULL,
-  `grp_usr_origin` varchar(100) DEFAULT NULL,
   `grp_usr_createdby` int(10) unsigned DEFAULT NULL,
   `grp_usr_datecreated` datetime DEFAULT NULL,
   `grp_usr_modifiedby` int(10) unsigned DEFAULT NULL,
   `grp_usr_datemodified` datetime DEFAULT NULL,
-  `grp_usr_publishedby` int(10) unsigned DEFAULT NULL,
-  `grp_usr_datepublished` datetime DEFAULT NULL,
-  `grp_usr_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `grp_usr_dateunpublished` datetime DEFAULT NULL,
   `grp_usr_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `grp_usr_islocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`grp_id`,`usr_id`),
   KEY `grp_id` (`grp_id`),
   KEY `usr_id` (`usr_id`),
-  KEY `grp_usr_ispublished` (`grp_usr_ispublished`),
-  KEY `grp_usr_keyregister` (`grp_usr_keyregister`)
+  KEY `grp_usr_ispublished` (`grp_usr_ispublished`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='groups_users';
 
 -- --------------------------------------------------------
@@ -278,17 +236,13 @@ CREATE TABLE IF NOT EXISTS `hst` (
   `hst_datecreated` datetime DEFAULT NULL,
   `hst_modifiedby` int(10) unsigned DEFAULT NULL,
   `hst_datemodified` datetime DEFAULT NULL,
-  `hst_publishedby` int(10) unsigned DEFAULT NULL,
-  `hst_datepublished` datetime DEFAULT NULL,
-  `hst_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `hst_dateunpublished` datetime DEFAULT NULL,
   `hst_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `hst_islocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`hst_id`),
   UNIQUE KEY `hst_code` (`hst_code`),
   KEY `lay_id` (`lay_id`),
   KEY `hst_ispublished` (`hst_ispublished`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='hosts' AUTO_INCREMENT=1000 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='hosts' AUTO_INCREMENT=1001 ;
 
 -- --------------------------------------------------------
 
@@ -304,10 +258,6 @@ CREATE TABLE IF NOT EXISTS `hst_stg` (
   `hst_stg_datecreated` datetime DEFAULT NULL,
   `hst_stg_modifiedby` int(10) unsigned DEFAULT NULL,
   `hst_stg_datemodified` datetime DEFAULT NULL,
-  `hst_stg_publishedby` int(10) unsigned DEFAULT NULL,
-  `hst_stg_datepublished` datetime DEFAULT NULL,
-  `hst_stg_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `hst_stg_dateunpublished` datetime DEFAULT NULL,
   `hst_stg_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`hst_id`,`stg_id`),
   KEY `hst_id` (`hst_id`),
@@ -358,10 +308,7 @@ CREATE TABLE IF NOT EXISTS `itm` (
   `itm_summary` text,
   `itm_content` mediumtext,
   `itm_version` mediumint(8) unsigned NOT NULL DEFAULT '1',
-  `itm_versioncomment` text,
   `itm_access` varchar(100) NOT NULL DEFAULT 'all',
-  `itm_latitude` double DEFAULT NULL,
-  `itm_longitude` double DEFAULT NULL,
   `itm_ordering` mediumint(9) NOT NULL DEFAULT '0',
   `itm_publishstartdate` datetime NOT NULL,
   `itm_publishenddate` datetime DEFAULT NULL,
@@ -376,10 +323,6 @@ CREATE TABLE IF NOT EXISTS `itm` (
   `itm_datecreated` datetime DEFAULT NULL,
   `itm_modifiedby` int(10) unsigned DEFAULT NULL,
   `itm_datemodified` datetime DEFAULT NULL,
-  `itm_publishedby` int(10) unsigned DEFAULT NULL,
-  `itm_datepublished` datetime DEFAULT NULL,
-  `itm_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `itm_dateunpublished` datetime DEFAULT NULL,
   `itm_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `itm_islocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`itm_id`),
@@ -416,10 +359,6 @@ CREATE TABLE IF NOT EXISTS `itm_rel` (
   `itm_rel_datecreated` datetime DEFAULT NULL,
   `itm_rel_modifiedby` int(10) unsigned DEFAULT NULL,
   `itm_rel_datemodified` datetime DEFAULT NULL,
-  `itm_rel_publishedby` int(10) unsigned DEFAULT NULL,
-  `itm_rel_datepublished` datetime DEFAULT NULL,
-  `itm_rel_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `itm_rel_dateunpublished` datetime DEFAULT NULL,
   `itm_rel_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`itm_id`,`rel_id`),
   KEY `itm_id` (`itm_id`),
@@ -442,32 +381,12 @@ CREATE TABLE IF NOT EXISTS `itm_stg` (
   `itm_stg_datecreated` datetime DEFAULT NULL,
   `itm_stg_modifiedby` int(10) unsigned DEFAULT NULL,
   `itm_stg_datemodified` datetime DEFAULT NULL,
-  `itm_stg_publishedby` int(10) unsigned DEFAULT NULL,
-  `itm_stg_datepublished` datetime DEFAULT NULL,
-  `itm_stg_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `itm_stg_dateunpublished` datetime DEFAULT NULL,
   `itm_stg_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`itm_id`,`stg_id`),
   KEY `itm_id` (`itm_id`),
   KEY `stg_id` (`stg_id`),
   KEY `itm_stg_ispublished` (`itm_stg_ispublished`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='items_settings';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `itm_trl`
---
-
-CREATE TABLE IF NOT EXISTS `itm_trl` (
-  `itm_id` int(10) unsigned NOT NULL,
-  `trl_id` int(10) unsigned NOT NULL,
-  `itm_trl_createdby` int(10) unsigned DEFAULT NULL,
-  `itm_trl_datecreated` datetime DEFAULT NULL,
-  `itm_trl_modifiedby` int(10) unsigned DEFAULT NULL,
-  `itm_trl_datemodified` datetime DEFAULT NULL,
-  PRIMARY KEY (`itm_id`,`trl_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='items_translations';
 
 -- --------------------------------------------------------
 
@@ -479,15 +398,10 @@ CREATE TABLE IF NOT EXISTS `itm_zon` (
   `itm_id` int(10) unsigned NOT NULL,
   `zon_id` int(10) unsigned NOT NULL,
   `itm_zon_ordering` mediumint(9) NOT NULL DEFAULT '0',
-  `itm_zon_display` varchar(100) NOT NULL DEFAULT 'all',
   `itm_zon_createdby` int(10) unsigned DEFAULT NULL,
   `itm_zon_datecreated` datetime DEFAULT NULL,
   `itm_zon_modifiedby` int(10) unsigned DEFAULT NULL,
   `itm_zon_datemodified` datetime DEFAULT NULL,
-  `itm_zon_publishedby` int(10) unsigned DEFAULT NULL,
-  `itm_zon_datepublished` datetime DEFAULT NULL,
-  `itm_zon_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `itm_zon_dateunpublished` datetime DEFAULT NULL,
   `itm_zon_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`itm_id`,`zon_id`),
   KEY `itm_zon_ispublished` (`itm_zon_ispublished`)
@@ -507,10 +421,6 @@ CREATE TABLE IF NOT EXISTS `lay` (
   `lay_datecreated` datetime DEFAULT NULL,
   `lay_modifiedby` int(10) unsigned DEFAULT NULL,
   `lay_datemodified` datetime DEFAULT NULL,
-  `lay_publishedby` int(10) unsigned DEFAULT NULL,
-  `lay_datepublished` datetime DEFAULT NULL,
-  `lay_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `lay_dateunpublished` datetime DEFAULT NULL,
   `lay_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `lay_islocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`lay_id`),
@@ -534,10 +444,6 @@ CREATE TABLE IF NOT EXISTS `lng` (
   `lng_datecreated` datetime DEFAULT NULL,
   `lng_modifiedby` int(10) unsigned DEFAULT NULL,
   `lng_datemodified` datetime DEFAULT NULL,
-  `lng_publishedby` int(10) unsigned DEFAULT NULL,
-  `lng_datepublished` datetime DEFAULT NULL,
-  `lng_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `lng_dateunpublished` datetime DEFAULT NULL,
   `lng_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `lng_islocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`lng_id`),
@@ -560,10 +466,6 @@ CREATE TABLE IF NOT EXISTS `lng_stg` (
   `lng_stg_datecreated` datetime DEFAULT NULL,
   `lng_stg_modifiedby` int(10) unsigned DEFAULT NULL,
   `lng_stg_datemodified` datetime DEFAULT NULL,
-  `lng_stg_publishedby` int(10) unsigned DEFAULT NULL,
-  `lng_stg_datepublished` datetime DEFAULT NULL,
-  `lng_stg_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `lng_stg_dateunpublished` datetime DEFAULT NULL,
   `lng_stg_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`lng_id`,`stg_id`),
   KEY `lng_id` (`lng_id`),
@@ -584,16 +486,12 @@ CREATE TABLE IF NOT EXISTS `per` (
   `per_datecreated` datetime DEFAULT NULL,
   `per_modifiedby` int(10) unsigned DEFAULT NULL,
   `per_datemodified` datetime DEFAULT NULL,
-  `per_publishedby` int(10) unsigned DEFAULT NULL,
-  `per_datepublished` datetime DEFAULT NULL,
-  `per_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `per_dateunpublished` datetime DEFAULT NULL,
   `per_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `per_islocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`per_id`),
   UNIQUE KEY `per_code` (`per_code`),
   KEY `per_ispublished` (`per_ispublished`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='permissions' AUTO_INCREMENT=1009 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='permissions' AUTO_INCREMENT=1010 ;
 
 -- --------------------------------------------------------
 
@@ -629,10 +527,6 @@ CREATE TABLE IF NOT EXISTS `sct` (
   `sct_datecreated` datetime DEFAULT NULL,
   `sct_modifiedby` int(10) unsigned DEFAULT NULL,
   `sct_datemodified` datetime DEFAULT NULL,
-  `sct_publishedby` int(10) unsigned DEFAULT NULL,
-  `sct_datepublished` datetime DEFAULT NULL,
-  `sct_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `sct_dateunpublished` datetime DEFAULT NULL,
   `sct_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `sct_islocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`sct_id`),
@@ -640,31 +534,6 @@ CREATE TABLE IF NOT EXISTS `sct` (
   KEY `sct_ispublished` (`sct_ispublished`),
   KEY `lay_id` (`lay_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='sections' AUTO_INCREMENT=1002 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sct_stg`
---
-
-CREATE TABLE IF NOT EXISTS `sct_stg` (
-  `sct_id` int(10) unsigned NOT NULL,
-  `stg_id` int(10) unsigned NOT NULL,
-  `sct_stg_value` varchar(255) DEFAULT NULL,
-  `sct_stg_createdby` int(10) unsigned DEFAULT NULL,
-  `sct_stg_datecreated` datetime DEFAULT NULL,
-  `sct_stg_modifiedby` int(10) unsigned DEFAULT NULL,
-  `sct_stg_datemodified` datetime DEFAULT NULL,
-  `sct_stg_publishedby` int(10) unsigned DEFAULT NULL,
-  `sct_stg_datepublished` datetime DEFAULT NULL,
-  `sct_stg_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `sct_stg_dateunpublished` datetime DEFAULT NULL,
-  `sct_stg_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`sct_id`,`stg_id`),
-  KEY `sct_id` (`sct_id`),
-  KEY `stg_id` (`stg_id`),
-  KEY `sct_stg_ispublished` (`sct_stg_ispublished`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='sections_settings';
 
 -- --------------------------------------------------------
 
@@ -702,17 +571,12 @@ CREATE TABLE IF NOT EXISTS `stg` (
   `stg_issection` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `stg_islanguage` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `stg_ishost` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `stg_isorganization` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `stg_iscomponent` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `stg_isglobal` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `stg_createdby` int(10) unsigned DEFAULT NULL,
   `stg_datecreated` datetime DEFAULT NULL,
   `stg_modifiedby` int(10) unsigned DEFAULT NULL,
   `stg_datemodified` datetime DEFAULT NULL,
-  `stg_publishedby` int(10) unsigned DEFAULT NULL,
-  `stg_datepublished` datetime DEFAULT NULL,
-  `stg_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `stg_dateunpublished` datetime DEFAULT NULL,
   `stg_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `stg_islocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`stg_id`),
@@ -754,10 +618,6 @@ CREATE TABLE IF NOT EXISTS `stg_usr` (
   `stg_usr_datecreated` datetime DEFAULT NULL,
   `stg_usr_modifiedby` int(10) unsigned DEFAULT NULL,
   `stg_usr_datemodified` datetime DEFAULT NULL,
-  `stg_usr_publishedby` int(10) unsigned DEFAULT NULL,
-  `stg_usr_datepublished` datetime DEFAULT NULL,
-  `stg_usr_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `stg_usr_dateunpublished` datetime DEFAULT NULL,
   `stg_usr_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`stg_id`,`usr_id`),
   KEY `stg_id` (`stg_id`),
@@ -833,10 +693,6 @@ CREATE TABLE IF NOT EXISTS `usr` (
   `usr_datecreated` datetime DEFAULT NULL,
   `usr_modifiedby` int(10) unsigned DEFAULT NULL,
   `usr_datemodified` datetime DEFAULT NULL,
-  `usr_publishedby` int(10) unsigned DEFAULT NULL,
-  `usr_datepublished` datetime DEFAULT NULL,
-  `usr_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `usr_dateunpublished` datetime DEFAULT NULL,
   `usr_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `usr_islocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`usr_id`),
@@ -846,7 +702,7 @@ CREATE TABLE IF NOT EXISTS `usr` (
   KEY `usr_ispublished` (`usr_ispublished`),
   KEY `usr_keyregister` (`usr_keyregister`),
   KEY `usr_keypassword` (`usr_keypassword`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='users' AUTO_INCREMENT=1001 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='users' AUTO_INCREMENT=1002 ;
 
 -- --------------------------------------------------------
 
@@ -861,7 +717,7 @@ CREATE TABLE IF NOT EXISTS `wtd` (
   `wtd_datecreated` datetime NOT NULL,
   `wtd_datemodified` datetime DEFAULT NULL,
   PRIMARY KEY (`wtd_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='watchdog' AUTO_INCREMENT=1002 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='watchdog' AUTO_INCREMENT=1028 ;
 
 -- --------------------------------------------------------
 
@@ -878,13 +734,9 @@ CREATE TABLE IF NOT EXISTS `zon` (
   `zon_datecreated` datetime DEFAULT NULL,
   `zon_modifiedby` int(10) unsigned DEFAULT NULL,
   `zon_datemodified` datetime DEFAULT NULL,
-  `zon_publishedby` int(10) unsigned DEFAULT NULL,
-  `zon_datepublished` datetime DEFAULT NULL,
-  `zon_unpublishedby` int(10) unsigned DEFAULT NULL,
-  `zon_dateunpublished` datetime DEFAULT NULL,
   `zon_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `zon_islocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`zon_id`),
   UNIQUE KEY `lay_zon` (`lay_id`,`zon_code`),
   KEY `zon_ispublished` (`zon_ispublished`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='zones' AUTO_INCREMENT=1014 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='zones' AUTO_INCREMENT=1016 ;

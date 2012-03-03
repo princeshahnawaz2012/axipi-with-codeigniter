@@ -13,7 +13,7 @@ class groups_model extends CI_Model {
         return $query->result();
     }
     function get_groups_is($is) {
-        $query = $this->db->query('SELECT grp.grp_id, grp.grp_code, grp.grp_islocked, grp.grp_ispublished FROM '.$this->db->dbprefix('grp').' AS grp WHERE grp.grp_is'.$is.' = \'1\' GROUP BY grp.grp_id ORDER BY grp.grp_code ASC');
+        $query = $this->db->query('SELECT grp.grp_id, grp.grp_code, grp.grp_islocked, grp.grp_ispublished, grp_trl.grp_trl_title FROM '.$this->db->dbprefix('grp').' AS grp LEFT JOIN '.$this->db->dbprefix('grp_trl').' AS grp_trl ON grp_trl.grp_id = grp.grp_id AND grp_trl.lng_id = \''.$this->lng->lng_id.'\' WHERE grp.grp_is'.$is.' = \'1\' GROUP BY grp.grp_id ORDER BY grp.grp_code ASC');
         return $query->result();
     }
     function get_groups_saved_item($flt) {

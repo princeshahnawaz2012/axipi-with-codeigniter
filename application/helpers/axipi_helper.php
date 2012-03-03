@@ -41,18 +41,14 @@ if( ! function_exists('build_columns')) {
 		$CI =& get_instance();
 		$defined_order = '';
 		$defined_direction = '';
-		if($CI->input->get($reference.'_col')) {
+		if($CI->input->get($reference.'_col') && preg_match('/^[a-zA-Z0-9._]{1,}[ ](ASC|DESC)$/', $CI->input->get($reference.'_col'))) {
 			list($defined_order, $defined_direction) = explode(' ', $CI->input->get($reference.'_col'));
 			$CI->session->set_userdata($reference.'_col', $CI->input->get($reference.'_col'));
-		} elseif($CI->session->userdata($reference.'_col')) {
+		} elseif($CI->session->userdata($reference.'_col') && preg_match('/^[a-zA-Z0-9._]{1,}[ ](ASC|DESC)$/', $CI->session->userdata($reference.'_col'))) {
 			list($defined_order, $defined_direction) = explode(' ', $CI->session->userdata($reference.'_col'));
 		}
 		if(!in_array($defined_order, $columns)) {
 			$defined_order = '';
-			$CI->session->set_userdata($reference.'_col', $default_order.' '.$default_direction);
-		}
-		if($defined_direction != 'ASC' && $defined_direction != 'DESC') {
-			$defined_direction = '';
 			$CI->session->set_userdata($reference.'_col', $default_order.' '.$default_direction);
 		}
 		$col = array();
@@ -77,7 +73,7 @@ if( ! function_exists('display_column')) {
 		$CI =& get_instance();
 		$link = '<a';
 		list($display_order, $display_direction) = explode(' ', $column);
-		if($CI->session->userdata($reference.'_col')) {
+		if($CI->session->userdata($reference.'_col') && preg_match('/^[a-zA-Z0-9._]{1,}[ ](ASC|DESC)$/', $CI->session->userdata($reference.'_col'))) {
 			list($defined_order, $defined_direction) = explode(' ', $CI->session->userdata($reference.'_col'));
 			if($display_order == $defined_order) {
 				if($display_direction == 'ASC') {

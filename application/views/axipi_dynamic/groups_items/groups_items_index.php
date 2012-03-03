@@ -43,7 +43,7 @@
 <th><?php display_column('groups_items', $columns[2], $this->lang->line('itm_title')); ?></th>
 <th><?php display_column('groups_items', $columns[3], $this->lang->line('cmp_code')); ?></th>
 <?php foreach($groups as $group) { ?>
-<th><?php echo $group->grp_code; ?></th>
+<th><?php echo $group->grp_trl_title; ?></th>
 <?php } ?>
 </tr>
 </thead>
