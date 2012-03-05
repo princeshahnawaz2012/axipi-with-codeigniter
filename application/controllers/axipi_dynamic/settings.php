@@ -20,13 +20,20 @@ class settings extends CI_Controller {
 		$filters['settings_stg_code'] = array('stg.stg_code', 'like');
 		$flt = build_filters($filters);
 
+		$columns = array();
+		$columns[] = 'stg.stg_id';
+		$columns[] = 'stg.stg_code';
+		$columns[] = 'stg.stg_value';
+		$col = build_columns('settings', $columns, 'stg.stg_code', 'ASC');
+
 		$results = $this->settings_model->get_all_settings($flt);
 		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
 
 		$data = array();
+		$data['columns'] = $col;
 		$data['pagination'] = $build_pagination['output'];
 		$data['position'] = $build_pagination['position'];
-		$data['results'] = $this->settings_model->get_pagination_settings($flt, $build_pagination['limit'], $build_pagination['start']);
+		$data['results'] = $this->settings_model->get_pagination_settings($flt, $build_pagination['limit'], $build_pagination['start'], 'settings');
 		$this->zones['content'] = $this->load->view('axipi_dynamic/settings/settings_index', $data, true);
 	}
 	public function rule_stg_code($stg_code, $current = '') {

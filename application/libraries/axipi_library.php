@@ -47,6 +47,22 @@ class axipi_library {
 	function debug($data) {
 		$this->debug[] = '<p><textarea>'.print_r($data, 1).'</textarea></p>';
 	}
+	function widget($itm_code) {
+		$query = $this->CI->db->query('SELECT itm_link AS link, cmp_code, itm.itm_id AS id, itm_content AS content, itm_code AS code, itm_virtualcode AS virtualcode, itm_parent AS parent, itm_title AS title FROM '.$this->CI->db->dbprefix('itm').' AS itm LEFT JOIN '.$this->CI->db->dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id WHERE itm.itm_code = ? GROUP BY itm.itm_id', array($itm_code));
+		if($query->num_rows() > 0) {
+			$itm = $query->row();
+			list($directory, $class) = explode('/', $itm->cmp_code);
+			if(file_exists(APPPATH.'widgets/'.$itm->cmp_code.EXT)) {
+				require_once APPPATH.'widgets/'.$itm->cmp_code.EXT;
+				$widget = new $class();
+				$widget->data = $itm;
+				foreach(get_object_vars($this->CI) as $key => $object) {
+					$widget->$key =& $this->CI->$key;
+				}
+				echo $widget->index();
+			}
+		} 
+	}
 	function build_pagination($total, $per_page) {
 		$this->CI->load->library('pagination');
 

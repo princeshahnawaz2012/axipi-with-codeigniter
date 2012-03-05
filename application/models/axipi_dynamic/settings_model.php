@@ -8,8 +8,8 @@ class settings_model extends CI_Model {
         $query = $this->db->query('SELECT COUNT(stg.stg_id) AS count FROM '.$this->db->dbprefix('stg').' AS stg WHERE '.implode(' AND ', $flt));
         return $query->row();
     }
-    function get_pagination_settings($flt, $num, $offset) {
-        $query = $this->db->query('SELECT stg.stg_id, stg.stg_code, stg.stg_value, stg.stg_islocked, stg.stg_ispublished FROM '.$this->db->dbprefix('stg').' AS stg WHERE '.implode(' AND ', $flt).' GROUP BY stg.stg_id ORDER BY stg.stg_id DESC LIMIT '.$offset.', '.$num);
+    function get_pagination_settings($flt, $num, $offset, $column) {
+        $query = $this->db->query('SELECT stg.stg_id, stg.stg_code, stg.stg_value, stg.stg_islocked, stg.stg_ispublished FROM '.$this->db->dbprefix('stg').' AS stg WHERE '.implode(' AND ', $flt).' GROUP BY stg.stg_id ORDER BY '.$this->session->userdata($column.'_col').' LIMIT '.$offset.', '.$num);
         return $query->result();
     }
     function get_setting($stg_id) {

@@ -32,9 +32,9 @@
 <table>
 <thead>
 <tr>
-<th><a class="sort_desc" href="#"><?php echo $this->lang->line('stg_id'); ?></a></th>
-<th><?php echo $this->lang->line('stg_code'); ?></th>
-<th><?php echo $this->lang->line('stg_value'); ?></th>
+<th><?php display_column('settings', $columns[0], $this->lang->line('stg_id')); ?></th>
+<th><?php display_column('settings', $columns[1], $this->lang->line('stg_code')); ?></th>
+<th><?php display_column('settings', $columns[2], $this->lang->line('stg_value')); ?></th>
 <th>&nbsp;</th>
 </tr>
 </thead>

@@ -38,7 +38,7 @@
 <p><span class="label">client_info</span><?php echo $this->db->conn_id->client_info; ?></p>
 <p><span class="label">host_info</span><?php echo $this->db->conn_id->host_info; ?></p>
 <p><span class="label">server_info</span><?php echo $this->db->conn_id->server_info; ?></p>
-<p><span class="label">stat</span><?php echo $this->db->conn_id->stat; ?></p>
+<?php if(isset($this->db->conn_id->stat) == 1) { ?><p><span class="label">stat</span><?php echo $this->db->conn_id->stat; ?></p><?php } ?>
 </fieldset>
 
 </div>
