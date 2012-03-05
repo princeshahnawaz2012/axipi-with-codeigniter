@@ -4,8 +4,9 @@
 
 <div class="column1">
 <fieldset><legend><?php echo $this->lang->line('debug_client'); ?></legend>
-<?php if(isset($_SERVER['HTTP_CLIENT_IP']) == 1) { ?><p><span class="label">HTTP_CLIENT_IP</span><?php echo $_SERVER['HTTP_CLIENT_IP']; ?></p><?php } ?>
+<?php if(isset($_SERVER['HTTP_X_CLUSTER_CLIENT_IP']) == 1) { ?><p><span class="label">HTTP_X_CLUSTER_CLIENT_IP</span><?php echo $_SERVER['HTTP_X_CLUSTER_CLIENT_IP']; ?></p><?php } ?>
 <?php if(isset($_SERVER['HTTP_X_FORWARDED_FOR']) == 1) { ?><p><span class="label">HTTP_X_FORWARDED_FOR</span><?php echo $_SERVER['HTTP_X_FORWARDED_FOR']; ?></p><?php } ?>
+<?php if(isset($_SERVER['HTTP_CLIENT_IP']) == 1) { ?><p><span class="label">HTTP_CLIENT_IP</span><?php echo $_SERVER['HTTP_CLIENT_IP']; ?></p><?php } ?>
 <?php if(isset($_SERVER['REMOTE_ADDR']) == 1) { ?><p><span class="label">REMOTE_ADDR</span><?php echo $_SERVER['REMOTE_ADDR']; ?></p><?php } ?>
 <?php if(isset($_SERVER['REMOTE_HOST']) == 1) { ?><p><span class="label">REMOTE_HOST</span><?php echo $_SERVER['REMOTE_HOST']; ?></p><?php } ?>
 <p><span class="label">HTTP_USER_AGENT</span><?php echo $_SERVER['HTTP_USER_AGENT']; ?></p>
