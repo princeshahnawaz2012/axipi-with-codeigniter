@@ -26,6 +26,16 @@ if( ! function_exists('build_filters')) {
 	}
 }
 
+if( ! function_exists('checkbox2database')) {
+	function checkbox2database($value) {
+		if($value == 1) {
+			return '1';
+		} else {
+			return '0';
+		}
+	}
+}
+
 if( ! function_exists('tinyint2boolean')) {
 	function tinyint2boolean($value) {
 		if($value == 1) {

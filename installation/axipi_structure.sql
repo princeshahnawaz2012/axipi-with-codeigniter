@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `cmp` (
   KEY `cmp_ispage` (`cmp_ispage`),
   KEY `cmp_iszone` (`cmp_iselement`),
   KEY `cmp_isrelation` (`cmp_isrelation`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='components' AUTO_INCREMENT=1137 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='components' AUTO_INCREMENT=1000 ;
 
 -- --------------------------------------------------------
 
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `cou_sub` (
   PRIMARY KEY (`cou_sub_id`),
   KEY `cou_sub_code` (`cou_sub_code`),
   KEY `cou_sub_title` (`cou_sub_title`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='countries_subdivisions' AUTO_INCREMENT=1206 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='countries_subdivisions' AUTO_INCREMENT=1000 ;
 
 -- --------------------------------------------------------
 
@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `grp` (
   PRIMARY KEY (`grp_id`),
   UNIQUE KEY `grp_code` (`grp_code`),
   KEY `grp_ispublished` (`grp_ispublished`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='groups' AUTO_INCREMENT=1004 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='groups' AUTO_INCREMENT=1000 ;
 
 -- --------------------------------------------------------
 
@@ -242,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `hst` (
   UNIQUE KEY `hst_code` (`hst_code`),
   KEY `lay_id` (`lay_id`),
   KEY `hst_ispublished` (`hst_ispublished`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='hosts' AUTO_INCREMENT=1001 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='hosts' AUTO_INCREMENT=1000 ;
 
 -- --------------------------------------------------------
 
@@ -337,7 +337,7 @@ CREATE TABLE IF NOT EXISTS `itm` (
   KEY `itm_parent` (`itm_parent`),
   FULLTEXT KEY `itm_summary` (`itm_summary`),
   FULLTEXT KEY `itm_content` (`itm_content`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='items' AUTO_INCREMENT=1085 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='items' AUTO_INCREMENT=1000 ;
 
 -- --------------------------------------------------------
 
@@ -426,7 +426,7 @@ CREATE TABLE IF NOT EXISTS `lay` (
   PRIMARY KEY (`lay_id`),
   UNIQUE KEY `lay_code` (`lay_code`),
   KEY `lay_ispublished` (`lay_ispublished`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='layouts' AUTO_INCREMENT=1002 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='layouts' AUTO_INCREMENT=1000 ;
 
 -- --------------------------------------------------------
 
@@ -450,7 +450,7 @@ CREATE TABLE IF NOT EXISTS `lng` (
   UNIQUE KEY `lng_code` (`lng_code`),
   KEY `lng_ispublished` (`lng_ispublished`),
   KEY `lng_title` (`lng_title`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='languages' AUTO_INCREMENT=1002 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='languages' AUTO_INCREMENT=1000 ;
 
 -- --------------------------------------------------------
 
@@ -491,7 +491,7 @@ CREATE TABLE IF NOT EXISTS `per` (
   PRIMARY KEY (`per_id`),
   UNIQUE KEY `per_code` (`per_code`),
   KEY `per_ispublished` (`per_ispublished`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='permissions' AUTO_INCREMENT=1010 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='permissions' AUTO_INCREMENT=1000 ;
 
 -- --------------------------------------------------------
 
@@ -533,7 +533,7 @@ CREATE TABLE IF NOT EXISTS `sct` (
   UNIQUE KEY `sct_code` (`sct_code`),
   KEY `sct_ispublished` (`sct_ispublished`),
   KEY `lay_id` (`lay_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='sections' AUTO_INCREMENT=1002 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='sections' AUTO_INCREMENT=1000 ;
 
 -- --------------------------------------------------------
 
@@ -583,7 +583,7 @@ CREATE TABLE IF NOT EXISTS `stg` (
   UNIQUE KEY `stg_code` (`stg_code`),
   KEY `stg_ispublished` (`stg_ispublished`),
   KEY `stg_isglobal` (`stg_isglobal`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='settings' AUTO_INCREMENT=1050 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='settings' AUTO_INCREMENT=1000 ;
 
 -- --------------------------------------------------------
 
@@ -702,7 +702,7 @@ CREATE TABLE IF NOT EXISTS `usr` (
   KEY `usr_ispublished` (`usr_ispublished`),
   KEY `usr_keyregister` (`usr_keyregister`),
   KEY `usr_keypassword` (`usr_keypassword`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='users' AUTO_INCREMENT=1002 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='users' AUTO_INCREMENT=1000 ;
 
 -- --------------------------------------------------------
 
@@ -717,7 +717,7 @@ CREATE TABLE IF NOT EXISTS `wtd` (
   `wtd_datecreated` datetime NOT NULL,
   `wtd_datemodified` datetime DEFAULT NULL,
   PRIMARY KEY (`wtd_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='watchdog' AUTO_INCREMENT=1028 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='watchdog' AUTO_INCREMENT=1000 ;
 
 -- --------------------------------------------------------
 
@@ -739,4 +739,4 @@ CREATE TABLE IF NOT EXISTS `zon` (
   PRIMARY KEY (`zon_id`),
   UNIQUE KEY `lay_zon` (`lay_id`,`zon_code`),
   KEY `zon_ispublished` (`zon_ispublished`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='zones' AUTO_INCREMENT=1016 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='zones' AUTO_INCREMENT=1000 ;

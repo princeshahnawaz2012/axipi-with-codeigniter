@@ -75,8 +75,8 @@ class hosts extends CI_Controller {
 			$this->db->set('lay_id', $this->input->post('lay_id'));
 			$this->db->set('hst_code', $this->input->post('hst_code'));
 			$this->db->set('hst_url', $this->input->post('hst_url'));
-			$this->db->set('hst_debug', $this->input->post('hst_debug'));
-			$this->db->set('hst_gzhandler', $this->input->post('hst_gzhandler'));
+			$this->db->set('hst_debug', checkbox2database($this->input->post('hst_debug')));
+			$this->db->set('hst_gzhandler', checkbox2database($this->input->post('hst_gzhandler')));
 			$this->db->set('hst_environment', $this->input->post('hst_environment'));
 			$this->db->set('hst_createdby', $this->usr->usr_id);
 			$this->db->set('hst_datecreated', date('Y-m-d H:i:s'));
@@ -126,8 +126,8 @@ class hosts extends CI_Controller {
 				$this->db->set('lay_id', $this->input->post('lay_id'));
 				$this->db->set('hst_code', $this->input->post('hst_code'));
 				$this->db->set('hst_url', $this->input->post('hst_url'));
-				$this->db->set('hst_debug', $this->input->post('hst_debug'));
-				$this->db->set('hst_gzhandler', $this->input->post('hst_gzhandler'));
+				$this->db->set('hst_debug', checkbox2database($this->input->post('hst_debug')));
+				$this->db->set('hst_gzhandler', checkbox2database($this->input->post('hst_gzhandler')));
 				$this->db->set('hst_environment', $this->input->post('hst_environment'));
 				$this->db->set('hst_modifiedby', $this->usr->usr_id);
 				$this->db->set('hst_datemodified', date('Y-m-d H:i:s'));
