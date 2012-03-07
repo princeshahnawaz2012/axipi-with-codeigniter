@@ -121,17 +121,14 @@ class sections extends CI_Controller {
 				$this->db->update('sct');
 
 				foreach($data['translations'] as $trl) {
+					$this->db->set('sct_trl_title', $this->input->post('title'.$trl->lng_id));
+					$this->db->set('sct_trl_description', $this->input->post('description'.$trl->lng_id));
+					$this->db->set('sct_trl_keywords', $this->input->post('keywords'.$trl->lng_id));
 					if($trl->sct_id) {
-						$this->db->set('sct_trl_title', $this->input->post('title'.$trl->lng_id));
-						$this->db->set('sct_trl_description', $this->input->post('description'.$trl->lng_id));
-						$this->db->set('sct_trl_keywords', $this->input->post('keywords'.$trl->lng_id));
 						$this->db->where('sct_id', $this->sct_id);
 						$this->db->where('lng_id', $trl->lng_id);
 						$this->db->update('sct_trl');
 					} else {
-						$this->db->set('sct_trl_title', $this->input->post('title'.$trl->lng_id));
-						$this->db->set('sct_trl_description', $this->input->post('description'.$trl->lng_id));
-						$this->db->set('sct_trl_keywords', $this->input->post('keywords'.$trl->lng_id));
 						$this->db->set('sct_id', $this->sct_id);
 						$this->db->set('lng_id', $trl->lng_id);
 						$this->db->insert('sct_trl');

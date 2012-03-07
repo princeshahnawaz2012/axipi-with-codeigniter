@@ -124,6 +124,7 @@ class axipi_library {
 				}
 			}*/
 			$titles[] = $this->CI->itm->itm_title;
+			$titles[] = $this->CI->sct->sct_trl_title; 
 			$head[] = '<title>'.implode(' | ', $titles).'</title>';
 
 			$head[] = '<meta charset="UTF-8">';

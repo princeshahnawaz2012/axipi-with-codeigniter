@@ -133,13 +133,12 @@ class zones extends CI_Controller {
 				$this->db->update('zon');
 
 				foreach($data['translations'] as $trl) {
+					$this->db->set('trl_zon_title', $this->input->post('title'.$trl->lng_id));
 					if($trl->zon_id) {
-						$this->db->set('trl_zon_title', $this->input->post('title'.$trl->lng_id));
 						$this->db->where('zon_id', $this->zon_id);
 						$this->db->where('lng_id', $trl->lng_id);
 						$this->db->update('trl_zon');
 					} else {
-						$this->db->set('trl_zon_title', $this->input->post('title'.$trl->lng_id));
 						$this->db->set('zon_id', $this->zon_id);
 						$this->db->set('lng_id', $trl->lng_id);
 						$this->db->insert('trl_zon');

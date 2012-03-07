@@ -9,7 +9,7 @@ class axipi_hook {
 
 		$this->CI->config->set_item('language', $this->CI->lng->lng_code);
 
-		$query = $this->CI->db->query('SELECT * FROM '.$this->CI->db->dbprefix('sct').' AS sct WHERE sct_id = ?', array($this->CI->itm->sct_id));
+		$query = $this->CI->db->query('SELECT * FROM '.$this->CI->db->dbprefix('sct').' AS sct LEFT JOIN '.$this->CI->db->dbprefix('sct_trl').' AS sct_trl ON sct_trl.sct_id = sct.sct_id WHERE sct.sct_id = ? AND sct_trl.lng_id = ?', array($this->CI->itm->sct_id, $this->CI->itm->lng_id));
 		$this->CI->sct = $query->row();
 
 		$query = $this->CI->db->query('SELECT * FROM '.$this->CI->db->dbprefix('lay').' AS lay WHERE lay_id = ?', array($this->CI->sct->lay_id));

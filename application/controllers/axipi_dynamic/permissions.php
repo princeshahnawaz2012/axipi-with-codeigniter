@@ -112,13 +112,12 @@ class permissions extends CI_Controller {
 				$this->db->update('per');
 
 				foreach($data['translations'] as $trl) {
+					$this->db->set('per_trl_title', $this->input->post('title'.$trl->lng_id));
 					if($trl->per_id) {
-						$this->db->set('per_trl_title', $this->input->post('title'.$trl->lng_id));
 						$this->db->where('per_id', $this->per_id);
 						$this->db->where('lng_id', $trl->lng_id);
 						$this->db->update('per_trl');
 					} else {
-						$this->db->set('per_trl_title', $this->input->post('title'.$trl->lng_id));
 						$this->db->set('per_id', $this->per_id);
 						$this->db->set('lng_id', $trl->lng_id);
 						$this->db->insert('per_trl');

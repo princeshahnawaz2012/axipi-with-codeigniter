@@ -114,13 +114,12 @@ class groups extends CI_Controller {
 				$this->db->update('grp');
 
 				foreach($data['translations'] as $trl) {
+					$this->db->set('grp_trl_title', $this->input->post('title'.$trl->lng_id));
 					if($trl->grp_id) {
-						$this->db->set('grp_trl_title', $this->input->post('title'.$trl->lng_id));
 						$this->db->where('grp_id', $this->grp_id);
 						$this->db->where('lng_id', $trl->lng_id);
 						$this->db->update('grp_trl');
 					} else {
-						$this->db->set('grp_trl_title', $this->input->post('title'.$trl->lng_id));
 						$this->db->set('grp_id', $this->grp_id);
 						$this->db->set('lng_id', $trl->lng_id);
 						$this->db->insert('grp_trl');

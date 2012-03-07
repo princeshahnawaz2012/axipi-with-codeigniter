@@ -135,13 +135,12 @@ class hosts extends CI_Controller {
 				$this->db->update('hst');
 
 				foreach($data['translations'] as $trl) {
+					$this->db->set('hst_trl_defaultitem', $this->input->post('defaultitem'.$trl->lng_id));
 					if($trl->hst_id) {
-						$this->db->set('hst_trl_defaultitem', $this->input->post('defaultitem'.$trl->lng_id));
 						$this->db->where('hst_id', $this->hst_id);
 						$this->db->where('lng_id', $trl->lng_id);
 						$this->db->update('hst_trl');
 					} else {
-						$this->db->set('hst_trl_defaultitem', $this->input->post('defaultitem'.$trl->lng_id));
 						$this->db->set('hst_id', $this->hst_id);
 						$this->db->set('lng_id', $trl->lng_id);
 						$this->db->insert('hst_trl');
