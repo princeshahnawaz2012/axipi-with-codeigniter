@@ -110,23 +110,19 @@ class axipi_library {
 		$head = array();
 		if($this->CI->lay->lay_type == 'text/html') {
 			$titles = array();
-			/*$titles[] = $this->CI->sct->sct_title;
-			foreach($this->CI->itm->itm_tree as $value) {
-				$titles[] = $value['title'];
+			foreach($this->CI->itm->tree as $value) {
+				$titles[] = $value['itm_title'];
 			}
+			$titles[] = $this->CI->sct->sct_trl_title;
 			if($this->CI->itm->itm_titlehead != '' && $this->CI->itm->itm_titleheadfull == 1) {
 				$titles = array();
 				$titles[] = $this->CI->itm->itm_titlehead;
 			} else {
-				$titles = array_reverse($titles);
 				if($this->CI->itm->itm_titlehead != '' && $this->CI->itm->itm_titleheadfull == 0) {
 					$titles[0] = $this->CI->itm->itm_titlehead;
 				}
-			}*/
-			$titles[] = $this->CI->itm->itm_title;
-			$titles[] = $this->CI->sct->sct_trl_title; 
+			}
 			$head[] = '<title>'.implode(' | ', $titles).'</title>';
-
 			$head[] = '<meta charset="UTF-8">';
 			/*if($this->CI->itm->itm_description != '') {
 				$head[] = '<meta content="'.$this->CI->data->display_in_field($this->CI->itm->itm_description).'" name="description">';
@@ -313,7 +309,7 @@ class axipi_library {
 				$debug .= '<h2>lay</h2>';
 				$debug .= loop_v($this->CI->lay);
 			
-				$debug .= '<h2>stg</h2>';
+				//$debug .= '<h2>stg</h2>';
 				//$debug .= loop_v($this->CI->stg);
 			
 				$debug .= '</div>';

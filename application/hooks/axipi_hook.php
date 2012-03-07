@@ -39,10 +39,12 @@ class axipi_hook {
 		$this->CI->usr->count_groups = count($this->CI->usr->groups);
 
 		$this->CI->itm->groups = array();
-        $query = $this->CI->db->query('SELECT grp_itm.grp_id, grp.grp_code FROM '.$this->CI->db->dbprefix('grp_itm').' AS grp_itm LEFT JOIN '.$this->CI->db->dbprefix('grp').' AS grp ON grp.grp_id = grp_itm.grp_id WHERE grp_itm.itm_id = ? GROUP BY grp.grp_id', array($this->CI->itm->itm_id));
-		if($query->num_rows() > 0) {
-			foreach($query->result() as $row) {
-				$this->CI->itm->groups[$row->grp_id] = $row->grp_code;
+		if($this->CI->itm->itm_access == 'groups') {
+			$query = $this->CI->db->query('SELECT grp_itm.grp_id, grp.grp_code FROM '.$this->CI->db->dbprefix('grp_itm').' AS grp_itm LEFT JOIN '.$this->CI->db->dbprefix('grp').' AS grp ON grp.grp_id = grp_itm.grp_id WHERE grp_itm.itm_id = ? GROUP BY grp.grp_id', array($this->CI->itm->itm_id));
+			if($query->num_rows() > 0) {
+				foreach($query->result() as $row) {
+					$this->CI->itm->groups[$row->grp_id] = $row->grp_code;
+				}
 			}
 		}
 		$this->CI->itm->count_groups = count($this->CI->itm->groups);
@@ -82,9 +84,13 @@ class axipi_hook {
 			}
 		}
 		$this->CI->itm->tree = array();
-		$this->CI->itm->tree[] = array('itm_id'=>$this->CI->itm->itm_id, 'itm_code'=>$this->CI->itm->itm_code, 'cmp_id'=>$this->CI->itm->cmp_id, 'itm_title'=>$this->CI->itm->itm_title);
+		$this->CI->itm->tree[] = array('itm_id'=>$this->CI->itm->itm_id, 'itm_code'=>$this->CI->itm->itm_code, 'cmp_id'=>$this->CI->itm->cmp_id, 'cmp_code'=>$this->CI->cmp->cmp_code, 'itm_title'=>$this->CI->itm->itm_title);
 		if($this->CI->itm->itm_parent != '') {
 			$this->CI->itm->tree = array_merge($this->CI->itm->tree, $this->CI->items_model->get_tree($this->CI->itm->itm_parent));
+		}
+		$this->CI->tree_itm_id = array();
+		foreach($this->CI->itm->tree as $k =>$v) {
+			$this->CI->tree_itm_id[] = $v['itm_id'];
 		}
 		$this->CI->output->set_content_type($this->CI->lay->lay_type);
 	}

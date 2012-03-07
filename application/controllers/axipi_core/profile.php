@@ -8,7 +8,9 @@ class profile extends CI_Controller {
 		$this->axipi_library->jquery_load('jquery');
 	}
 	public function index() {
-		$this->zones['content'] = $this->load->view('axipi_core/profile_index', null, true);
+		$data = array();
+		$data['usr'] = $this->users_model->get_user($this->usr->usr_id);
+		$this->zones['content'] = $this->load->view('axipi_core/profile_index', $data, true);
 	}
 	public function rule_usr_email($usr_email, $current = '') {
 		if($current != '') {

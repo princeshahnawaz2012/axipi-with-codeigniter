@@ -6,10 +6,10 @@ class items_model extends CI_Model {
     }
 	function get_tree($itm_id) {
 		$tree = array();
-		$query = $this->db->query('SELECT itm.*, cmp.cmp_code, sct.sct_code, lng.lng_code, COUNT(DISTINCT(items.itm_id)) AS count_items FROM '.$this->db->dbprefix('itm').' AS itm LEFT JOIN '.$this->db->dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id LEFT JOIN '.$this->db->dbprefix('sct').' AS sct ON sct.sct_id = itm.sct_id LEFT JOIN '.$this->db->dbprefix('lng').' AS lng ON lng.lng_id = itm.lng_id LEFT JOIN itm AS items ON items.itm_parent = itm.itm_id WHERE itm.itm_id = ? GROUP BY itm.itm_id', array($itm_id));
+		$query = $this->db->query('SELECT itm.itm_id, itm.itm_code, itm.itm_title, itm.itm_parent, cmp.cmp_code, cmp.cmp_id FROM '.$this->db->dbprefix('itm').' AS itm LEFT JOIN '.$this->db->dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id WHERE itm.itm_id = ? GROUP BY itm.itm_id', array($itm_id));
 		$itm = $query->row();
 		
-		$tree[] = array('itm_id'=>$itm->itm_id, 'itm_code'=>$itm->itm_code, 'cmp_id'=>$itm->cmp_id, 'itm_title'=>$itm->itm_title);
+		$tree[] = array('itm_id'=>$itm->itm_id, 'itm_code'=>$itm->itm_code, 'cmp_id'=>$itm->cmp_id, 'cmp_code'=>$itm->cmp_code, 'itm_title'=>$itm->itm_title);
 		if($itm->itm_parent != '') {
 			$tree = array_merge($tree, $this->get_tree($itm->itm_parent));
 		}
