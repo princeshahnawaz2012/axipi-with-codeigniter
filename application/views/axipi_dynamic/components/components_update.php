@@ -27,6 +27,7 @@ if($cmp) {
 
 <div class="column1">
 <p><?php echo form_label($this->lang->line('cmp_code').' *', 'cmp_code'); ?><?php echo form_input('cmp_code', set_value('cmp_code', $cmp->cmp_code), 'id="cmp_code" class="inputtext"'); ?></p>
+<p><?php echo form_label($this->lang->line('lay_code'), 'lay_id'); ?><?php echo form_dropdown('lay_id', $select_layout, set_value('lay_id', $cmp->lay_id), 'id="lay_id" class="select"'); ?></p>
 </div>
 
 <div class="column1 columnlast">

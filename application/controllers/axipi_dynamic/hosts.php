@@ -31,7 +31,7 @@ class hosts extends CI_Controller {
 		$col = build_columns('hosts', $columns, 'hst.hst_id', 'DESC');
 
 		$results = $this->hosts_model->get_all_hosts($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
+		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'hosts');
 
 		$data = array();
 		$data['columns'] = $col;
@@ -48,7 +48,6 @@ class hosts extends CI_Controller {
 		}
 		if($query->num_rows() > 0) {
 			$this->form_validation->set_message('rule_hst_code', $this->lang->line('value_already_used'));
-			$this->form_validation->set_rules('hst_url', 'lang:hst_url', 'max_length[255]');
 			return FALSE;
 		} else {
 			return TRUE;
@@ -57,6 +56,7 @@ class hosts extends CI_Controller {
 	public function create() {
 		$this->load->helper(array('form'));
 		$this->load->library('form_validation');
+
 		$data = array();
 		$data['select_layout'] = $this->hosts_model->select_layout();
 		$data['select_hst_trl_defaultitem'] = $this->hosts_model->select_hst_trl_defaultitem();
@@ -65,6 +65,9 @@ class hosts extends CI_Controller {
 		$this->form_validation->set_rules('hst_code', 'lang:hst_code', 'required|max_length[100]|callback_rule_hst_code');
 		$this->form_validation->set_rules('hst_url', 'lang:hst_url', 'required|max_length[255]');
 		$this->form_validation->set_rules('hst_environment', 'lang:hst_environment', 'max_length[100]');
+		$this->form_validation->set_rules('lay_id', 'lang:lay_id', 'numeric');
+		$this->form_validation->set_rules('hst_gzhandler', 'lang:hst_gzhandler');
+		$this->form_validation->set_rules('hst_debug', 'lang:hst_debug');
 		foreach($data['translations'] as $trl) {
 			$this->form_validation->set_rules('defaultitem'.$trl->lng_id, 'lang:hst_trl_defaultitem', 'required');
 		}
@@ -72,12 +75,12 @@ class hosts extends CI_Controller {
 		if($this->form_validation->run() == FALSE) {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/hosts/hosts_create', $data, true);
 		} else {
-			$this->db->set('lay_id', $this->input->post('lay_id'));
 			$this->db->set('hst_code', $this->input->post('hst_code'));
 			$this->db->set('hst_url', $this->input->post('hst_url'));
-			$this->db->set('hst_debug', checkbox2database($this->input->post('hst_debug')));
-			$this->db->set('hst_gzhandler', checkbox2database($this->input->post('hst_gzhandler')));
 			$this->db->set('hst_environment', $this->input->post('hst_environment'));
+			$this->db->set('lay_id', $this->input->post('lay_id'));
+			$this->db->set('hst_gzhandler', checkbox2database($this->input->post('hst_gzhandler')));
+			$this->db->set('hst_debug', checkbox2database($this->input->post('hst_debug')));
 			$this->db->set('hst_createdby', $this->usr->usr_id);
 			$this->db->set('hst_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('hst_ispublished', 1);
@@ -116,6 +119,9 @@ class hosts extends CI_Controller {
 			$this->form_validation->set_rules('hst_code', 'lang:hst_code', 'required|max_length[100]|callback_rule_hst_code['.$data['hst']->hst_code.']');
 			$this->form_validation->set_rules('hst_url', 'lang:hst_url', 'required|max_length[255]');
 			$this->form_validation->set_rules('hst_environment', 'lang:hst_environment', 'max_length[100]');
+			$this->form_validation->set_rules('lay_id', 'lang:lay_id', 'numeric');
+			$this->form_validation->set_rules('hst_gzhandler', 'lang:hst_gzhandler');
+			$this->form_validation->set_rules('hst_debug', 'lang:hst_debug');
 			foreach($data['translations'] as $trl) {
 				$this->form_validation->set_rules('defaultitem'.$trl->lng_id, 'lang:hst_trl_defaultitem', 'required');
 			}
@@ -123,12 +129,12 @@ class hosts extends CI_Controller {
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/hosts/hosts_update', $data, true);
 			} else {
-				$this->db->set('lay_id', $this->input->post('lay_id'));
 				$this->db->set('hst_code', $this->input->post('hst_code'));
 				$this->db->set('hst_url', $this->input->post('hst_url'));
-				$this->db->set('hst_debug', checkbox2database($this->input->post('hst_debug')));
-				$this->db->set('hst_gzhandler', checkbox2database($this->input->post('hst_gzhandler')));
 				$this->db->set('hst_environment', $this->input->post('hst_environment'));
+				$this->db->set('lay_id', $this->input->post('lay_id'));
+				$this->db->set('hst_gzhandler', checkbox2database($this->input->post('hst_gzhandler')));
+				$this->db->set('hst_debug', checkbox2database($this->input->post('hst_debug')));
 				$this->db->set('hst_modifiedby', $this->usr->usr_id);
 				$this->db->set('hst_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('hst_id', $this->hst_id);
@@ -154,27 +160,28 @@ class hosts extends CI_Controller {
 	}
 	public function delete() {
 		if($this->hst_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
 			$data = array();
 			$data['hst'] = $this->hosts_model->get_host($this->hst_id);
+			if($data['hst']->hst_islocked == 0) {
+				$this->load->helper(array('form'));
+				$this->load->library('form_validation');
+				$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
+	
+				if($this->form_validation->run() == FALSE) {
+					$this->zones['content'] = $this->load->view('axipi_dynamic/hosts/hosts_delete', $data, true);
+				} else {
+					$this->db->where('hst_id', $this->hst_id);
+					$this->db->delete('hst_trl');
 
-			$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
-
-			if($this->form_validation->run() == FALSE) {
-				$this->zones['content'] = $this->load->view('axipi_dynamic/hosts/hosts_delete', $data, true);
+					$this->db->where('hst_id', $this->hst_id);
+					$this->db->where('hst_islocked', 0);
+					$this->db->delete('hst');
+					$this->msg[] = $this->lang->line('deleted');
+					$this->index();
+				}
 			} else {
-				$this->db->where('hst_id', $this->hst_id);
-				$this->db->delete('hst_trl');
-
-				$this->db->where('hst_id', $this->hst_id);
-				$this->db->delete('hst_stg');
-
-				$this->db->where('hst_id', $this->hst_id);
-				$this->db->where('hst_islocked', 0);
-				$this->db->delete('hst');
-				$this->msg[] = $this->lang->line('deleted');
-				$this->index();
+				$this->zones['content'] = '';
+				$this->msg[] = $this->lang->line('nopermission');
 			}
 		}
 	}

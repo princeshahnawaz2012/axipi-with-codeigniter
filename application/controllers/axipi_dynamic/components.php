@@ -23,11 +23,12 @@ class components extends CI_Controller {
 		$columns = array();
 		$columns[] = 'cmp.cmp_id';
 		$columns[] = 'cmp.cmp_code';
+		$columns[] = 'lay.lay_code';
 		$columns[] = 'count_items';
 		$col = build_columns('components', $columns, 'cmp.cmp_id', 'DESC');
 
 		$results = $this->components_model->get_all_components($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
+		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'components');
 
 		$data = array();
 		$data['columns'] = $col;
@@ -53,6 +54,7 @@ class components extends CI_Controller {
 		$this->load->helper(array('form'));
 		$this->load->library('form_validation');
 		$data = array();
+		$data['select_layout'] = $this->items_model->select_layout();
 
 		$this->form_validation->set_rules('cmp_code', 'lang:cmp_code', 'required|max_length[100]|callback_rule_cmp_code');
 
@@ -60,6 +62,7 @@ class components extends CI_Controller {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/components/components_create', $data, true);
 		} else {
 			$this->db->set('cmp_code', $this->input->post('cmp_code'));
+			$this->db->set('lay_id', $this->input->post('lay_id'));
 			$this->db->set('cmp_ispublished', 1);
 			$this->db->set('cmp_createdby', $this->usr->usr_id);
 			$this->db->set('cmp_datecreated', date('Y-m-d H:i:s'));
@@ -81,6 +84,7 @@ class components extends CI_Controller {
 			$this->load->library('form_validation');
 			$data = array();
 			$data['cmp'] = $this->components_model->get_component($this->cmp_id);
+			$data['select_layout'] = $this->items_model->select_layout();
 
 			$this->form_validation->set_rules('cmp_code', 'lang:cmp_code', 'required|max_length[100]|callback_rule_cmp_code['.$data['cmp']->cmp_code.']');
 
@@ -88,6 +92,7 @@ class components extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/components/components_update', $data, true);
 			} else {
 				$this->db->set('cmp_code', $this->input->post('cmp_code'));
+				$this->db->set('lay_id', $this->input->post('lay_id'));
 				$this->db->set('cmp_modifiedby', $this->usr->usr_id);
 				$this->db->set('cmp_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('cmp_id', $this->cmp_id);

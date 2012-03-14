@@ -6,6 +6,7 @@ if($hst) {
 <div class="display">
 <ul>
 <li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('hosts'); ?></a></li>
+<li><a href="<?php echo current_url(); ?>?a=read&amp;hst_id=<?php echo $hst->hst_id; ?>"><?php echo $hst->hst_code; ?></a></li>
 <li><?php echo $this->lang->line('delete'); ?></li>
 </ul>
 </div>

@@ -29,7 +29,7 @@ class languages extends CI_Controller {
 		$col = build_columns('languages', $columns, 'lng.lng_id', 'DESC');
 
 		$results = $this->languages_model->get_all_languages($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
+		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'languages');
 
 		$data = array();
 		$data['columns'] = $col;
@@ -125,16 +125,10 @@ class languages extends CI_Controller {
 				$this->db->delete('hst_trl');
 
 				$this->db->where('lng_id', $this->lng_id);
-				$this->db->delete('lng_stg');
-
-				$this->db->where('lng_id', $this->lng_id);
 				$this->db->delete('per_trl');
 
 				$this->db->where('lng_id', $this->lng_id);
 				$this->db->delete('sct_trl');
-
-				$this->db->where('lng_id', $this->lng_id);
-				$this->db->delete('stg_trl');
 
 				$this->db->where('lng_id', $this->lng_id);
 				$this->db->delete('trl_zon');

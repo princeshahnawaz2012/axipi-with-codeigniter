@@ -57,7 +57,7 @@
 <td><?php echo $result->sct_code; ?></td>
 <td><?php echo $result->cmp_code; ?></td>
 <td><?php echo $result->lng_code; ?></td>
-<td><?php echo $result->itm_ispublished; ?></td>
+<td><?php echo $this->lang->line('reply_'.$result->itm_ispublished); ?></td>
 <td><?php echo $result->itm_access; ?><?php if($result->count_groups != 0 && $result->itm_access == 'groups') { ?> (<?php echo $result->groups; ?>)<?php } ?>
 </td>
 <th>

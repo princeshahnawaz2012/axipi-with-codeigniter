@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `cmp` (
   KEY `cmp_ispage` (`cmp_ispage`),
   KEY `cmp_iszone` (`cmp_iselement`),
   KEY `cmp_isrelation` (`cmp_isrelation`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='components' AUTO_INCREMENT=1000 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='components' AUTO_INCREMENT=1133 ;
 
 -- --------------------------------------------------------
 
@@ -52,68 +52,6 @@ CREATE TABLE IF NOT EXISTS `cmp_stg` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cou`
---
-
-CREATE TABLE IF NOT EXISTS `cou` (
-  `cou_id` int(10) unsigned NOT NULL,
-  `cou_alpha2` char(2) NOT NULL,
-  `cou_alpha3` char(3) NOT NULL,
-  `cou_ordering` mediumint(9) NOT NULL DEFAULT '0',
-  `cou_createdby` int(10) unsigned DEFAULT NULL,
-  `cou_datecreated` datetime DEFAULT NULL,
-  `cou_modifiedby` int(10) unsigned DEFAULT NULL,
-  `cou_datemodified` datetime DEFAULT NULL,
-  `cou_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `cou_islocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`cou_id`),
-  UNIQUE KEY `cou_alpha2` (`cou_alpha2`),
-  UNIQUE KEY `cou_alpha3` (`cou_alpha3`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='countries';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cou_sub`
---
-
-CREATE TABLE IF NOT EXISTS `cou_sub` (
-  `cou_sub_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `cou_id` int(10) unsigned NOT NULL,
-  `cou_sub_code` varchar(6) NOT NULL,
-  `cou_sub_title` varchar(255) NOT NULL,
-  `cou_sub_createdby` int(10) unsigned DEFAULT NULL,
-  `cou_sub_datecreated` datetime DEFAULT NULL,
-  `cou_sub_modifiedby` int(10) unsigned DEFAULT NULL,
-  `cou_sub_datemodified` datetime DEFAULT NULL,
-  `cou_sub_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`cou_sub_id`),
-  KEY `cou_sub_code` (`cou_sub_code`),
-  KEY `cou_sub_title` (`cou_sub_title`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='countries_subdivisions' AUTO_INCREMENT=1000 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cou_trl`
---
-
-CREATE TABLE IF NOT EXISTS `cou_trl` (
-  `cou_id` int(10) unsigned NOT NULL,
-  `lng_id` int(10) unsigned NOT NULL,
-  `cou_trl_title` varchar(255) NOT NULL,
-  `cou_trl_createdby` int(10) unsigned DEFAULT NULL,
-  `cou_trl_datecreated` datetime DEFAULT NULL,
-  `cou_trl_modifiedby` int(10) unsigned DEFAULT NULL,
-  `cou_trl_datemodified` datetime DEFAULT NULL,
-  PRIMARY KEY (`cou_id`,`lng_id`),
-  KEY `lng_id` (`lng_id`),
-  KEY `cou_trl_title` (`cou_trl_title`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='countries_translations';
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `grp`
 --
 
@@ -133,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `grp` (
   PRIMARY KEY (`grp_id`),
   UNIQUE KEY `grp_code` (`grp_code`),
   KEY `grp_ispublished` (`grp_ispublished`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='groups' AUTO_INCREMENT=1000 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='groups' AUTO_INCREMENT=1003 ;
 
 -- --------------------------------------------------------
 
@@ -247,27 +185,6 @@ CREATE TABLE IF NOT EXISTS `hst` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hst_stg`
---
-
-CREATE TABLE IF NOT EXISTS `hst_stg` (
-  `hst_id` int(10) unsigned NOT NULL,
-  `stg_id` int(10) unsigned NOT NULL,
-  `hst_stg_value` varchar(255) DEFAULT NULL,
-  `hst_stg_createdby` int(10) unsigned DEFAULT NULL,
-  `hst_stg_datecreated` datetime DEFAULT NULL,
-  `hst_stg_modifiedby` int(10) unsigned DEFAULT NULL,
-  `hst_stg_datemodified` datetime DEFAULT NULL,
-  `hst_stg_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`hst_id`,`stg_id`),
-  KEY `hst_id` (`hst_id`),
-  KEY `stg_id` (`stg_id`),
-  KEY `hst_stg_ispublished` (`hst_stg_ispublished`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='hosts_settings';
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `hst_trl`
 --
 
@@ -293,7 +210,6 @@ CREATE TABLE IF NOT EXISTS `hst_trl` (
 CREATE TABLE IF NOT EXISTS `itm` (
   `itm_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `cmp_id` int(10) unsigned NOT NULL,
-  `cou_id` int(10) unsigned DEFAULT NULL,
   `lay_id` int(10) unsigned DEFAULT NULL,
   `lng_id` int(10) unsigned NOT NULL,
   `sct_id` int(10) unsigned NOT NULL,
@@ -328,7 +244,6 @@ CREATE TABLE IF NOT EXISTS `itm` (
   PRIMARY KEY (`itm_id`),
   UNIQUE KEY `itm_code` (`itm_code`),
   KEY `cmp_id` (`cmp_id`),
-  KEY `cou_id` (`cou_id`),
   KEY `lay_id` (`lay_id`),
   KEY `lng_id` (`lng_id`),
   KEY `sct_id` (`sct_id`),
@@ -337,7 +252,7 @@ CREATE TABLE IF NOT EXISTS `itm` (
   KEY `itm_parent` (`itm_parent`),
   FULLTEXT KEY `itm_summary` (`itm_summary`),
   FULLTEXT KEY `itm_content` (`itm_content`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='items' AUTO_INCREMENT=1000 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='items' AUTO_INCREMENT=1082 ;
 
 -- --------------------------------------------------------
 
@@ -426,7 +341,7 @@ CREATE TABLE IF NOT EXISTS `lay` (
   PRIMARY KEY (`lay_id`),
   UNIQUE KEY `lay_code` (`lay_code`),
   KEY `lay_ispublished` (`lay_ispublished`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='layouts' AUTO_INCREMENT=1000 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='layouts' AUTO_INCREMENT=1002 ;
 
 -- --------------------------------------------------------
 
@@ -450,28 +365,7 @@ CREATE TABLE IF NOT EXISTS `lng` (
   UNIQUE KEY `lng_code` (`lng_code`),
   KEY `lng_ispublished` (`lng_ispublished`),
   KEY `lng_title` (`lng_title`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='languages' AUTO_INCREMENT=1000 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `lng_stg`
---
-
-CREATE TABLE IF NOT EXISTS `lng_stg` (
-  `lng_id` int(10) unsigned NOT NULL,
-  `stg_id` int(10) unsigned NOT NULL,
-  `lng_stg_value` varchar(255) DEFAULT NULL,
-  `lng_stg_createdby` int(10) unsigned DEFAULT NULL,
-  `lng_stg_datecreated` datetime DEFAULT NULL,
-  `lng_stg_modifiedby` int(10) unsigned DEFAULT NULL,
-  `lng_stg_datemodified` datetime DEFAULT NULL,
-  `lng_stg_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`lng_id`,`stg_id`),
-  KEY `lng_id` (`lng_id`),
-  KEY `stg_id` (`stg_id`),
-  KEY `lng_stg_ispublished` (`lng_stg_ispublished`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='languages_settings';
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='languages' AUTO_INCREMENT=1002 ;
 
 -- --------------------------------------------------------
 
@@ -533,7 +427,7 @@ CREATE TABLE IF NOT EXISTS `sct` (
   UNIQUE KEY `sct_code` (`sct_code`),
   KEY `sct_ispublished` (`sct_ispublished`),
   KEY `lay_id` (`lay_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='sections' AUTO_INCREMENT=1000 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='sections' AUTO_INCREMENT=1002 ;
 
 -- --------------------------------------------------------
 
@@ -556,74 +450,6 @@ CREATE TABLE IF NOT EXISTS `sct_trl` (
   KEY `sct_id` (`sct_id`),
   KEY `sct_trl_title` (`sct_trl_title`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='sections_translations';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `stg`
---
-
-CREATE TABLE IF NOT EXISTS `stg` (
-  `stg_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `stg_code` varchar(100) NOT NULL,
-  `stg_value` varchar(255) DEFAULT NULL,
-  `stg_isuser` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `stg_issection` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `stg_islanguage` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `stg_ishost` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `stg_iscomponent` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `stg_isglobal` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `stg_createdby` int(10) unsigned DEFAULT NULL,
-  `stg_datecreated` datetime DEFAULT NULL,
-  `stg_modifiedby` int(10) unsigned DEFAULT NULL,
-  `stg_datemodified` datetime DEFAULT NULL,
-  `stg_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `stg_islocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`stg_id`),
-  UNIQUE KEY `stg_code` (`stg_code`),
-  KEY `stg_ispublished` (`stg_ispublished`),
-  KEY `stg_isglobal` (`stg_isglobal`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='settings' AUTO_INCREMENT=1000 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `stg_trl`
---
-
-CREATE TABLE IF NOT EXISTS `stg_trl` (
-  `stg_id` int(10) unsigned NOT NULL,
-  `lng_id` int(10) unsigned NOT NULL,
-  `stg_trl_title` varchar(255) NOT NULL,
-  `stg_trl_createdby` int(10) unsigned DEFAULT NULL,
-  `stg_trl_datecreated` datetime DEFAULT NULL,
-  `stg_trl_modifiedby` int(10) unsigned DEFAULT NULL,
-  `stg_trl_datemodified` datetime DEFAULT NULL,
-  PRIMARY KEY (`lng_id`,`stg_id`),
-  KEY `lng_id` (`lng_id`),
-  KEY `sct_trl_title` (`stg_trl_title`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='settings_translations';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `stg_usr`
---
-
-CREATE TABLE IF NOT EXISTS `stg_usr` (
-  `stg_id` int(10) unsigned NOT NULL,
-  `usr_id` int(10) unsigned NOT NULL,
-  `stg_usr_value` varchar(255) DEFAULT NULL,
-  `stg_usr_createdby` int(10) unsigned DEFAULT NULL,
-  `stg_usr_datecreated` datetime DEFAULT NULL,
-  `stg_usr_modifiedby` int(10) unsigned DEFAULT NULL,
-  `stg_usr_datemodified` datetime DEFAULT NULL,
-  `stg_usr_ispublished` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`stg_id`,`usr_id`),
-  KEY `stg_id` (`stg_id`),
-  KEY `usr_id` (`usr_id`),
-  KEY `stg_usr_ispublished` (`stg_usr_ispublished`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='settings_users';
 
 -- --------------------------------------------------------
 
@@ -652,8 +478,6 @@ CREATE TABLE IF NOT EXISTS `trl_zon` (
 
 CREATE TABLE IF NOT EXISTS `usr` (
   `usr_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `cou_id` int(10) unsigned DEFAULT NULL,
-  `cou_sub_id` int(10) unsigned DEFAULT NULL,
   `lng_id` int(10) unsigned DEFAULT NULL,
   `usr_email` varchar(100) DEFAULT NULL,
   `usr_protectedpassword` char(32) DEFAULT NULL,
@@ -697,12 +521,11 @@ CREATE TABLE IF NOT EXISTS `usr` (
   `usr_islocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`usr_id`),
   UNIQUE KEY `usr_email` (`usr_email`),
-  KEY `cou_id` (`cou_id`),
   KEY `lng_id` (`lng_id`),
   KEY `usr_ispublished` (`usr_ispublished`),
   KEY `usr_keyregister` (`usr_keyregister`),
   KEY `usr_keypassword` (`usr_keypassword`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='users' AUTO_INCREMENT=1000 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='users' AUTO_INCREMENT=1001 ;
 
 -- --------------------------------------------------------
 
@@ -739,4 +562,4 @@ CREATE TABLE IF NOT EXISTS `zon` (
   PRIMARY KEY (`zon_id`),
   UNIQUE KEY `lay_zon` (`lay_id`,`zon_code`),
   KEY `zon_ispublished` (`zon_ispublished`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='zones' AUTO_INCREMENT=1000 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='zones' AUTO_INCREMENT=1014 ;

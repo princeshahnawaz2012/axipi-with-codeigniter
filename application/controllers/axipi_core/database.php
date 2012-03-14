@@ -10,6 +10,7 @@ class database extends CI_Controller {
 		$output = '<div class="box1">';
 		$output .= '<h1>Tables ('.$query->num_rows().')</h1>';
 		$output .= '<ul>';
+		$output .= '<li><a href="'.current_url().'?a=translation">Translation</a></li>';
 		$output .= '<li><a href="'.current_url().'?a=optimize">Optimize</a></li>';
 		$output .= '</ul>';
 		$output .= '<div class="display">';
@@ -64,10 +65,48 @@ class database extends CI_Controller {
 		$output .= '</tbody>';
 		$output .= '</table>';
 
-		$output .= '</div>
-		</div>';
+		$output .= '</div>';
+		$output .= '</div>';
 
 		$this->zones['content'] = $output;
+	}
+	public function translation() {
+		$this->load->language('axipi_dynamic');
+
+		$output = '<div class="box1">';
+		$output .= '<h1>Translation</h1>';
+		$output .= '<ul>';
+		$output .= '<li><a href="'.current_url().'">Index</a></li>';
+		$output .= '</ul>';
+		$output .= '<div class="display">';
+		$query = $this->db->query('SHOW TABLE STATUS');
+		if($query->num_rows() > 0) {
+			$fields = array();
+			foreach($query->result() as $row) {
+				$query2 = $this->db->query('SHOW COLUMNS FROM '.$row->Name);
+				if($query2->num_rows() > 0) {
+					foreach($query2->result() as $row2) {
+						if(substr($row2->Field, 0, 1) != '_') {
+							$fields[] = $row2->Field;
+						}
+					}
+				}
+			}
+			$fields = array_unique($fields);
+			sort($fields);
+
+			$output .= '<textarea class="textareabigger">&lt;?php'."\r\n";
+			$u = 1;
+			foreach($fields as $k) {
+				$output .= '$lang[\''.$k.'\'] = \''.addslashes($this->lang->line($k)).'\';'."\r\n";
+			}
+			$output .= '</textarea>';
+
+			$output .= '</div>';
+			$output .= '</div>';
+
+			$this->zones['content'] = $output;
+		}
 	}
 	public function optimize() {
 		$query = $this->db->query('SHOW TABLE STATUS');

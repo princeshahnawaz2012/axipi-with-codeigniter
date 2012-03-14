@@ -28,7 +28,7 @@ class users extends CI_Controller {
 		$col = build_columns('users', $columns, 'usr.usr_id', 'DESC');
 
 		$results = $this->users_model->get_all_users($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
+		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'users');
 
 		$data = array();
 		$data['columns'] = $col;
@@ -129,9 +129,6 @@ class users extends CI_Controller {
 			} else {
 				$this->db->where('usr_id', $this->usr_id);
 				$this->db->delete('cnt_usr');
-
-				$this->db->where('usr_id', $this->usr_id);
-				$this->db->delete('stg_usr');
 
 				$this->db->where('usr_id', $this->usr_id);
 				$this->db->where('grp_usr_islocked', 0);

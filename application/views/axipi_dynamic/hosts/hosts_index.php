@@ -50,8 +50,8 @@
 <td><?php echo $result->hst_code; ?></td>
 <td><?php echo $result->hst_url; ?></td>
 <td><?php echo $result->hst_environment; ?></td>
-<td><?php echo $result->hst_gzhandler; ?></td>
-<td><?php echo $result->hst_debug; ?></td>
+<td><?php echo $this->lang->line('reply_'.$result->hst_gzhandler); ?></td>
+<td><?php echo $this->lang->line('reply_'.$result->hst_debug); ?></td>
 <td><?php echo $result->lay_code; ?></td>
 <th>
 <a href="<?php echo current_url(); ?>?a=update&amp;hst_id=<?php echo $result->hst_id;?>"><?php echo $this->lang->line('update'); ?></a>

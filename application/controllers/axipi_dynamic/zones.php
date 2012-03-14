@@ -30,7 +30,7 @@ class zones extends CI_Controller {
 		$col = build_columns('zones', $columns, 'zon.zon_id', 'DESC');
 
 		$results = $this->zones_model->get_all_zones($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
+		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'zones');
 
 		$data = array();
 		$data['columns'] = $col;

@@ -49,9 +49,10 @@
 <p><span class="label">php_sapi_name</span><?php echo php_sapi_name(); ?></p>
 <p><span class="label">get_current_user</span><?php echo get_current_user(); ?></p>
 <?php if(function_exists('posix_getpwuid') && function_exists('posix_geteuid')) {$processUser = posix_getpwuid(posix_geteuid()); ?><p><span class="label">posix_getpwuid</span><?php echo implode(', ', $processUser); ?></p><?php } ?>
-<p><span class="label">ci_session</span><?php echo $this->session->userdata('session_id'); ?></p>
+<p><span class="label">session_id</span><?php echo $this->session->userdata('session_id'); ?></p>
+<p><span class="label">sess_cookie_name</span><?php echo $this->config->item('sess_cookie_name'); ?></p>
+<p><span class="label">sess_expiration</span><?php echo $this->config->item('sess_expiration'); ?></p>
 
-<?php $expire = ini_get('session.gc_maxlifetime')/60; ?><p><span class="label">session.gc_maxlifetime</span><?php echo $expire; ?> minutes</p>
 <p><span class="label">file_uploads</span><?php echo ini_get('file_uploads'); ?></p>
 <p><span class="label">upload_max_filesize</span><?php echo ini_get('upload_max_filesize'); ?></p>
 <p><span class="label">post_max_size</span><?php echo ini_get('post_max_size'); ?></p>

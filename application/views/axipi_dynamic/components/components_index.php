@@ -34,7 +34,8 @@
 <tr>
 <th><?php display_column('components', $columns[0], $this->lang->line('cmp_id')); ?></th>
 <th><?php display_column('components', $columns[1], $this->lang->line('cmp_code')); ?></th>
-<th><?php display_column('components', $columns[2], $this->lang->line('items')); ?></th>
+<th><?php display_column('components', $columns[2], $this->lang->line('lay_code')); ?></th>
+<th><?php display_column('components', $columns[3], $this->lang->line('items')); ?></th>
 <th>&nbsp;</th>
 </tr>
 </thead>
@@ -44,6 +45,7 @@
 <tr>
 <td><a href="<?php echo current_url(); ?>?a=read&amp;cmp_id=<?php echo $result->cmp_id;?>"><?php echo $result->cmp_id;?></a></td>
 <td><?php echo $result->cmp_code; ?></td>
+<td><?php echo $result->lay_code; ?></td>
 <td><?php echo $result->count_items; ?></td>
 <th>
 <a href="<?php echo current_url(); ?>?a=update&amp;cmp_id=<?php echo $result->cmp_id;?>"><?php echo $this->lang->line('update'); ?></a>

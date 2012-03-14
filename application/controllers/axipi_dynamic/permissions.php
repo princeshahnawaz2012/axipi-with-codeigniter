@@ -27,7 +27,7 @@ class permissions extends CI_Controller {
 		$col = build_columns('permissions', $columns, 'per.per_id', 'DESC');
 
 		$results = $this->permissions_model->get_all_permissions($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
+		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'permissions');
 
 		$data = array();
 		$data['columns'] = $col;

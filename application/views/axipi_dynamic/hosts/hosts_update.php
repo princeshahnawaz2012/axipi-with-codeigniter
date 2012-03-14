@@ -6,6 +6,7 @@ if($hst) {
 <div class="display">
 <ul>
 <li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('hosts'); ?></a></li>
+<li><a href="<?php echo current_url(); ?>?a=read&amp;hst_id=<?php echo $hst->hst_id; ?>"><?php echo $hst->hst_code; ?></a></li>
 <li><?php echo $this->lang->line('update'); ?></li>
 </ul>
 </div>
@@ -14,6 +15,7 @@ if($hst) {
 <div class="box1">
 <h1><?php echo $hst->hst_code; ?></h1>
 <ul>
+<?php if($hst->hst_islocked == 0) { ?><li><a href="<?php echo current_url(); ?>?a=delete&amp;hst_id=<?php echo $hst->hst_id; ?>"><?php echo $this->lang->line('delete'); ?></a></li><?php } ?>
 <li><a href="<?php echo current_url(); ?>?a=read&amp;hst_id=<?php echo $hst->hst_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
 <li><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>

@@ -28,7 +28,7 @@ class sections extends CI_Controller {
 		$col = build_columns('sections', $columns, 'sct.sct_id', 'DESC');
 
 		$results = $this->sections_model->get_all_sections($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 30);
+		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'sections');
 
 		$data = array();
 		$data['columns'] = $col;
@@ -154,9 +154,6 @@ class sections extends CI_Controller {
 			} else {
 				$this->db->where('sct_id', $this->sct_id);
 				$this->db->delete('sct_trl');
-
-				$this->db->where('sct_id', $this->sct_id);
-				$this->db->delete('sct_stg');
 
 				$this->db->where('sct_id', $this->sct_id);
 				$this->db->where('sct_islocked', 0);

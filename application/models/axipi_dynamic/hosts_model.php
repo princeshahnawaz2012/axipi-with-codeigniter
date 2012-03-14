@@ -24,10 +24,10 @@ class hosts_model extends CI_Model {
 		$select_layout = array();
 		$select_layout[''] = '--';
 		$this->db->cache_on();
-        $query = $this->db->query('SELECT lay.lay_id, lay.lay_code FROM '.$this->db->dbprefix('lay').' AS lay WHERE 1 GROUP BY lay.lay_id ORDER BY lay.lay_code ASC');
+        $query = $this->db->query('SELECT lay.lay_id, CONCAT(lay.lay_code, \' (\', lay.lay_type, \')\') AS lay_title FROM '.$this->db->dbprefix('lay').' AS lay WHERE 1 GROUP BY lay.lay_id ORDER BY lay.lay_code ASC');
 		if($query->num_rows() > 0) {
 			foreach($query->result() as $row) {
-				$select_layout[$row->lay_id] = $row->lay_code;
+				$select_layout[$row->lay_id] = $row->lay_title;
 			}
 		}
 		$this->db->cache_off();
