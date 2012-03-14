@@ -34,9 +34,9 @@ if($itm) {
 <p><?php echo form_label($this->lang->line('cmp_code').' *', 'cmp_id'); ?><?php echo form_dropdown('cmp_id', $select_component, set_value('', $itm->cmp_id), 'id="cmp_id" class="select"'); ?></p>
 <p><?php echo form_label($this->lang->line('itm_content'), 'itm_content'); ?><?php echo form_textarea('itm_content', set_value('itm_content', $itm->itm_content), 'id="itm_content" class="textarea"'); ?></p>
 <p><?php echo form_label($this->lang->line('itm_summary'), 'itm_summary'); ?><?php echo form_textarea('itm_summary', set_value('', $itm->itm_summary), 'id="itm_summary" class="textarea"'); ?></p>
-<p><?php echo form_label($this->lang->line('itm_link'), 'itm_link'); ?><?php echo form_input('itm_link', set_value('itm_link', $itm->itm_link), 'id="itm_link" class="inputtext"'); ?></p>
 <p><?php echo form_label($this->lang->line('itm_publishstartdate'), 'itm_publishstartdate'); ?><?php echo form_input('itm_publishstartdate', set_value('itm_publishstartdate', $itm->itm_publishstartdate), 'id="itm_publishstartdate" class="inputtext datefield"'); ?></p>
 <p><?php echo form_label($this->lang->line('itm_publishstarttime'), 'itm_publishstarttime'); ?><?php echo form_input('itm_publishstarttime', set_value('itm_publishstarttime', $itm->itm_publishstarttime), 'id="itm_publishstarttime" class="inputtext timefield"'); ?></p>
+<p><?php echo form_label($this->lang->line('itm_link'), 'itm_link'); ?><?php echo form_input('itm_link', set_value('itm_link', $itm->itm_link), 'id="itm_link" class="inputtext"'); ?></p>
 </div>
 
 <div class="column1 columnlast">
