@@ -29,6 +29,7 @@ class axipi_hook {
 			$this->CI->usr->usr_access = 'connected';
 			$this->CI->usr->groups = $this->CI->users_model->get_groups($this->CI->session->userdata('usr_id'));
 			$this->CI->usr->groups[1002] = 'connected';
+		} else if(isset($this->CI->usr) == 1) {
 		} else {
 			$this->CI->usr = new stdClass();
 			$this->CI->usr->usr_id = 0;

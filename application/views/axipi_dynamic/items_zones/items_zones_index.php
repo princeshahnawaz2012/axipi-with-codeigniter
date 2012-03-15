@@ -36,13 +36,13 @@
 <table>
 <thead>
 <tr>
-<th><?php echo $this->lang->line('itm_title'); ?></th>
-<th><?php echo $this->lang->line('sct_code'); ?></th>
-<th><?php echo $this->lang->line('cmp_code'); ?></th>
-<th><?php echo $this->lang->line('lng_code'); ?></th>
-<th><?php echo $this->lang->line('itm_zon_ordering'); ?></th>
-<th><?php echo $this->lang->line('itm_zon_ispublished'); ?></th>
-<th>&nbsp;</th>
+<th style="width: 25%;"><?php echo $this->lang->line('itm_title'); ?></th>
+<th style="width: 10%;"><?php echo $this->lang->line('sct_code'); ?></th>
+<th style="width: 25%;"><?php echo $this->lang->line('cmp_code'); ?></th>
+<th style="width: 10%;"><?php echo $this->lang->line('lng_code'); ?></th>
+<th style="width: 10%;"><?php echo $this->lang->line('itm_zon_ordering'); ?></th>
+<th style="width: 10%;"><?php echo $this->lang->line('itm_zon_ispublished'); ?></th>
+<th style="width: 10%;">&nbsp;</th>
 </tr>
 </thead>
 <tbody>
