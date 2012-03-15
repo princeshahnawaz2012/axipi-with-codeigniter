@@ -22,8 +22,8 @@ class items_zones extends CI_Controller {
 		$this->load->helper(array('form'));
 
 		$filters = array();
-		$filters['zones_zon_code'] = array('zon.zon_code', 'like');
-		$filters['zones_lay_id'] = array('zon.lay_id', 'equal');
+		$filters['items_zones_zon_code'] = array('zon.zon_code', 'like');
+		$filters['items_zones_lay_id'] = array('zon.lay_id', 'equal');
 		$flt = build_filters($filters);
 
 		$columns = array();
@@ -32,7 +32,7 @@ class items_zones extends CI_Controller {
 		$columns[] = 'lay.lay_code';
 		$columns[] = 'zon.zon_ordering';
 		$columns[] = 'count_items';
-		$col = build_columns('zones', $columns, 'lay.lay_code', 'ASC');
+		$col = build_columns('items_zones', $columns, 'lay.lay_code', 'ASC');
 
 		$results = $this->zones_model->get_all_zones($flt);
 		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'items_zones');
@@ -41,7 +41,7 @@ class items_zones extends CI_Controller {
 		$data['columns'] = $col;
 		$data['pagination'] = $build_pagination['output'];
 		$data['position'] = $build_pagination['position'];
-		$data['results'] = $this->zones_model->get_pagination_zones($flt, $build_pagination['limit'], $build_pagination['start'], 'zones');
+		$data['results'] = $this->zones_model->get_pagination_zones($flt, $build_pagination['limit'], $build_pagination['start'], 'items_zones');
 		$data['items_zones'] = $this->zones_model->get_all_items_zones($flt);
 		$data['select_layout'] = $this->zones_model->select_layout();
 		$this->zones['content'] = $this->load->view('axipi_dynamic/items_zones/items_zones_index', $data, true);

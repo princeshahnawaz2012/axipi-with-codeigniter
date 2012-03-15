@@ -100,4 +100,50 @@ class items_model extends CI_Model {
 		list($itm->itm_publishstartdate, $itm->itm_publishstarttime) = explode(' ', $itm->itm_publishstartdate);
         return $itm;
     }
+    function get_all_items_relations($flt) {
+		$flt = array();
+		$flt[] = '1';
+        $query = $this->db->query('SELECT itm.itm_id, itm.itm_title, itm_rel.rel_id, itm_rel.itm_rel_ordering, itm_rel.itm_rel_ispublished, cmp.cmp_code, lng.lng_code, sct.sct_code FROM '.$this->db->dbprefix('itm_rel').' AS itm_rel LEFT JOIN '.$this->db->dbprefix('itm').' AS itm ON itm.itm_id = itm_rel.itm_id LEFT JOIN '.$this->db->dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id LEFT JOIN '.$this->db->dbprefix('sct').' AS sct ON sct.sct_id = itm.sct_id LEFT JOIN '.$this->db->dbprefix('lng').' AS lng ON lng.lng_id = itm.lng_id WHERE '.implode(' AND ', $flt).' GROUP BY itm_rel.rel_id, itm_rel.itm_id ORDER BY itm_rel.itm_rel_parent ASC, itm_rel.itm_rel_ordering ASC, itm.itm_title ASC');
+		$items_relations = array();
+		if($query->num_rows() > 0) {
+			$u = 0;
+			foreach($query->result() as $row) {
+				$items_relations[$row->rel_id][$u] = new stdClass();
+				$items_relations[$row->rel_id][$u]->itm_id = $row->itm_id;
+				$items_relations[$row->rel_id][$u]->itm_title = $row->itm_title;
+				$items_relations[$row->rel_id][$u]->itm_rel_ordering = $row->itm_rel_ordering;
+				$items_relations[$row->rel_id][$u]->itm_rel_ispublished = $row->itm_rel_ispublished;
+				$items_relations[$row->rel_id][$u]->cmp_code = $row->cmp_code;
+				$items_relations[$row->rel_id][$u]->lng_code = $row->lng_code;
+				$items_relations[$row->rel_id][$u]->sct_code = $row->sct_code;
+				$u++;
+			}
+		}
+        return $items_relations;
+    }
+    function get_item_relation($rel_id, $itm_id) {
+        $query = $this->db->query('SELECT itm_rel.* FROM '.$this->db->dbprefix('itm_rel').' AS itm_rel WHERE itm_rel.rel_id = ? AND itm_rel.itm_id = ? GROUP BY itm_rel.rel_id, itm_rel.itm_id', array($rel_id, $itm_id));
+		$itm_rel = $query->row();
+        return $itm_rel;
+    }
+	function build_select_tree($relations, $indent = '', $relation) {
+		if($indent == '') {
+			$indent = '&nbsp;';
+		} else {
+			$indent = $indent.'&nbsp;&nbsp;&nbsp;&nbsp;';
+		}
+		if(isset($relations[$relation]) == 1) {
+			foreach($relations[$relation] as $id => $title) {
+				$title = $indent.'|-'.$title;
+				$tree_items[$id] = $title;
+				if(isset($relations[$id]) == 1 && $id != '') {
+					$merge = $this->build_select_tree($relations, $indent, $id);
+					foreach($merge as $k => $v) {
+						$tree_items[$k] = $v;
+					}
+				}
+			}
+		}
+		return $tree_items;
+	}
 }
