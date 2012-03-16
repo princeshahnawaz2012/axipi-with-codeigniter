@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Changes on CodeIgniter : axipi User Guide</title>
+<link rel="stylesheet" type="text/css" href="userguide.css">
+<script type="text/javascript" src="nav/nav.js"></script>
+<script type="text/javascript" src="nav/prototype.lite.js"></script>
+<script type="text/javascript" src="nav/moo.fx.js"></script>
+<script type="text/javascript" src="nav/user_guide_menu.js"></script>
+</head>
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"><script type="text/javascript">create_menu('null');</script></div></div>
+<div id="nav2"><a name="top"></a><a href="javascript:void(0);" onclick="myHeight.toggle();"><img src="images/nav_toggle_darker.jpg" width="154" height="43" border="0" title="Toggle Table of Contents" alt="Toggle Table of Contents" /></a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>axipi User Guide Version 1.0</h1></td>
+<td id="breadcrumb_right"><a href="toc.html">Table of Contents Page</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://axipi.com">axipi Home</a>&nbsp;&nbsp;&#8250;&nbsp;
+<a href="index.html">User Guide Home</a>&nbsp;&nbsp;&#8250;&nbsp;
+Changes on CodeIgniter
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="axipi.com/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+</table>
+<!-- END BREADCRUMB -->
+
+<!-- START CONTENT -->
+<div id="content">
+
+<h1>Changes on CodeIgniter</h1>
+
+<h2>Folders</h2>
+<h3>/system/language/english</h3>
+<p>To assume ISO 639-1 for languages</p>
+<p><pre>< /system/language/english
+> /system/language/en</pre></p>
+
+<h2>Files</h2>
+<h3>/application/config/config.php</h3>
+<p><pre>29c29
+< $config['index_page'] = 'index.php';
+---
+> $config['index_page'] = '';
+72c72
+< $config['language']	= 'english';
+---
+> $config['language']	= 'en';
+94c94
+< $config['enable_hooks'] = FALSE;
+---
+> $config['enable_hooks'] = TRUE;
+227c227
+< $config['encryption_key'] = '';
+---
+> $config['encryption_key'] = 'h5z21hn9y';
+282c282
+< $config['global_xss_filtering'] = FALSE;
+---
+> $config['global_xss_filtering'] = TRUE;
+296c296
+< $config['csrf_protection'] = FALSE;
+---
+> $config['csrf_protection'] = TRUE;</pre></p>
+
+<h3>/application/config/routes.php</h3>
+<p>To assume routes from database</p>
+<p><pre>< $route['default_controller'] = "welcome";
+< $route['404_override'] = '';
+---
+> $route['default_controller'] = 'welcome';
+> $route['(:any)'] = 'welcome';</pre></p>
+
+<h3>/system/core/CodeIgniter.php</h3>
+<p>To assume routes from database</p>
+<p><pre>304a305,345
+> 	$LOAD =& load_class('Loader', 'core');
+> 	$db = $LOAD->database('', true);
+> 
+> 	$uri_string = $URI->uri_string();
+> 	if($uri_string != '') {
+> 		$page = $uri_string;
+> 	} else {
+> 		$page = 'axipi';
+> 	}
+> 
+> 	$query = $db->query('SELECT * FROM '.$db->dbprefix('itm').' AS itm WHERE itm_code = ?', array($page));
+> 	if($query->num_rows() == 0) {
+> 		$query = $db->query('SELECT cmp.cmp_id FROM '.$db->dbprefix('cmp').' AS cmp WHERE cmp_code = ?', array('axipi_core/error404'));
+> 		if($query->num_rows() > 0) {
+> 			$cmp = $query->row();
+> 			$query = $db->query('SELECT * FROM '.$db->dbprefix('itm').' AS itm WHERE cmp_id = ?', array($cmp->cmp_id));
+> 		}
+> 	}
+> 	$itm = $query->row();
+> 
+> 	$query = $db->query('SELECT * FROM '.$db->dbprefix('cmp').' AS cmp WHERE cmp_id = ?', array($itm->cmp_id));
+> 	$cmp = $query->row();
+> 
+> 	list($directory, $class) = explode('/', $cmp->cmp_code);
+> 	if(file_exists(APPPATH.'controllers/'.$cmp->cmp_code.EXT)) {
+> 		require_once(APPPATH.'controllers/'.$cmp->cmp_code.EXT);
+> 		$RTR->set_directory($directory);
+> 		$RTR->set_class($class);
+> 
+> 		if($IN->get('a') && method_exists($class, $IN->get('a')) && strncmp($IN->get('a'), '_', 1) != 0) {
+> 			$method = $IN->get('a');
+> 		} else {
+> 			$method = 'index';
+> 		}
+> 		$RTR->set_method($method);
+> 	} else {
+> 		require_once(APPPATH.'controllers/axipi_core/error404'.EXT);
+> 		$class = 'error404';
+> 		$method = 'index';
+> 	}
+> 
+308a350,352
+> 	$CI->db = $db;
+> 	$CI->itm = $itm;
+> 	$CI->cmp = $cmp;</pre></p>
+
+<h3>/system/core/Controller.php</h3>
+<p>To fix double loading related to changes in /system/core/CodeIgniter.php</p>
+<p><pre>46c46,48
+< 			$this->$var =& load_class($class);
+---
+> 			if($var != 'loader') {
+> 				$this->$var =& load_class($class);
+> 			}</pre></p>
+
+<h3>/system/database/DB_active_rec.php</h3>
+<p>To manage NULL values</p>
+<p><pre>924c924,928
+< 				$this->ar_set[$this->_protect_identifiers($k, FALSE, TRUE)] = $this->escape($v);
+---
+> 				if($v == '') {
+> 					$this->ar_set[$this->_protect_identifiers($k, FALSE, TRUE)] = 'NULL';
+> 				} else {
+> 					$this->ar_set[$this->_protect_identifiers($k, FALSE, TRUE)] = $this->escape($v);
+> 				}</pre></p>
+
+</div>
+<!-- END CONTENT -->
+
+<div id="footer">
+<p>
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="index.html">User Guide Home</a>
+</p>
+</div>
+
+</body>
+</html>

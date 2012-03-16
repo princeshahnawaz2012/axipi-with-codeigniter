@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Welcome to axipi : axipi User Guide</title>
+<title>Installation : axipi User Guide</title>
 <link rel="stylesheet" type="text/css" href="userguide.css">
 <script type="text/javascript" src="nav/nav.js"></script>
 <script type="text/javascript" src="nav/prototype.lite.js"></script>
@@ -29,7 +29,8 @@
 <tr>
 <td id="breadcrumb">
 <a href="http://axipi.com">axipi Home</a>&nbsp;&nbsp;&#8250;&nbsp;
-axipi User Guide
+<a href="index.html">User Guide Home</a>&nbsp;&nbsp;&#8250;&nbsp;
+Installation
 </td>
 <td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="axipi.com/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
 </tr>
@@ -39,9 +40,17 @@ axipi User Guide
 <!-- START CONTENT -->
 <div id="content">
 
-<h2>Welcome to axipi</h2>
+<h1>Installation</h1>
+<p>axipi requires the use of PHP version 5.2.0 or newer.</p>
 
-<p>Online website management (components, pages, layouts, zoning, users, groups...) using CodeIgniter</p>
+<p>You must create a MySQL database, with a collation <var>utf8_general_ci</var> if possible, and load in the database the file <dfn>/installation/axipi_structure.sql</dfn> then the file <dfn>/installation/axipi_data.sql</dfn> (UTF-8).<br />
+Open the <dfn>/application/config/database.php</dfn> file with a text editor and set your database settings.</p>
+
+<p>The folders /medias and /storage must be writable by the owner.</p>
+
+<p>The default account is <var>install@axipi.com</var> with the password <var>install</var>.</p>
+
+<p>The default page is available at <dfn>/axipi</dfn>.</p>
 
 </div>
 <!-- END CONTENT -->
