@@ -1,5 +1,5 @@
 Options -Indexes -MultiViews +FollowSymLinks
-DirectoryIndex index.php
+DirectoryIndex index.php index.html
 FileETag None
 
 <IfModule mod_php5.c>
