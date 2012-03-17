@@ -305,29 +305,24 @@
 	$LOAD =& load_class('Loader', 'core');
 	$db = $LOAD->database('', true);
 
+	$CFG->load('axipi');
+
 	$uri_string = $URI->uri_string();
 	if($uri_string != '') {
 		$page = $uri_string;
 	} else {
-		$page = 'axipi';
+		$page = $CFG->item('default_itm_code');
 	}
 
-	$query = $db->query('SELECT * FROM '.$db->dbprefix('itm').' AS itm WHERE itm_code = ?', array($page));
+	$query = $db->query('SELECT itm.*, cmp.cmp_code FROM '.$db->dbprefix('itm').' AS itm LEFT JOIN '.$db->dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id WHERE itm_code = ?', array($page));
 	if($query->num_rows() == 0) {
-		$query = $db->query('SELECT cmp.cmp_id FROM '.$db->dbprefix('cmp').' AS cmp WHERE cmp_code = ?', array('axipi_core/error404'));
-		if($query->num_rows() > 0) {
-			$cmp = $query->row();
-			$query = $db->query('SELECT * FROM '.$db->dbprefix('itm').' AS itm WHERE cmp_id = ?', array($cmp->cmp_id));
-		}
+		$query = $db->query('SELECT *, cmp.cmp_code FROM '.$db->dbprefix('itm').' AS itm LEFT JOIN '.$db->dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id WHERE cmp_code = ?', array($CFG->item('404_cmp_code')));
 	}
 	$itm = $query->row();
 
-	$query = $db->query('SELECT * FROM '.$db->dbprefix('cmp').' AS cmp WHERE cmp_id = ?', array($itm->cmp_id));
-	$cmp = $query->row();
-
-	list($directory, $class) = explode('/', $cmp->cmp_code);
-	if(file_exists(APPPATH.'controllers/'.$cmp->cmp_code.EXT)) {
-		require_once(APPPATH.'controllers/'.$cmp->cmp_code.EXT);
+	list($directory, $class) = explode('/', $itm->cmp_code);
+	if(file_exists(APPPATH.'controllers/'.$itm->cmp_code.EXT)) {
+		require_once(APPPATH.'controllers/'.$itm->cmp_code.EXT);
 		$RTR->set_directory($directory);
 		$RTR->set_class($class);
 
@@ -349,7 +344,6 @@
 	$CI = new $class();
 	$CI->db = $db;
 	$CI->itm = $itm;
-	$CI->cmp = $cmp;
 
 /*
  * ------------------------------------------------------

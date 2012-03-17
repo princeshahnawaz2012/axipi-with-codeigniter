@@ -49,9 +49,10 @@
 <p><span class="label">php_sapi_name</span><?php echo php_sapi_name(); ?></p>
 <p><span class="label">get_current_user</span><?php echo get_current_user(); ?></p>
 <?php if(function_exists('posix_getpwuid') && function_exists('posix_geteuid')) {$processUser = posix_getpwuid(posix_geteuid()); ?><p><span class="label">posix_getpwuid</span><?php echo implode(', ', $processUser); ?></p><?php } ?>
-<p><span class="label">session_id</span><?php echo $this->session->userdata('session_id'); ?></p>
-<p><span class="label">sess_cookie_name</span><?php echo $this->config->item('sess_cookie_name'); ?></p>
-<p><span class="label">sess_expiration</span><?php echo $this->config->item('sess_expiration'); ?></p>
+<p><span class="label">session_name</span><?php echo session_name(); ?></p>
+<p><span class="label">session_id</span><?php echo session_id(); ?></p>
+<p><span class="label">session_save_path</span><?php echo session_save_path(); ?></p>
+<?php $expire = ini_get('session.gc_maxlifetime')/60; ?><p><span class="label">session.gc_maxlifetime</span><?php echo $expire; ?> minutes</p>
 
 <p><span class="label">file_uploads</span><?php echo ini_get('file_uploads'); ?></p>
 <p><span class="label">upload_max_filesize</span><?php echo ini_get('upload_max_filesize'); ?></p>
@@ -65,6 +66,7 @@
 <p><span class="label">get_included_files</span><?php echo str_replace($_SERVER['DOCUMENT_ROOT'], '', implode('<br />', get_included_files())); ?></p>
 <p><span class="label">get_declared_classes</span><?php echo implode(', ', get_declared_classes()); ?></p>
 
+<p><span class="label">$_SESSION</span><textarea class="textareabigger"><?php echo print_r($_SESSION, 1); ?></textarea></p>
 <p><span class="label">$_COOKIE</span><textarea class="textareabigger"><?php echo print_r($_COOKIE, 1); ?></textarea></p>
 <p><span class="label">$_SERVER</span><textarea class="textareabigger"><?php echo print_r($_SERVER, 1); ?></textarea></p>
 

@@ -4,6 +4,9 @@ class axipi_hook {
 	public function post_controller_constructor() {
 		$this->CI =& get_instance();
 
+		$query = $this->CI->db->query('SELECT * FROM '.$this->CI->db->dbprefix('cmp').' AS cmp WHERE cmp_id = ?', array($this->CI->itm->cmp_id));
+		$this->CI->cmp = $query->row();
+
 		$query = $this->CI->db->query('SELECT * FROM '.$this->CI->db->dbprefix('lng').' AS lng WHERE lng_id = ?', array($this->CI->itm->lng_id));
 		$this->CI->lng = $query->row();
 
@@ -74,14 +77,10 @@ class axipi_hook {
 		}
 
 		if($this->CI->http_status != 200) {
-			$query = $this->CI->db->query('SELECT * FROM '.$this->CI->db->dbprefix('cmp').' AS cmp WHERE cmp_code = ?', array('axipi_core/error'.$this->CI->http_status));
+			$query = $this->CI->db->query('SELECT *, cmp.cmp_code FROM '.$this->CI->db->dbprefix('itm').' AS itm LEFT JOIN '.$this->CI->db->dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id WHERE cmp_code = ?', array($this->CI->config->item($this->CI->http_status.'_cmp_code')));
 			if($query->num_rows() > 0) {
-				$cmp = $query->row();
-				$query = $this->CI->db->query('SELECT * FROM '.$this->CI->db->dbprefix('itm').' AS itm WHERE cmp_id = ?', array($cmp->cmp_id));
-				if($query->num_rows() > 0) {
-					$itm = $query->row();
-					redirect($itm->itm_code);
-				}
+				$itm = $query->row();
+				redirect($itm->itm_code);
 			}
 		}
 		$this->CI->itm->tree = array();

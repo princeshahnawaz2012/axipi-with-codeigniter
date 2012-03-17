@@ -80,7 +80,7 @@ $autoload['helper'] = array('axipi_helper', 'url');
 |
 */
 
-$autoload['config'] = array('axipi');
+$autoload['config'] = array();
 
 
 /*
