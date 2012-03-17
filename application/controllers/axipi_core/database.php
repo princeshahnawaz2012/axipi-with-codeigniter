@@ -46,11 +46,7 @@ class database extends CI_Controller {
 			//}
 			$output .= '<tr>';
 			$output .= '<td>'.$row->Name.'</td>';
-			if(!file_exists('application/controllers/axipi_dynamic/'.$row->Comment.'.php')) {
-				$output .= '<td style="background-color: #FFC2BF;">'.$row->Comment.'</td>';
-			} else {
-				$output .= '<td>'.$row->Comment.'</td>';
-			}
+			$output .= '<td>'.$row->Comment.'</td>';
 			$output .= '<td>'.$engine.'</td>';
 			$output .= '<td>'.$row->Collation.'</td>';
 			$output .= '<td>'.$rows.'</td>';
