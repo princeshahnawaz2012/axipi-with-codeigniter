@@ -217,6 +217,7 @@ padding: 3px 0 7px 3px;
  color: #002166;
  display: block;
  margin: 14px 0 14px 0;
+ overflow: auto;
  padding: 12px 10px 12px 10px;
 }
 
