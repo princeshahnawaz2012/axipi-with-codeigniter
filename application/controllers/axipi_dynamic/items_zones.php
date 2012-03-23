@@ -32,7 +32,7 @@ class items_zones extends CI_Controller {
 		$columns[] = 'lay.lay_code';
 		$columns[] = 'zon.zon_ordering';
 		$columns[] = 'count_items';
-		$col = build_columns('items_zones', $columns, 'lay.lay_code', 'ASC');
+		$col = build_columns('items_zones', $columns, 'zon.zon_ordering', 'ASC');
 
 		$results = $this->zones_model->get_all_zones($flt);
 		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'items_zones');

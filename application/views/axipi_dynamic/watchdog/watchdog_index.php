@@ -27,7 +27,7 @@
 <tr>
 <th><?php echo $this->lang->line('wtd_id'); ?></th>
 <th><?php echo $this->lang->line('wtd_content'); ?></th>
-<th><span class="sort_desc"><?php echo $this->lang->line('wtd_datecreated'); ?></span></th>
+<th class="sort_desc"><span><?php echo $this->lang->line('wtd_datecreated'); ?></span></th>
 </tr>
 </thead>
 <tbody>

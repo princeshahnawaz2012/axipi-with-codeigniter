@@ -131,6 +131,7 @@ $lang['purge_locked'] = 'Déjà purgé';
 $lang['purge'] = 'Purger';
 $lang['purged'] = 'Purge effectuée';
 $lang['read'] = 'Read';
+$lang['relations'] = 'Relations';
 $lang['remember_checkbox'] = 'Remember';
 $lang['rename_directory'] = 'Renommer un dossier';
 $lang['rename_file'] = 'Renommer un fichier';

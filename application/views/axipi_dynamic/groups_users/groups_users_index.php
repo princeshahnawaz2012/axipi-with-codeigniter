@@ -34,8 +34,8 @@
 <table>
 <thead>
 <tr>
-<th><?php display_column('groups_users', $columns[0], $this->lang->line('usr_id')); ?></th>
-<th><?php display_column('groups_users', $columns[1], $this->lang->line('usr_email')); ?></th>
+<?php display_column('groups_users', $columns[0], $this->lang->line('usr_id')); ?>
+<?php display_column('groups_users', $columns[1], $this->lang->line('usr_email')); ?>
 <?php foreach($groups as $group) { ?>
 <th><?php echo $group->grp_trl_title; ?></th>
 <?php } ?>

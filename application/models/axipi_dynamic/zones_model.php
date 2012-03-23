@@ -34,7 +34,7 @@ class zones_model extends CI_Model {
         return $query->row();
     }
     function get_all_items_zones($flt) {
-        $query = $this->db->query('SELECT itm.itm_id, itm.itm_title, zon.zon_id, itm_zon.itm_zon_ordering, itm_zon.itm_zon_ispublished, cmp.cmp_code, lng.lng_code, sct.sct_code FROM '.$this->db->dbprefix('itm_zon').' AS itm_zon LEFT JOIN '.$this->db->dbprefix('zon').' AS zon ON zon.zon_id = itm_zon.zon_id LEFT JOIN '.$this->db->dbprefix('lay').' AS lay ON lay.lay_id = zon.lay_id LEFT JOIN '.$this->db->dbprefix('itm').' AS itm ON itm.itm_id = itm_zon.itm_id LEFT JOIN '.$this->db->dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id LEFT JOIN '.$this->db->dbprefix('sct').' AS sct ON sct.sct_id = itm.sct_id LEFT JOIN '.$this->db->dbprefix('lng').' AS lng ON lng.lng_id = itm.lng_id WHERE '.implode(' AND ', $flt).' GROUP BY itm_zon.zon_id, itm_zon.itm_id ORDER BY itm_zon.itm_zon_ordering ASC');
+        $query = $this->db->query('SELECT itm.itm_id, itm.itm_title, itm.itm_access, GROUP_CONCAT(DISTINCT grp.grp_code ORDER BY grp.grp_code ASC SEPARATOR \', \') AS groups, COUNT(DISTINCT(grp_itm.grp_id)) AS count_groups, zon.zon_id, itm_zon.itm_zon_ordering, itm_zon.itm_zon_ispublished, cmp.cmp_code, lng.lng_code, sct.sct_code FROM '.$this->db->dbprefix('itm_zon').' AS itm_zon LEFT JOIN '.$this->db->dbprefix('zon').' AS zon ON zon.zon_id = itm_zon.zon_id LEFT JOIN '.$this->db->dbprefix('lay').' AS lay ON lay.lay_id = zon.lay_id LEFT JOIN '.$this->db->dbprefix('itm').' AS itm ON itm.itm_id = itm_zon.itm_id LEFT JOIN '.$this->db->dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id LEFT JOIN '.$this->db->dbprefix('sct').' AS sct ON sct.sct_id = itm.sct_id LEFT JOIN '.$this->db->dbprefix('lng').' AS lng ON lng.lng_id = itm.lng_id LEFT JOIN '.$this->db->dbprefix('grp_itm').' AS grp_itm ON grp_itm.itm_id = itm.itm_id LEFT JOIN '.$this->db->dbprefix('grp').' AS grp ON grp.grp_id = grp_itm.grp_id WHERE '.implode(' AND ', $flt).' GROUP BY itm_zon.zon_id, itm_zon.itm_id ORDER BY itm_zon.itm_zon_ordering ASC');
 		$items_zones = array();
 		if($query->num_rows() > 0) {
 			$u = 0;
@@ -42,6 +42,9 @@ class zones_model extends CI_Model {
 				$items_zones[$row->zon_id][$u] = new stdClass();
 				$items_zones[$row->zon_id][$u]->itm_id = $row->itm_id;
 				$items_zones[$row->zon_id][$u]->itm_title = $row->itm_title;
+				$items_zones[$row->zon_id][$u]->itm_access = $row->itm_access;
+				$items_zones[$row->zon_id][$u]->groups = $row->groups;
+				$items_zones[$row->zon_id][$u]->count_groups = $row->count_groups;
 				$items_zones[$row->zon_id][$u]->itm_zon_ordering = $row->itm_zon_ordering;
 				$items_zones[$row->zon_id][$u]->itm_zon_ispublished = $row->itm_zon_ispublished;
 				$items_zones[$row->zon_id][$u]->cmp_code = $row->cmp_code;

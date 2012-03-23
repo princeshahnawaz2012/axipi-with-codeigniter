@@ -36,13 +36,14 @@
 <table>
 <thead>
 <tr>
-<th style="width: 25%;"><?php echo $this->lang->line('itm_title'); ?></th>
+<th style="width: 20%;"><?php echo $this->lang->line('itm_title'); ?></th>
 <th style="width: 10%;"><?php echo $this->lang->line('sct_code'); ?></th>
-<th style="width: 25%;"><?php echo $this->lang->line('cmp_code'); ?></th>
+<th style="width: 20%;"><?php echo $this->lang->line('cmp_code'); ?></th>
 <th style="width: 10%;"><?php echo $this->lang->line('lng_code'); ?></th>
+<th style="width: 15%;"><?php echo $this->lang->line('itm_access'); ?></th>
 <th style="width: 10%;"><?php echo $this->lang->line('itm_zon_ordering'); ?></th>
 <th style="width: 10%;"><?php echo $this->lang->line('itm_zon_ispublished'); ?></th>
-<th style="width: 10%;">&nbsp;</th>
+<th style="width: 5%;">&nbsp;</th>
 </tr>
 </thead>
 <tbody>
@@ -53,8 +54,9 @@
 <td><?php echo $itm_zon->sct_code; ?></td>
 <td><?php echo $itm_zon->cmp_code; ?></td>
 <td><?php echo $itm_zon->lng_code; ?></td>
+<td><?php echo $itm_zon->itm_access; ?><?php if($itm_zon->count_groups != 0 && $itm_zon->itm_access == 'groups') { ?> (<?php echo $itm_zon->groups; ?>)<?php } ?>
 <td><?php echo $itm_zon->itm_zon_ordering; ?></td>
-<td><?php echo $itm_zon->itm_zon_ispublished; ?></td>
+<td><?php echo $this->lang->line('reply_'.$itm_zon->itm_zon_ispublished); ?></td>
 <th>
 <a href="<?php echo current_url(); ?>?a=update&amp;zon_id=<?php echo $result->zon_id;?>&amp;itm_id=<?php echo $itm_zon->itm_id;?>"><?php echo $this->lang->line('update'); ?></a>
 <a href="<?php echo current_url(); ?>?a=delete&amp;zon_id=<?php echo $result->zon_id;?>&amp;itm_id=<?php echo $itm_zon->itm_id;?>"><?php echo $this->lang->line('delete'); ?></a>

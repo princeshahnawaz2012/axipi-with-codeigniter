@@ -1,7 +1,7 @@
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
-<li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('zones'); ?></a></li>
+<li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('relations'); ?></a></li>
 <li><?php echo $this->lang->line('create'); ?></li>
 </ul>
 </div>

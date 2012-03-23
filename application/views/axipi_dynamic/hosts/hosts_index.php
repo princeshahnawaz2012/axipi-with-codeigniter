@@ -32,13 +32,13 @@
 <table>
 <thead>
 <tr>
-<th><?php display_column('hosts', $columns[0], $this->lang->line('hst_id')); ?></th>
-<th><?php display_column('hosts', $columns[1], $this->lang->line('hst_code')); ?></th>
-<th><?php display_column('hosts', $columns[2], $this->lang->line('hst_url')); ?></th>
-<th><?php display_column('hosts', $columns[3], $this->lang->line('hst_environment')); ?></th>
-<th><?php display_column('hosts', $columns[4], $this->lang->line('hst_gzhandler')); ?></th>
-<th><?php display_column('hosts', $columns[5], $this->lang->line('hst_debug')); ?></th>
-<th><?php display_column('hosts', $columns[6], $this->lang->line('lay_code')); ?></th>
+<?php display_column('hosts', $columns[0], $this->lang->line('hst_id')); ?>
+<?php display_column('hosts', $columns[1], $this->lang->line('hst_code')); ?>
+<?php display_column('hosts', $columns[2], $this->lang->line('hst_url')); ?>
+<?php display_column('hosts', $columns[3], $this->lang->line('hst_environment')); ?>
+<?php display_column('hosts', $columns[4], $this->lang->line('hst_gzhandler')); ?>
+<?php display_column('hosts', $columns[5], $this->lang->line('hst_debug')); ?>
+<?php display_column('hosts', $columns[6], $this->lang->line('lay_code')); ?>
 <th>&nbsp;</th>
 </tr>
 </thead>
