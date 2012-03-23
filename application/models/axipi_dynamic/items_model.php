@@ -103,27 +103,52 @@ class items_model extends CI_Model {
     function get_all_items_relations($flt) {
 		$flt = array();
 		$flt[] = '1';
-        $query = $this->db->query('SELECT itm.itm_id, itm.itm_title, itm.itm_access, GROUP_CONCAT(DISTINCT grp.grp_code ORDER BY grp.grp_code ASC SEPARATOR \', \') AS groups, COUNT(DISTINCT(grp_itm.grp_id)) AS count_groups, itm_rel.rel_id, itm_rel.itm_rel_ordering, itm_rel.itm_rel_ispublished, cmp.cmp_code, lng.lng_code, sct.sct_code FROM '.$this->db->dbprefix('itm_rel').' AS itm_rel LEFT JOIN '.$this->db->dbprefix('itm').' AS itm ON itm.itm_id = itm_rel.itm_id LEFT JOIN '.$this->db->dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id LEFT JOIN '.$this->db->dbprefix('sct').' AS sct ON sct.sct_id = itm.sct_id LEFT JOIN '.$this->db->dbprefix('lng').' AS lng ON lng.lng_id = itm.lng_id LEFT JOIN '.$this->db->dbprefix('grp_itm').' AS grp_itm ON grp_itm.itm_id = itm.itm_id LEFT JOIN '.$this->db->dbprefix('grp').' AS grp ON grp.grp_id = grp_itm.grp_id WHERE '.implode(' AND ', $flt).' GROUP BY itm_rel.rel_id, itm_rel.itm_id ORDER BY itm_rel.itm_rel_parent ASC, itm_rel.itm_rel_ordering ASC, itm.itm_title ASC');
-		$items_relations = array();
+        $query = $this->db->query('SELECT itm_rel.itm_rel_parent, itm.itm_id, itm.itm_title, itm.itm_access, GROUP_CONCAT(DISTINCT grp.grp_code ORDER BY grp.grp_code ASC SEPARATOR \', \') AS groups, COUNT(DISTINCT(grp_itm.grp_id)) AS count_groups, itm_rel.rel_id, itm_rel.itm_rel_ordering, itm_rel.itm_rel_ispublished, cmp.cmp_code, lng.lng_code, sct.sct_code FROM '.$this->db->dbprefix('itm_rel').' AS itm_rel LEFT JOIN '.$this->db->dbprefix('itm').' AS itm ON itm.itm_id = itm_rel.itm_id LEFT JOIN '.$this->db->dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id LEFT JOIN '.$this->db->dbprefix('sct').' AS sct ON sct.sct_id = itm.sct_id LEFT JOIN '.$this->db->dbprefix('lng').' AS lng ON lng.lng_id = itm.lng_id LEFT JOIN '.$this->db->dbprefix('grp_itm').' AS grp_itm ON grp_itm.itm_id = itm.itm_id LEFT JOIN '.$this->db->dbprefix('grp').' AS grp ON grp.grp_id = grp_itm.grp_id WHERE '.implode(' AND ', $flt).' GROUP BY itm_rel.rel_id, itm_rel.itm_id ORDER BY itm_rel.rel_id ASC, itm_rel.itm_rel_parent ASC, itm_rel.itm_rel_ordering ASC, itm.itm_title ASC');
+		$tree = array();
 		if($query->num_rows() > 0) {
-			$u = 0;
+			$items_relations = array();
 			foreach($query->result() as $row) {
-				$items_relations[$row->rel_id][$u] = new stdClass();
-				$items_relations[$row->rel_id][$u]->itm_id = $row->itm_id;
-				$items_relations[$row->rel_id][$u]->itm_title = $row->itm_title;
-				$items_relations[$row->rel_id][$u]->itm_access = $row->itm_access;
-				$items_relations[$row->rel_id][$u]->groups = $row->groups;
-				$items_relations[$row->rel_id][$u]->count_groups = $row->count_groups;
-				$items_relations[$row->rel_id][$u]->itm_rel_ordering = $row->itm_rel_ordering;
-				$items_relations[$row->rel_id][$u]->itm_rel_ispublished = $row->itm_rel_ispublished;
-				$items_relations[$row->rel_id][$u]->cmp_code = $row->cmp_code;
-				$items_relations[$row->rel_id][$u]->lng_code = $row->lng_code;
-				$items_relations[$row->rel_id][$u]->sct_code = $row->sct_code;
-				$u++;
+				if(isset($items_relations[$row->rel_id][$row->itm_rel_parent]) == 0) {
+					$items_relations[$row->rel_id][$row->itm_rel_parent] = array();
+				}
+				$items_relations[$row->rel_id][$row->itm_rel_parent][$row->itm_id] = new stdClass();
+				$items_relations[$row->rel_id][$row->itm_rel_parent][$row->itm_id]->itm_id = $row->itm_id;
+				$items_relations[$row->rel_id][$row->itm_rel_parent][$row->itm_id]->itm_title = $row->itm_title;
+				$items_relations[$row->rel_id][$row->itm_rel_parent][$row->itm_id]->itm_access = $row->itm_access;
+				$items_relations[$row->rel_id][$row->itm_rel_parent][$row->itm_id]->groups = $row->groups;
+				$items_relations[$row->rel_id][$row->itm_rel_parent][$row->itm_id]->count_groups = $row->count_groups;
+				$items_relations[$row->rel_id][$row->itm_rel_parent][$row->itm_id]->itm_rel_ordering = $row->itm_rel_ordering;
+				$items_relations[$row->rel_id][$row->itm_rel_parent][$row->itm_id]->itm_rel_ispublished = $row->itm_rel_ispublished;
+				$items_relations[$row->rel_id][$row->itm_rel_parent][$row->itm_id]->cmp_code = $row->cmp_code;
+				$items_relations[$row->rel_id][$row->itm_rel_parent][$row->itm_id]->lng_code = $row->lng_code;
+				$items_relations[$row->rel_id][$row->itm_rel_parent][$row->itm_id]->sct_code = $row->sct_code;
+			}
+			foreach($items_relations as $rel_id => $items) {
+				$tree[$rel_id] = $this->build_tree($items_relations[$rel_id], '', '');
 			}
 		}
-        return $items_relations;
+        return $tree;
     }
+	function build_tree($relations, $indent = '', $relation) {
+		if($indent == '') {
+			$indent = '&nbsp;';
+		} else {
+			$indent = $indent.'&nbsp;&nbsp;&nbsp;';
+		}
+		if(isset($relations[$relation]) == 1) {
+			foreach($relations[$relation] as $id => $object) {
+				$object->itm_title = $indent.'|-'.$object->itm_title;
+				$tree_items[$id] = $object;
+				if(isset($relations[$id]) == 1 && $id != '') {
+					$merge = $this->build_tree($relations, $indent, $id);
+					foreach($merge as $k => $v) {
+						$tree_items[$k] = $v;
+					}
+				}
+			}
+		}
+		return $tree_items;
+	}
     function get_item_relation($rel_id, $itm_id) {
         $query = $this->db->query('SELECT itm_rel.* FROM '.$this->db->dbprefix('itm_rel').' AS itm_rel WHERE itm_rel.rel_id = ? AND itm_rel.itm_id = ? GROUP BY itm_rel.rel_id, itm_rel.itm_id', array($rel_id, $itm_id));
 		$itm_rel = $query->row();
