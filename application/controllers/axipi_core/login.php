@@ -10,10 +10,14 @@ class login extends CI_Controller {
 
 		$this->form_validation->set_rules('email', 'lang:email', 'required|valid_email|callback_rule_login');
 		$this->form_validation->set_rules('password', 'lang:password', 'required');
+		$this->form_validation->set_rules('remember_checkbox', 'lang:remember_checkbox');
 
 		if($this->form_validation->run() == FALSE) {
 			$this->zones['content'] = $this->load->view('axipi_core/login_index', null, true);
 		} else {
+			if($this->input->post('remember_checkbox')) {
+				//$this->input->set_cookie(array('name'=>'axipi-remember', 'value'=>1, 'expire'=>3600*24*30, 'path'=>'/', 'secure'=>TRUE));
+			}
 			redirect('axipi');
 		}
 	}
