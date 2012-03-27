@@ -35,7 +35,10 @@
 <?php display_column('components', $columns[0], $this->lang->line('cmp_id')); ?>
 <?php display_column('components', $columns[1], $this->lang->line('cmp_code')); ?>
 <?php display_column('components', $columns[2], $this->lang->line('lay_code')); ?>
-<?php display_column('components', $columns[3], $this->lang->line('items')); ?>
+<?php display_column('components', $columns[3], $this->lang->line('cmp_ispage')); ?>
+<?php display_column('components', $columns[4], $this->lang->line('cmp_iselement')); ?>
+<?php display_column('components', $columns[5], $this->lang->line('cmp_isrelation')); ?>
+<?php display_column('components', $columns[6], $this->lang->line('items')); ?>
 <th>&nbsp;</th>
 </tr>
 </thead>
@@ -46,6 +49,9 @@
 <td><a href="<?php echo current_url(); ?>?a=read&amp;cmp_id=<?php echo $result->cmp_id;?>"><?php echo $result->cmp_id;?></a></td>
 <td><?php echo $result->cmp_code; ?></td>
 <td><?php echo $result->lay_code; ?></td>
+<td><?php echo $this->lang->line('reply_'.$result->cmp_ispage); ?></td>
+<td><?php echo $this->lang->line('reply_'.$result->cmp_iselement); ?></td>
+<td><?php echo $this->lang->line('reply_'.$result->cmp_isrelation); ?></td>
 <td><?php echo $result->count_items; ?></td>
 <th>
 <a href="<?php echo current_url(); ?>?a=update&amp;cmp_id=<?php echo $result->cmp_id;?>"><?php echo $this->lang->line('update'); ?></a>

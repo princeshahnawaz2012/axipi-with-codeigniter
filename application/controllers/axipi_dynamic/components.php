@@ -24,6 +24,9 @@ class components extends CI_Controller {
 		$columns[] = 'cmp.cmp_id';
 		$columns[] = 'cmp.cmp_code';
 		$columns[] = 'lay.lay_code';
+		$columns[] = 'cmp.cmp_ispage';
+		$columns[] = 'cmp.cmp_iselement';
+		$columns[] = 'cmp.cmp_isrelation';
 		$columns[] = 'count_items';
 		$col = build_columns('components', $columns, 'cmp.cmp_id', 'DESC');
 
@@ -57,12 +60,18 @@ class components extends CI_Controller {
 		$data['select_layout'] = $this->items_model->select_layout();
 
 		$this->form_validation->set_rules('cmp_code', 'lang:cmp_code', 'required|max_length[100]|callback_rule_cmp_code');
+		$this->form_validation->set_rules('cmp_ispage', 'lang:cmp_ispage');
+		$this->form_validation->set_rules('cmp_iselement', 'lang:cmp_iselement');
+		$this->form_validation->set_rules('cmp_isrelation', 'lang:cmp_isrelation');
 
 		if($this->form_validation->run() == FALSE) {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/components/components_create', $data, true);
 		} else {
 			$this->db->set('cmp_code', $this->input->post('cmp_code'));
 			$this->db->set('lay_id', $this->input->post('lay_id'));
+			$this->db->set('cmp_ispage', checkbox2database($this->input->post('cmp_ispage')));
+			$this->db->set('cmp_iselement', checkbox2database($this->input->post('cmp_iselement')));
+			$this->db->set('cmp_isrelation', checkbox2database($this->input->post('cmp_isrelation')));
 			$this->db->set('cmp_ispublished', 1);
 			$this->db->set('cmp_createdby', $this->usr->usr_id);
 			$this->db->set('cmp_datecreated', date('Y-m-d H:i:s'));
@@ -87,12 +96,18 @@ class components extends CI_Controller {
 			$data['select_layout'] = $this->items_model->select_layout();
 
 			$this->form_validation->set_rules('cmp_code', 'lang:cmp_code', 'required|max_length[100]|callback_rule_cmp_code['.$data['cmp']->cmp_code.']');
+			$this->form_validation->set_rules('cmp_ispage', 'lang:cmp_ispage');
+			$this->form_validation->set_rules('cmp_iselement', 'lang:cmp_iselement');
+			$this->form_validation->set_rules('cmp_isrelation', 'lang:cmp_isrelation');
 
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/components/components_update', $data, true);
 			} else {
 				$this->db->set('cmp_code', $this->input->post('cmp_code'));
 				$this->db->set('lay_id', $this->input->post('lay_id'));
+				$this->db->set('cmp_ispage', checkbox2database($this->input->post('cmp_ispage')));
+				$this->db->set('cmp_iselement', checkbox2database($this->input->post('cmp_iselement')));
+				$this->db->set('cmp_isrelation', checkbox2database($this->input->post('cmp_isrelation')));
 				$this->db->set('cmp_modifiedby', $this->usr->usr_id);
 				$this->db->set('cmp_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('cmp_id', $this->cmp_id);

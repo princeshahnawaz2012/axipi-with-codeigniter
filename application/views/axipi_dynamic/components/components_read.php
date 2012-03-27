@@ -26,6 +26,9 @@ if($cmp) {
 </div>
 
 <div class="column1 columnlast">
+<p><span class="label"><?php echo $this->lang->line('cmp_ispage'); ?></span><?php echo $this->lang->line('reply_'.$cmp->cmp_ispage); ?></p>
+<p><span class="label"><?php echo $this->lang->line('cmp_iselement'); ?></span><?php echo $this->lang->line('reply_'.$cmp->cmp_iselement); ?></p>
+<p><span class="label"><?php echo $this->lang->line('cmp_isrelation'); ?></span><?php echo $this->lang->line('reply_'.$cmp->cmp_isrelation); ?></p>
 </div>
 
 </div>

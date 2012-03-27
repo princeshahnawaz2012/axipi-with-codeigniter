@@ -22,7 +22,7 @@ class components_model extends CI_Model {
         return $query->row();
     }
     function get_pagination_components($flt, $num, $offset, $column) {
-        $query = $this->db->query('SELECT cmp.cmp_id, cmp.cmp_code, lay.lay_code, cmp.cmp_islocked, cmp.cmp_ispublished, COUNT(DISTINCT(items.itm_id)) AS count_items FROM '.$this->db->dbprefix('cmp').' AS cmp LEFT JOIN '.$this->db->dbprefix('itm').' AS items ON items.cmp_id = cmp.cmp_id LEFT JOIN '.$this->db->dbprefix('lay').' AS lay ON lay.lay_id = cmp.lay_id WHERE '.implode(' AND ', $flt).' GROUP BY cmp.cmp_id ORDER BY '.$this->session->userdata($column.'_col').' LIMIT '.$offset.', '.$num);
+        $query = $this->db->query('SELECT cmp.cmp_id, cmp.cmp_code, cmp.cmp_ispage, cmp.cmp_iselement, cmp.cmp_isrelation, lay.lay_code, cmp.cmp_islocked, cmp.cmp_ispublished, COUNT(DISTINCT(items.itm_id)) AS count_items FROM '.$this->db->dbprefix('cmp').' AS cmp LEFT JOIN '.$this->db->dbprefix('itm').' AS items ON items.cmp_id = cmp.cmp_id LEFT JOIN '.$this->db->dbprefix('lay').' AS lay ON lay.lay_id = cmp.lay_id WHERE '.implode(' AND ', $flt).' GROUP BY cmp.cmp_id ORDER BY '.$this->session->userdata($column.'_col').' LIMIT '.$offset.', '.$num);
         return $query->result();
     }
     function get_component($cmp_id) {

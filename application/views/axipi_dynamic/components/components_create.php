@@ -26,6 +26,9 @@
 </div>
 
 <div class="column1 columnlast">
+<p><?php echo form_label($this->lang->line('cmp_ispage'), 'cmp_ispage'); ?><?php echo form_checkbox('cmp_ispage', 1, set_value('cmp_ispage'), 'id="cmp_ispage" class="inputcheckbox"'); ?></p>
+<p><?php echo form_label($this->lang->line('cmp_iselement'), 'cmp_iselement'); ?><?php echo form_checkbox('cmp_iselement', 1, set_value('cmp_iselement'), 'id="cmp_iselement" class="inputcheckbox"'); ?></p>
+<p><?php echo form_label($this->lang->line('cmp_isrelation'), 'cmp_isrelation'); ?><?php echo form_checkbox('cmp_isrelation', 1, set_value('cmp_isrelation'), 'id="cmp_isrelation" class="inputcheckbox"'); ?></p>
 <p><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></p>
 </div>
 
