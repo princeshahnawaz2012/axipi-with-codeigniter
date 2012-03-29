@@ -30,6 +30,9 @@ if($grp) {
 </div>
 
 <div class="column1 columnlast">
+<p><?php echo form_label($this->lang->line('grp_isitem'), 'grp_isitem'); ?><?php echo form_checkbox('grp_isitem', 1, set_value('grp_isitem', $grp->grp_isitem), 'id="grp_isitem" class="inputcheckbox"'); ?></p>
+<p><?php echo form_label($this->lang->line('grp_isuser'), 'grp_isuser'); ?><?php echo form_checkbox('grp_isuser', 1, set_value('grp_isuser', $grp->grp_isuser), 'id="grp_isuser" class="inputcheckbox"'); ?></p>
+<p><?php echo form_label($this->lang->line('grp_ispermission'), 'grp_ispermission'); ?><?php echo form_checkbox('grp_ispermission', 1, set_value('grp_ispermission', $grp->grp_ispermission), 'id="grp_ispermission" class="inputcheckbox"'); ?></p>
 <p><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></p>
 </div>
 

@@ -17,15 +17,20 @@ class items_model extends CI_Model {
 	}
     function select_item_parent() {
 		$select_item_parent = array();
-		$select_item_parent[''] = '--';
+		$select_item_parent[''] = '-';
 		//$this->db->cache_on();
-        $query = $this->db->query('SELECT itm.itm_id, itm.itm_code AS itm_code, CONCAT(sct.sct_code, \' (\', lng.lng_code, \')\') AS optgroup FROM '.$this->db->dbprefix('itm').' AS itm LEFT JOIN '.$this->db->dbprefix('sct').' AS sct ON sct.sct_id = itm.sct_id LEFT JOIN '.$this->db->dbprefix('lng').' AS lng ON lng.lng_id = itm.lng_id WHERE 1 GROUP BY itm.itm_id ORDER BY sct.sct_code ASC, itm.itm_title ASC');
+        $query = $this->db->query('SELECT itm.itm_id, itm.itm_parent, itm.itm_code AS itm_code, CONCAT(sct.sct_code, \' (\', lng.lng_code, \')\') AS optgroup FROM '.$this->db->dbprefix('itm').' AS itm LEFT JOIN '.$this->db->dbprefix('sct').' AS sct ON sct.sct_id = itm.sct_id LEFT JOIN '.$this->db->dbprefix('lng').' AS lng ON lng.lng_id = itm.lng_id WHERE 1 GROUP BY itm.itm_id ORDER BY sct.sct_code ASC, itm.itm_parent ASC, itm.itm_ordering ASC, itm.itm_title ASC');
 		if($query->num_rows() > 0) {
 			foreach($query->result() as $row) {
 				if(isset($select_item_parent[$row->optgroup]) == 0) {
 					$select_item_parent[$row->optgroup] = array();
 				}
-				$select_item_parent[$row->optgroup][$row->itm_id] = $row->itm_code;
+				$select_item_parent[$row->optgroup][$row->itm_parent][$row->itm_id] = $row->itm_code;
+			}
+		}
+		foreach($select_item_parent as $optgroup => $items) {
+			if($optgroup != '') {
+				$select_item_parent[$optgroup] = $this->build_select_tree($items, '', '');
 			}
 		}
 		//$this->db->cache_off();
@@ -33,7 +38,7 @@ class items_model extends CI_Model {
     }
     function select_component() {
 		$select_component = array();
-		$select_component[''] = '--';
+		$select_component[''] = '-';
 		$this->db->cache_on();
         $query = $this->db->query('SELECT cmp.cmp_id, SUBSTRING(cmp.cmp_code, LOCATE(\'/\', cmp.cmp_code) + 1) AS cmp_code, SUBSTRING(cmp.cmp_code, 1, LOCATE(\'/\', cmp.cmp_code) - 1) AS optgroup FROM '.$this->db->dbprefix('cmp').' AS cmp WHERE 1 GROUP BY cmp.cmp_id ORDER BY cmp.cmp_code ASC');
 		if($query->num_rows() > 0) {
@@ -49,7 +54,7 @@ class items_model extends CI_Model {
     }
     function select_section() {
 		$select_section = array();
-		$select_section[''] = '--';
+		$select_section[''] = '-';
 		$this->db->cache_on();
         $query = $this->db->query('SELECT sct.sct_id, CONCAT(sct_trl.sct_trl_title, \' (\', sct.sct_code, \')\') AS sct_title FROM '.$this->db->dbprefix('sct').' AS sct LEFT JOIN '.$this->db->dbprefix('sct_trl').' AS sct_trl ON sct_trl.sct_id = sct.sct_id WHERE sct_trl.lng_id = \''.$this->lng->lng_id.'\' GROUP BY sct.sct_id ORDER BY sct.sct_code ASC');
 		if($query->num_rows() > 0) {
@@ -62,7 +67,7 @@ class items_model extends CI_Model {
     }
     function select_language() {
 		$select_language = array();
-		$select_language[''] = '--';
+		$select_language[''] = '-';
 		$this->db->cache_on();
         $query = $this->db->query('SELECT lng.lng_id, CONCAT(lng.lng_title, \' (\', lng.lng_code, \')\') AS lng_title FROM '.$this->db->dbprefix('lng').' AS lng WHERE 1 GROUP BY lng.lng_id ORDER BY lng.lng_code ASC');
 		if($query->num_rows() > 0) {
@@ -75,7 +80,7 @@ class items_model extends CI_Model {
     }
     function select_layout() {
 		$select_layout = array();
-		$select_layout[''] = '--';
+		$select_layout[''] = '-';
 		$this->db->cache_on();
         $query = $this->db->query('SELECT lay.lay_id, CONCAT(lay.lay_code, \' (\', lay.lay_type, \')\') AS lay_title FROM '.$this->db->dbprefix('lay').' AS lay WHERE 1 GROUP BY lay.lay_id ORDER BY lay.lay_code ASC');
 		if($query->num_rows() > 0) {

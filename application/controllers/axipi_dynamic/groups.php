@@ -58,6 +58,9 @@ class groups extends CI_Controller {
 		$data['translations'] = $this->groups_model->get_translations($this->grp_id);
 
 		$this->form_validation->set_rules('grp_code', 'lang:grp_code', 'required|max_length[100]|callback_rule_grp_code');
+		$this->form_validation->set_rules('grp_isitem', 'lang:grp_isitem');
+		$this->form_validation->set_rules('grp_isuser', 'lang:grp_isuser');
+		$this->form_validation->set_rules('grp_ispermission', 'lang:grp_ispermission');
 		foreach($data['translations'] as $trl) {
 			$this->form_validation->set_rules('title'.$trl->lng_id, 'lang:grp_trl_title', 'required');
 		}
@@ -66,6 +69,9 @@ class groups extends CI_Controller {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_create', $data, true);
 		} else {
 			$this->db->set('grp_code', $this->input->post('grp_code'));
+			$this->db->set('grp_isitem', checkbox2database($this->input->post('grp_isitem')));
+			$this->db->set('grp_isuser', checkbox2database($this->input->post('grp_isuser')));
+			$this->db->set('grp_ispermission', checkbox2database($this->input->post('grp_ispermission')));
 			$this->db->set('grp_createdby', $this->usr->usr_id);
 			$this->db->set('grp_datecreated', date('Y-m-d H:i:s'));
 			$this->db->set('grp_ispublished', 1);
@@ -100,6 +106,9 @@ class groups extends CI_Controller {
 			$data['translations'] = $this->groups_model->get_translations($this->grp_id);
 
 			$this->form_validation->set_rules('grp_code', 'lang:grp_code', 'required|max_length[100]|callback_rule_grp_code['.$data['grp']->grp_code.']');
+			$this->form_validation->set_rules('grp_isitem', 'lang:grp_isitem');
+			$this->form_validation->set_rules('grp_isuser', 'lang:grp_isuser');
+			$this->form_validation->set_rules('grp_ispermission', 'lang:grp_ispermission');
 			foreach($data['translations'] as $trl) {
 				$this->form_validation->set_rules('title'.$trl->lng_id, 'lang:grp_trl_title', 'required');
 			}
@@ -108,6 +117,9 @@ class groups extends CI_Controller {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_update', $data, true);
 			} else {
 				$this->db->set('grp_code', $this->input->post('grp_code'));
+				$this->db->set('grp_isitem', checkbox2database($this->input->post('grp_isitem')));
+				$this->db->set('grp_isuser', checkbox2database($this->input->post('grp_isuser')));
+				$this->db->set('grp_ispermission', checkbox2database($this->input->post('grp_ispermission')));
 				$this->db->set('grp_modifiedby', $this->usr->usr_id);
 				$this->db->set('grp_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('grp_id', $this->grp_id);

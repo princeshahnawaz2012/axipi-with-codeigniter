@@ -26,6 +26,9 @@ if($grp) {
 </div>
 
 <div class="column1 columnlast">
+<p><span class="label"><?php echo $this->lang->line('grp_isitem'); ?></span><?php echo $this->lang->line('reply_'.$grp->grp_isitem); ?></p>
+<p><span class="label"><?php echo $this->lang->line('grp_isuser'); ?></span><?php echo $this->lang->line('reply_'.$grp->grp_isuser); ?></p>
+<p><span class="label"><?php echo $this->lang->line('grp_ispermission'); ?></span><?php echo $this->lang->line('reply_'.$grp->grp_ispermission); ?></p>
 </div>
 
 <?php if($translations) { ?>

@@ -6,7 +6,7 @@ class sections_model extends CI_Model {
     }
     function select_layout() {
 		$select_layout = array();
-		$select_layout[''] = '--';
+		$select_layout[''] = '-';
 		$this->db->cache_on();
         $query = $this->db->query('SELECT lay.lay_id, CONCAT(lay.lay_code, \' (\', lay.lay_type, \')\') AS lay_title FROM '.$this->db->dbprefix('lay').' AS lay WHERE 1 GROUP BY lay.lay_id ORDER BY lay.lay_code ASC');
 		if($query->num_rows() > 0) {

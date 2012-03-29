@@ -6,7 +6,7 @@ class zones_model extends CI_Model {
     }
     function select_layout() {
 		$select_layout = array();
-		$select_layout[''] = '--';
+		$select_layout[''] = '-';
 		$this->db->cache_on();
         $query = $this->db->query('SELECT lay.lay_id, CONCAT(lay.lay_code, \' (\', lay.lay_type, \')\') AS lay_title FROM '.$this->db->dbprefix('lay').' AS lay WHERE 1 GROUP BY lay.lay_id ORDER BY lay.lay_code ASC');
 		if($query->num_rows() > 0) {
@@ -57,7 +57,7 @@ class zones_model extends CI_Model {
     }
     function select_item() {
 		$select_item = array();
-		$select_item[''] = '--';
+		$select_item[''] = '-';
 		//$this->db->cache_on();
         $query = $this->db->query('SELECT itm.itm_id, itm.itm_code AS itm_code, CONCAT(sct.sct_code, \' (\', lng.lng_code, \')\') AS optgroup FROM '.$this->db->dbprefix('itm').' AS itm LEFT JOIN '.$this->db->dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id LEFT JOIN '.$this->db->dbprefix('sct').' AS sct ON sct.sct_id = itm.sct_id LEFT JOIN '.$this->db->dbprefix('lng').' AS lng ON lng.lng_id = itm.lng_id WHERE cmp.cmp_iselement = \'1\' GROUP BY itm.itm_id ORDER BY sct.sct_code ASC, itm.itm_title ASC');
 		if($query->num_rows() > 0) {
