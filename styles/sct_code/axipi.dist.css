@@ -74,7 +74,7 @@ tbody th a:focus, tbody th a:hover, .box1 > ul li a:focus, .box1 > ul li a:hover
 form{margin:0px;padding:0px;}
 select, textarea, option, optgroup, input, button{background-color:#FFFFFF;color:#111111;}
 optgroup, option{padding-left:2px;}
-optgroup{border-top:1px solid #999999;font-weight:bold;padding:2px 0px 5px 0px;}
+optgroup{border-top:1px solid #999999;font-weight:bold;padding:2px 0px 5px 2px;}
 option{padding-right:5px;}
 optgroup option{margin-left:5px;}
 fieldset, textarea, input, select, button{border:1px solid #999999;}
