@@ -30,7 +30,7 @@ class items_model extends CI_Model {
 		}
 		foreach($select_item_parent as $optgroup => $items) {
 			if($optgroup != '') {
-				$select_item_parent[$optgroup] = $this->build_select_tree($items, '', '');
+				$select_item_parent[$optgroup] = $this->build_tree($items, '', '');
 			}
 		}
 		//$this->db->cache_off();
@@ -142,8 +142,13 @@ class items_model extends CI_Model {
 		}
 		if(isset($relations[$relation]) == 1) {
 			foreach($relations[$relation] as $id => $object) {
-				$object->itm_title = $indent.'|-'.$object->itm_title;
-				$tree_items[$id] = $object;
+				if(is_object($object)) {
+					$object->itm_title = $indent.'|-'.$object->itm_title;
+					$tree_items[$id] = $object;
+				} else {
+					$object = $indent.'|-'.$object;
+					$tree_items[$id] = $object;
+				}
 				if(isset($relations[$id]) == 1 && $id != '') {
 					$merge = $this->build_tree($relations, $indent, $id);
 					foreach($merge as $k => $v) {
@@ -159,24 +164,4 @@ class items_model extends CI_Model {
 		$itm_rel = $query->row();
         return $itm_rel;
     }
-	function build_select_tree($relations, $indent = '', $relation) {
-		if($indent == '') {
-			$indent = '&nbsp;';
-		} else {
-			$indent = $indent.'&nbsp;&nbsp;&nbsp;&nbsp;';
-		}
-		if(isset($relations[$relation]) == 1) {
-			foreach($relations[$relation] as $id => $title) {
-				$title = $indent.'|-'.$title;
-				$tree_items[$id] = $title;
-				if(isset($relations[$id]) == 1 && $id != '') {
-					$merge = $this->build_select_tree($relations, $indent, $id);
-					foreach($merge as $k => $v) {
-						$tree_items[$k] = $v;
-					}
-				}
-			}
-		}
-		return $tree_items;
-	}
 }

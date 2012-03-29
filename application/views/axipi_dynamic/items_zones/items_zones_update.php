@@ -27,6 +27,7 @@ if($zon) {
 
 <div class="column1">
 <p><?php echo form_label($this->lang->line('itm_zon_ordering').' *', 'itm_zon_ordering'); ?><?php echo form_input('itm_zon_ordering', set_value('itm_zon_ordering', $itm_zon->itm_zon_ordering), 'id="itm_zon_ordering" class="inputtext numericfield"'); ?></p>
+<p><?php echo form_label($this->lang->line('itm_zon_ispublished'), 'itm_zon_ispublished'); ?><?php echo form_checkbox('itm_zon_ispublished', 1, set_value('itm_zon_ispublished', $itm_zon->itm_zon_ispublished), 'id="itm_zon_ispublished" class="inputcheckbox"'); ?></p>
 </div>
 
 <div class="column1 columnlast">

@@ -60,7 +60,7 @@ class sections extends CI_Controller {
 		$this->form_validation->set_rules('sct_code', 'lang:sct_code', 'required|max_length[100]|callback_rule_sct_code');
 		$this->form_validation->set_rules('lay_id', 'lang:lay_code', 'required');
 		foreach($data['translations'] as $trl) {
-			$this->form_validation->set_rules('title'.$trl->lng_id, 'lang:sct_trl_title', 'required');
+			$this->form_validation->set_rules('title'.$trl->lng_id, $this->lang->line('sct_trl_title').' ('.$trl->lng_code.')', 'required');
 		}
 
 		if($this->form_validation->run() == FALSE) {
@@ -107,7 +107,7 @@ class sections extends CI_Controller {
 			$this->form_validation->set_rules('sct_code', 'lang:sct_code', 'required|max_length[100]|callback_rule_sct_code['.$data['sct']->sct_code.']');
 			$this->form_validation->set_rules('lay_id', 'lang:lay_code', 'required');
 			foreach($data['translations'] as $trl) {
-				$this->form_validation->set_rules('title'.$trl->lng_id, 'lang:sct_trl_title', 'required');
+				$this->form_validation->set_rules('title'.$trl->lng_id, $this->lang->line('sct_trl_title').' ('.$trl->lng_code.')', 'required');
 			}
 
 			if($this->form_validation->run() == FALSE) {

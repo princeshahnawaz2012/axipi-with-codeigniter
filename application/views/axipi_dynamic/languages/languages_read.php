@@ -23,6 +23,7 @@ if($lng) {
 
 <div class="column1">
 <p><span class="label"><?php echo $this->lang->line('lng_code'); ?></span><?php echo $lng->lng_code; ?></p>
+<p><span class="label"><?php echo $this->lang->line('lng_defaultitem'); ?></span><?php echo $lng->lng_defaultitem; ?></p>
 </div>
 
 <div class="column1 columnlast">

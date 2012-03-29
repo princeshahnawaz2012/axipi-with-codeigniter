@@ -15,9 +15,6 @@ class axipi_hook {
 		$query = $this->CI->db->query('SELECT * FROM '.$this->CI->db->dbprefix('sct').' AS sct LEFT JOIN '.$this->CI->db->dbprefix('sct_trl').' AS sct_trl ON sct_trl.sct_id = sct.sct_id WHERE sct.sct_id = ? AND sct_trl.lng_id = ?', array($this->CI->itm->sct_id, $this->CI->itm->lng_id));
 		$this->CI->sct = $query->row();
 
-		$query = $this->CI->db->query('SELECT * FROM '.$this->CI->db->dbprefix('lay').' AS lay WHERE lay_id = ?', array($this->CI->sct->lay_id));
-		$this->CI->lay = $query->row();
-
 		$query = $this->CI->db->query('SELECT * FROM '.$this->CI->db->dbprefix('hst').' AS hst WHERE hst.hst_code = ?', array($_SERVER['HTTP_HOST']));
 		if($query->num_rows() > 0) {
 			$this->CI->hst = $query->row();
@@ -26,6 +23,18 @@ class axipi_hook {
 			$this->CI->hst = new stdClass();
 			$this->CI->hst->hst_debug = 0;
 		}
+
+		if($this->CI->itm->lay_id != '') {
+			$lay_id = $this->CI->itm->lay_id;
+		} elseif($this->CI->cmp->lay_id != '') {
+			$lay_id = $this->CI->cmp->lay_id;
+		} elseif($this->CI->hst->lay_id != '') {
+			$lay_id = $this->CI->hst->lay_id;
+		} else {
+			$lay_id = $this->CI->sct->lay_id;
+		}
+		$query = $this->CI->db->query('SELECT * FROM '.$this->CI->db->dbprefix('lay').' AS lay WHERE lay_id = ?', array($lay_id));
+		$this->CI->lay = $query->row();
 
 		if($this->CI->session->userdata('usr_id')) {
 			$this->CI->usr = $this->CI->users_model->get_user($this->CI->session->userdata('usr_id'));

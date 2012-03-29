@@ -122,6 +122,7 @@ class items_relations extends CI_Controller {
 			$data['select_item_parent'] = $this->items_model->select_item_parent();
 
 			$this->form_validation->set_rules('itm_rel_ordering', 'lang:itm_rel_ordering', 'required|numeric');
+			$this->form_validation->set_rules('itm_rel_ispublished', 'lang:itm_rel_ispublished');
 
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/items_relations/items_relations_update', $data, true);
@@ -129,6 +130,7 @@ class items_relations extends CI_Controller {
 				$this->db->set('itm_rel_parent', $this->input->post('itm_rel_parent'));
 				$this->db->set('itm_rel_title', $this->input->post('itm_rel_title'));
 				$this->db->set('itm_rel_ordering', $this->input->post('itm_rel_ordering'));
+				$this->db->set('itm_rel_ispublished', $this->input->post('itm_rel_ispublished'));
 				$this->db->set('itm_rel_modifiedby', $this->usr->usr_id);
 				$this->db->set('itm_rel_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('rel_id', $this->rel_id);

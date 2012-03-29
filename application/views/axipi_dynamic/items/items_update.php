@@ -30,10 +30,10 @@ if($itm) {
 <p><?php echo form_label($this->lang->line('itm_parent'), 'itm_parent'); ?><?php echo form_dropdown('itm_parent', $select_item_parent, set_value('itm_parent', $itm->itm_parent), 'id="itm_parent" class="select"'); ?></p>
 <p><?php echo form_label($this->lang->line('itm_code'), 'itm_code'); ?><?php echo form_input('itm_code', set_value('itm_code', $itm->itm_code), 'id="itm_code" class="inputtext"'); ?></p>
 <p><?php echo form_label($this->lang->line('itm_virtualcode'), 'itm_virtualcode'); ?><?php echo form_input('itm_virtualcode', set_value('itm_virtualcode', $itm->itm_virtualcode), 'id="itm_virtualcode" class="inputtext"'); ?></p>
-<p><?php echo form_label($this->lang->line('itm_title').' *', 'itm_title'); ?><?php echo form_input('itm_title', set_value('', $itm->itm_title), 'id="itm_title" class="inputtext"'); ?></p>
-<p><?php echo form_label($this->lang->line('cmp_code').' *', 'cmp_id'); ?><?php echo form_dropdown('cmp_id', $select_component, set_value('', $itm->cmp_id), 'id="cmp_id" class="select"'); ?></p>
+<p><?php echo form_label($this->lang->line('itm_title').' *', 'itm_title'); ?><?php echo form_input('itm_title', set_value('itm_title', $itm->itm_title), 'id="itm_title" class="inputtext"'); ?></p>
+<p><?php echo form_label($this->lang->line('cmp_code').' *', 'cmp_id'); ?><?php echo form_dropdown('cmp_id', $select_component, set_value('cmp_id', $itm->cmp_id), 'id="cmp_id" class="select"'); ?></p>
 <p><?php echo form_label($this->lang->line('itm_content'), 'itm_content'); ?><?php echo form_textarea('itm_content', set_value('itm_content', $itm->itm_content), 'id="itm_content" class="textarea"'); ?></p>
-<p><?php echo form_label($this->lang->line('itm_summary'), 'itm_summary'); ?><?php echo form_textarea('itm_summary', set_value('', $itm->itm_summary), 'id="itm_summary" class="textarea"'); ?></p>
+<p><?php echo form_label($this->lang->line('itm_summary'), 'itm_summary'); ?><?php echo form_textarea('itm_summary', set_value('itm_summary', $itm->itm_summary), 'id="itm_summary" class="textarea"'); ?></p>
 <p><?php echo form_label($this->lang->line('itm_publishstartdate'), 'itm_publishstartdate'); ?><?php echo form_input('itm_publishstartdate', set_value('itm_publishstartdate', $itm->itm_publishstartdate), 'id="itm_publishstartdate" class="inputtext datefield"'); ?></p>
 <p><?php echo form_label($this->lang->line('itm_publishstarttime'), 'itm_publishstarttime'); ?><?php echo form_input('itm_publishstarttime', set_value('itm_publishstarttime', $itm->itm_publishstarttime), 'id="itm_publishstarttime" class="inputtext timefield"'); ?></p>
 <p><?php echo form_label($this->lang->line('itm_link'), 'itm_link'); ?><?php echo form_input('itm_link', set_value('itm_link', $itm->itm_link), 'id="itm_link" class="inputtext"'); ?></p>
@@ -46,6 +46,7 @@ if($itm) {
 <p><?php echo form_label($this->lang->line('lng_code').' *', 'lng_id'); ?><?php echo form_dropdown('lng_id', $select_language, set_value('lng_id', $itm->lng_id), 'id="lng_id" class="select"'); ?></p>
 <p><?php echo form_label($this->lang->line('lay_code'), 'lay_id'); ?><?php echo form_dropdown('lay_id', $select_layout, set_value('lay_id', $itm->lay_id), 'id="lay_id" class="select"'); ?></p>
 <p><?php echo form_label($this->lang->line('itm_access').' *', 'itm_access'); ?><?php echo form_dropdown('itm_access', $this->lang->line('itm_access_values'), set_value('itm_access', $itm->itm_access), 'id="itm_access" class="select"'); ?></p>
+<?php if($itm->itm_islocked == 0) { ?><p><?php echo form_label($this->lang->line('itm_ispublished'), 'itm_ispublished'); ?><?php echo form_checkbox('itm_ispublished', 1, set_value('itm_ispublished', $itm->itm_ispublished), 'id="itm_ispublished" class="inputcheckbox"'); ?></p><?php } ?>
 <p><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></p>
 </div>
 

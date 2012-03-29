@@ -71,7 +71,7 @@ class zones extends CI_Controller {
 		}
 		$this->form_validation->set_rules('zon_ordering', 'lang:zon_ordering', 'required|numeric');
 		foreach($data['translations'] as $trl) {
-			$this->form_validation->set_rules('title'.$trl->lng_id, 'lang:trl_zon_title', 'required');
+			$this->form_validation->set_rules('title'.$trl->lng_id, $this->lang->line('trl_zon_title').' ('.$trl->lng_code.')', 'required');
 		}
 
 		if($this->form_validation->run() == FALSE) {
@@ -118,7 +118,7 @@ class zones extends CI_Controller {
 			$this->form_validation->set_rules('zon_code', 'lang:zon_code', 'required|max_length[100]|callback_rule_zon_code['.$this->input->post('lay_id').','.$data['zon']->lay_id.','.$data['zon']->zon_code.']');
 			$this->form_validation->set_rules('zon_ordering', 'lang:zon_ordering', 'required|numeric');
 			foreach($data['translations'] as $trl) {
-				$this->form_validation->set_rules('title'.$trl->lng_id, 'lang:trl_zon_title', 'required');
+				$this->form_validation->set_rules('title'.$trl->lng_id, $this->lang->line('trl_zon_title').' ('.$trl->lng_code.')', 'required');
 			}
 
 			if($this->form_validation->run() == FALSE) {

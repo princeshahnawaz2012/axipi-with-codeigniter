@@ -133,6 +133,7 @@ class items extends CI_Controller {
 			$this->form_validation->set_rules('itm_link', 'lang:itm_link', 'max_length[255]');
 			$this->form_validation->set_rules('itm_ordering', 'lang:itm_ordering', 'required|numeric');
 			$this->form_validation->set_rules('lng_id', 'lang:lng_code', 'required');
+			$this->form_validation->set_rules('itm_ispublished', 'lang:itm_ispublished');
 
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/items/items_update', $data, true);
@@ -156,6 +157,9 @@ class items extends CI_Controller {
 				$this->db->set('itm_publishstartdate', $this->input->post('itm_publishstartdate').' '.$this->input->post('itm_publishstarttime'));
 				$this->db->set('itm_modifiedby', $this->usr->usr_id);
 				$this->db->set('itm_datemodified', date('Y-m-d H:i:s'));
+				if($data['itm']->itm_islocked == 0) {
+					$this->db->set('itm_ispublished', $this->input->post('itm_ispublished'));
+				}
 				$this->db->where('itm_id', $this->itm_id);
 				$this->db->update('itm');
 				$this->msg[] = $this->lang->line('updated');

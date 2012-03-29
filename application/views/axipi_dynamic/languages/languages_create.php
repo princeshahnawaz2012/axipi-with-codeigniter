@@ -23,6 +23,7 @@
 <div class="column1">
 <p><?php echo form_label($this->lang->line('lng_code').' *', 'lng_code'); ?><?php echo form_input('lng_code', set_value('lng_code'), 'id="lng_code" class="inputtext"'); ?></p>
 <p><?php echo form_label($this->lang->line('lng_title').' *', 'lng_title'); ?><?php echo form_input('lng_title', set_value('lng_title'), 'id="lng_title" class="inputtext"'); ?></p>
+<p><?php echo form_label($this->lang->line('lng_defaultitem').' *', 'lng_defaultitem'); ?><?php echo form_dropdown('lng_defaultitem', $select_lng_defaultitem, set_value('lng_defaultitem'), 'id="defaultitem'.'" class="select"'); ?></p>
 </div>
 
 <div class="column1 columnlast">

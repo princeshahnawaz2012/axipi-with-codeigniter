@@ -19,7 +19,7 @@ class hosts_model extends CI_Model {
 		}
 		foreach($select_hst_trl_defaultitem as $optgroup => $items) {
 			if($optgroup != '') {
-				$select_hst_trl_defaultitem[$optgroup] = $this->build_select_tree($items, '', '');
+				$select_hst_trl_defaultitem[$optgroup] = $this->build_tree($items, '', '');
 			}
 		}
 		//$this->db->cache_off();
@@ -54,18 +54,23 @@ class hosts_model extends CI_Model {
         $query = $this->db->query('SELECT hst.*, lay.lay_code  FROM '.$this->db->dbprefix('hst').' AS hst LEFT JOIN '.$this->db->dbprefix('lay').' AS lay ON lay.lay_id = hst.lay_id WHERE hst.hst_id = ? GROUP BY hst.hst_id', array($hst_id));
         return $query->row();
     }
-	function build_select_tree($relations, $indent = '', $relation) {
+	function build_tree($relations, $indent = '', $relation) {
 		if($indent == '') {
 			$indent = '&nbsp;';
 		} else {
-			$indent = $indent.'&nbsp;&nbsp;&nbsp;&nbsp;';
+			$indent = $indent.'&nbsp;&nbsp;&nbsp;';
 		}
 		if(isset($relations[$relation]) == 1) {
-			foreach($relations[$relation] as $id => $title) {
-				$title = $indent.'|-'.$title;
-				$tree_items[$id] = $title;
+			foreach($relations[$relation] as $id => $object) {
+				if(is_object($object)) {
+					$object->itm_title = $indent.'|-'.$object->itm_title;
+					$tree_items[$id] = $object;
+				} else {
+					$object = $indent.'|-'.$object;
+					$tree_items[$id] = $object;
+				}
 				if(isset($relations[$id]) == 1 && $id != '') {
-					$merge = $this->build_select_tree($relations, $indent, $id);
+					$merge = $this->build_tree($relations, $indent, $id);
 					foreach($merge as $k => $v) {
 						$tree_items[$k] = $v;
 					}

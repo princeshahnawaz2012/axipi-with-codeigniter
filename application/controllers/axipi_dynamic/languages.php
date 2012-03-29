@@ -55,15 +55,18 @@ class languages extends CI_Controller {
 		$this->load->helper(array('form'));
 		$this->load->library('form_validation');
 		$data = array();
+		$data['select_lng_defaultitem'] = $this->languages_model->select_lng_defaultitem();
 
 		$this->form_validation->set_rules('lng_code', 'lang:lng_code', 'required|exact_length[2]|callback_rule_lng_code');
 		$this->form_validation->set_rules('lng_title', 'lang:lng_title', 'required|max_length[255]');
+		$this->form_validation->set_rules('lng_defaultitem', 'lang:lng_defaultitem', 'required');
 
 		if($this->form_validation->run() == FALSE) {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/languages/languages_create', $data, true);
 		} else {
 			$this->db->set('lng_code', $this->input->post('lng_code'));
 			$this->db->set('lng_title', $this->input->post('lng_title'));
+			$this->db->set('lng_defaultitem', $this->input->post('lng_defaultitem'));
 			$this->db->set('lng_ispublished', 1);
 			$this->db->set('lng_createdby', $this->usr->usr_id);
 			$this->db->set('lng_datecreated', date('Y-m-d H:i:s'));
@@ -85,15 +88,18 @@ class languages extends CI_Controller {
 			$this->load->library('form_validation');
 			$data = array();
 			$data['lng'] = $this->languages_model->get_language($this->lng_id);
+			$data['select_lng_defaultitem'] = $this->languages_model->select_lng_defaultitem();
 
 			$this->form_validation->set_rules('lng_code', 'lang:lng_code', 'required|exact_length[2]|callback_rule_lng_code['.$data['lng']->lng_code.']');
 			$this->form_validation->set_rules('lng_title', 'lang:lng_title', 'required|max_length[255]');
+				$this->form_validation->set_rules('lng_defaultitem', 'lang:lng_defaultitem', 'required');
 
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/languages/languages_update', $data, true);
 			} else {
 				$this->db->set('lng_code', $this->input->post('lng_code'));
 				$this->db->set('lng_title', $this->input->post('lng_title'));
+				$this->db->set('lng_defaultitem', $this->input->post('lng_defaultitem'));
 				$this->db->set('lng_modifiedby', $this->usr->usr_id);
 				$this->db->set('lng_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('lng_id', $this->lng_id);
@@ -115,9 +121,6 @@ class languages extends CI_Controller {
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/languages/languages_delete', $data, true);
 			} else {
-				$this->db->where('lng_id', $this->lng_id);
-				$this->db->delete('cou_trl');
-
 				$this->db->where('lng_id', $this->lng_id);
 				$this->db->delete('grp_trl');
 

@@ -28,6 +28,7 @@
 <p><span class="label">PHP_SELF</span><?php echo $_SERVER['PHP_SELF']; ?></p>
 <p><span class="label">QUERY_STRING</span><?php echo $_SERVER['QUERY_STRING']; ?></p>
 <p><span class="label">REQUEST_URI</span><?php echo $_SERVER['REQUEST_URI']; ?></p>
+<p><span class="label">SCRIPT_FILENAME</span><?php echo $_SERVER['SCRIPT_FILENAME']; ?></p> 
 <?php if(function_exists('apache_get_modules')) { ?><p><span class="label">apache_get_modules</span><?php echo implode(', ', apache_get_modules()); ?></p><?php } ?>
 <?php if(function_exists('apache_request_headers')) { ?><p><span class="label">apache_request_headers</span><textarea class="textareabigger"><?php echo print_r(apache_request_headers(), 1); ?></textarea></p><?php } ?>
 <?php if(function_exists('apache_response_headers')) { ?><p><span class="label">apache_response_headers</span><textarea class="textareabigger"><?php echo print_r(apache_response_headers(), 1); ?></textarea></p><?php } ?>

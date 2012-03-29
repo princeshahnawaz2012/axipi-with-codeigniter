@@ -70,7 +70,7 @@ class items_zones extends CI_Controller {
 			$this->load->library('form_validation');
 			$data = array();
 			$data['zon'] = $this->zones_model->get_zone($this->zon_id);
-			$data['select_item'] = $this->zones_model->select_item();
+			$data['select_item'] = $this->zones_model->select_item($this->zon_id);
 	
 			$this->form_validation->set_rules('itm_id', 'lang:itm_code', 'required');
 			$this->form_validation->set_rules('itm_zon_ordering', 'lang:itm_zon_ordering', 'required|numeric');
@@ -110,11 +110,13 @@ class items_zones extends CI_Controller {
 			$data['itm_zon'] = $this->zones_model->get_item_zone($this->zon_id, $this->itm_id);
 
 			$this->form_validation->set_rules('itm_zon_ordering', 'lang:itm_zon_ordering', 'required|numeric');
+			$this->form_validation->set_rules('itm_zon_ispublished', 'lang:itm_zon_ispublished');
 
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/items_zones/items_zones_update', $data, true);
 			} else {
 				$this->db->set('itm_zon_ordering', $this->input->post('itm_zon_ordering'));
+				$this->db->set('itm_zon_ispublished', $this->input->post('itm_zon_ispublished'));
 				$this->db->set('itm_zon_modifiedby', $this->usr->usr_id);
 				$this->db->set('itm_zon_datemodified', date('Y-m-d H:i:s'));
 				$this->db->where('zon_id', $this->zon_id);

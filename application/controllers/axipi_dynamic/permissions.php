@@ -57,7 +57,7 @@ class permissions extends CI_Controller {
 
 		$this->form_validation->set_rules('per_code', 'lang:per_code', 'required|max_length[100]|callback_rule_per_code');
 		foreach($data['translations'] as $trl) {
-			$this->form_validation->set_rules('title'.$trl->lng_id, 'lang:per_trl_title', 'required');
+			$this->form_validation->set_rules('title'.$trl->lng_id, $this->lang->line('per_trl_title').' ('.$trl->lng_code.')', 'required');
 		}
 
 		if($this->form_validation->run() == FALSE) {
@@ -99,7 +99,7 @@ class permissions extends CI_Controller {
 
 			$this->form_validation->set_rules('per_code', 'lang:per_code', 'required|max_length[100]|callback_rule_per_code['.$data['per']->per_code.']');
 			foreach($data['translations'] as $trl) {
-				$this->form_validation->set_rules('title'.$trl->lng_id, 'lang:per_trl_title', 'required');
+				$this->form_validation->set_rules('title'.$trl->lng_id, $this->lang->line('per_trl_title').' ('.$trl->lng_code.')', 'required');
 			}
 
 			if($this->form_validation->run() == FALSE) {

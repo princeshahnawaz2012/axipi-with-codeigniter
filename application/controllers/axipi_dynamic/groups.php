@@ -62,7 +62,7 @@ class groups extends CI_Controller {
 		$this->form_validation->set_rules('grp_isuser', 'lang:grp_isuser');
 		$this->form_validation->set_rules('grp_ispermission', 'lang:grp_ispermission');
 		foreach($data['translations'] as $trl) {
-			$this->form_validation->set_rules('title'.$trl->lng_id, 'lang:grp_trl_title', 'required');
+			$this->form_validation->set_rules('title'.$trl->lng_id, $this->lang->line('grp_trl_title').' ('.$trl->lng_code.')', 'required');
 		}
 
 		if($this->form_validation->run() == FALSE) {
@@ -110,7 +110,7 @@ class groups extends CI_Controller {
 			$this->form_validation->set_rules('grp_isuser', 'lang:grp_isuser');
 			$this->form_validation->set_rules('grp_ispermission', 'lang:grp_ispermission');
 			foreach($data['translations'] as $trl) {
-				$this->form_validation->set_rules('title'.$trl->lng_id, 'lang:grp_trl_title', 'required');
+				$this->form_validation->set_rules('title'.$trl->lng_id, $this->lang->line('grp_trl_title').' ('.$trl->lng_code.')', 'required');
 			}
 
 			if($this->form_validation->run() == FALSE) {

@@ -55,17 +55,17 @@ class zones_model extends CI_Model {
 		}
         return $items_zones;
     }
-    function select_item() {
+    function select_item($zon_id) {
 		$select_item = array();
 		$select_item[''] = '-';
 		//$this->db->cache_on();
-        $query = $this->db->query('SELECT itm.itm_id, itm.itm_code AS itm_code, CONCAT(sct.sct_code, \' (\', lng.lng_code, \')\') AS optgroup FROM '.$this->db->dbprefix('itm').' AS itm LEFT JOIN '.$this->db->dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id LEFT JOIN '.$this->db->dbprefix('sct').' AS sct ON sct.sct_id = itm.sct_id LEFT JOIN '.$this->db->dbprefix('lng').' AS lng ON lng.lng_id = itm.lng_id WHERE cmp.cmp_iselement = \'1\' GROUP BY itm.itm_id ORDER BY sct.sct_code ASC, itm.itm_title ASC');
+        $query = $this->db->query('SELECT itm.itm_id, itm.itm_code AS itm_code, itm.itm_title AS itm_title, CONCAT(sct.sct_code, \' (\', lng.lng_code, \')\') AS optgroup FROM '.$this->db->dbprefix('itm').' AS itm LEFT JOIN '.$this->db->dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id LEFT JOIN '.$this->db->dbprefix('sct').' AS sct ON sct.sct_id = itm.sct_id LEFT JOIN '.$this->db->dbprefix('lng').' AS lng ON lng.lng_id = itm.lng_id WHERE cmp.cmp_iselement = \'1\' AND itm.itm_id NOT IN (SELECT itm_id FROM '.$this->db->dbprefix('itm_zon').' WHERE zon_id = ?) GROUP BY itm.itm_id ORDER BY sct.sct_code ASC, itm.itm_title ASC', array($zon_id));
 		if($query->num_rows() > 0) {
 			foreach($query->result() as $row) {
 				if(isset($select_item[$row->optgroup]) == 0) {
 					$select_item[$row->optgroup] = array();
 				}
-				$select_item[$row->optgroup][$row->itm_id] = $row->itm_code;
+				$select_item[$row->optgroup][$row->itm_id] = $row->itm_title.' ('.$row->itm_code.')';
 			}
 		}
 		//$this->db->cache_off();

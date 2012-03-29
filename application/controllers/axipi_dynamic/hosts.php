@@ -69,7 +69,7 @@ class hosts extends CI_Controller {
 		$this->form_validation->set_rules('hst_gzhandler', 'lang:hst_gzhandler');
 		$this->form_validation->set_rules('hst_debug', 'lang:hst_debug');
 		foreach($data['translations'] as $trl) {
-			$this->form_validation->set_rules('defaultitem'.$trl->lng_id, 'lang:hst_trl_defaultitem', 'required');
+			$this->form_validation->set_rules('defaultitem'.$trl->lng_id, $this->lang->line('hst_trl_defaultitem').' ('.$trl->lng_code.')', 'required');
 		}
 
 		if($this->form_validation->run() == FALSE) {
@@ -123,7 +123,7 @@ class hosts extends CI_Controller {
 			$this->form_validation->set_rules('hst_gzhandler', 'lang:hst_gzhandler');
 			$this->form_validation->set_rules('hst_debug', 'lang:hst_debug');
 			foreach($data['translations'] as $trl) {
-				$this->form_validation->set_rules('defaultitem'.$trl->lng_id, 'lang:hst_trl_defaultitem', 'required');
+				$this->form_validation->set_rules('defaultitem'.$trl->lng_id, $this->lang->line('hst_trl_defaultitem').' ('.$trl->lng_code.')', 'required');
 			}
 
 			if($this->form_validation->run() == FALSE) {
