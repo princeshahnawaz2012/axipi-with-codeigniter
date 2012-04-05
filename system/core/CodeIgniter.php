@@ -305,7 +305,7 @@
 	$LOAD =& load_class('Loader', 'core');
 	$db = $LOAD->database('', true);
 
-	$CFG->load('axipi');
+	$CFG->load('axipi_config');
 
 	$segs = $URI->segment_array();
 	$segments_page = array();
