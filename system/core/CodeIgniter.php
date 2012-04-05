@@ -307,10 +307,24 @@
 
 	$CFG->load('axipi');
 
-	$uri_string = $URI->uri_string();
-	if($uri_string != '') {
-		$page = $uri_string;
-	} else {
+	$segs = $URI->segment_array();
+	$segments_page = array();
+	$arguments = array();
+
+	$stop = 0;
+	foreach ($segs as $segment) {
+		if(substr($segment, 0, 1) == '_') {
+			$method = substr($segment, 1);
+			$stop = 1;
+		} else if($stop == 0) {
+			$segments_page[] = $segment;
+		} else if($stop == 1) {
+			$arguments[] = $segment;
+		}
+	}
+	$page = implode('/', $segments_page);
+
+	if($page == '') {
 		$page = $CFG->item('default_itm_code');
 	}
 
@@ -326,8 +340,7 @@
 		$RTR->set_directory($directory);
 		$RTR->set_class($class);
 
-		if($IN->get('a') && method_exists($class, $IN->get('a')) && strncmp($IN->get('a'), '_', 1) != 0) {
-			$method = $IN->get('a');
+		if($method && method_exists($class, $method) && strncmp($method, '_', 1) != 0) {
 		} else {
 			$method = 'index';
 		}
@@ -394,7 +407,7 @@
 
 		// Call the requested method.
 		// Any URI segments present (besides the class/function) will be passed to the method for convenience
-		call_user_func_array(array(&$CI, $method), array_slice($URI->rsegments, 2));
+		call_user_func_array(array(&$CI, $method), $arguments);
 	}
 
 

@@ -1,7 +1,7 @@
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
-<li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('components'); ?></a></li>
+<li class="first"><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('components'); ?></a></li>
 <li><?php echo $this->lang->line('index'); ?></li>
 </ul>
 </div>
@@ -10,7 +10,7 @@
 <div class="box1">
 <h1><?php echo $this->lang->line('components'); ?> (<?php echo $position; ?>)</h1>
 <ul>
-<li><a class="create" href="<?php echo current_url(); ?>?a=create"><?php echo $this->lang->line('create'); ?></a></li>
+<li><a class="create" href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_create"><?php echo $this->lang->line('create'); ?></a></li>
 </ul>
 <div class="display">
 
@@ -46,7 +46,7 @@
 
 <?php foreach($results as $result) { ?>
 <tr>
-<td><a href="<?php echo current_url(); ?>?a=read&amp;cmp_id=<?php echo $result->cmp_id;?>"><?php echo $result->cmp_id;?></a></td>
+<td><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/?cmp_id=<?php echo $result->cmp_id;?>"><?php echo $result->cmp_id;?></a></td>
 <td><?php echo $result->cmp_code; ?></td>
 <td><?php echo $result->lay_code; ?></td>
 <td><?php echo $this->lang->line('reply_'.$result->cmp_ispage); ?></td>
@@ -54,8 +54,8 @@
 <td><?php echo $this->lang->line('reply_'.$result->cmp_isrelation); ?></td>
 <td><?php echo $result->count_items; ?></td>
 <th>
-<a href="<?php echo current_url(); ?>?a=update&amp;cmp_id=<?php echo $result->cmp_id;?>"><?php echo $this->lang->line('update'); ?></a>
-<?php if($result->count_items == 0 && $result->cmp_islocked == 0) { ?><a href="<?php echo current_url(); ?>?a=delete&amp;cmp_id=<?php echo $result->cmp_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
+<a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/?cmp_id=<?php echo $result->cmp_id;?>"><?php echo $this->lang->line('update'); ?></a>
+<?php if($result->count_items == 0 && $result->cmp_islocked == 0) { ?><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_delete/?cmp_id=<?php echo $result->cmp_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
 </th>
 </tr>
 <?php } ?>

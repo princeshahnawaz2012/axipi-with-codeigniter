@@ -1,7 +1,7 @@
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
-<li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('users'); ?></a></li>
+<li class="first"><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('users'); ?></a></li>
 <li><?php echo $this->lang->line('index'); ?></li>
 </ul>
 </div>
@@ -9,9 +9,6 @@
 
 <div class="box1">
 <h1><?php echo $this->lang->line('users'); ?> (<?php echo $position; ?>)</h1>
-<ul>
-<li><a class="create" href="<?php echo current_url(); ?>?a=create"><?php echo $this->lang->line('create'); ?></a></li>
-</ul>
 <div class="display">
 
 <h2><?php echo $this->lang->line('index'); ?></h2>
@@ -45,7 +42,7 @@
 
 <?php foreach($results as $result) { ?>
 <tr>
-<td><a href="<?php echo current_url(); ?>?a=read&amp;usr_id=<?php echo $result->usr_id;?>"><?php echo $result->usr_id;?></a></td>
+<td><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/?usr_id=<?php echo $result->usr_id;?>"><?php echo $result->usr_id;?></a></td>
 <td><?php echo $result->usr_email; ?></td>
 <?php foreach($groups as $group) { ?>
 <?php if($result->usr_islocked == 1 && $group->grp_islocked == 1) { ?>

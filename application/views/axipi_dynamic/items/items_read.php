@@ -5,7 +5,7 @@ if($itm) {
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
-<li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('items'); ?></a></li>
+<li class="first"><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('items'); ?></a></li>
 <li><?php echo $this->lang->line('read'); ?></li>
 </ul>
 </div>
@@ -14,8 +14,8 @@ if($itm) {
 <div class="box1">
 <h1><?php echo $itm->itm_code; ?></h1>
 <ul>
-<li><a href="<?php echo current_url(); ?>?a=update&amp;itm_id=<?php echo $itm->itm_id; ?>"><?php echo $this->lang->line('update'); ?></a></li>
-<li><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('index'); ?></a></li>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/?itm_id=<?php echo $itm->itm_id; ?>"><?php echo $this->lang->line('update'); ?></a></li>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>
 <div class="display">
 

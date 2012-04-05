@@ -5,7 +5,7 @@ if($grp) {
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
-<li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('groups'); ?></a></li>
+<li class="first"><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('groups'); ?></a></li>
 <li><?php echo $this->lang->line('read'); ?></li>
 </ul>
 </div>
@@ -14,8 +14,8 @@ if($grp) {
 <div class="box1">
 <h1><?php echo $grp->grp_code; ?></h1>
 <ul>
-<li><a href="<?php echo current_url(); ?>?a=update&amp;grp_id=<?php echo $grp->grp_id; ?>"><?php echo $this->lang->line('update'); ?></a></li>
-<li><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('index'); ?></a></li>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/?grp_id=<?php echo $grp->grp_id; ?>"><?php echo $this->lang->line('update'); ?></a></li>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>
 <div class="display">
 

@@ -1,7 +1,7 @@
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
-<li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('users'); ?></a></li>
+<li class="first"><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('users'); ?></a></li>
 <li><?php echo $this->lang->line('index'); ?></li>
 </ul>
 </div>
@@ -10,7 +10,7 @@
 <div class="box1">
 <h1><?php echo $this->lang->line('users'); ?> (<?php echo $position; ?>)</h1>
 <ul>
-<li><a class="create" href="<?php echo current_url(); ?>?a=create"><?php echo $this->lang->line('create'); ?></a></li>
+<li><a class="create" href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_create"><?php echo $this->lang->line('create'); ?></a></li>
 </ul>
 <div class="display">
 
@@ -42,12 +42,12 @@
 
 <?php foreach($results as $result) { ?>
 <tr>
-<td><a href="<?php echo current_url(); ?>?a=read&amp;usr_id=<?php echo $result->usr_id;?>"><?php echo $result->usr_id;?></a></td>
+<td><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/?usr_id=<?php echo $result->usr_id;?>"><?php echo $result->usr_id;?></a></td>
 <td><?php echo $result->usr_email; ?></td>
 <td><?php echo $result->count_groups; ?><?php if($result->count_groups > 0) { ?> (<?php echo $result->groups; ?>)<?php } ?></td>
 <th>
-<a href="<?php echo current_url(); ?>?a=update&amp;usr_id=<?php echo $result->usr_id;?>"><?php echo $this->lang->line('update'); ?></a>
-<?php if($result->count_groups == 0 && $result->usr_islocked == 0) { ?><a href="<?php echo current_url(); ?>?a=delete&amp;usr_id=<?php echo $result->usr_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
+<a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/?usr_id=<?php echo $result->usr_id;?>"><?php echo $this->lang->line('update'); ?></a>
+<?php if($result->count_groups == 0 && $result->usr_islocked == 0) { ?><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_delete/?usr_id=<?php echo $result->usr_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
 </th>
 </tr>
 <?php } ?>

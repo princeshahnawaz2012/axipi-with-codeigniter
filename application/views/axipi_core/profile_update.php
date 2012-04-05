@@ -5,7 +5,7 @@ if($usr) {
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
-<li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->itm->itm_title; ?></a></li>
+<li class="first"><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->itm->itm_title; ?></a></li>
 </ul>
 </div>
 </div>
@@ -13,13 +13,13 @@ if($usr) {
 <div class="box1">
 <h1><?php echo $usr->usr_email; ?></h1>
 <ul>
-<li><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('cancel'); ?></a></li>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('cancel'); ?></a></li>
 </ul>
 <div class="display">
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open(current_url().'?a=update&amp;usr_id='.$usr->usr_id); ?>
+<?php echo form_open(current_url()); ?>
 
 <div class="column1">
 <fieldset>

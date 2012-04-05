@@ -10,8 +10,8 @@ class database extends CI_Controller {
 		$output = '<div class="box1">';
 		$output .= '<h1>Tables ('.$query->num_rows().')</h1>';
 		$output .= '<ul>';
-		$output .= '<li><a href="'.current_url().'?a=translation">Translation</a></li>';
-		$output .= '<li><a href="'.current_url().'?a=optimize">Optimize</a></li>';
+		$output .= '<li><a href="'.base_url().$this->itm->itm_code.'/_translation">Translation</a></li>';
+		$output .= '<li><a href="'.base_url().$this->itm->itm_code.'/_optimize">Optimize</a></li>';
 		$output .= '</ul>';
 		$output .= '<div class="display">';
 		$output .= '<table>';
@@ -72,7 +72,7 @@ class database extends CI_Controller {
 		$output = '<div class="box1">';
 		$output .= '<h1>Translation</h1>';
 		$output .= '<ul>';
-		$output .= '<li><a href="'.current_url().'">Index</a></li>';
+		$output .= '<li><a href="'.base_url().$this->itm->itm_code.'">Index</a></li>';
 		$output .= '</ul>';
 		$output .= '<div class="display">';
 		$query = $this->db->query('SHOW TABLE STATUS');

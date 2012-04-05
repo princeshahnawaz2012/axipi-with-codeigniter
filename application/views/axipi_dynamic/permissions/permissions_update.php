@@ -5,7 +5,7 @@ if($per) {
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
-<li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('permissions'); ?></a></li>
+<li class="first"><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('permissions'); ?></a></li>
 <li><?php echo $this->lang->line('update'); ?></li>
 </ul>
 </div>
@@ -14,8 +14,8 @@ if($per) {
 <div class="box1">
 <h1><?php echo $per->per_code; ?></h1>
 <ul>
-<li><a href="<?php echo current_url(); ?>?a=read&amp;per_id=<?php echo $per->per_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
-<li><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('index'); ?></a></li>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/?per_id=<?php echo $per->per_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>
 <div class="display">
 
@@ -23,7 +23,7 @@ if($per) {
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open(current_url().'?a=update&amp;per_id='.$per->per_id); ?>
+<?php echo form_open(current_url().'?per_id='.$per->per_id); ?>
 
 <div class="column1">
 <p><?php echo form_label($this->lang->line('per_code').' *', 'per_code'); ?><?php echo form_input('per_code', set_value('per_code', $per->per_code), 'id="per_code" class="inputtext"'); ?></p>

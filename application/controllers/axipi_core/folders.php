@@ -105,9 +105,9 @@ class folders extends CI_Controller {
 					$output .= '<td>&nbsp;</td>';
 				}
 				$output .= '<th>';
-				$output .= '<a href="'.current_url().'?a=chmod_755&amp;folder='.$folder.'">chmod 0755</a>';
-				$output .= '<a href="'.current_url().'?a=chmod_775&amp;folder='.$folder.'">chmod 0775</a>';
-				$output .= '<a href="'.current_url().'?a=chmod_777&amp;folder='.$folder.'">chmod 0777</a>';
+				$output .= '<a href="'.base_url().$this->itm->itm_code.'/_chmod_755&amp;folder='.$folder.'">chmod 0755</a>';
+				$output .= '<a href="'.base_url().$this->itm->itm_code.'/_chmod_775&amp;folder='.$folder.'">chmod 0775</a>';
+				$output .= '<a href="'.base_url().$this->itm->itm_code.'/_chmod_777&amp;folder='.$folder.'">chmod 0777</a>';
 				$output .= '</th>';
 				$output .= '</tr>';
 			}

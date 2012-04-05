@@ -5,8 +5,8 @@ if($hst) {
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
-<li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('hosts'); ?></a></li>
-<li><a href="<?php echo current_url(); ?>?a=read&amp;hst_id=<?php echo $hst->hst_id; ?>"><?php echo $hst->hst_code; ?></a></li>
+<li class="first"><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('hosts'); ?></a></li>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/?hst_id=<?php echo $hst->hst_id; ?>"><?php echo $hst->hst_code; ?></a></li>
 <li><?php echo $this->lang->line('update'); ?></li>
 </ul>
 </div>
@@ -15,9 +15,9 @@ if($hst) {
 <div class="box1">
 <h1><?php echo $hst->hst_code; ?></h1>
 <ul>
-<?php if($hst->hst_islocked == 0) { ?><li><a href="<?php echo current_url(); ?>?a=delete&amp;hst_id=<?php echo $hst->hst_id; ?>"><?php echo $this->lang->line('delete'); ?></a></li><?php } ?>
-<li><a href="<?php echo current_url(); ?>?a=read&amp;hst_id=<?php echo $hst->hst_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
-<li><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('index'); ?></a></li>
+<?php if($hst->hst_islocked == 0) { ?><li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_delete/?hst_id=<?php echo $hst->hst_id; ?>"><?php echo $this->lang->line('delete'); ?></a></li><?php } ?>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/?hst_id=<?php echo $hst->hst_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>
 <div class="display">
 
@@ -25,7 +25,7 @@ if($hst) {
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open(current_url().'?a=update&amp;hst_id='.$hst->hst_id); ?>
+<?php echo form_open(current_url().'?hst_id='.$hst->hst_id); ?>
 
 <div class="column1">
 <p><?php echo form_label($this->lang->line('hst_code').' *', 'hst_code'); ?><?php echo form_input('hst_code', set_value('hst_code', $hst->hst_code), 'id="hst_code" class="inputtext"'); ?></p>

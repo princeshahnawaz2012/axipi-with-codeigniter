@@ -1,7 +1,7 @@
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
-<li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('relations'); ?></a></li>
+<li class="first"><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('relations'); ?></a></li>
 <li><?php echo $this->lang->line('index'); ?></li>
 </ul>
 </div>
@@ -30,7 +30,7 @@
 <div class="box1">
 <h1><?php echo $result->itm_title; ?> (<?php echo $result->itm_code; ?>)</h1>
 <ul>
-<li><a class="create" href="<?php echo current_url(); ?>?a=create&amp;rel_id=<?php echo $result->itm_id; ?>"><?php echo $this->lang->line('create'); ?></a></li>
+<li><a class="create" href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_create/?rel_id=<?php echo $result->itm_id; ?>"><?php echo $this->lang->line('create'); ?></a></li>
 </ul>
 <div class="display">
 
@@ -53,7 +53,7 @@
 
 <?php foreach($items_relations[$result->itm_id] as $itm_rel) { ?>
 <tr>
-<td><a href="<?php echo current_url(); ?>?a=read&amp;rel_id=<?php echo $result->itm_id;?>&amp;itm_id=<?php echo $itm_rel->itm_id;?>"><?php echo $itm_rel->itm_title;?></a></td>
+<td><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/?rel_id=<?php echo $result->itm_id;?>&amp;itm_id=<?php echo $itm_rel->itm_id;?>"><?php echo $itm_rel->itm_title;?></a></td>
 <td><?php echo $itm_rel->sct_code; ?></td>
 <td><?php echo $itm_rel->cmp_code; ?></td>
 <td><?php echo $itm_rel->lng_code; ?></td>
@@ -61,8 +61,8 @@
 <td><?php echo $itm_rel->itm_rel_ordering; ?></td>
 <td><?php echo $this->lang->line('reply_'.$itm_rel->itm_rel_ispublished); ?></td>
 <th>
-<a href="<?php echo current_url(); ?>?a=update&amp;rel_id=<?php echo $result->itm_id;?>&amp;itm_id=<?php echo $itm_rel->itm_id;?>"><?php echo $this->lang->line('update'); ?></a>
-<a href="<?php echo current_url(); ?>?a=delete&amp;rel_id=<?php echo $result->itm_id;?>&amp;itm_id=<?php echo $itm_rel->itm_id;?>"><?php echo $this->lang->line('delete'); ?></a>
+<a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/?rel_id=<?php echo $result->itm_id;?>&amp;itm_id=<?php echo $itm_rel->itm_id;?>"><?php echo $this->lang->line('update'); ?></a>
+<a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_delete/?rel_id=<?php echo $result->itm_id;?>&amp;itm_id=<?php echo $itm_rel->itm_id;?>"><?php echo $this->lang->line('delete'); ?></a>
 </th>
 </tr>
 <?php } ?>

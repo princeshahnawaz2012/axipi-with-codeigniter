@@ -5,7 +5,7 @@ if($itm) {
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
-<li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('items'); ?></a></li>
+<li class="first"><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('items'); ?></a></li>
 <li><?php echo $this->lang->line('update'); ?></li>
 </ul>
 </div>
@@ -14,8 +14,8 @@ if($itm) {
 <div class="box1">
 <h1><?php echo $itm->itm_code; ?></h1>
 <ul>
-<li><a href="<?php echo current_url(); ?>?a=read&amp;itm_id=<?php echo $itm->itm_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
-<li><a href="<?php echo current_url(); ?>"><?php echo $this->lang->line('index'); ?></a></li>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/?itm_id=<?php echo $itm->itm_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>
 <div class="display">
 
@@ -23,7 +23,7 @@ if($itm) {
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open(current_url().'?a=update&amp;itm_id='.$itm->itm_id); ?>
+<?php echo form_open(current_url().'?itm_id='.$itm->itm_id); ?>
 
 <div class="column1">
 <p><?php echo form_label($this->lang->line('sct_code').' *', 'sct_id'); ?><?php echo form_dropdown('sct_id', $select_section, set_value('sct_id', $itm->sct_id), 'id="sct_id" class="select"'); ?></p>

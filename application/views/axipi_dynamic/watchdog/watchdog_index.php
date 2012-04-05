@@ -1,7 +1,7 @@
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
-<li class="first"><a href="<?php echo current_url(); ?>"><?php echo $this->itm->itm_title; ?></a></li>
+<li class="first"><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->itm->itm_title; ?></a></li>
 <li><?php echo $this->lang->line('index'); ?></li>
 </ul>
 </div>
@@ -10,7 +10,7 @@
 <div class="box1">
 <h1><?php echo $this->itm->itm_title; ?> (<?php echo $position; ?>)</h1>
 <ul>
-<li><a class="purge" href="<?php echo current_url(); ?>?a=purge"><?php echo $this->lang->line('purge'); ?></a></li>
+<li><a class="purge" href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_purge"><?php echo $this->lang->line('purge'); ?></a></li>
 </ul>
 <div class="display">
 
