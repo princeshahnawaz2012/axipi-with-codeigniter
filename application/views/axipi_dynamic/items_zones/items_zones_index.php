@@ -11,7 +11,7 @@
 <h1><?php echo $this->lang->line('zones'); ?> (<?php echo $position; ?>)</h1>
 <div class="display">
 
-<?php echo form_open(current_url()); ?>
+<?php echo form_open(base_url().$this->itm->itm_code); ?>
 <div class="filters">
 <div><?php echo form_label($this->lang->line('zon_code'), 'items_zones_zon_code'); ?><?php echo form_input('items_zones_zon_code', set_value('items_zones_zon_code', $this->session->userdata('items_zones_zon_code')), 'id="items_zones_zon_code" class="inputtext"'); ?></div>
 <div><?php echo form_label($this->lang->line('lay_code'), 'items_zones_lay_id'); ?><?php echo form_dropdown('items_zones_lay_id', $select_layout, set_value('items_zones_lay_id', $this->session->userdata('items_zones_lay_id')), 'id="items_zones_lay_id" class="select"'); ?></div>

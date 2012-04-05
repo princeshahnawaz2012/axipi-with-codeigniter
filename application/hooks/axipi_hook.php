@@ -101,7 +101,6 @@ class axipi_hook {
 		foreach($this->CI->itm->tree as $k =>$v) {
 			$this->CI->tree_itm_id[] = $v['itm_id'];
 		}
-		$this->CI->output->set_content_type($this->CI->lay->lay_type);
 	}
 	public function post_controller() {
 		$this->CI =& get_instance();
@@ -125,7 +124,7 @@ class axipi_hook {
 				}
 			}
 		} 
-
+		$this->CI->output->set_content_type($this->CI->lay->lay_type);
 		$page = $this->CI->load->view($this->CI->lay->lay_code, $output, 'true');
 	}
 }

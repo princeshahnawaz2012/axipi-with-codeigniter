@@ -221,32 +221,55 @@ class axipi_library {
 	}
 	function get_debug() {
 		$debug = '';
-		if($this->CI->lay->lay_type == 'text/html') {
-			function loop_v($data) {
-				if(is_array($data)) {
-				} else {
-					$data = get_object_vars($data);
+		if($this->CI->hst->hst_debug == 1) {
+			if($this->CI->lay->lay_type == 'text/xml') {
+				$debug .= '<debug>';
+				$debug .= '<elapsed_time>'.$this->CI->benchmark->elapsed_time().'</elapsed_time>';
+				if(function_exists('memory_get_peak_usage')) {
+					$debug .= '<memory_get_peak_usage>'.number_format(memory_get_peak_usage(), 0, '.', ' ').'</memory_get_peak_usage>';
 				}
-				ksort($data);
-				$output = '<ul>';
-				foreach($data as $k => $v) {
-					if(is_array($v)) {
-						if(count($v) != 0) {
-							$output .= '<li>'.$k.':';
-							$output .= loop_v($v);
-							$output .= '</li>';
-						}
-					} elseif(strval($v) != '') {
-						$output .= '<li>'.$k.':';
-						$output .= ' '.$v;
-						$output .= '</li>';
+				if(function_exists('memory_get_usage')) {
+					$debug .= '<memory_get_usage>'.number_format(memory_get_usage(), 0, '.', ' ').'</memory_get_usage>';
+				}
+	
+				if(count($this->debug) != 0) {
+					foreach($this->debug as $item) {
+						$debug .= '<php>'.$item.'</php>';
 					}
 				}
-				$output .= '</ul>';
-				return $output;
-			}
 
-			if($this->CI->hst->hst_debug == 1) {
+				$debug .= '<queries count="'.count($this->CI->db->queries).'">';
+				foreach($this->CI->db->queries as $query) {
+					$debug .= '<query>'.str_replace(array('<', '>'), array('&lt;', '&gt;'), $query).'</query>';
+				}
+				$debug .= '</queries>';
+				$debug .= '</debug>';
+			}
+			if($this->CI->lay->lay_type == 'text/html') {
+				function loop_v($data) {
+					if(is_array($data)) {
+					} else {
+						$data = get_object_vars($data);
+					}
+					ksort($data);
+					$output = '<ul>';
+					foreach($data as $k => $v) {
+						if(is_array($v)) {
+							if(count($v) != 0) {
+								$output .= '<li>'.$k.':';
+								$output .= loop_v($v);
+								$output .= '</li>';
+							}
+						} elseif(strval($v) != '') {
+							$output .= '<li>'.$k.':';
+							$output .= ' '.$v;
+							$output .= '</li>';
+						}
+					}
+					$output .= '</ul>';
+					return $output;
+				}
+
 				$debug = '<div id="box-debug">';
 				$debug .= '<h1>Debug</h1>';
 				$debug .= '<div class="display">';

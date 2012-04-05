@@ -13,7 +13,7 @@
 
 <h2><?php echo $this->lang->line('index'); ?></h2>
 
-<?php echo form_open(current_url()); ?>
+<?php echo form_open(base_url().$this->itm->itm_code); ?>
 <div class="filters">
 <div><?php echo form_label($this->lang->line('usr_email'), 'groups_users_usr_email'); ?><?php echo form_input('groups_users_usr_email', set_value('groups_users_usr_email', $this->session->userdata('groups_users_usr_email')), 'id="groups_users_usr_email" class="inputtext"'); ?></div>
 <div><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></div>
@@ -26,7 +26,7 @@
 <?php echo $pagination; ?>
 </div>
 
-<?php echo form_open(current_url()); ?>
+<?php echo form_open(base_url().$this->itm->itm_code); ?>
 
 <table>
 <thead>

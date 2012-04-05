@@ -16,7 +16,7 @@
 
 <h2><?php echo $this->lang->line('index'); ?></h2>
 
-<?php echo form_open(current_url()); ?>
+<?php echo form_open(base_url().$this->itm->itm_code); ?>
 <div class="filters">
 <div><?php echo form_label($this->lang->line('itm_code'), 'items_itm_code'); ?><?php echo form_input('items_itm_code', set_value('items_itm_code', $this->session->userdata('items_itm_code')), 'id="items_itm_code" class="inputtext"'); ?></div>
 <div><?php echo form_label($this->lang->line('itm_title'), 'items_itm_title'); ?><?php echo form_input('items_itm_title', set_value('items_itm_title', $this->session->userdata('items_itm_title')), 'id="items_itm_title" class="inputtext"'); ?></div>

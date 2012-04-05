@@ -16,7 +16,7 @@
 
 <h2><?php echo $this->lang->line('index'); ?></h2>
 
-<?php echo form_open(current_url()); ?>
+<?php echo form_open(base_url().$this->itm->itm_code); ?>
 <div class="filters">
 <div><?php echo form_label($this->lang->line('sct_code'), 'sections_sct_code'); ?><?php echo form_input('sections_sct_code', set_value('sections_sct_code', $this->session->userdata('sections_sct_code')), 'id="sections_sct_code" class="inputtext"'); ?></div>
 <div><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></div>

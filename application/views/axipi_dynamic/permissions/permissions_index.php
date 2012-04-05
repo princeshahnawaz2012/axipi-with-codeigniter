@@ -16,7 +16,7 @@
 
 <h2><?php echo $this->lang->line('index'); ?></h2>
 
-<?php echo form_open(current_url()); ?>
+<?php echo form_open(base_url().$this->itm->itm_code); ?>
 <div class="filters">
 <div><?php echo form_label($this->lang->line('per_code'), 'permissions_per_code'); ?><?php echo form_input('permissions_per_code', set_value('permissions_per_code', $this->session->userdata('permissions_per_code')), 'id="permissions_per_code" class="inputtext"'); ?></div>
 <div><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></div>

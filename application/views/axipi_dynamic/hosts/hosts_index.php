@@ -16,7 +16,7 @@
 
 <h2><?php echo $this->lang->line('index'); ?></h2>
 
-<?php echo form_open(current_url()); ?>
+<?php echo form_open(base_url().$this->itm->itm_code); ?>
 <div class="filters">
 <div><?php echo form_label($this->lang->line('hst_code'), 'hosts_hst_code'); ?><?php echo form_input('hosts_hst_code', set_value('hosts_hst_code', $this->session->userdata('hosts_hst_code')), 'id="hosts_hst_code" class="inputtext"'); ?></div>
 <div><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></div>

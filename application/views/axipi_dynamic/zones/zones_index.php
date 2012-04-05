@@ -16,7 +16,7 @@
 
 <h2><?php echo $this->lang->line('index'); ?></h2>
 
-<?php echo form_open(current_url()); ?>
+<?php echo form_open(base_url().$this->itm->itm_code); ?>
 <div class="filters">
 <div><?php echo form_label($this->lang->line('zon_code'), 'zones_zon_code'); ?><?php echo form_input('zones_zon_code', set_value('zones_zon_code', $this->session->userdata('zones_zon_code')), 'id="zones_zon_code" class="inputtext"'); ?></div>
 <div><?php echo form_label($this->lang->line('lay_code'), 'zones_lay_id'); ?><?php echo form_dropdown('zones_lay_id', $select_layout, set_value('zones_lay_id', $this->session->userdata('zones_lay_id')), 'id="zones_lay_id" class="select"'); ?></div>
