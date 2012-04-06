@@ -3,59 +3,7 @@
 class users_model extends CI_Model {
     function __construct() {
         parent::__construct();
-
-		$this->session_key = '5n2z8fg6y8j4a';
-
-		$this->key_id = 'axipi-id';
-		$this->key_password = 'axipi-password';
-		$this->key_remember = 'axipi-remember';
-		$this->key_token = 'axipi-token';
-		$this->key_time = 'axipi-time';
-
-		$this->cookie_id = $this->input->cookie($this->key_id);
-		$this->cookie_password = $this->input->cookie($this->key_password);
-		$this->cookie_remember = $this->input->cookie($this->key_remember);
-		$this->cookie_token = $this->input->cookie($this->key_token);
-		$this->cookie_time = $this->input->cookie($this->key_time);
     }
-	function token() {
-		$token_time = time();
-		$token = $this->hash_token($token_time);
-
-		$this->cookie_token = $this->input->set_cookie(array('name'=>$this->key_token, 'value'=>$token, 'expire'=>0, 'path'=>'/', 'secure'=>TRUE));
-		$this->cookie_time = $this->input->set_cookie(array('name'=>$this->key_time, 'value'=>$token_time, 'expire'=>0, 'path'=>'/', 'secure'=>TRUE));
-	}
-	function hash_token($time) {
-		return hash('sha256', $this->token_auth().$time);
-	}
-	function token_auth() {
-		return $this->session_key.$_SERVER['HTTP_HOST'].$_SERVER['HTTP_USER_AGENT'];
-	}
-	function hash_password($password) {
-		return hash('sha256', $this->session_key.$password);
-	}
-	function login($email, $password) {
-		$this->session->unset_userdata('usr_id');
-        $query = $this->db->query('SELECT usr.usr_id, usr.usr_logincount, usr.usr_protectedpassword FROM '.$this->db->dbprefix('usr').' AS usr WHERE usr.usr_email = ? GROUP BY usr.usr_id', array($email));
-		if($query->num_rows() > 0) {
-			$usr = $query->row();
-			if(md5($password) == $usr->usr_protectedpassword) {
-				$this->db->set('usr_loginlast', date('Y-m-d H:i:s'));
-				$this->db->set('usr_logincount', $usr->usr_logincount + 1);
-				$this->db->where('usr_id', $usr->usr_id);
-				$this->db->update('usr');
-
-				$this->token();
-				$time = 0;
-				$this->cookie_id = $this->input->set_cookie(array('name'=>$this->key_id, 'value'=>$usr->usr_id, 'expire'=>$time, 'path'=>'/', 'secure'=>TRUE));
-				$this->cookie_password = $this->input->set_cookie(array('name'=>$this->key_password, 'value'=>$this->hash_password($usr->usr_protectedpassword), 'expire'=>$time, 'path'=>'/', 'secure'=>TRUE));
-
-				$this->session->set_userdata('usr_id', $usr->usr_id);
-				return true;
-			}
-		}
-		return false;
-	}
 	function get_all_users($flt) {
         $query = $this->db->query('SELECT COUNT(usr.usr_id) AS count FROM '.$this->db->dbprefix('usr').' AS usr WHERE '.implode(' AND ', $flt));
         return $query->row();

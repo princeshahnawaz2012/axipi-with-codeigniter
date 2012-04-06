@@ -22,7 +22,7 @@ class login extends CI_Controller {
 		}
 	}
 	public function rule_login() {
-		if($this->users_model->login($this->input->post('email'), $this->input->post('password'))) {
+		if($this->auth->login($this->input->post('email'), $this->input->post('password'))) {
 			return TRUE;
 		} else {
 			$this->form_validation->set_message('rule_login', $this->lang->line('login_error'));

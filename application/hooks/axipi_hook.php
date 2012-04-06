@@ -36,18 +36,11 @@ class axipi_hook {
 		$query = $this->CI->db->query('SELECT * FROM '.$this->CI->db->dbprefix('lay').' AS lay WHERE lay_id = ?', array($lay_id));
 		$this->CI->lay = $query->row();
 
-		if($this->CI->session->userdata('usr_id')) {
-			$this->CI->usr = $this->CI->users_model->get_user($this->CI->session->userdata('usr_id'));
-			$this->CI->usr->usr_access = 'connected';
-			$this->CI->usr->groups = $this->CI->users_model->get_groups($this->CI->session->userdata('usr_id'));
-			$this->CI->usr->groups[1002] = 'connected';
-		} else if(isset($this->CI->usr) == 1) {
+		$this->CI->load->driver('auth', array('adapter'=>$this->CI->sct->sct_code));
+
+		if($this->CI->auth->logged_in()) {
 		} else {
-			$this->CI->usr = new stdClass();
-			$this->CI->usr->usr_id = 0;
-			$this->CI->usr->usr_access = 'guest';
-			$this->CI->usr->groups = array();
-			$this->CI->usr->groups[1001] = 'guest';
+			$this->CI->auth->set_user_default();
 		}
 		$this->CI->usr->count_groups = count($this->CI->usr->groups);
 
