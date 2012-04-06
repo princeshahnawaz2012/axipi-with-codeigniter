@@ -6,14 +6,14 @@ if( ! function_exists('build_filters')) {
 		$flt = array();
 		$flt[] = '1';
 		foreach($filters as $k =>$v) {
-			$value = false;
+			$value = '';
 			if($CI->input->post($k) || isset($_POST[$k]) == 1) {
-				$value = $CI->input->post($k);
-				$CI->session->set_userdata($k, $CI->input->post($k));
-			} elseif($CI->session->userdata($k)) {
+				$value = strval($CI->input->post($k));
+				$CI->session->set_userdata($k, strval($CI->input->post($k)));
+			} elseif($CI->session->userdata($k) != '') {
 				$value = $CI->session->userdata($k);
 			}
-			if($value) {
+			if($value != '') {
 				if($v[1] == 'equal') {
 					$flt[] = $v[0].' = '.$CI->db->escape($value);
 				}
