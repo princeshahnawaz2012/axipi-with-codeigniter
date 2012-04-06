@@ -81,16 +81,30 @@ Changes on CodeIgniter
 
 <h3>/system/core/CodeIgniter.php</h3>
 <p>To assume routes from database</p>
-<p><pre>304a305,340
+<p><pre>304a305,353
 > 	$LOAD =& load_class('Loader', 'core');
 > 	$db = $LOAD->database('', true);
 > 
-> 	$CFG->load('axipi');
+> 	$CFG->load('axipi_config');
 > 
-> 	$uri_string = $URI->uri_string();
-> 	if($uri_string != '') {
-> 		$page = $uri_string;
-> 	} else {
+> 	$segs = $URI->segment_array();
+> 	$segments_page = array();
+> 	$arguments = array();
+> 
+> 	$stop = 0;
+> 	foreach ($segs as $segment) {
+> 		if(substr($segment, 0, 1) == '_') {
+> 			$method = substr($segment, 1);
+> 			$stop = 1;
+> 		} else if($stop == 0) {
+> 			$segments_page[] = $segment;
+> 		} else if($stop == 1) {
+> 			$arguments[] = $segment;
+> 		}
+> 	}
+> 	$page = implode('/', $segments_page);
+> 
+> 	if($page == '') {
 > 		$page = $CFG->item('default_itm_code');
 > 	}
 > 
@@ -106,8 +120,7 @@ Changes on CodeIgniter
 > 		$RTR->set_directory($directory);
 > 		$RTR->set_class($class);
 > 
-> 		if($IN->get('a') && method_exists($class, $IN->get('a')) && strncmp($IN->get('a'), '_', 1) != 0) {
-> 			$method = $IN->get('a');
+> 		if($method && method_exists($class, $method) && strncmp($method, '_', 1) != 0) {
 > 		} else {
 > 			$method = 'index';
 > 		}
@@ -118,9 +131,13 @@ Changes on CodeIgniter
 > 		$method = 'index';
 > 	}
 > 
-308a345,346
+308a358,359
 > 	$CI->db = $db;
-> 	$CI->itm = $itm;</pre></p>
+> 	$CI->itm = $itm;
+359c410
+< 		call_user_func_array(array(&$CI, $method), array_slice($URI->rsegments, 2));
+---
+> 		call_user_func_array(array(&$CI, $method), $arguments);</pre></p>
 
 <h3>/system/core/Controller.php</h3>
 <p>To fix double loading related to changes in /system/core/CodeIgniter.php</p>
