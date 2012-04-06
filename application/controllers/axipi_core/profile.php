@@ -5,6 +5,7 @@ class profile extends CI_Controller {
 		parent::__construct();
 
 		$this->load->language('axipi_dynamic');
+		$this->load->model('axipi_dynamic/users_model', '', true);
 		$this->axipi_library->jquery_load('jquery');
 	}
 	public function index() {

@@ -124,27 +124,16 @@ class axipi_library {
 			}
 			$head[] = '<title>'.implode(' | ', $titles).'</title>';
 			$head[] = '<meta charset="UTF-8">';
-			/*if($this->CI->itm->itm_description != '') {
-				$head[] = '<meta content="'.$this->CI->data->display_in_field($this->CI->itm->itm_description).'" name="description">';
-			} elseif($this->CI->sct->sct_description != '') {
-				$head[] = '<meta content="'.$this->CI->data->display_in_field($this->CI->sct->sct_description).'" name="description">';
+			if($this->CI->itm->itm_description != '') {
+				$head[] = '<meta content="'.$this->CI->itm->itm_description.'" name="description">';
+			} elseif($this->CI->sct->sct_trl_description != '') {
+				$head[] = '<meta content="'.$this->CI->sct->sct_trl_description.'" name="description">';
 			}
 			if($this->CI->itm->itm_keywords != '') {
-				$head[] = '<meta content="'.$this->CI->data->display_in_field($this->CI->itm->itm_keywords).'" name="keywords">';
-			} elseif($this->CI->sct->sct_keywords != '') {
-				$head[] = '<meta content="'.$this->CI->data->display_in_field($this->CI->sct->sct_keywords).'" name="keywords">';
-			}*/
-			/*if(isset($this->CI->itm->itm_stg']['meta-robots']) == 1 && $this->CI->itm->itm_stg']['meta-robots'] != '') {
-				$head[] = '<meta content="'.$this->CI->itm->itm_stg']['meta-robots'].'" name="robots">';
-			} else {
-				$robots = '<meta content="index,follow" name="robots">';
-			}*/
-
-			/*if($this->CI->stg->cdn-url'] != '') {
-				$this->base_url = $this->CI->stg->cdn-url'].'/';
-			} else {
-				$this->base_url = '';
-			}*/
+				$head[] = '<meta content="'.$this->CI->itm->itm_keywords.'" name="keywords">';
+			} elseif($this->CI->sct->sct_trl_keywords != '') {
+				$head[] = '<meta content="'.$this->CI->sct->sct_trl_keywords.'" name="keywords">';
+			}
 			if(file_exists('styles/sct_code/'.$this->CI->sct->sct_code.'.css')) {
 				$head[] = '<link href="'.$this->base_url.'styles/sct_code/'.$this->CI->sct->sct_code.'.css" rel="stylesheet" type="text/css">';
 			} elseif(file_exists('styles/sct_code/'.$this->CI->sct->sct_code.'.dist.css')) {
@@ -156,14 +145,10 @@ class axipi_library {
 			if(file_exists('styles/lay_code/'.$this->CI->lay->lay_code.'.css')) {
 				$head[] = '<link href="'.$this->base_url.'styles/lay_code/'.$this->CI->lay->lay_code.'.css" rel="stylesheet" type="text/css">';
 			}
-			/*if(file_exists('styles/hst_environment/'.$this->CI->hst->hst_environment.'.css')) {
-				$head[] = '<link href="'.$this->base_url.'styles/hst_environment/'.$this->CI->hst->hst_environment.'.css" rel="stylesheet" type="text/css">';
-			}
-			if(file_exists('styles/hst_code/'.$_SERVER['HTTP_HOST'].'.css')) {
-				$head[] = '<link href="'.$this->base_url.'styles/hst_code/'.$_SERVER['HTTP_HOST'].'.css" rel="stylesheet" type="text/css">';
-			}*/
 			if(file_exists('styles/cmp_code/'.$this->CI->cmp->cmp_code.'.css')) {
 				$head[] = '<link href="'.$this->base_url.'styles/cmp_code/'.$this->CI->cmp->cmp_code.'.css" rel="stylesheet" type="text/css">';
+			} else if(file_exists('styles/cmp_code/'.$this->CI->cmp->cmp_code.'.dist.css')) {
+				$head[] = '<link href="'.$this->base_url.'styles/cmp_code/'.$this->CI->cmp->cmp_code.'.dist.css" rel="stylesheet" type="text/css">';
 			}
 			if(file_exists('styles/itm_virtualcode/'.$this->CI->itm->itm_virtualcode.'.css')) {
 				$head[] = '<link href="'.$this->base_url.'styles/itm_virtualcode/'.$this->CI->itm->itm_virtualcode.'.css" rel="stylesheet" type="text/css">';
@@ -171,9 +156,9 @@ class axipi_library {
 			if(file_exists('styles/itm_code/'.$this->CI->itm->itm_code.'.css')) {
 				$head[] = '<link href="'.$this->base_url.'styles/itm_code/'.$this->CI->itm->itm_code.'.css" rel="stylesheet" type="text/css">';
 			}
-			/*if(file_exists('styles/lng_code/'.$this->CI->lng->lng_code.'.css')) {
+			if(file_exists('styles/lng_code/'.$this->CI->lng->lng_code.'.css')) {
 				$head[] = '<link href="'.$this->base_url.'styles/lng_code/'.$this->CI->lng->lng_code.'.css" rel="stylesheet" type="text/css">';
-			}*/
+			}
 		}
 		$head = array_merge($head, $this->CI->head);
 		return implode("\r\n", $head)."\r\n";
@@ -185,9 +170,9 @@ class axipi_library {
 			if(count($this->jquery) != 0) {
 				foreach($this->jquery as $v) {
 					if(file_exists('thirdparty/jquery/scripts/'.$v.'.min.js')) {
-						$foot[] = '<script type="text/javascript" src="'.$this->base_url.'thirdparty/jquery/scripts/'.$v.'.min.js" charset="UTF-8"></script>';
+						$foot[] = '<script src="'.$this->base_url.'thirdparty/jquery/scripts/'.$v.'.min.js" type="text/javascript"></script>';
 					} elseif(file_exists('thirdparty/jquery/scripts/'.$v.'.js')) {
-						$foot[] = '<script type="text/javascript" src="'.$this->base_url.'thirdparty/jquery/scripts/'.$v.'.js" charset="UTF-8"></script>';
+						$foot[] = '<script src="'.$this->base_url.'thirdparty/jquery/scripts/'.$v.'.js" type="text/javascript"></script>';
 					}
 				}
 				if(file_exists('scripts/sct_code/'.$this->CI->sct->sct_code.'.js')) {
@@ -197,8 +182,9 @@ class axipi_library {
 				}
 				if(file_exists('scripts/sct_virtualcode/'.$this->CI->sct->sct_virtualcode.'.js')) {
 					$foot[] = '<script src="'.$this->base_url.'scripts/sct_virtualcode/'.$this->CI->sct->sct_virtualcode.'.js" type="text/javascript"></script>';
-				} elseif(isset($this->CI->sct->sct_virtualcode) == 1 && file_exists('scripts/sct_virtualcode/'.$this->CI->sct->sct_virtualcode.'.dist.js')) {
-					$foot[] = '<script src="'.$this->base_url.'scripts/sct_virtualcode/'.$this->CI->sct->sct_virtualcode.'.dist.js" type="text/javascript"></script>';
+				}
+				if(file_exists('scripts/lay_virtualcode/'.$this->CI->lay->lay_virtualcode.'.js')) {
+					$foot[] = '<script src="'.$this->base_url.'scripts/lay_virtualcode/'.$this->CI->lay->lay_virtualcode.'.js" type="text/javascript"></script>';
 				}
 				if(file_exists('scripts/cmp_code/'.$this->CI->cmp->cmp_code.'.js')) {
 					$foot[] = '<script src="'.$this->base_url.'scripts/cmp_code/'.$this->CI->cmp->cmp_code.'.js" type="text/javascript"></script>';
@@ -222,6 +208,26 @@ class axipi_library {
 	function get_debug() {
 		$debug = '';
 		if($this->CI->hst->hst_debug == 1) {
+			if($this->CI->lay->lay_type == 'text/plain') {
+				$debug .= 'elapsed_time : '.$this->CI->benchmark->elapsed_time()."\r\n";;
+				if(function_exists('memory_get_peak_usage')) {
+					$debug .= 'memory_get_peak_usage : '.number_format(memory_get_peak_usage(), 0, '.', ' ')."\r\n";
+				}
+				if(function_exists('memory_get_usage')) {
+					$debug .= 'memory_get_usage : '.number_format(memory_get_usage(), 0, '.', ' ')."\r\n";
+				}
+
+				if(count($this->debug) != 0) {
+					foreach($this->debug as $item) {
+						$debug .= 'php : '.$item."\r\n";
+					}
+				}
+
+				$debug .= 'queries ('.count($this->CI->db->queries).')'."\r\n";;
+				foreach($this->CI->db->queries as $query) {
+					$debug .= 'query : '.str_replace(array('<', '>'), array('&lt;', '&gt;'), $query)."\r\n";
+				}
+			}
 			if($this->CI->lay->lay_type == 'text/xml') {
 				$debug .= '<debug>';
 				$debug .= '<elapsed_time>'.$this->CI->benchmark->elapsed_time().'</elapsed_time>';

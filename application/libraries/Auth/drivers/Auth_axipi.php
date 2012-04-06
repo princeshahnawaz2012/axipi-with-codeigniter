@@ -3,7 +3,7 @@
 class Auth_Axipi extends CI_Driver {
 	private $CI;
 	public function __construct() {
-		$this->CI = get_instance();
+		$this->CI =& get_instance();
 
 		$this->session_key = '5n2z8fg6y8j4a';
 
