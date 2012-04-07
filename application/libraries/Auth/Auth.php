@@ -2,7 +2,7 @@
 
 class Auth extends CI_Driver_Library {
 	public function __construct($config = array()) {
-		if(!file_exists('application/libraries/Auth/drivers/Auth_'.$config['adapter'].'.php')) {
+		if(!file_exists(APPPATH.'/libraries/Auth/drivers/Auth_'.$config['adapter'].'.php')) {
 			$config['adapter'] = 'axipi';
 		}
 		$this->_adapter = $config['adapter'];
