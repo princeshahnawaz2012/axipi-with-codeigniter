@@ -13,7 +13,11 @@ class layouts_model extends CI_Model {
         return $query->result();
     }
     function get_layout($lay_id) {
-        $query = $this->db->query('SELECT lay.* FROM '.$this->db->dbprefix('lay').' AS lay WHERE lay.lay_id = ? GROUP BY lay.lay_id', array($lay_id));
+		if(is_numeric($lay_id)) {
+			$query = $this->db->query('SELECT lay.* FROM '.$this->db->dbprefix('lay').' AS lay WHERE lay.lay_id = ? GROUP BY lay.lay_id', array($lay_id));
+		} else {
+			$query = $this->db->query('SELECT lay.* FROM '.$this->db->dbprefix('lay').' AS lay WHERE lay.lay_code = ? GROUP BY lay.lay_id', array($lay_id));
+		}
         return $query->row();
     }
 }
