@@ -183,8 +183,8 @@ class axipi_library {
 				if(file_exists('scripts/sct_virtualcode/'.$this->CI->sct->sct_virtualcode.'.js')) {
 					$foot[] = '<script src="'.$this->base_url.'scripts/sct_virtualcode/'.$this->CI->sct->sct_virtualcode.'.js" type="text/javascript"></script>';
 				}
-				if(file_exists('scripts/lay_virtualcode/'.$this->CI->lay->lay_virtualcode.'.js')) {
-					$foot[] = '<script src="'.$this->base_url.'scripts/lay_virtualcode/'.$this->CI->lay->lay_virtualcode.'.js" type="text/javascript"></script>';
+				if(file_exists('scripts/lay_code/'.$this->CI->lay->lay_code.'.js')) {
+					$foot[] = '<script src="'.$this->base_url.'scripts/lay_code/'.$this->CI->lay->lay_code.'.js" type="text/javascript"></script>';
 				}
 				if(file_exists('scripts/cmp_code/'.$this->CI->cmp->cmp_code.'.js')) {
 					$foot[] = '<script src="'.$this->base_url.'scripts/cmp_code/'.$this->CI->cmp->cmp_code.'.js" type="text/javascript"></script>';
