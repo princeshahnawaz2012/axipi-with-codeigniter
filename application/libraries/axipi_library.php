@@ -6,6 +6,7 @@ class axipi_library {
 			date_default_timezone_set('Etc/UCT');
 		}
 		set_error_handler(array($this, 'error_handler'));
+		register_shutdown_function(array($this, 'shutdown_function'));
 		$this->CI =& get_instance();
 		$this->CI->err = array();
 		$this->CI->hlp = array();
@@ -25,6 +26,18 @@ class axipi_library {
 		$this->debug[$key] = $e_type.' | '.$e_message.' | '.$e_file.' | '.$e_line;
 		$this->watchdog(array('e_type'=>$e_type, 'e_message'=>$e_message, 'e_file'=>$e_file, 'e_line'=>$e_line));
 	}
+	function shutdown_function() {
+		if(function_exists('error_get_last')) {
+			$error = error_get_last();
+			if($error['type'] == 1) {
+				ob_end_clean();
+
+				$this->watchdog($error);
+				set_status_header(500);
+				exit(0);
+			}
+		}
+	}
 	function watchdog($data) {
 		$wtd_content = '';
 		foreach($data as $k => $v) {
@@ -32,7 +45,7 @@ class axipi_library {
 			$wtd_content .= $v."\r\n";
 		}
 		$wtd_key = md5($wtd_content);
-        $query = $this->CI->db->query('SELECT wtd_id FROM '.$this->CI->db->dbprefix('wtd').' AS wtd WHERE wtd.wtd_key = ? GROUP BY wtd.wtd_id', array($wtd_key));
+		$query = $this->CI->db->query('SELECT wtd_id FROM '.$this->CI->db->dbprefix('wtd').' AS wtd WHERE wtd.wtd_key = ? GROUP BY wtd.wtd_id', array($wtd_key));
 		if($query->num_rows() > 0) {
 			$this->CI->db->set('wtd_datemodified', date('Y-m-d H:i:s'));
 			$this->CI->db->where('wtd_key', $wtd_key);
