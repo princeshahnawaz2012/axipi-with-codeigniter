@@ -1,7 +1,3 @@
-<?php
-if($itm) {
-?>
-
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
@@ -14,7 +10,7 @@ if($itm) {
 <div class="box1">
 <h1><?php echo $itm->itm_code; ?></h1>
 <ul>
-<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/?itm_id=<?php echo $itm->itm_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/<?php echo $itm->itm_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
 <li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>
 <div class="display">
@@ -23,7 +19,7 @@ if($itm) {
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open(current_url().'?itm_id='.$itm->itm_id); ?>
+<?php echo form_open_multipart(current_url()); ?>
 
 <div class="column1">
 <p><?php echo form_label($this->lang->line('sct_code').' *', 'sct_id'); ?><?php echo form_dropdown('sct_id', $select_section, set_value('sct_id', $itm->sct_id), 'id="sct_id" class="select"'); ?></p>
@@ -40,6 +36,13 @@ if($itm) {
 </div>
 
 <div class="column1 columnlast">
+<?php foreach($this->storage_files as $file) { ?>
+	<p><?php echo form_label($this->lang->line($file), $file); ?><?php echo form_upload($file, false, 'id="'.$file.'" class="inputfile"'); ?></p>
+	<?php if($itm->{$file} && file_exists('storage/'.$this->storage_folder.'/'.$file.'/'.$itm->{$file})) { ?>
+		<p><?php echo form_label($this->lang->line('delete'), 'delete_'.$file); ?><?php echo form_checkbox('delete_'.$file, 1, set_value('delete_'.$file), 'id="delete_'.$file.'" class="inputcheckbox"'); ?></p>
+		<p><a href="<?php echo base_url(); ?>storage/<?php echo $this->storage_folder; ?>/<?php echo $file; ?>/<?php echo $itm->{$file}; ?>"><?php echo $itm->{$file}; ?></a></p>
+	<?php } ?>
+<?php } ?>
 <p><?php echo form_label($this->lang->line('itm_description'), 'itm_description'); ?><?php echo form_textarea('itm_description', set_value('itm_description', $itm->itm_description), 'id="itm_description" class="textarea"'); ?></p>
 <p><?php echo form_label($this->lang->line('itm_keywords'), 'itm_keywords'); ?><?php echo form_textarea('itm_keywords', set_value('itm_keywords', $itm->itm_keywords), 'id="itm_keywords" class="textarea"'); ?></p>
 <p><?php echo form_label($this->lang->line('itm_ordering').' *', 'itm_ordering'); ?><?php echo form_input('itm_ordering', set_value('itm_ordering', $itm->itm_ordering), 'id="itm_ordering" class="inputtext numericfield"'); ?></p>
@@ -54,11 +57,3 @@ if($itm) {
 
 </div>
 </div>
-
-<?php
-} else {
-?>
-
-<?php
-}
-?>

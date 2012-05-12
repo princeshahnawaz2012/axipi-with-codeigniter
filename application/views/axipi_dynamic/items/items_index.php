@@ -51,7 +51,7 @@
 
 <?php foreach($results as $result) { ?>
 <tr>
-<td><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/?itm_id=<?php echo $result->itm_id;?>"><?php echo $result->itm_id;?></a></td>
+<td><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/<?php echo $result->itm_id;?>"><?php echo $result->itm_id;?></a></td>
 <td><?php echo $result->itm_code; ?></td>
 <td><?php echo $result->itm_title; ?></td>
 <td><?php echo $result->sct_code; ?></td>
@@ -61,8 +61,8 @@
 <td><?php echo $result->itm_access; ?><?php if($result->count_groups != 0 && $result->itm_access == 'groups') { ?> (<?php echo $result->groups; ?>)<?php } ?>
 </td>
 <th>
-<a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/?itm_id=<?php echo $result->itm_id;?>"><?php echo $this->lang->line('update'); ?></a>
-<?php if($result->count_items == 0 && $result->itm_islocked == 0) { ?><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_delete/?itm_id=<?php echo $result->itm_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
+<a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/<?php echo $result->itm_id;?>"><?php echo $this->lang->line('update'); ?></a>
+<?php if($result->count_items == 0 && $result->itm_islocked == 0) { ?><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_delete/<?php echo $result->itm_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
 </th>
 </tr>
 <?php } ?>

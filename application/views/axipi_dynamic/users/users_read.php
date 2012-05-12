@@ -1,7 +1,3 @@
-<?php
-if($usr) {
-?>
-
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
@@ -14,7 +10,7 @@ if($usr) {
 <div class="box1">
 <h1><?php echo $usr->usr_email; ?></h1>
 <ul>
-<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/?usr_id=<?php echo $usr->usr_id; ?>"><?php echo $this->lang->line('update'); ?></a></li>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/<?php echo $usr->usr_id; ?>"><?php echo $this->lang->line('update'); ?></a></li>
 <li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>
 <div class="display">
@@ -32,11 +28,3 @@ if($usr) {
 
 </div>
 </div>
-
-<?php
-} else {
-?>
-
-<?php
-}
-?>

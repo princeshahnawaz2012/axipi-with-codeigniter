@@ -6,12 +6,6 @@ class permissions extends CI_Controller {
 
 		$this->load->language('axipi_dynamic');
 		$this->load->model('axipi_dynamic/permissions_model', '', true);
-
-		if($this->input->get('per_id')) {
-			$this->per_id = $this->input->get('per_id');
-		} else {
-			$this->per_id = 0;
-		}
 	}
 	public function index() {
 		$this->load->helper(array('form'));
@@ -53,7 +47,7 @@ class permissions extends CI_Controller {
 		$this->load->helper(array('form'));
 		$this->load->library('form_validation');
 		$data = array();
-		$data['translations'] = $this->permissions_model->get_translations($this->per_id);
+		$data['translations'] = $this->permissions_model->get_translations(0);
 
 		$this->form_validation->set_rules('per_code', 'lang:per_code', 'required|max_length[100]|callback_rule_per_code');
 		foreach($data['translations'] as $trl) {
@@ -81,21 +75,23 @@ class permissions extends CI_Controller {
 			$this->index();
 		}
 	}
-	public function read() {
-		if($this->per_id != 0) {
-			$data = array();
-			$data['per'] = $this->permissions_model->get_permission($this->per_id);
-			$data['translations'] = $this->permissions_model->get_translations($this->per_id);
+	public function read($per_id) {
+		$data = array();
+		$data['per'] = $this->permissions_model->get_permission($per_id);
+		if($data['per']) {
+			$data['translations'] = $this->permissions_model->get_translations($per_id);
 			$this->zones['content'] = $this->load->view('axipi_dynamic/permissions/permissions_read', $data, true);
+		} else {
+			$this->index();
 		}
 	}
-	public function update() {
-		if($this->per_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['per'] = $this->permissions_model->get_permission($this->per_id);
-			$data['translations'] = $this->permissions_model->get_translations($this->per_id);
+	public function update($per_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['per'] = $this->permissions_model->get_permission($per_id);
+		if($data['per']) {
+			$data['translations'] = $this->permissions_model->get_translations($per_id);
 
 			$this->form_validation->set_rules('per_code', 'lang:per_code', 'required|max_length[100]|callback_rule_per_code['.$data['per']->per_code.']');
 			foreach($data['translations'] as $trl) {
@@ -108,17 +104,17 @@ class permissions extends CI_Controller {
 				$this->db->set('per_code', $this->input->post('per_code'));
 				$this->db->set('per_modifiedby', $this->usr->usr_id);
 				$this->db->set('per_datemodified', date('Y-m-d H:i:s'));
-				$this->db->where('per_id', $this->per_id);
+				$this->db->where('per_id', $per_id);
 				$this->db->update('per');
 
 				foreach($data['translations'] as $trl) {
 					$this->db->set('per_trl_title', $this->input->post('title'.$trl->lng_id));
 					if($trl->per_id) {
-						$this->db->where('per_id', $this->per_id);
+						$this->db->where('per_id', $per_id);
 						$this->db->where('lng_id', $trl->lng_id);
 						$this->db->update('per_trl');
 					} else {
-						$this->db->set('per_id', $this->per_id);
+						$this->db->set('per_id', $per_id);
 						$this->db->set('lng_id', $trl->lng_id);
 						$this->db->insert('per_trl');
 					}
@@ -127,31 +123,36 @@ class permissions extends CI_Controller {
 				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}
+		} else {
+			$this->index();
 		}
 	}
-	public function delete() {
-		if($this->per_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['per'] = $this->permissions_model->get_permission($this->per_id);
-
-			$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
-
-			if($this->form_validation->run() == FALSE) {
-				$this->zones['content'] = $this->load->view('axipi_dynamic/permissions/permissions_delete', $data, true);
+	public function delete($per_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['per'] = $this->permissions_model->get_permission($per_id);
+		if($data['per']) {
+			if($data['per']->per_islocked == 0) {
+				$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
+		
+				if($this->form_validation->run() == FALSE) {
+					$this->zones['content'] = $this->load->view('axipi_dynamic/permissions/permissions_delete', $data, true);
+				} else {
+					$this->db->where('per_id', $per_id);
+					$this->db->delete('per_trl');
+		
+					$this->db->where('per_id', $per_id);
+					$this->db->where('grp_per_islocked', 0);
+					$this->db->delete('grp_per');
+		
+					$this->db->where('per_id', $per_id);
+					$this->db->where('per_islocked', 0);
+					$this->db->delete('per');
+					$this->msg[] = $this->lang->line('deleted');
+					$this->index();
+				}
 			} else {
-				$this->db->where('per_id', $this->per_id);
-				$this->db->delete('per_trl');
-
-				$this->db->where('per_id', $this->per_id);
-				$this->db->where('grp_per_islocked', 0);
-				$this->db->delete('grp_per');
-
-				$this->db->where('per_id', $this->per_id);
-				$this->db->where('per_islocked', 0);
-				$this->db->delete('per');
-				$this->msg[] = $this->lang->line('deleted');
 				$this->index();
 			}
 		}

@@ -1,11 +1,8 @@
-<?php
-if($sct) {
-?>
-
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
 <li class="first"><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('sections'); ?></a></li>
+<li><?php echo $sct->sct_code; ?></li>
 <li><?php echo $this->lang->line('read'); ?></li>
 </ul>
 </div>
@@ -14,7 +11,8 @@ if($sct) {
 <div class="box1">
 <h1><?php echo $sct->sct_code; ?></h1>
 <ul>
-<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/?sct_id=<?php echo $sct->sct_id; ?>"><?php echo $this->lang->line('update'); ?></a></li>
+<?php if($sct->sct_islocked == 0) { ?><li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_delete/<?php echo $sct->sct_id; ?>"><?php echo $this->lang->line('delete'); ?></a></li><?php } ?>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/<?php echo $sct->sct_id; ?>"><?php echo $this->lang->line('update'); ?></a></li>
 <li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>
 <div class="display">
@@ -30,21 +28,13 @@ if($sct) {
 </div>
 
 <?php if($translations) { ?>
-<?php foreach($translations as $trl) { ?>
-<h2><?php echo $trl->lng_title; ?> (<?php echo $trl->lng_code; ?>)</h2>
-<p><span class="label"><?php echo $this->lang->line('sct_trl_title'); ?></span><?php echo $trl->sct_trl_title; ?></p>
-<p><span class="label"><?php echo $this->lang->line('sct_trl_description'); ?></span><?php echo $trl->sct_trl_description; ?></p>
-<p><span class="label"><?php echo $this->lang->line('sct_trl_keywords'); ?></span><?php echo $trl->sct_trl_keywords; ?></p>
-<?php } ?>
+	<?php foreach($translations as $trl) { ?>
+		<h2><?php echo $trl->lng_title; ?> (<?php echo $trl->lng_code; ?>)</h2>
+		<p><span class="label"><?php echo $this->lang->line('sct_trl_title'); ?></span><?php echo $trl->sct_trl_title; ?></p>
+		<p><span class="label"><?php echo $this->lang->line('sct_trl_description'); ?></span><?php echo $trl->sct_trl_description; ?></p>
+		<p><span class="label"><?php echo $this->lang->line('sct_trl_keywords'); ?></span><?php echo $trl->sct_trl_keywords; ?></p>
+	<?php } ?>
 <?php } ?>
 
 </div>
 </div>
-
-<?php
-} else {
-?>
-
-<?php
-}
-?>

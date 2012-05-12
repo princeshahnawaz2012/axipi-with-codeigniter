@@ -1,7 +1,3 @@
-<?php
-if($rel) {
-?>
-
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
@@ -14,7 +10,7 @@ if($rel) {
 <div class="box1">
 <h1><?php echo $rel->itm_title; ?> (<?php echo $rel->itm_code; ?>) - <?php echo $itm->itm_title; ?> (<?php echo $itm->itm_code; ?>)</h1>
 <ul>
-<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/?rel_id=<?php echo $rel->itm_id.'&amp;itm_id='.$itm->itm_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/<?php echo $rel->itm_id; ?>/<?php echo $itm->itm_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
 <li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>
 <div class="display">
@@ -23,7 +19,7 @@ if($rel) {
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open(current_url().'?rel_id='.$rel->itm_id.'&amp;itm_id='.$itm->itm_id); ?>
+<?php echo form_open(current_url()); ?>
 
 <div class="column1">
 <p><?php echo form_label($this->lang->line('itm_rel_parent'), 'itm_rel_parent'); ?><?php echo form_dropdown('itm_rel_parent', $select_item_parent, set_value('itm_rel_parent', $itm_rel->itm_rel_parent), 'id="itm_rel_parent" class="select"'); ?></p>
@@ -40,11 +36,3 @@ if($rel) {
 
 </div>
 </div>
-
-<?php
-} else {
-?>
-
-<?php
-}
-?>

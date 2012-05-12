@@ -1,7 +1,3 @@
-<?php
-if($cmp) {
-?>
-
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
@@ -14,7 +10,7 @@ if($cmp) {
 <div class="box1">
 <h1><?php echo $cmp->cmp_code; ?></h1>
 <ul>
-<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/?cmp_id=<?php echo $cmp->cmp_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/<?php echo $cmp->cmp_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
 <li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>
 <div class="display">
@@ -23,7 +19,7 @@ if($cmp) {
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open(current_url().'?cmp_id='.$cmp->cmp_id); ?>
+<?php echo form_open(current_url()); ?>
 
 <div class="column1">
 <p><?php echo form_label($this->lang->line('cmp_code').' *', 'cmp_code'); ?><?php echo form_input('cmp_code', set_value('cmp_code', $cmp->cmp_code), 'id="cmp_code" class="inputtext"'); ?></p>
@@ -41,11 +37,3 @@ if($cmp) {
 
 </div>
 </div>
-
-<?php
-} else {
-?>
-
-<?php
-}
-?>

@@ -1,7 +1,3 @@
-<?php
-if($zon) {
-?>
-
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
@@ -14,7 +10,7 @@ if($zon) {
 <div class="box1">
 <h1><?php echo $zon->lay_code; ?> - <?php echo $zon->zon_code; ?> - <?php echo $itm->itm_code; ?></h1>
 <ul>
-<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/?zon_id=<?php echo $zon->zon_id.'&amp;itm_id='.$itm->itm_id; ?>"><?php echo $this->lang->line('update'); ?></a></li>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/<?php echo $zon->zon_id; ?>/<?php echo $itm->itm_id; ?>"><?php echo $this->lang->line('update'); ?></a></li>
 <li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>
 <div class="display">
@@ -36,11 +32,3 @@ if($zon) {
 
 </div>
 </div>
-
-<?php
-} else {
-?>
-
-<?php
-}
-?>

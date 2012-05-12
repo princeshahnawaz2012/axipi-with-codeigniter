@@ -6,12 +6,6 @@ class hosts extends CI_Controller {
 
 		$this->load->language('axipi_dynamic');
 		$this->load->model('axipi_dynamic/hosts_model', '', true);
-
-		if($this->input->get('hst_id')) {
-			$this->hst_id = $this->input->get('hst_id');
-		} else {
-			$this->hst_id = 0;
-		}
 	}
 	public function index() {
 		$this->load->helper(array('form'));
@@ -60,7 +54,7 @@ class hosts extends CI_Controller {
 		$data = array();
 		$data['select_layout'] = $this->hosts_model->select_layout();
 		$data['select_hst_trl_defaultitem'] = $this->hosts_model->select_hst_trl_defaultitem();
-		$data['translations'] = $this->hosts_model->get_translations($this->hst_id);
+		$data['translations'] = $this->hosts_model->get_translations(0);
 
 		$this->form_validation->set_rules('hst_code', 'lang:hst_code', 'required|max_length[100]|callback_rule_hst_code');
 		$this->form_validation->set_rules('hst_url', 'lang:hst_url', 'required|max_length[255]');
@@ -98,23 +92,25 @@ class hosts extends CI_Controller {
 			$this->index();
 		}
 	}
-	public function read() {
-		if($this->hst_id != 0) {
-			$data = array();
-			$data['hst'] = $this->hosts_model->get_host($this->hst_id);
-			$data['translations'] = $this->hosts_model->get_translations($this->hst_id);
+	public function read($hst_id) {
+		$data = array();
+		$data['hst'] = $this->hosts_model->get_host($hst_id);
+		if($data['hst']) {
+			$data['translations'] = $this->hosts_model->get_translations($hst_id);
 			$this->zones['content'] = $this->load->view('axipi_dynamic/hosts/hosts_read', $data, true);
+		} else {
+			$this->index();
 		}
 	}
-	public function update() {
-		if($this->hst_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['hst'] = $this->hosts_model->get_host($this->hst_id);
+	public function update($hst_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['hst'] = $this->hosts_model->get_host($hst_id);
+		if($data['hst']) {
 			$data['select_layout'] = $this->hosts_model->select_layout();
 			$data['select_hst_trl_defaultitem'] = $this->hosts_model->select_hst_trl_defaultitem();
-			$data['translations'] = $this->hosts_model->get_translations($this->hst_id);
+			$data['translations'] = $this->hosts_model->get_translations($hst_id);
 
 			$this->form_validation->set_rules('hst_code', 'lang:hst_code', 'required|max_length[100]|callback_rule_hst_code['.$data['hst']->hst_code.']');
 			$this->form_validation->set_rules('hst_url', 'lang:hst_url', 'required|max_length[255]');
@@ -137,17 +133,17 @@ class hosts extends CI_Controller {
 				$this->db->set('hst_debug', checkbox2database($this->input->post('hst_debug')));
 				$this->db->set('hst_modifiedby', $this->usr->usr_id);
 				$this->db->set('hst_datemodified', date('Y-m-d H:i:s'));
-				$this->db->where('hst_id', $this->hst_id);
+				$this->db->where('hst_id', $hst_id);
 				$this->db->update('hst');
 
 				foreach($data['translations'] as $trl) {
 					$this->db->set('hst_trl_defaultitem', $this->input->post('defaultitem'.$trl->lng_id));
 					if($trl->hst_id) {
-						$this->db->where('hst_id', $this->hst_id);
+						$this->db->where('hst_id', $hst_id);
 						$this->db->where('lng_id', $trl->lng_id);
 						$this->db->update('hst_trl');
 					} else {
-						$this->db->set('hst_id', $this->hst_id);
+						$this->db->set('hst_id', $hst_id);
 						$this->db->set('lng_id', $trl->lng_id);
 						$this->db->insert('hst_trl');
 					}
@@ -156,12 +152,14 @@ class hosts extends CI_Controller {
 				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}
+		} else {
+			$this->index();
 		}
 	}
-	public function delete() {
-		if($this->hst_id != 0) {
-			$data = array();
-			$data['hst'] = $this->hosts_model->get_host($this->hst_id);
+	public function delete($hst_id) {
+		$data = array();
+		$data['hst'] = $this->hosts_model->get_host($hst_id);
+		if($data['hst']) {
 			if($data['hst']->hst_islocked == 0) {
 				$this->load->helper(array('form'));
 				$this->load->library('form_validation');
@@ -170,18 +168,17 @@ class hosts extends CI_Controller {
 				if($this->form_validation->run() == FALSE) {
 					$this->zones['content'] = $this->load->view('axipi_dynamic/hosts/hosts_delete', $data, true);
 				} else {
-					$this->db->where('hst_id', $this->hst_id);
+					$this->db->where('hst_id', $hst_id);
 					$this->db->delete('hst_trl');
 
-					$this->db->where('hst_id', $this->hst_id);
+					$this->db->where('hst_id', $hst_id);
 					$this->db->where('hst_islocked', 0);
 					$this->db->delete('hst');
 					$this->msg[] = $this->lang->line('deleted');
 					$this->index();
 				}
 			} else {
-				$this->zones['content'] = '';
-				$this->msg[] = $this->lang->line('nopermission');
+				$this->index();
 			}
 		}
 	}

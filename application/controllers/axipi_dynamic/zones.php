@@ -6,12 +6,6 @@ class zones extends CI_Controller {
 
 		$this->load->language('axipi_dynamic');
 		$this->load->model('axipi_dynamic/zones_model', '', true);
-
-		if($this->input->get('zon_id')) {
-			$this->zon_id = $this->input->get('zon_id');
-		} else {
-			$this->zon_id = 0;
-		}
 	}
 	public function index() {
 		$this->load->helper(array('form'));
@@ -63,7 +57,7 @@ class zones extends CI_Controller {
 		$this->load->library('form_validation');
 		$data = array();
 		$data['select_layout'] = $this->zones_model->select_layout();
-		$data['translations'] = $this->zones_model->get_translations($this->zon_id);
+		$data['translations'] = $this->zones_model->get_translations(0);
 
 		$this->form_validation->set_rules('lay_id', 'lang:lay_code', 'required');
 		if($this->input->post('lay_id')) {
@@ -97,22 +91,24 @@ class zones extends CI_Controller {
 			$this->index();
 		}
 	}
-	public function read() {
-		if($this->zon_id != 0) {
-			$data = array();
-			$data['zon'] = $this->zones_model->get_zone($this->zon_id);
-			$data['translations'] = $this->zones_model->get_translations($this->zon_id);
+	public function read($zon_id) {
+		$data = array();
+		$data['zon'] = $this->zones_model->get_zone($zon_id);
+		if($data['zon']) {
+			$data['translations'] = $this->zones_model->get_translations($zon_id);
 			$this->zones['content'] = $this->load->view('axipi_dynamic/zones/zones_read', $data, true);
+		} else {
+			$this->index();
 		}
 	}
-	public function update() {
-		if($this->zon_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['zon'] = $this->zones_model->get_zone($this->zon_id);
+	public function update($zon_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['zon'] = $this->zones_model->get_zone($zon_id);
+		if($data['zon']) {
 			$data['select_layout'] = $this->zones_model->select_layout();
-			$data['translations'] = $this->zones_model->get_translations($this->zon_id);
+			$data['translations'] = $this->zones_model->get_translations($zon_id);
 
 			$this->form_validation->set_rules('lay_id', 'lang:lay_code', 'required');
 			$this->form_validation->set_rules('zon_code', 'lang:zon_code', 'required|max_length[100]|callback_rule_zon_code['.$this->input->post('lay_id').','.$data['zon']->lay_id.','.$data['zon']->zon_code.']');
@@ -129,17 +125,17 @@ class zones extends CI_Controller {
 				$this->db->set('zon_ordering', $this->input->post('zon_ordering'));
 				$this->db->set('zon_modifiedby', $this->usr->usr_id);
 				$this->db->set('zon_datemodified', date('Y-m-d H:i:s'));
-				$this->db->where('zon_id', $this->zon_id);
+				$this->db->where('zon_id', $zon_id);
 				$this->db->update('zon');
 
 				foreach($data['translations'] as $trl) {
 					$this->db->set('trl_zon_title', $this->input->post('title'.$trl->lng_id));
 					if($trl->zon_id) {
-						$this->db->where('zon_id', $this->zon_id);
+						$this->db->where('zon_id', $zon_id);
 						$this->db->where('lng_id', $trl->lng_id);
 						$this->db->update('trl_zon');
 					} else {
-						$this->db->set('zon_id', $this->zon_id);
+						$this->db->set('zon_id', $zon_id);
 						$this->db->set('lng_id', $trl->lng_id);
 						$this->db->insert('trl_zon');
 					}
@@ -148,28 +144,33 @@ class zones extends CI_Controller {
 				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}
+		} else {
+			$this->index();
 		}
 	}
-	public function delete() {
-		if($this->zon_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['zon'] = $this->zones_model->get_zone($this->zon_id);
+	public function delete($zon_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['zon'] = $this->zones_model->get_zone($zon_id);
+		if($data['zon']) {
+			if($data['zon']->zon_islocked == 0) {
+				$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
 
-			$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
+				if($this->form_validation->run() == FALSE) {
+					$this->zones['content'] = $this->load->view('axipi_dynamic/zones/zones_delete', $data, true);
+				} else {
+					$this->db->where('zon_id', $zon_id);
+					$this->db->delete('trl_zon');
 
-			if($this->form_validation->run() == FALSE) {
-				$this->zones['content'] = $this->load->view('axipi_dynamic/zones/zones_delete', $data, true);
+					$this->db->where('zon_id', $zon_id);
+					$this->db->where('zon_islocked', 0);
+					$this->db->delete('zon');
+					$this->index();
+					$this->msg[] = $this->lang->line('deleted');
+				}
 			} else {
-				$this->db->where('zon_id', $this->zon_id);
-				$this->db->delete('trl_zon');
-
-				$this->db->where('zon_id', $this->zon_id);
-				$this->db->where('zon_islocked', 0);
-				$this->db->delete('zon');
 				$this->index();
-				$this->msg[] = $this->lang->line('deleted');
 			}
 		}
 	}

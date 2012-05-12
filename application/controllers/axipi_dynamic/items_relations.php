@@ -6,17 +6,6 @@ class items_relations extends CI_Controller {
 
 		$this->load->language('axipi_dynamic');
 		$this->load->model('axipi_dynamic/zones_model', '', true);
-
-		if($this->input->get('rel_id')) {
-			$this->rel_id = $this->input->get('rel_id');
-		} else {
-			$this->rel_id = 0;
-		}
-		if($this->input->get('itm_id')) {
-			$this->itm_id = $this->input->get('itm_id');
-		} else {
-			$this->itm_id = 0;
-		}
 	}
 	public function index() {
 		$this->load->helper(array('form'));
@@ -72,22 +61,22 @@ class items_relations extends CI_Controller {
 			return TRUE;
 		}
 	}
-	public function create() {
-		if($this->rel_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['rel'] = $this->items_model->get_item($this->rel_id);
+	public function create($rel_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['rel'] = $this->items_model->get_item($rel_id);
+		if($data['rel']) {
 			$data['select_item'] = $this->items_model->select_item_parent();
 			$data['select_item_parent'] = $this->items_model->select_item_parent();
-	
+
 			$this->form_validation->set_rules('itm_id', 'lang:itm_code', 'required');
 			$this->form_validation->set_rules('itm_rel_ordering', 'lang:itm_rel_ordering', 'required|numeric');
-	
+
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/items_relations/items_relations_create', $data, true);
 			} else {
-				$this->db->set('rel_id', $this->rel_id);
+				$this->db->set('rel_id', $rel_id);
 				$this->db->set('itm_id', $this->input->post('itm_id'));
 				$this->db->set('itm_rel_parent', $this->input->post('itm_rel_parent'));
 				$this->db->set('itm_rel_title', $this->input->post('itm_rel_title'));
@@ -96,29 +85,33 @@ class items_relations extends CI_Controller {
 				$this->db->set('itm_rel_datecreated', date('Y-m-d H:i:s'));
 				$this->db->set('itm_rel_ispublished', 1);
 				$this->db->insert('itm_rel');
-	
+
 				$this->msg[] = $this->lang->line('created');
 				$this->index();
 			}
+		} else {
+			$this->index();
 		}
 	}
-	public function read() {
-		if($this->rel_id != 0 && $this->itm_id != 0) {
-			$data = array();
-			$data['rel'] = $this->items_model->get_item($this->rel_id);
-			$data['itm'] = $this->items_model->get_item($this->itm_id);
-			$data['itm_rel'] = $this->items_model->get_item_relation($this->rel_id, $this->itm_id);
+	public function read($rel_id, $itm_id) {
+		$data = array();
+		$data['itm_rel'] = $this->items_model->get_item_relation($rel_id, $itm_id);
+		if($data['itm_rel']) {
+			$data['rel'] = $this->items_model->get_item($rel_id);
+			$data['itm'] = $this->items_model->get_item($itm_id);
 			$this->zones['content'] = $this->load->view('axipi_dynamic/items_relations/items_relations_read', $data, true);
+		} else {
+			$this->index();
 		}
 	}
-	public function update() {
-		if($this->rel_id != 0 && $this->itm_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['rel'] = $this->items_model->get_item($this->rel_id);
-			$data['itm'] = $this->items_model->get_item($this->itm_id);
-			$data['itm_rel'] = $this->items_model->get_item_relation($this->rel_id, $this->itm_id);
+	public function update($rel_id, $itm_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['itm_rel'] = $this->items_model->get_item_relation($rel_id, $itm_id);
+		if($data['itm_rel']) {
+			$data['rel'] = $this->items_model->get_item($rel_id);
+			$data['itm'] = $this->items_model->get_item($itm_id);
 			$data['select_item_parent'] = $this->items_model->select_item_parent();
 
 			$this->form_validation->set_rules('itm_rel_ordering', 'lang:itm_rel_ordering', 'required|numeric');
@@ -133,35 +126,39 @@ class items_relations extends CI_Controller {
 				$this->db->set('itm_rel_ispublished', $this->input->post('itm_rel_ispublished'));
 				$this->db->set('itm_rel_modifiedby', $this->usr->usr_id);
 				$this->db->set('itm_rel_datemodified', date('Y-m-d H:i:s'));
-				$this->db->where('rel_id', $this->rel_id);
-				$this->db->where('itm_id', $this->itm_id);
+				$this->db->where('rel_id', $rel_id);
+				$this->db->where('itm_id', $itm_id);
 				$this->db->update('itm_rel');
 
 				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}
+		} else {
+			$this->index();
 		}
 	}
-	public function delete() {
-		if($this->rel_id != 0 && $this->itm_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['rel'] = $this->items_model->get_item($this->rel_id);
-			$data['itm'] = $this->items_model->get_item($this->itm_id);
-			$data['itm_rel'] = $this->items_model->get_item_relation($this->rel_id, $this->itm_id);
+	public function delete($rel_id, $itm_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['itm_rel'] = $this->items_model->get_item_relation($rel_id, $itm_id);
+		if($data['itm_rel']) {
+			$data['rel'] = $this->items_model->get_item($rel_id);
+			$data['itm'] = $this->items_model->get_item($itm_id);
 
 			$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
 
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/items_relations/items_relations_delete', $data, true);
 			} else {
-				$this->db->where('rel_id', $this->rel_id);
-				$this->db->where('itm_id', $this->itm_id);
+				$this->db->where('rel_id', $rel_id);
+				$this->db->where('itm_id', $itm_id);
 				$this->db->delete('itm_rel');
 				$this->index();
 				$this->msg[] = $this->lang->line('deleted');
 			}
+		} else {
+			$this->index();
 		}
 	}
 }

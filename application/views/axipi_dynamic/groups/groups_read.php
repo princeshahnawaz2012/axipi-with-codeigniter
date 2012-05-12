@@ -1,11 +1,8 @@
-<?php
-if($grp) {
-?>
-
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
 <li class="first"><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('groups'); ?></a></li>
+<li><?php echo $grp->grp_code; ?></li>
 <li><?php echo $this->lang->line('read'); ?></li>
 </ul>
 </div>
@@ -14,7 +11,8 @@ if($grp) {
 <div class="box1">
 <h1><?php echo $grp->grp_code; ?></h1>
 <ul>
-<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/?grp_id=<?php echo $grp->grp_id; ?>"><?php echo $this->lang->line('update'); ?></a></li>
+<?php if($grp->grp_islocked == 0) { ?><li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_delete/<?php echo $grp->grp_id; ?>"><?php echo $this->lang->line('delete'); ?></a></li><?php } ?>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/<?php echo $grp->grp_id; ?>"><?php echo $this->lang->line('update'); ?></a></li>
 <li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>
 <div class="display">
@@ -32,19 +30,11 @@ if($grp) {
 </div>
 
 <?php if($translations) { ?>
-<?php foreach($translations as $trl) { ?>
-<h2><?php echo $trl->lng_title; ?> (<?php echo $trl->lng_code; ?>)</h2>
-<p><span class="label"><?php echo $this->lang->line('grp_trl_title'); ?></span><?php echo $trl->grp_trl_title; ?></p>
-<?php } ?>
+	<?php foreach($translations as $trl) { ?>
+		<h2><?php echo $trl->lng_title; ?> (<?php echo $trl->lng_code; ?>)</h2>
+		<p><span class="label"><?php echo $this->lang->line('grp_trl_title'); ?></span><?php echo $trl->grp_trl_title; ?></p>
+	<?php } ?>
 <?php } ?>
 
 </div>
 </div>
-
-<?php
-} else {
-?>
-
-<?php
-}
-?>

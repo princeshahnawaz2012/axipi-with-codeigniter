@@ -7,11 +7,10 @@ class items extends CI_Controller {
 		$this->load->language('axipi_dynamic');
 		$this->load->model('axipi_dynamic/items_model', '', true);
 
-		if($this->input->get('itm_id')) {
-			$this->itm_id = $this->input->get('itm_id');
-		} else {
-			$this->itm_id = 0;
-		}
+		$this->load->library('upload');
+
+		$this->storage_folder = 'items';
+		$this->storage_files = array('itm_file', 'itm_mediasmall', 'itm_mediamedium', 'itm_medialarge');
 	}
 	public function index() {
 		$this->load->helper(array('form'));
@@ -82,6 +81,19 @@ class items extends CI_Controller {
 		if($this->form_validation->run() == FALSE) {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/items/items_create', $data, true);
 		} else {
+
+			foreach($this->storage_files as $file) {
+				$config = array();
+				$config['allowed_types'] = '*';
+				$config['encrypt_name'] = true;
+				$config['upload_path'] = 'storage/'.$this->storage_folder.'/'.$file;
+				$this->upload->initialize($config);
+				if($this->upload->do_upload($file)) {
+					$upload = $this->upload->data();
+					$this->db->set($file, $upload['file_name']);
+				}
+			}
+
 			$this->db->set('sct_id', $this->input->post('sct_id'));
 			$this->db->set('itm_parent', $this->input->post('itm_parent'));
 			$this->db->set('lay_id', $this->input->post('lay_id'));
@@ -101,24 +113,26 @@ class items extends CI_Controller {
 			$this->db->set('itm_publishstartdate', $this->input->post('itm_publishstartdate').' '.$this->input->post('itm_publishstarttime'));
 			$this->db->set('itm_createdby', $this->usr->usr_id);
 			$this->db->set('itm_datecreated', date('Y-m-d H:i:s'));
-			$this->db->set('itm_ispublished', 1);
+			$this->db->set('itm_ispublished', checkbox2database($this->input->post('itm_ispublished')));
 			$this->db->insert('itm');
 			$this->index();
 		}
 	}
-	public function read() {
-		if($this->itm_id != 0) {
-			$data = array();
-			$data['itm'] = $this->items_model->get_item($this->itm_id);
+	public function read($itm_id) {
+		$data = array();
+		$data['itm'] = $this->items_model->get_item($itm_id);
+		if($data['itm']) {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/items/items_read', $data, true);
+		} else {
+			$this->index();
 		}
 	}
-	public function update() {
-		if($this->itm_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['itm'] = $this->items_model->get_item($this->itm_id);
+	public function update($itm_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['itm'] = $this->items_model->get_item($itm_id);
+		if($data['itm']) {
 			$data['select_item_parent'] = $this->items_model->select_item_parent();
 			$data['select_component'] = $this->items_model->select_component();
 			$data['select_section'] = $this->items_model->select_section();
@@ -138,6 +152,28 @@ class items extends CI_Controller {
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/items/items_update', $data, true);
 			} else {
+
+				foreach($this->storage_files as $file) {
+					if($this->input->post('delete_'.$file) && file_exists('storage/'.$this->storage_folder.'/'.$file.'/'.$data['itm']->{$file})) {
+						unlink('storage/'.$this->storage_folder.'/'.$file.'/'.$data['itm']->{$file});
+					}
+				}
+
+				foreach($this->storage_files as $file) {
+					$config = array();
+					$config['allowed_types'] = '*';
+					$config['encrypt_name'] = true;
+					$config['upload_path'] = 'storage/'.$this->storage_folder.'/'.$file;
+					$this->upload->initialize($config);
+					if($this->upload->do_upload($file)) {
+						if($data['itm']->{$file} && file_exists('storage/'.$this->storage_folder.'/'.$file.'/'.$data['itm']->{$file})) {
+							unlink('storage/'.$this->storage_folder.'/'.$file.'/'.$data['itm']->{$file});
+						}
+						$upload = $this->upload->data();
+						$this->db->set($file, $upload['file_name']);
+					}
+				}
+
 				$this->db->set('sct_id', $this->input->post('sct_id'));
 				$this->db->set('itm_parent', $this->input->post('itm_parent'));
 				$this->db->set('lay_id', $this->input->post('lay_id'));
@@ -158,47 +194,59 @@ class items extends CI_Controller {
 				$this->db->set('itm_modifiedby', $this->usr->usr_id);
 				$this->db->set('itm_datemodified', date('Y-m-d H:i:s'));
 				if($data['itm']->itm_islocked == 0) {
-					$this->db->set('itm_ispublished', $this->input->post('itm_ispublished'));
+					$this->db->set('itm_ispublished', checkbox2database($this->input->post('itm_ispublished')));
 				}
-				$this->db->where('itm_id', $this->itm_id);
+				$this->db->where('itm_id', $itm_id);
 				$this->db->update('itm');
 				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}
+		} else {
+			$this->index();
 		}
 	}
-	public function delete() {
-		if($this->itm_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['itm'] = $this->items_model->get_item($this->itm_id);
+	public function delete($itm_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['itm'] = $this->items_model->get_item($itm_id);
+		if($data['itm']) {
+			if($data['itm']->itm_islocked == 0) {
+				$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
 
-			$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
+				if($this->form_validation->run() == FALSE) {
+					$this->zones['content'] = $this->load->view('axipi_dynamic/items/items_delete', $data, true);
+				} else {
 
-			if($this->form_validation->run() == FALSE) {
-				$this->zones['content'] = $this->load->view('axipi_dynamic/items/items_delete', $data, true);
+					foreach($this->storage_files as $file) {
+						if($data['itm']->{$file} && file_exists('storage/'.$this->storage_folder.'/'.$file.'/'.$data['itm']->{$file})) {
+							unlink('storage/'.$this->storage_folder.'/'.$file.'/'.$data['itm']->{$file});
+						}
+					}
+
+					$this->db->where('itm_id', $itm_id);
+					$this->db->delete('grp_itm');
+
+					$this->db->where('itm_id', $itm_id);
+					$this->db->delete('itm_rel');
+
+					$this->db->where('rel_id', $itm_id);
+					$this->db->delete('itm_rel');
+
+					$this->db->where('itm_id', $itm_id);
+					$this->db->delete('itm_stg');
+
+					$this->db->where('itm_id', $itm_id);
+					$this->db->delete('itm_zon');
+
+					$this->db->where('itm_id', $itm_id);
+					$this->db->where('itm_islocked', 0);
+					$this->db->delete('itm');
+					$this->index();
+					$this->msg[] = $this->lang->line('deleted');
+				}
 			} else {
-				$this->db->where('itm_id', $this->itm_id);
-				$this->db->delete('grp_itm');
-
-				$this->db->where('itm_id', $this->itm_id);
-				$this->db->delete('itm_rel');
-
-				$this->db->where('rel_id', $this->itm_id);
-				$this->db->delete('itm_rel');
-
-				$this->db->where('itm_id', $this->itm_id);
-				$this->db->delete('itm_stg');
-
-				$this->db->where('itm_id', $this->itm_id);
-				$this->db->delete('itm_zon');
-
-				$this->db->where('itm_id', $this->itm_id);
-				$this->db->where('itm_islocked', 0);
-				$this->db->delete('itm');
 				$this->index();
-				$this->msg[] = $this->lang->line('deleted');
 			}
 		}
 	}

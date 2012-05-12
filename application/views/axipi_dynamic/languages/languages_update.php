@@ -1,7 +1,3 @@
-<?php
-if($lng) {
-?>
-
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
@@ -14,7 +10,7 @@ if($lng) {
 <div class="box1">
 <h1><?php echo $lng->lng_code; ?></h1>
 <ul>
-<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/?lng_id=<?php echo $lng->lng_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/<?php echo $lng->lng_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
 <li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>
 <div class="display">
@@ -23,7 +19,7 @@ if($lng) {
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open(current_url().'?lng_id='.$lng->lng_id); ?>
+<?php echo form_open(current_url()); ?>
 
 <div class="column1">
 <p><?php echo form_label($this->lang->line('lng_code').' *', 'lng_code'); ?><?php echo form_input('lng_code', set_value('lng_code', $lng->lng_code), 'id="lng_code" class="inputtext"'); ?></p>
@@ -39,11 +35,3 @@ if($lng) {
 
 </div>
 </div>
-
-<?php
-} else {
-?>
-
-<?php
-}
-?>

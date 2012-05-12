@@ -43,13 +43,13 @@
 
 <?php foreach($results as $result) { ?>
 <tr>
-<td><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/?sct_id=<?php echo $result->sct_id;?>"><?php echo $result->sct_id;?></a></td>
+<td><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/<?php echo $result->sct_id;?>"><?php echo $result->sct_id;?></a></td>
 <td><?php echo $result->sct_code; ?></td>
 <td><?php echo $result->lay_code; ?></td>
 <td><?php echo $result->count_items; ?></td>
 <th>
-<a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/?sct_id=<?php echo $result->sct_id;?>"><?php echo $this->lang->line('update'); ?></a>
-<?php if($result->count_items == 0 && $result->sct_islocked == 0) { ?><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_delete/?sct_id=<?php echo $result->sct_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
+<a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/<?php echo $result->sct_id;?>"><?php echo $this->lang->line('update'); ?></a>
+<?php if($result->count_items == 0 && $result->sct_islocked == 0) { ?><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_delete/<?php echo $result->sct_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
 </th>
 </tr>
 <?php } ?>

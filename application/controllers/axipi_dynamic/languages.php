@@ -6,12 +6,6 @@ class languages extends CI_Controller {
 
 		$this->load->language('axipi_dynamic');
 		$this->load->model('axipi_dynamic/languages_model', '', true);
-
-		if($this->input->get('lng_id')) {
-			$this->lng_id = $this->input->get('lng_id');
-		} else {
-			$this->lng_id = 0;
-		}
 	}
 	public function index() {
 		$this->load->helper(array('form'));
@@ -75,19 +69,21 @@ class languages extends CI_Controller {
 			$this->index();
 		}
 	}
-	public function read() {
-		if($this->lng_id != 0) {
-			$data = array();
-			$data['lng'] = $this->languages_model->get_language($this->lng_id);
+	public function read($lng_id) {
+		$data = array();
+		$data['lng'] = $this->languages_model->get_language($lng_id);
+		if($data['lng']) {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/languages/languages_read', $data, true);
+		} else {
+			$this->index();
 		}
 	}
-	public function update() {
-		if($this->lng_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['lng'] = $this->languages_model->get_language($this->lng_id);
+	public function update($lng_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['lng'] = $this->languages_model->get_language($lng_id);
+		if($data['lng']) {
 			$data['select_lng_defaultitem'] = $this->languages_model->select_lng_defaultitem();
 
 			$this->form_validation->set_rules('lng_code', 'lang:lng_code', 'required|exact_length[2]|callback_rule_lng_code['.$data['lng']->lng_code.']');
@@ -102,44 +98,49 @@ class languages extends CI_Controller {
 				$this->db->set('lng_defaultitem', $this->input->post('lng_defaultitem'));
 				$this->db->set('lng_modifiedby', $this->usr->usr_id);
 				$this->db->set('lng_datemodified', date('Y-m-d H:i:s'));
-				$this->db->where('lng_id', $this->lng_id);
+				$this->db->where('lng_id', $lng_id);
 				$this->db->update('lng');
 				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}
+		} else {
+			$this->index();
 		}
 	}
-	public function delete() {
-		if($this->lng_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['lng'] = $this->languages_model->get_language($this->lng_id);
-
-			$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
-
-			if($this->form_validation->run() == FALSE) {
-				$this->zones['content'] = $this->load->view('axipi_dynamic/languages/languages_delete', $data, true);
+	public function delete($lng_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['lng'] = $this->languages_model->get_language($lng_id);
+		if($data['lng']) {
+			if($data['lng']->lng_islocked == 0) {
+				$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
+	
+				if($this->form_validation->run() == FALSE) {
+					$this->zones['content'] = $this->load->view('axipi_dynamic/languages/languages_delete', $data, true);
+				} else {
+					$this->db->where('lng_id', $lng_id);
+					$this->db->delete('grp_trl');
+	
+					$this->db->where('lng_id', $lng_id);
+					$this->db->delete('hst_trl');
+	
+					$this->db->where('lng_id', $lng_id);
+					$this->db->delete('per_trl');
+	
+					$this->db->where('lng_id', $lng_id);
+					$this->db->delete('sct_trl');
+	
+					$this->db->where('lng_id', $lng_id);
+					$this->db->delete('trl_zon');
+	
+					$this->db->where('lng_id', $lng_id);
+					$this->db->where('lng_islocked', 0);
+					$this->db->delete('lng');
+					$this->msg[] = $this->lang->line('deleted');
+					$this->index();
+				}
 			} else {
-				$this->db->where('lng_id', $this->lng_id);
-				$this->db->delete('grp_trl');
-
-				$this->db->where('lng_id', $this->lng_id);
-				$this->db->delete('hst_trl');
-
-				$this->db->where('lng_id', $this->lng_id);
-				$this->db->delete('per_trl');
-
-				$this->db->where('lng_id', $this->lng_id);
-				$this->db->delete('sct_trl');
-
-				$this->db->where('lng_id', $this->lng_id);
-				$this->db->delete('trl_zon');
-
-				$this->db->where('lng_id', $this->lng_id);
-				$this->db->where('lng_islocked', 0);
-				$this->db->delete('lng');
-				$this->msg[] = $this->lang->line('deleted');
 				$this->index();
 			}
 		}

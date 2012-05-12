@@ -6,17 +6,6 @@ class items_zones extends CI_Controller {
 
 		$this->load->language('axipi_dynamic');
 		$this->load->model('axipi_dynamic/zones_model', '', true);
-
-		if($this->input->get('zon_id')) {
-			$this->zon_id = $this->input->get('zon_id');
-		} else {
-			$this->zon_id = 0;
-		}
-		if($this->input->get('itm_id')) {
-			$this->itm_id = $this->input->get('itm_id');
-		} else {
-			$this->itm_id = 0;
-		}
 	}
 	public function index() {
 		$this->load->helper(array('form'));
@@ -64,13 +53,13 @@ class items_zones extends CI_Controller {
 			return TRUE;
 		}
 	}
-	public function create() {
-		if($this->zon_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['zon'] = $this->zones_model->get_zone($this->zon_id);
-			$data['select_item'] = $this->zones_model->select_item($this->zon_id);
+	public function create($zon_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['zon'] = $this->zones_model->get_zone($zon_id);
+		if($data['zon']) {
+			$data['select_item'] = $this->zones_model->select_item($zon_id);
 	
 			$this->form_validation->set_rules('itm_id', 'lang:itm_code', 'required');
 			$this->form_validation->set_rules('itm_zon_ordering', 'lang:itm_zon_ordering', 'required|numeric');
@@ -78,7 +67,7 @@ class items_zones extends CI_Controller {
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/items_zones/items_zones_create', $data, true);
 			} else {
-				$this->db->set('zon_id', $this->zon_id);
+				$this->db->set('zon_id', $zon_id);
 				$this->db->set('itm_id', $this->input->post('itm_id'));
 				$this->db->set('itm_zon_ordering', $this->input->post('itm_zon_ordering'));
 				$this->db->set('itm_zon_createdby', $this->usr->usr_id);
@@ -89,25 +78,29 @@ class items_zones extends CI_Controller {
 				$this->msg[] = $this->lang->line('created');
 				$this->index();
 			}
+		} else {
+			$this->index();
 		}
 	}
-	public function read() {
-		if($this->zon_id != 0 && $this->itm_id != 0) {
-			$data = array();
-			$data['zon'] = $this->zones_model->get_zone($this->zon_id);
-			$data['itm'] = $this->items_model->get_item($this->itm_id);
-			$data['itm_zon'] = $this->zones_model->get_item_zone($this->zon_id, $this->itm_id);
+	public function read($zon_id, $itm_id) {
+		$data = array();
+		$data['itm_zon'] = $this->zones_model->get_item_zone($zon_id, $itm_id);
+		if($data['itm_zon']) {
+			$data['zon'] = $this->zones_model->get_zone($zon_id);
+			$data['itm'] = $this->items_model->get_item($itm_id);
 			$this->zones['content'] = $this->load->view('axipi_dynamic/items_zones/items_zones_read', $data, true);
+		} else {
+			$this->index();
 		}
 	}
-	public function update() {
-		if($this->zon_id != 0 && $this->itm_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['zon'] = $this->zones_model->get_zone($this->zon_id);
-			$data['itm'] = $this->items_model->get_item($this->itm_id);
-			$data['itm_zon'] = $this->zones_model->get_item_zone($this->zon_id, $this->itm_id);
+	public function update($zon_id, $itm_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['itm_zon'] = $this->zones_model->get_item_zone($zon_id, $itm_id);
+		if($data['itm_zon']) {
+			$data['zon'] = $this->zones_model->get_zone($zon_id);
+			$data['itm'] = $this->items_model->get_item($itm_id);
 
 			$this->form_validation->set_rules('itm_zon_ordering', 'lang:itm_zon_ordering', 'required|numeric');
 			$this->form_validation->set_rules('itm_zon_ispublished', 'lang:itm_zon_ispublished');
@@ -119,35 +112,39 @@ class items_zones extends CI_Controller {
 				$this->db->set('itm_zon_ispublished', $this->input->post('itm_zon_ispublished'));
 				$this->db->set('itm_zon_modifiedby', $this->usr->usr_id);
 				$this->db->set('itm_zon_datemodified', date('Y-m-d H:i:s'));
-				$this->db->where('zon_id', $this->zon_id);
-				$this->db->where('itm_id', $this->itm_id);
+				$this->db->where('zon_id', $zon_id);
+				$this->db->where('itm_id', $itm_id);
 				$this->db->update('itm_zon');
 
 				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}
+		} else {
+			$this->index();
 		}
 	}
-	public function delete() {
-		if($this->zon_id != 0 && $this->itm_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['zon'] = $this->zones_model->get_zone($this->zon_id);
-			$data['itm'] = $this->items_model->get_item($this->itm_id);
-			$data['itm_zon'] = $this->zones_model->get_item_zone($this->zon_id, $this->itm_id);
+	public function delete($zon_id, $itm_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['itm_zon'] = $this->zones_model->get_item_zone($zon_id, $itm_id);
+		if($data['itm_zon']) {
+			$data['zon'] = $this->zones_model->get_zone($zon_id);
+			$data['itm'] = $this->items_model->get_item($itm_id);
 
 			$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
 
 			if($this->form_validation->run() == FALSE) {
 				$this->zones['content'] = $this->load->view('axipi_dynamic/items_zones/items_zones_delete', $data, true);
 			} else {
-				$this->db->where('zon_id', $this->zon_id);
-				$this->db->where('itm_id', $this->itm_id);
+				$this->db->where('zon_id', $zon_id);
+				$this->db->where('itm_id', $itm_id);
 				$this->db->delete('itm_zon');
 				$this->index();
 				$this->msg[] = $this->lang->line('deleted');
 			}
+		} else {
+			$this->index();
 		}
 	}
 }

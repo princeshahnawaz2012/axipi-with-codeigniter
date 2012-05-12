@@ -102,7 +102,9 @@ class items_model extends CI_Model {
     function get_item($itm_id) {
         $query = $this->db->query('SELECT itm.*, cmp.cmp_code, sct.sct_code, lng.lng_code, COUNT(DISTINCT(items.itm_id)) AS count_items FROM '.$this->db->dbprefix('itm').' AS itm LEFT JOIN '.$this->db->dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id LEFT JOIN '.$this->db->dbprefix('sct').' AS sct ON sct.sct_id = itm.sct_id LEFT JOIN '.$this->db->dbprefix('lng').' AS lng ON lng.lng_id = itm.lng_id LEFT JOIN itm AS items ON items.itm_parent = itm.itm_id WHERE itm.itm_id = ? GROUP BY itm.itm_id', array($itm_id));
 		$itm = $query->row();
-		list($itm->itm_publishstartdate, $itm->itm_publishstarttime) = explode(' ', $itm->itm_publishstartdate);
+		if($itm) {
+			list($itm->itm_publishstartdate, $itm->itm_publishstarttime) = explode(' ', $itm->itm_publishstartdate);
+		}
         return $itm;
     }
     function get_all_items_relations($flt) {

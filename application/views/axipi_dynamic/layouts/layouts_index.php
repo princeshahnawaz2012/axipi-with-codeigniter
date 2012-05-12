@@ -43,13 +43,13 @@
 
 <?php foreach($results as $result) { ?>
 <tr>
-<td><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/?lay_id=<?php echo $result->lay_id;?>"><?php echo $result->lay_id;?></a></td>
+<td><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/<?php echo $result->lay_id;?>"><?php echo $result->lay_id;?></a></td>
 <td><?php echo $result->lay_code; ?></td>
 <td><?php echo $result->lay_type; ?></td>
 <td><?php echo $result->count_sections; ?></td>
 <th>
-<a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/?lay_id=<?php echo $result->lay_id;?>"><?php echo $this->lang->line('update'); ?></a>
-<?php if($result->count_sections == 0 && $result->lay_islocked == 0) { ?><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_delete/?lay_id=<?php echo $result->lay_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
+<a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/<?php echo $result->lay_id;?>"><?php echo $this->lang->line('update'); ?></a>
+<?php if($result->count_sections == 0 && $result->lay_islocked == 0) { ?><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_delete/<?php echo $result->lay_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
 </th>
 </tr>
 <?php } ?>

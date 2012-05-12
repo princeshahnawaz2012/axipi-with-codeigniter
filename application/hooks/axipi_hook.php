@@ -3,6 +3,7 @@
 class axipi_hook {
 	public function post_controller_constructor() {
 		$this->CI =& get_instance();
+		$this->CI->zones = array();
 
 		$query = $this->CI->db->query('SELECT * FROM '.$this->CI->db->dbprefix('cmp').' AS cmp WHERE cmp_id = ?', array($this->CI->itm->cmp_id));
 		$this->CI->cmp = $query->row();

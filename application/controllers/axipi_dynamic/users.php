@@ -7,12 +7,6 @@ class users extends CI_Controller {
 		$this->load->language('axipi_dynamic');
 		$this->load->model('axipi_dynamic/users_model', '', true);
 		$this->axipi_library->jquery_load('jquery');
-
-		if($this->input->get('usr_id')) {
-			$this->usr_id = $this->input->get('usr_id');
-		} else {
-			$this->usr_id = 0;
-		}
 	}
 	public function index() {
 		$this->load->helper(array('form'));
@@ -77,20 +71,21 @@ class users extends CI_Controller {
 			$this->index();
 		}
 	}
-	public function read() {
-		if($this->usr_id != 0) {
-			$data = array();
-			$data['usr'] = $this->users_model->get_user($this->usr_id);
+	public function read($usr_id) {
+		$data = array();
+		$data['usr'] = $this->users_model->get_user($usr_id);
+		if($data['usr']) {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/users/users_read', $data, true);
+		} else {
+			$this->index();
 		}
 	}
-	public function update() {
-		if($this->usr_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['usr'] = $this->users_model->get_user($this->usr_id);
-
+	public function update($usr_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['usr'] = $this->users_model->get_user($usr_id);
+		if($data['usr']) {
 			$this->form_validation->set_rules('usr_email', 'lang:usr_email', 'required|max_length[100]|valid_email|callback_rule_usr_email['.$data['usr']->usr_email.']');
 			$this->form_validation->set_rules('usr_emailconfirm', 'lang:usr_emailconfirm', 'required|max_length[100]|valid_email|matches[usr_email]');
 			$this->form_validation->set_rules('usr_passwordconfirm', 'lang:usr_passwordconfirm', 'matches[usr_password]');
@@ -108,36 +103,41 @@ class users extends CI_Controller {
 				$this->db->set('usr_lastname', $this->input->post('usr_lastname'));
 				$this->db->set('usr_modifiedby', $this->usr->usr_id);
 				$this->db->set('usr_datemodified', date('Y-m-d H:i:s'));
-				$this->db->where('usr_id', $this->usr_id);
+				$this->db->where('usr_id', $usr_id);
 				$this->db->update('usr');
 				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}
+		} else {
+			$this->index();
 		}
 	}
-	public function delete() {
-		if($this->usr_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['usr'] = $this->users_model->get_user($this->usr_id);
+	public function delete($usr_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['usr'] = $this->users_model->get_user($usr_id);
+		if($data['usr']) {
+			if($data['usr']->usr_islocked == 0) {
+				$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
 
-			$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
+				if($this->form_validation->run() == FALSE) {
+					$this->zones['content'] = $this->load->view('axipi_dynamic/users/users_delete', $data, true);
+				} else {
+					$this->db->where('usr_id', $usr_id);
+					$this->db->delete('cnt_usr');
 
-			if($this->form_validation->run() == FALSE) {
-				$this->zones['content'] = $this->load->view('axipi_dynamic/users/users_delete', $data, true);
+					$this->db->where('usr_id', $usr_id);
+					$this->db->where('grp_usr_islocked', 0);
+					$this->db->delete('grp_usr');
+
+					$this->db->where('usr_id', $usr_id);
+					$this->db->where('usr_islocked', 0);
+					$this->db->delete('usr');
+					$this->msg[] = $this->lang->line('deleted');
+					$this->index();
+				}
 			} else {
-				$this->db->where('usr_id', $this->usr_id);
-				$this->db->delete('cnt_usr');
-
-				$this->db->where('usr_id', $this->usr_id);
-				$this->db->where('grp_usr_islocked', 0);
-				$this->db->delete('grp_usr');
-
-				$this->db->where('usr_id', $this->usr_id);
-				$this->db->where('usr_islocked', 0);
-				$this->db->delete('usr');
-				$this->msg[] = $this->lang->line('deleted');
 				$this->index();
 			}
 		}

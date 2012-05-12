@@ -1,7 +1,3 @@
-<?php
-if($lay) {
-?>
-
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
@@ -14,8 +10,8 @@ if($lay) {
 <div class="box1">
 <h1><?php echo $lay->lay_code; ?></h1>
 <ul>
-<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/?lay_id=<?php echo $lay->lay_id; ?>"><?php echo $this->lang->line('update'); ?></a></li>
-<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/?lay_id=<?php echo $lay->lay_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/<?php echo $lay->lay_id; ?>"><?php echo $this->lang->line('update'); ?></a></li>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/<?php echo $lay->lay_id; ?>"><?php echo $this->lang->line('read'); ?></a></li>
 <li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>
 <div class="display">
@@ -24,7 +20,7 @@ if($lay) {
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open(current_url().'?lay_id='.$lay->lay_id); ?>
+<?php echo form_open(current_url()); ?>
 
 <div class="column1">
 <p><?php echo form_label($this->lang->line('confirm').' *', 'confirm'); ?><?php echo form_checkbox('confirm', 1, false, 'id="confirm" class="inputcheckbox"'); ?></p>
@@ -35,11 +31,3 @@ if($lay) {
 
 </div>
 </div>
-
-<?php
-} else {
-?>
-
-<?php
-}
-?>

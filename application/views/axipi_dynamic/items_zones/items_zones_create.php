@@ -18,7 +18,7 @@
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open(current_url().'?zon_id='.$zon->zon_id); ?>
+<?php echo form_open(current_url()); ?>
 
 <div class="column1">
 <p><?php echo form_label($this->lang->line('itm_code').' *', 'itm_id'); ?><?php echo form_dropdown('itm_id', $select_item, set_value('itm_id'), 'id="itm_id" class="select"'); ?></p>

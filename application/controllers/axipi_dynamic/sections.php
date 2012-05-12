@@ -6,12 +6,6 @@ class sections extends CI_Controller {
 
 		$this->load->language('axipi_dynamic');
 		$this->load->model('axipi_dynamic/sections_model', '', true);
-
-		if($this->input->get('sct_id')) {
-			$this->sct_id = $this->input->get('sct_id');
-		} else {
-			$this->sct_id = 0;
-		}
 	}
 	public function index() {
 		$this->load->helper(array('form'));
@@ -55,7 +49,7 @@ class sections extends CI_Controller {
 		$this->load->library('form_validation');
 		$data = array();
 		$data['select_layout'] = $this->sections_model->select_layout();
-		$data['translations'] = $this->sections_model->get_translations($this->sct_id);
+		$data['translations'] = $this->sections_model->get_translations(0);
 
 		$this->form_validation->set_rules('sct_code', 'lang:sct_code', 'required|max_length[100]|callback_rule_sct_code');
 		$this->form_validation->set_rules('lay_id', 'lang:lay_code', 'required');
@@ -87,22 +81,24 @@ class sections extends CI_Controller {
 			$this->index();
 		}
 	}
-	public function read() {
-		if($this->sct_id != 0) {
-			$data = array();
-			$data['sct'] = $this->sections_model->get_section($this->sct_id);
-			$data['translations'] = $this->sections_model->get_translations($this->sct_id);
+	public function read($sct_id) {
+		$data = array();
+		$data['sct'] = $this->sections_model->get_section($sct_id);
+		if($data['sct']) {
+			$data['translations'] = $this->sections_model->get_translations($sct_id);
 			$this->zones['content'] = $this->load->view('axipi_dynamic/sections/sections_read', $data, true);
+		} else {
+			$this->index();
 		}
 	}
-	public function update() {
-		if($this->sct_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['sct'] = $this->sections_model->get_section($this->sct_id);
+	public function update($sct_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['sct'] = $this->sections_model->get_section($sct_id);
+		if($data['sct']) {
 			$data['select_layout'] = $this->sections_model->select_layout();
-			$data['translations'] = $this->sections_model->get_translations($this->sct_id);
+			$data['translations'] = $this->sections_model->get_translations($sct_id);
 
 			$this->form_validation->set_rules('sct_code', 'lang:sct_code', 'required|max_length[100]|callback_rule_sct_code['.$data['sct']->sct_code.']');
 			$this->form_validation->set_rules('lay_id', 'lang:lay_code', 'required');
@@ -117,7 +113,7 @@ class sections extends CI_Controller {
 				$this->db->set('sct_code', $this->input->post('sct_code'));
 				$this->db->set('sct_modifiedby', $this->usr->usr_id);
 				$this->db->set('sct_datemodified', date('Y-m-d H:i:s'));
-				$this->db->where('sct_id', $this->sct_id);
+				$this->db->where('sct_id', $sct_id);
 				$this->db->update('sct');
 
 				foreach($data['translations'] as $trl) {
@@ -125,11 +121,11 @@ class sections extends CI_Controller {
 					$this->db->set('sct_trl_description', $this->input->post('description'.$trl->lng_id));
 					$this->db->set('sct_trl_keywords', $this->input->post('keywords'.$trl->lng_id));
 					if($trl->sct_id) {
-						$this->db->where('sct_id', $this->sct_id);
+						$this->db->where('sct_id', $sct_id);
 						$this->db->where('lng_id', $trl->lng_id);
 						$this->db->update('sct_trl');
 					} else {
-						$this->db->set('sct_id', $this->sct_id);
+						$this->db->set('sct_id', $sct_id);
 						$this->db->set('lng_id', $trl->lng_id);
 						$this->db->insert('sct_trl');
 					}
@@ -138,27 +134,32 @@ class sections extends CI_Controller {
 				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}
+		} else {
+			$this->index();
 		}
 	}
-	public function delete() {
-		if($this->sct_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['sct'] = $this->sections_model->get_section($this->sct_id);
+	public function delete($sct_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['sct'] = $this->sections_model->get_section($sct_id);
+		if($data['sct']) {
+			if($data['sct']->sct_islocked == 0) {
+				$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
 
-			$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
+				if($this->form_validation->run() == FALSE) {
+					$this->zones['content'] = $this->load->view('axipi_dynamic/sections/sections_delete', $data, true);
+				} else {
+					$this->db->where('sct_id', $sct_id);
+					$this->db->delete('sct_trl');
 
-			if($this->form_validation->run() == FALSE) {
-				$this->zones['content'] = $this->load->view('axipi_dynamic/sections/sections_delete', $data, true);
+					$this->db->where('sct_id', $sct_id);
+					$this->db->where('sct_islocked', 0);
+					$this->db->delete('sct');
+					$this->msg[] = $this->lang->line('deleted');
+					$this->index();
+				}
 			} else {
-				$this->db->where('sct_id', $this->sct_id);
-				$this->db->delete('sct_trl');
-
-				$this->db->where('sct_id', $this->sct_id);
-				$this->db->where('sct_islocked', 0);
-				$this->db->delete('sct');
-				$this->msg[] = $this->lang->line('deleted');
 				$this->index();
 			}
 		}

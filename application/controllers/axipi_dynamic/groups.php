@@ -6,12 +6,6 @@ class groups extends CI_Controller {
 
 		$this->load->language('axipi_dynamic');
 		$this->load->model('axipi_dynamic/groups_model', '', true);
-
-		if($this->input->get('grp_id')) {
-			$this->grp_id = $this->input->get('grp_id');
-		} else {
-			$this->grp_id = 0;
-		}
 	}
 	public function index() {
 		$this->load->helper(array('form'));
@@ -55,7 +49,7 @@ class groups extends CI_Controller {
 		$this->load->helper(array('form'));
 		$this->load->library('form_validation');
 		$data = array();
-		$data['translations'] = $this->groups_model->get_translations($this->grp_id);
+		$data['translations'] = $this->groups_model->get_translations(0);
 
 		$this->form_validation->set_rules('grp_code', 'lang:grp_code', 'required|max_length[100]|callback_rule_grp_code');
 		$this->form_validation->set_rules('grp_isitem', 'lang:grp_isitem');
@@ -89,21 +83,23 @@ class groups extends CI_Controller {
 			$this->index();
 		}
 	}
-	public function read() {
-		if($this->grp_id != 0) {
-			$data = array();
-			$data['grp'] = $this->groups_model->get_group($this->grp_id);
-			$data['translations'] = $this->groups_model->get_translations($this->grp_id);
+	public function read($grp_id) {
+		$data = array();
+		$data['grp'] = $this->groups_model->get_group($grp_id);
+		if($data['grp']) {
+			$data['translations'] = $this->groups_model->get_translations($grp_id);
 			$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_read', $data, true);
+		} else {
+			$this->index();
 		}
 	}
-	public function update() {
-		if($this->grp_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['grp'] = $this->groups_model->get_group($this->grp_id);
-			$data['translations'] = $this->groups_model->get_translations($this->grp_id);
+	public function update($grp_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['grp'] = $this->groups_model->get_group($grp_id);
+		if($data['grp']) {
+			$data['translations'] = $this->groups_model->get_translations($grp_id);
 
 			$this->form_validation->set_rules('grp_code', 'lang:grp_code', 'required|max_length[100]|callback_rule_grp_code['.$data['grp']->grp_code.']');
 			$this->form_validation->set_rules('grp_isitem', 'lang:grp_isitem');
@@ -122,17 +118,17 @@ class groups extends CI_Controller {
 				$this->db->set('grp_ispermission', checkbox2database($this->input->post('grp_ispermission')));
 				$this->db->set('grp_modifiedby', $this->usr->usr_id);
 				$this->db->set('grp_datemodified', date('Y-m-d H:i:s'));
-				$this->db->where('grp_id', $this->grp_id);
+				$this->db->where('grp_id', $grp_id);
 				$this->db->update('grp');
 
 				foreach($data['translations'] as $trl) {
 					$this->db->set('grp_trl_title', $this->input->post('title'.$trl->lng_id));
 					if($trl->grp_id) {
-						$this->db->where('grp_id', $this->grp_id);
+						$this->db->where('grp_id', $grp_id);
 						$this->db->where('lng_id', $trl->lng_id);
 						$this->db->update('grp_trl');
 					} else {
-						$this->db->set('grp_id', $this->grp_id);
+						$this->db->set('grp_id', $grp_id);
 						$this->db->set('lng_id', $trl->lng_id);
 						$this->db->insert('grp_trl');
 					}
@@ -141,38 +137,43 @@ class groups extends CI_Controller {
 				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}
+		} else {
+			$this->index();
 		}
 	}
-	public function delete() {
-		if($this->grp_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['grp'] = $this->groups_model->get_group($this->grp_id);
-
-			$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
-
-			if($this->form_validation->run() == FALSE) {
-				$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_delete', $data, true);
+	public function delete($grp_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['grp'] = $this->groups_model->get_group($grp_id);
+		if($data['grp']) {
+			if($data['grp']->grp_islocked == 0) {
+				$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
+	
+				if($this->form_validation->run() == FALSE) {
+					$this->zones['content'] = $this->load->view('axipi_dynamic/groups/groups_delete', $data, true);
+				} else {
+					$this->db->where('grp_id', $grp_id);
+					$this->db->delete('grp_itm');
+	
+					$this->db->where('grp_id', $grp_id);
+					$this->db->delete('grp_trl');
+	
+					$this->db->where('grp_id', $grp_id);
+					$this->db->where('grp_per_islocked', 0);
+					$this->db->delete('grp_per');
+	
+					$this->db->where('grp_id', $grp_id);
+					$this->db->where('grp_usr_islocked', 0);
+					$this->db->delete('grp_usr');
+	
+					$this->db->where('grp_id', $grp_id);
+					$this->db->where('grp_islocked', 0);
+					$this->db->delete('grp');
+					$this->msg[] = $this->lang->line('deleted');
+					$this->index();
+				}
 			} else {
-				$this->db->where('grp_id', $this->grp_id);
-				$this->db->delete('grp_itm');
-
-				$this->db->where('grp_id', $this->grp_id);
-				$this->db->delete('grp_trl');
-
-				$this->db->where('grp_id', $this->grp_id);
-				$this->db->where('grp_per_islocked', 0);
-				$this->db->delete('grp_per');
-
-				$this->db->where('grp_id', $this->grp_id);
-				$this->db->where('grp_usr_islocked', 0);
-				$this->db->delete('grp_usr');
-
-				$this->db->where('grp_id', $this->grp_id);
-				$this->db->where('grp_islocked', 0);
-				$this->db->delete('grp');
-				$this->msg[] = $this->lang->line('deleted');
 				$this->index();
 			}
 		}

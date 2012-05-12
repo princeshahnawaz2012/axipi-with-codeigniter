@@ -46,7 +46,7 @@
 
 <?php foreach($results as $result) { ?>
 <tr>
-<td><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/?hst_id=<?php echo $result->hst_id;?>"><?php echo $result->hst_id;?></a></td>
+<td><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_read/<?php echo $result->hst_id;?>"><?php echo $result->hst_id;?></a></td>
 <td><?php echo $result->hst_code; ?></td>
 <td><?php echo $result->hst_url; ?></td>
 <td><?php echo $result->hst_environment; ?></td>
@@ -54,8 +54,8 @@
 <td><?php echo $this->lang->line('reply_'.$result->hst_debug); ?></td>
 <td><?php echo $result->lay_code; ?></td>
 <th>
-<a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/?hst_id=<?php echo $result->hst_id;?>"><?php echo $this->lang->line('update'); ?></a>
-<?php if($result->hst_islocked == 0) { ?><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_delete/?hst_id=<?php echo $result->hst_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
+<a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/<?php echo $result->hst_id;?>"><?php echo $this->lang->line('update'); ?></a>
+<?php if($result->hst_islocked == 0) { ?><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_delete/<?php echo $result->hst_id;?>"><?php echo $this->lang->line('delete'); ?></a><?php } ?>
 </th>
 </tr>
 <?php } ?>

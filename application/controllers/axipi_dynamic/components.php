@@ -6,12 +6,6 @@ class components extends CI_Controller {
 
 		$this->load->language('axipi_dynamic');
 		$this->load->model('axipi_dynamic/components_model', '', true);
-
-		if($this->input->get('cmp_id')) {
-			$this->cmp_id = $this->input->get('cmp_id');
-		} else {
-			$this->cmp_id = 0;
-		}
 	}
 	public function index() {
 		$this->load->helper(array('form'));
@@ -80,19 +74,21 @@ class components extends CI_Controller {
 			$this->index();
 		}
 	}
-	public function read() {
-		if($this->cmp_id != 0) {
-			$data = array();
-			$data['cmp'] = $this->components_model->get_component($this->cmp_id);
+	public function read($cmp_id) {
+		$data = array();
+		$data['cmp'] = $this->components_model->get_component($cmp_id);
+		if($data['cmp']) {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/components/components_read', $data, true);
+		} else {
+			$this->index();
 		}
 	}
-	public function update() {
-		if($this->cmp_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['cmp'] = $this->components_model->get_component($this->cmp_id);
+	public function update($cmp_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['cmp'] = $this->components_model->get_component($cmp_id);
+		if($data['cmp']) {
 			$data['select_layout'] = $this->items_model->select_layout();
 
 			$this->form_validation->set_rules('cmp_code', 'lang:cmp_code', 'required|max_length[100]|callback_rule_cmp_code['.$data['cmp']->cmp_code.']');
@@ -110,32 +106,37 @@ class components extends CI_Controller {
 				$this->db->set('cmp_isrelation', checkbox2database($this->input->post('cmp_isrelation')));
 				$this->db->set('cmp_modifiedby', $this->usr->usr_id);
 				$this->db->set('cmp_datemodified', date('Y-m-d H:i:s'));
-				$this->db->where('cmp_id', $this->cmp_id);
+				$this->db->where('cmp_id', $cmp_id);
 				$this->db->update('cmp');
 				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}
+		} else {
+			$this->index();
 		}
 	}
-	public function delete() {
-		if($this->cmp_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['cmp'] = $this->components_model->get_component($this->cmp_id);
+	public function delete($cmp_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['cmp'] = $this->components_model->get_component($cmp_id);
+		if($data['cmp']) {
+			if($data['cmp']->cmp_islocked == 0) {
+				$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
 
-			$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
+				if($this->form_validation->run() == FALSE) {
+					$this->zones['content'] = $this->load->view('axipi_dynamic/components/components_delete', $data, true);
+				} else {
+					$this->db->where('cmp_id', $cmp_id);
+					$this->db->delete('cmp_stg');
 
-			if($this->form_validation->run() == FALSE) {
-				$this->zones['content'] = $this->load->view('axipi_dynamic/components/components_delete', $data, true);
+					$this->db->where('cmp_id', $cmp_id);
+					$this->db->where('cmp_islocked', 0);
+					$this->db->delete('cmp');
+					$this->msg[] = $this->lang->line('deleted');
+					$this->index();
+				}
 			} else {
-				$this->db->where('cmp_id', $this->cmp_id);
-				$this->db->delete('cmp_stg');
-
-				$this->db->where('cmp_id', $this->cmp_id);
-				$this->db->where('cmp_islocked', 0);
-				$this->db->delete('cmp');
-				$this->msg[] = $this->lang->line('deleted');
 				$this->index();
 			}
 		}

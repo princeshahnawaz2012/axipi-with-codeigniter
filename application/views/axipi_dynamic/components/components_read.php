@@ -1,11 +1,8 @@
-<?php
-if($cmp) {
-?>
-
 <div class="box-breadcrumbs box1">
 <div class="display">
 <ul>
 <li class="first"><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('components'); ?></a></li>
+<li><?php echo $cmp->cmp_code; ?></li>
 <li><?php echo $this->lang->line('read'); ?></li>
 </ul>
 </div>
@@ -14,7 +11,8 @@ if($cmp) {
 <div class="box1">
 <h1><?php echo $cmp->cmp_code; ?></h1>
 <ul>
-<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/?cmp_id=<?php echo $cmp->cmp_id; ?>"><?php echo $this->lang->line('update'); ?></a></li>
+<?php if($cmp->cmp_islocked == 0) { ?><li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_delete/<?php echo $cmp->cmp_id; ?>"><?php echo $this->lang->line('delete'); ?></a></li><?php } ?>
+<li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>/_update/<?php echo $cmp->cmp_id; ?>"><?php echo $this->lang->line('update'); ?></a></li>
 <li><a href="<?php echo base_url(); ?><?php echo $this->itm->itm_code; ?>"><?php echo $this->lang->line('index'); ?></a></li>
 </ul>
 <div class="display">
@@ -33,11 +31,3 @@ if($cmp) {
 
 </div>
 </div>
-
-<?php
-} else {
-?>
-
-<?php
-}
-?>

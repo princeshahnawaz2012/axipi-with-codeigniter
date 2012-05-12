@@ -25,7 +25,7 @@
 
 	<div id="box-content">
 	<div id="display-content">
-	<?php echo $zones['content']; ?>
+	<?php if(isset($zones['content']) == 1) { echo $zones['content']; } ?>
 	</div>
 	</div>
 

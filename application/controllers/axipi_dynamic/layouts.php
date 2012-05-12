@@ -6,12 +6,6 @@ class layouts extends CI_Controller {
 
 		$this->load->language('axipi_dynamic');
 		$this->load->model('axipi_dynamic/layouts_model', '', true);
-
-		if($this->input->get('lay_id')) {
-			$this->lay_id = $this->input->get('lay_id');
-		} else {
-			$this->lay_id = 0;
-		}
 	}
 	public function index() {
 		$this->load->helper(array('form'));
@@ -71,20 +65,21 @@ class layouts extends CI_Controller {
 			$this->index();
 		}
 	}
-	public function read() {
-		if($this->lay_id != 0) {
-			$data = array();
-			$data['lay'] = $this->layouts_model->get_layout($this->lay_id);
+	public function read($lay_id) {
+		$data = array();
+		$data['lay'] = $this->layouts_model->get_layout($lay_id);
+		if($data['lay']) {
 			$this->zones['content'] = $this->load->view('axipi_dynamic/layouts/layouts_read', $data, true);
+		} else {
+			$this->index();
 		}
 	}
-	public function update() {
-		if($this->lay_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['lay'] = $this->layouts_model->get_layout($this->lay_id);
-
+	public function update($lay_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['lay'] = $this->layouts_model->get_layout($lay_id);
+		if($data['lay']) {
 			$this->form_validation->set_rules('lay_code', 'lang:lay_code', 'required|max_length[100]|callback_rule_lay_code['.$data['lay']->lay_code.']');
 			$this->form_validation->set_rules('lay_type', 'lang:lay_type', 'required|max_length[100]');
 
@@ -95,32 +90,37 @@ class layouts extends CI_Controller {
 				$this->db->set('lay_type', $this->input->post('lay_type'));
 				$this->db->set('lay_modifiedby', $this->usr->usr_id);
 				$this->db->set('lay_datemodified', date('Y-m-d H:i:s'));
-				$this->db->where('lay_id', $this->lay_id);
+				$this->db->where('lay_id', $lay_id);
 				$this->db->update('lay');
 				$this->msg[] = $this->lang->line('updated');
 				$this->index();
 			}
+		} else {
+			$this->index();
 		}
 	}
-	public function delete() {
-		if($this->lay_id != 0) {
-			$this->load->helper(array('form'));
-			$this->load->library('form_validation');
-			$data = array();
-			$data['lay'] = $this->layouts_model->get_layout($this->lay_id);
+	public function delete($lay_id) {
+		$this->load->helper(array('form'));
+		$this->load->library('form_validation');
+		$data = array();
+		$data['lay'] = $this->layouts_model->get_layout($lay_id);
+		if($data['lay']) {
+			if($data['lay']->lay_islocked == 0) {
+				$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
 
-			$this->form_validation->set_rules('confirm', 'lang:confirm', 'required');
+				if($this->form_validation->run() == FALSE) {
+					$this->zones['content'] = $this->load->view('axipi_dynamic/layouts/layouts_delete', $data, true);
+				} else {
+					$this->db->where('lay_id', $lay_id);
+					$this->db->delete('zon');
 
-			if($this->form_validation->run() == FALSE) {
-				$this->zones['content'] = $this->load->view('axipi_dynamic/layouts/layouts_delete', $data, true);
+					$this->db->where('lay_id', $lay_id);
+					$this->db->where('lay_islocked', 0);
+					$this->db->delete('lay');
+					$this->msg[] = $this->lang->line('deleted');
+					$this->index();
+				}
 			} else {
-				$this->db->where('lay_id', $this->lay_id);
-				$this->db->delete('zon');
-
-				$this->db->where('lay_id', $this->lay_id);
-				$this->db->where('lay_islocked', 0);
-				$this->db->delete('lay');
-				$this->msg[] = $this->lang->line('deleted');
 				$this->index();
 			}
 		}
