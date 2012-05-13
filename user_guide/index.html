@@ -18,7 +18,7 @@ Open the <strong>/application/config/database.php</strong> file with a text edit
 
 <p>The default account is <strong>install@axipi.com</strong> with the password <strong>install</strong>.</p>
 
-<p>The backend page is available at <strong>/axipi</strong>.</p>
+<p>The backend is available at <strong>/axipi</strong>.</p>
 
 <h1>Changes on CodeIgniter</h1>
 
@@ -149,7 +149,7 @@ Open the <strong>/application/config/database.php</strong> file with a text edit
 
 <h3>/system/libraries/Driver.php</h3>
 
-<p>To solve "Accessing static property Auth::$lib_name as non static" error</p>
+<p>To solve "Accessing static property Auth::$lib_name as non static"</p>
 <p><pre>33c33
 < 	protected static $lib_name;
 ---
@@ -157,7 +157,7 @@ Open the <strong>/application/config/database.php</strong> file with a text edit
 
 <h3>/system/libraries/Upload.php</h3>
 
-<p>To solve "Undefined index: tmp_path" error</p>
+<p>To solve "Undefined index: tmp_path"</p>
 <p><pre>1055c1055
 < 		if (DIRECTORY_SEPARATOR !== '\\' && function_exists('exec'))
 ---
