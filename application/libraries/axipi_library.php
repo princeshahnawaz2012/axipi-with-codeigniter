@@ -65,8 +65,8 @@ class axipi_library {
 		if($query->num_rows() > 0) {
 			$itm = $query->row();
 			list($directory, $class) = explode('/', $itm->cmp_code);
-			if(file_exists(APPPATH.'widgets/'.$itm->cmp_code.EXT)) {
-				require_once APPPATH.'widgets/'.$itm->cmp_code.EXT;
+			if(file_exists(APPPATH.'controllers/'.$itm->cmp_code.EXT)) {
+				require_once APPPATH.'controllers/'.$itm->cmp_code.EXT;
 				$widget = new $class();
 				$widget->data = $itm;
 				foreach(get_object_vars($this->CI) as $key => $object) {

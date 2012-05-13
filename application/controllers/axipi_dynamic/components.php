@@ -25,7 +25,7 @@ class components extends CI_Controller {
 		$col = build_columns('components', $columns, 'cmp.cmp_id', 'DESC');
 
 		$results = $this->components_model->get_all_components($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'components');
+		$build_pagination = $this->axipi_library->build_pagination($results->count, 50, 'components');
 
 		$data = array();
 		$data['columns'] = $col;

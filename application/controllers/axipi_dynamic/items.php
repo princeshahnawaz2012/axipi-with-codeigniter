@@ -35,7 +35,7 @@ class items extends CI_Controller {
 		$col = build_columns('items', $columns, 'itm.itm_id', 'DESC');
 
 		$results = $this->items_model->get_all_items($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'items');
+		$build_pagination = $this->axipi_library->build_pagination($results->count, 50, 'items');
 
 		$data = array();
 		$data['columns'] = $col;

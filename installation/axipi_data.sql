@@ -10,7 +10,6 @@ INSERT INTO `cmp` (`cmp_id`, `lay_id`, `cmp_code`, `cmp_ispage`, `cmp_isexcludep
 (1004, NULL, 'axipi_dynamic/items', 1, 0, 0, 0, 0, NULL, '2012-01-01 00:00:00', NULL, NULL, 1, 1),
 (1005, NULL, 'axipi_dynamic/languages', 1, 0, 0, 0, 0, NULL, '2012-01-01 00:00:00', NULL, NULL, 1, 0),
 (1006, NULL, 'axipi_dynamic/sections', 1, 0, 0, 0, 0, NULL, '2012-01-01 00:00:00', NULL, NULL, 1, 0),
-(1008, NULL, 'axipi_core/zone_breadcrumbs', 0, 0, 1, 0, 0, NULL, '2012-01-01 00:00:00', NULL, NULL, 1, 0),
 (1009, NULL, 'axipi_dynamic/groups', 1, 0, 0, 0, 0, NULL, '2012-01-01 00:00:00', NULL, NULL, 1, 1),
 (1010, NULL, 'axipi_core/zone_errors', 0, 0, 1, 0, 0, NULL, '2012-01-01 00:00:00', NULL, NULL, 1, 0),
 (1011, NULL, 'axipi_core/zone_messages', 0, 0, 1, 0, 0, NULL, '2012-01-01 00:00:00', NULL, NULL, 1, 0),
@@ -37,7 +36,6 @@ INSERT INTO `cmp` (`cmp_id`, `lay_id`, `cmp_code`, `cmp_ispage`, `cmp_isexcludep
 (1078, NULL, 'axipi_core/medias', 1, 0, 0, 0, 0, NULL, '2012-01-01 00:00:00', NULL, NULL, 1, 0),
 (1084, NULL, 'axipi_core/lostpassword', 1, 0, 0, 0, 0, NULL, '2012-01-01 00:00:00', NULL, NULL, 1, 0),
 (1085, NULL, 'axipi_core/goodies', 1, 0, 0, 0, 0, NULL, '2012-01-01 00:00:00', NULL, NULL, 1, 0),
-(1095, NULL, 'axipi_core/redirect301', 1, 0, 0, 0, 0, NULL, '2012-01-01 00:00:00', NULL, NULL, 1, 0),
 (1131, NULL, 'axipi_dynamic/watchdog', 1, 0, 0, 0, 0, NULL, '2012-01-01 00:00:00', NULL, NULL, 1, 0),
 (1132, NULL, 'axipi_dynamic/connections_users', 1, 0, 0, 0, 0, NULL, '2012-01-01 00:00:00', NULL, NULL, 1, 0);
 
@@ -140,7 +138,6 @@ INSERT INTO `itm` (`itm_id`, `cmp_id`, `lay_id`, `lng_id`, `sct_id`, `itm_code`,
 (1001, 1001, NULL, 1000, 1000, 'axipi/login', NULL, NULL, 'Login', NULL, 0, NULL, NULL, NULL, NULL, 1, 'guest', 0, '2012-01-01 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2012-01-01 00:00:00', NULL, NULL, 1, 1),
 (1002, 1003, NULL, 1000, 1000, 'axipi/dynamic/components', NULL, 1065, 'Components', NULL, 0, NULL, NULL, NULL, NULL, 1, 'groups', 0, '2012-01-01 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2012-01-01 00:00:00', NULL, NULL, 1, 1),
 (1005, 1002, NULL, 1000, 1000, 'axipi/menu', 'header-menu', NULL, 'Menu header', NULL, 0, NULL, NULL, NULL, NULL, 1, 'all', 0, '2012-01-01 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2012-01-01 00:00:00', NULL, NULL, 1, 0),
-(1007, 1008, NULL, 1000, 1000, 'axipi/breadcrumbs', 'breadcrumbs', NULL, 'Breadcrumbs', NULL, 0, NULL, NULL, NULL, NULL, 1, 'all', 0, '2012-01-01 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2012-01-01 00:00:00', NULL, NULL, 1, 0),
 (1008, 1004, NULL, 1000, 1000, 'axipi/dynamic/items', NULL, 1065, 'Items', NULL, 0, NULL, NULL, NULL, NULL, 1, 'groups', 0, '2012-01-01 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2012-01-01 00:00:00', NULL, NULL, 1, 1),
 (1009, 1002, NULL, 1000, 1000, 'axipi/dynamic/menu', NULL, 1065, 'axipi dynamic', NULL, 0, NULL, NULL, NULL, NULL, 1, 'groups', 0, '2012-01-01 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2012-01-01 00:00:00', NULL, NULL, 1, 0),
 (1011, 1010, NULL, 1000, 1000, 'axipi/errors', 'errors', NULL, 'Errors', NULL, 0, NULL, NULL, NULL, NULL, 1, 'all', 0, '2012-01-01 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2012-01-01 00:00:00', NULL, NULL, 1, 0),

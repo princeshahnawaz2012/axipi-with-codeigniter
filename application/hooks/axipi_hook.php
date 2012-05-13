@@ -104,8 +104,8 @@ class axipi_hook {
 		if($query->num_rows() > 0) {
 			foreach($query->result() as $row) {
 				list($directory, $class) = explode('/', $row->cmp_code);
-				if(file_exists(APPPATH.'widgets/'.$row->cmp_code.EXT)) {
-					require_once APPPATH.'widgets/'.$row->cmp_code.EXT;
+				if(file_exists(APPPATH.'controllers/'.$row->cmp_code.EXT)) {
+					require_once APPPATH.'controllers/'.$row->cmp_code.EXT;
 					$widget = new $class();
 					$widget->data = $row;
 					foreach(get_object_vars($this->CI) as $key => $object) {
