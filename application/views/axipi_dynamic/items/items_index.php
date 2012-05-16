@@ -23,6 +23,7 @@
 <div><?php echo form_label($this->lang->line('sct_code'), 'items_sct_id'); ?><?php echo form_dropdown('items_sct_id', $select_section, set_value('items_sct_id', $this->session->userdata('items_sct_id')), 'id="items_sct_id" class="select"'); ?></div>
 <div><?php echo form_label($this->lang->line('cmp_code'), 'items_cmp_code'); ?><?php echo form_input('items_cmp_code', set_value('items_cmp_code', $this->session->userdata('items_cmp_code')), 'id="items_cmp_code" class="inputtext"'); ?></div>
 <div><?php echo form_label($this->lang->line('lng_code'), 'items_lng_id'); ?><?php echo form_dropdown('items_lng_id', $select_language, set_value('items_lng_id', $this->session->userdata('items_lng_id')), 'id="items_lng_id" class="select"'); ?></div>
+<div><?php echo form_label($this->lang->line('itm_ispublished'), 'items_itm_ispublished'); ?><?php echo form_dropdown('items_itm_ispublished', $select_ispublished, set_value('items_itm_ispublished', $this->session->userdata('items_itm_ispublished')), 'id="items_itm_ispublished" class="select"'); ?></div>
 <div><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></div>
 </div>
 </form>

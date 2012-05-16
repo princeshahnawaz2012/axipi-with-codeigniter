@@ -20,6 +20,7 @@
 <div><?php echo form_label($this->lang->line('sct_code'), 'groups_items_sct_id'); ?><?php echo form_dropdown('groups_items_sct_id', $select_section, set_value('groups_items_sct_id', $this->session->userdata('groups_items_sct_id')), 'id="groups_items_sct_id" class="select"'); ?></div>
 <div><?php echo form_label($this->lang->line('cmp_code'), 'groups_items_cmp_code'); ?><?php echo form_input('groups_items_cmp_code', set_value('groups_items_cmp_code', $this->session->userdata('groups_items_cmp_code')), 'id="groups_items_cmp_code" class="inputtext"'); ?></div>
 <div><?php echo form_label($this->lang->line('lng_code'), 'groups_items_lng_id'); ?><?php echo form_dropdown('groups_items_lng_id', $select_language, set_value('groups_items_lng_id', $this->session->userdata('groups_items_lng_id')), 'id="groups_items_lng_id" class="select"'); ?></div>
+<div><?php echo form_label($this->lang->line('itm_ispublished'), 'groups_groups_items_itm_ispublished'); ?><?php echo form_dropdown('groups_items_itm_ispublished', $select_ispublished, set_value('groups_items_itm_ispublished', $this->session->userdata('groups_items_itm_ispublished')), 'id="groups_items_itm_ispublished" class="select"'); ?></div>
 <div><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></div>
 </div>
 </form>

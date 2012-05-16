@@ -15,12 +15,17 @@ class items extends CI_Controller {
 	public function index() {
 		$this->load->helper(array('form'));
 
+		if(isset($_SESSION['items_itm_ispublished']) == 0) {
+			$_SESSION['items_itm_ispublished'] = '';
+		}
+
 		$filters = array();
 		$filters['items_itm_code'] = array('itm.itm_code', 'like');
 		$filters['items_itm_title'] = array('itm.itm_title', 'like');
 		$filters['items_sct_id'] = array('itm.sct_id', 'equal');
 		$filters['items_cmp_code'] = array('cmp.cmp_code', 'like');
 		$filters['items_lng_id'] = array('itm.lng_id', 'equal');
+		$filters['items_itm_ispublished'] = array('itm.itm_ispublished', 'equal');
 		$flt = build_filters($filters);
 
 		$columns = array();
@@ -44,6 +49,7 @@ class items extends CI_Controller {
 		$data['results'] = $this->items_model->get_pagination_items($flt, $build_pagination['limit'], $build_pagination['start'], 'items');
 		$data['select_section'] = $this->items_model->select_section();
 		$data['select_language'] = $this->items_model->select_language();
+		$data['select_ispublished'] = array(''=>'-', '0'=>$this->lang->line('reply_0'), '1'=>$this->lang->line('reply_1'));
 		$this->zones['content'] = $this->load->view('axipi_dynamic/items/items_index', $data, true);
 	}
 	public function rule_itm_code($itm_code, $current = '') {

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>axipi User Guide</title>
-<link rel="stylesheet" type="text/css" href="userguide.css">
+<link rel="stylesheet" type="text/css" href="user_guide.css">
 </head>
 <body>
 
@@ -29,145 +29,145 @@ Open the <strong>/application/config/database.php</strong> file with a text edit
 <h3>/system/language/english</h3>
 
 <p>To assume ISO 639-1 for languages</p>
-<p><pre>< /system/language/english
-> /system/language/en</pre></p>
+<pre>&lt; /system/language/english
+&gt; /system/language/en</pre>
 
 <h2>Files</h2>
 
 <h3>/application/config/config.php</h3>
 
-<p><pre>29c29
-< $config['index_page'] = 'index.php';
+<pre>29c29
+&lt; $config['index_page'] = 'index.php';
 ---
-> $config['index_page'] = '';
+&gt; $config['index_page'] = '';
 72c72
-< $config['language']	= 'english';
+&lt; $config['language']	= 'english';
 ---
-> $config['language']	= 'en';
+&gt; $config['language']	= 'en';
 94c94
-< $config['enable_hooks'] = FALSE;
+&lt; $config['enable_hooks'] = FALSE;
 ---
-> $config['enable_hooks'] = TRUE;
+&gt; $config['enable_hooks'] = TRUE;
 282c282
-< $config['global_xss_filtering'] = FALSE;
+&lt; $config['global_xss_filtering'] = FALSE;
 ---
-> $config['global_xss_filtering'] = TRUE;
+&gt; $config['global_xss_filtering'] = TRUE;
 296c296
-< $config['csrf_protection'] = FALSE;
+&lt; $config['csrf_protection'] = FALSE;
 ---
-> $config['csrf_protection'] = TRUE;</pre></p>
+&gt; $config['csrf_protection'] = TRUE;</pre>
 
 <h3>/application/config/routes.php</h3>
 
 <p>To assume routes from database</p>
-<p><pre>< $route['default_controller'] = "welcome";
-< $route['404_override'] = '';
+<pre>&lt; $route['default_controller'] = "welcome";
+&lt; $route['404_override'] = '';
 ---
-> $route['default_controller'] = 'welcome';
-> $route['(:any)'] = 'welcome';</pre></p>
+&gt; $route['default_controller'] = 'welcome';
+&gt; $route['(:any)'] = 'welcome';</pre>
 
 <h3>/system/core/CodeIgniter.php</h3>
 
 <p>To assume routes from database</p>
-<p><pre>304a305,353
-> 	$LOAD =& load_class('Loader', 'core');
-> 	$db = $LOAD->database('', true);
-> 
-> 	$CFG->load('axipi_config');
-> 
-> 	$segs = $URI->segment_array();
-> 	$segments_page = array();
-> 	$arguments = array();
-> 
-> 	$stop = 0;
-> 	foreach ($segs as $segment) {
-> 		if(substr($segment, 0, 1) == '_') {
-> 			$method = substr($segment, 1);
-> 			$stop = 1;
-> 		} else if($stop == 0) {
-> 			$segments_page[] = $segment;
-> 		} else if($stop == 1) {
-> 			$arguments[] = $segment;
-> 		}
-> 	}
-> 	$page = implode('/', $segments_page);
-> 
-> 	if($page == '') {
-> 		$page = $CFG->item('default_itm_code');
-> 	}
-> 
-> 	$query = $db->query('SELECT itm.*, cmp.cmp_code FROM '.$db->dbprefix('itm').' AS itm LEFT JOIN '.$db->dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id WHERE itm_code = ?', array($page));
-> 	if($query->num_rows() == 0) {
-> 		$query = $db->query('SELECT *, cmp.cmp_code FROM '.$db->dbprefix('itm').' AS itm LEFT JOIN '.$db->dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id WHERE cmp_code = ?', array($CFG->item('404_cmp_code')));
-> 	}
-> 	$itm = $query->row();
-> 
-> 	list($directory, $class) = explode('/', $itm->cmp_code);
-> 	if(file_exists(APPPATH.'controllers/'.$itm->cmp_code.EXT)) {
-> 		require_once(APPPATH.'controllers/'.$itm->cmp_code.EXT);
-> 		$RTR->set_directory($directory);
-> 		$RTR->set_class($class);
-> 
-> 		if($method && method_exists($class, $method) && strncmp($method, '_', 1) != 0) {
-> 		} else {
-> 			$method = 'index';
-> 		}
-> 		$RTR->set_method($method);
-> 	} else {
-> 		require_once(APPPATH.'controllers/axipi_core/error404'.EXT);
-> 		$class = 'error404';
-> 		$method = 'index';
-> 	}
-> 
+<pre>304a305,353
+&gt; 	$LOAD =& load_class('Loader', 'core');
+&gt; 	$db = $LOAD-&gt;database('', true);
+&gt; 
+&gt; 	$CFG-&gt;load('axipi_config');
+&gt; 
+&gt; 	$segs = $URI-&gt;segment_array();
+&gt; 	$segments_page = array();
+&gt; 	$arguments = array();
+&gt; 
+&gt; 	$stop = 0;
+&gt; 	foreach ($segs as $segment) {
+&gt; 		if(substr($segment, 0, 1) == '_') {
+&gt; 			$method = substr($segment, 1);
+&gt; 			$stop = 1;
+&gt; 		} else if($stop == 0) {
+&gt; 			$segments_page[] = $segment;
+&gt; 		} else if($stop == 1) {
+&gt; 			$arguments[] = $segment;
+&gt; 		}
+&gt; 	}
+&gt; 	$page = implode('/', $segments_page);
+&gt; 
+&gt; 	if($page == '') {
+&gt; 		$page = $CFG-&gt;item('default_itm_code');
+&gt; 	}
+&gt; 
+&gt; 	$query = $db-&gt;query('SELECT itm.*, cmp.cmp_code FROM '.$db-&gt;dbprefix('itm').' AS itm LEFT JOIN '.$db-&gt;dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id WHERE itm_code = ?', array($page));
+&gt; 	if($query-&gt;num_rows() == 0) {
+&gt; 		$query = $db-&gt;query('SELECT *, cmp.cmp_code FROM '.$db-&gt;dbprefix('itm').' AS itm LEFT JOIN '.$db-&gt;dbprefix('cmp').' AS cmp ON cmp.cmp_id = itm.cmp_id WHERE cmp_code = ?', array($CFG-&gt;item('404_cmp_code')));
+&gt; 	}
+&gt; 	$itm = $query-&gt;row();
+&gt; 
+&gt; 	list($directory, $class) = explode('/', $itm-&gt;cmp_code);
+&gt; 	if(file_exists(APPPATH.'controllers/'.$itm-&gt;cmp_code.EXT)) {
+&gt; 		require_once(APPPATH.'controllers/'.$itm-&gt;cmp_code.EXT);
+&gt; 		$RTR-&gt;set_directory($directory);
+&gt; 		$RTR-&gt;set_class($class);
+&gt; 
+&gt; 		if($method && method_exists($class, $method) && strncmp($method, '_', 1) != 0) {
+&gt; 		} else {
+&gt; 			$method = 'index';
+&gt; 		}
+&gt; 		$RTR-&gt;set_method($method);
+&gt; 	} else {
+&gt; 		require_once(APPPATH.'controllers/axipi_core/error404'.EXT);
+&gt; 		$class = 'error404';
+&gt; 		$method = 'index';
+&gt; 	}
+&gt; 
 308a358,359
-> 	$CI->db = $db;
-> 	$CI->itm = $itm;
+&gt; 	$CI-&gt;db = $db;
+&gt; 	$CI-&gt;itm = $itm;
 359c410
-< 		call_user_func_array(array(&$CI, $method), array_slice($URI->rsegments, 2));
+&lt; 		call_user_func_array(array(&amp;$CI, $method), array_slice($URI-&gt;rsegments, 2));
 ---
-> 		call_user_func_array(array(&$CI, $method), $arguments);</pre></p>
+&gt; 		call_user_func_array(array(&amp;$CI, $method), $arguments);</pre>
 
 <h3>/system/core/Controller.php</h3>
 
 <p>To fix double loading related to changes in /system/core/CodeIgniter.php</p>
-<p><pre>46c46,48
-< 			$this->$var =& load_class($class);
+<pre>46c46,48
+&lt; 			$this-&gt;$var =& load_class($class);
 ---
-> 			if($var != 'loader') {
-> 				$this->$var =& load_class($class);
-> 			}</pre></p>
+&gt; 			if($var != 'loader') {
+&gt; 				$this-&gt;$var =& load_class($class);
+&gt; 			}</pre>
 
 <h3>/system/database/DB_active_rec.php</h3>
 
 <p>To manage NULL values</p>
-<p><pre>924c924,928
-< 				$this->ar_set[$this->_protect_identifiers($k, FALSE, TRUE)] = $this->escape($v);
+<pre>924c924,928
+&lt; 				$this-&gt;ar_set[$this-&gt;_protect_identifiers($k, FALSE, TRUE)] = $this-&gt;escape($v);
 ---
-> 				if($v == '') {
-> 					$this->ar_set[$this->_protect_identifiers($k, FALSE, TRUE)] = 'NULL';
-> 				} else {
-> 					$this->ar_set[$this->_protect_identifiers($k, FALSE, TRUE)] = $this->escape($v);
-> 				}</pre></p>
+&gt; 				if($v == '') {
+&gt; 					$this-&gt;ar_set[$this-&gt;_protect_identifiers($k, FALSE, TRUE)] = 'NULL';
+&gt; 				} else {
+&gt; 					$this-&gt;ar_set[$this-&gt;_protect_identifiers($k, FALSE, TRUE)] = $this-&gt;escape($v);
+&gt; 				}</pre>
 
 <h3>/system/libraries/Driver.php</h3>
 
 <p>To solve "Accessing static property Auth::$lib_name as non static"</p>
-<p><pre>33c33
-< 	protected static $lib_name;
+<pre>33c33
+&lt; 	protected static $lib_name;
 ---
-> 	protected $lib_name;</pre></p>
+&gt; 	protected $lib_name;</pre>
 
 <h3>/system/libraries/Upload.php</h3>
 
 <p>To solve "Undefined index: tmp_path"</p>
-<p><pre>1055c1055
-< 		if (DIRECTORY_SEPARATOR !== '\\' && function_exists('exec'))
+<pre>1055c1055
+&lt; 		if (DIRECTORY_SEPARATOR !== '\\' && function_exists('exec'))
 ---
-> 		/*if (DIRECTORY_SEPARATOR !== '\\' && function_exists('exec'))
+&gt; 		/*if (DIRECTORY_SEPARATOR !== '\\' && function_exists('exec'))
 1064c1064
-< 		}
+&lt; 		}
 ---
-> 		}*/</pre></p>
+&gt; 		}*/</pre>
 
 </div>
 

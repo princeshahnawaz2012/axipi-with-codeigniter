@@ -11,12 +11,17 @@ class groups_items extends CI_Controller {
 	public function index() {
 		$this->load->helper(array('form'));
 
+		if(isset($_SESSION['groups_items_itm_ispublished']) == 0) {
+			$_SESSION['groups_items_itm_ispublished'] = '';
+		}
+
 		$filters = array();
 		$filters['groups_items_itm_code'] = array('itm.itm_code', 'like');
 		$filters['groups_items_itm_title'] = array('itm.itm_title', 'like');
 		$filters['groups_items_sct_id'] = array('itm.sct_id', 'equal');
 		$filters['groups_items_cmp_code'] = array('cmp.cmp_code', 'like');
 		$filters['groups_items_lng_id'] = array('itm.lng_id', 'equal');
+		$filters['groups_items_itm_ispublished'] = array('itm.itm_ispublished', 'equal');
 		$flt = build_filters($filters);
 		$flt[] = 'itm.itm_access = \'groups\'';
 
@@ -39,6 +44,7 @@ class groups_items extends CI_Controller {
 		$data['groups'] = $this->groups_model->get_groups_is('item');
 		$data['select_section'] = $this->items_model->select_section();
 		$data['select_language'] = $this->items_model->select_language();
+		$data['select_ispublished'] = array(''=>'-', '0'=>$this->lang->line('reply_0'), '1'=>$this->lang->line('reply_1'));
 
 		if($this->input->post('submit_groups')) {
 			foreach($data['results'] as $result) {
