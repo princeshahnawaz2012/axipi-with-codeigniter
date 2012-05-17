@@ -6,6 +6,9 @@ if( ! function_exists('build_filters')) {
 		$flt = array();
 		$flt[] = '1';
 		foreach($filters as $k =>$v) {
+			if(isset($_SESSION[$k]) == 0) {
+				$_SESSION[$k] = '';
+			}
 			$value = '';
 			if($CI->input->post($k) || isset($_POST[$k]) == 1) {
 				$value = strval($CI->input->post($k));

@@ -15,10 +15,6 @@ class items extends CI_Controller {
 	public function index() {
 		$this->load->helper(array('form'));
 
-		if(isset($_SESSION['items_itm_ispublished']) == 0) {
-			$_SESSION['items_itm_ispublished'] = '';
-		}
-
 		$filters = array();
 		$filters['items_itm_code'] = array('itm.itm_code', 'like');
 		$filters['items_itm_title'] = array('itm.itm_title', 'like');
