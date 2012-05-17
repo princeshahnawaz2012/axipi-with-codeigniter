@@ -81,7 +81,7 @@ Open the <strong>/application/config/database.php</strong> file with a text edit
 &gt; 
 &gt; 	$stop = 0;
 &gt; 	foreach ($segs as $segment) {
-&gt; 		if(substr($segment, 0, 1) == '_') {
+&gt; 		if(substr($segment, 0, 1) == '_' && $stop == 0) {
 &gt; 			$method = substr($segment, 1);
 &gt; 			$stop = 1;
 &gt; 		} else if($stop == 0) {

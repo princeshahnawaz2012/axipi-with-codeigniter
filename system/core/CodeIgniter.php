@@ -313,7 +313,7 @@
 
 	$stop = 0;
 	foreach ($segs as $segment) {
-		if(substr($segment, 0, 1) == '_') {
+		if(substr($segment, 0, 1) == '_' && $stop == 0) {
 			$method = substr($segment, 1);
 			$stop = 1;
 		} else if($stop == 0) {
