@@ -5,35 +5,37 @@ class Auth_Axipi extends CI_Driver {
 	public function __construct() {
 		$this->CI =& get_instance();
 
-		$this->session_key = '5n2z8fg6y8j4a';
+		$this->CI->session_key = '5n2z8fg6y8j4a';
 
-		$this->key_id = 'axipi-id';
-		$this->key_password = 'axipi-password';
-		$this->key_remember = 'axipi-remember';
-		$this->key_token = 'axipi-token';
-		$this->key_time = 'axipi-time';
-
-		$this->cookie_id = $this->CI->input->cookie($this->key_id);
-		$this->cookie_password = $this->CI->input->cookie($this->key_password);
-		$this->cookie_remember = $this->CI->input->cookie($this->key_remember);
-		$this->cookie_token = $this->CI->input->cookie($this->key_token);
-		$this->cookie_time = $this->CI->input->cookie($this->key_time);
+		$this->CI->key_id = 'axipi_id';
+		$this->CI->key_password = 'axipi_password';
+		$this->CI->key_remember = 'axipi_remember';
+		$this->CI->key_token = 'axipi_token';
+		$this->CI->key_time = 'axipi_time';
+	}
+	function set_cookie($data) {
+		$this->CI->input->set_cookie($data);
+		$this->CI->cookies[$data['name']] = $data['value'];
+	}
+	function get_cookie($name) {
+		if(isset($this->CI->cookies[$name]) == 0) {
+			$this->CI->cookies[$name] = $this->CI->input->cookie($name);
+		}
 	}
 	function token() {
 		$token_time = time();
 		$token = $this->hash_token($token_time);
-
-		$this->cookie_token = $this->CI->input->set_cookie(array('name'=>$this->key_token, 'value'=>$token, 'expire'=>0, 'path'=>'/', 'secure'=>TRUE));
-		$this->cookie_time = $this->CI->input->set_cookie(array('name'=>$this->key_time, 'value'=>$token_time, 'expire'=>0, 'path'=>'/', 'secure'=>TRUE));
+		$this->set_cookie(array('name'=>$this->CI->key_token, 'value'=>$token, 'expire'=>0, 'path'=>'/'));
+		$this->set_cookie(array('name'=>$this->CI->key_time, 'value'=>$token_time, 'expire'=>0, 'path'=>'/'));
 	}
 	function hash_token($time) {
 		return hash('sha256', $this->token_auth().$time);
 	}
 	function token_auth() {
-		return $this->session_key.$_SERVER['HTTP_HOST'].$_SERVER['HTTP_USER_AGENT'];
+		return $this->CI->session_key.$_SERVER['HTTP_HOST'].$_SERVER['HTTP_USER_AGENT'];
 	}
 	function hash_password($password) {
-		return hash('sha256', $this->session_key.$password);
+		return hash('sha256', $this->CI->session_key.$password);
 	}
 	public function login($email, $password) {
 		$this->CI->session->unset_userdata('usr_id');
@@ -48,8 +50,8 @@ class Auth_Axipi extends CI_Driver {
 
 				$this->token();
 				$time = 0;
-				$this->cookie_id = $this->CI->input->set_cookie(array('name'=>$this->key_id, 'value'=>$usr->usr_id, 'expire'=>$time, 'path'=>'/', 'secure'=>TRUE));
-				$this->cookie_password = $this->CI->input->set_cookie(array('name'=>$this->key_password, 'value'=>$this->hash_password($usr->usr_protectedpassword), 'expire'=>$time, 'path'=>'/', 'secure'=>TRUE));
+				$this->set_cookie(array('name'=>$this->CI->key_id, 'value'=>$usr->usr_id, 'expire'=>$time, 'path'=>'/'));
+				$this->set_cookie(array('name'=>$this->CI->key_password, 'value'=>$this->hash_password($usr->usr_protectedpassword), 'expire'=>$time, 'path'=>'/'));
 
 				$this->CI->session->set_userdata('usr_id', $usr->usr_id);
 				return true;
@@ -59,14 +61,34 @@ class Auth_Axipi extends CI_Driver {
 	}
 	public function logout() {
 		$this->CI->session->sess_destroy();
+		$this->CI->input->set_cookie(array('name'=>$this->CI->key_id, 'value'=>'', 'expire'=>'', 'path'=>'/'));
+		$this->CI->input->set_cookie(array('name'=>$this->CI->key_password, 'value'=>'', 'expire'=>'', 'path'=>'/'));
+		$this->CI->input->set_cookie(array('name'=>$this->CI->key_remember, 'value'=>'', 'expire'=>'', 'path'=>'/'));
+		$this->CI->input->set_cookie(array('name'=>$this->CI->key_token, 'value'=>'', 'expire'=>'', 'path'=>'/'));
+		$this->CI->input->set_cookie(array('name'=>$this->CI->key_time, 'value'=>'', 'expire'=>'', 'path'=>'/'));
 	}
 	public function logged_in() {
-		if($this->CI->session->userdata('usr_id')) {
-			$this->CI->usr = $this->get_user($this->CI->session->userdata('usr_id'));
-			$this->CI->usr->usr_access = 'connected';
-			$this->CI->usr->groups = $this->get_groups();
-			$this->CI->usr->groups[1002] = 'connected';
-			return true;
+		$this->get_cookie($this->CI->key_id);
+		$this->get_cookie($this->CI->key_password);
+		$this->get_cookie($this->CI->key_remember);
+		$this->get_cookie($this->CI->key_token);
+		$this->get_cookie($this->CI->key_time);
+
+		if($this->CI->cookies[$this->CI->key_id] != '') {
+			$enabled = 1;
+			$token = $this->hash_token($this->CI->cookies[$this->CI->key_time]);
+			if(strcmp($this->CI->cookies[$this->CI->key_token], $token) != 0) {
+				$enabled = 0;
+				$this->logout();
+			}
+			if($this->CI->session->userdata('usr_id') && $enabled == 1) {
+				$this->token();
+				$this->CI->usr = $this->get_user($this->CI->session->userdata('usr_id'));
+				$this->CI->usr->usr_access = 'connected';
+				$this->CI->usr->groups = $this->get_groups();
+				$this->CI->usr->groups[1002] = 'connected';
+				return true;
+			}
 		}
 		return false;
 	}
