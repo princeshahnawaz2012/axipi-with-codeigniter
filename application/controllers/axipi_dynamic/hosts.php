@@ -25,7 +25,7 @@ class hosts extends CI_Controller {
 		$col = build_columns('hosts', $columns, 'hst.hst_id', 'DESC');
 
 		$results = $this->hosts_model->get_all_hosts($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'hosts');
+		$build_pagination = $this->axipi_library->build_pagination(base_url().$this->itm->itm_code, 'hosts', $results->count, 30);
 
 		$data = array();
 		$data['columns'] = $col;

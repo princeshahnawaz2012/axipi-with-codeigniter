@@ -21,7 +21,7 @@ class groups_users extends CI_Controller {
 		$col = build_columns('groups_users', $columns, 'usr.usr_id', 'DESC');
 
 		$results = $this->users_model->get_all_users($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'groups_users');
+		$build_pagination = $this->axipi_library->build_pagination(base_url().$this->itm->itm_code, 'groups_users', $results->count, 30);
 
 		$data = array();
 		$data['columns'] = $col;

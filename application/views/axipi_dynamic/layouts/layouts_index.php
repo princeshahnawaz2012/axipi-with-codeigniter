@@ -32,10 +32,10 @@
 <table>
 <thead>
 <tr>
-<?php display_column('layouts', $columns[0], $this->lang->line('lay_id')); ?>
-<?php display_column('layouts', $columns[1], $this->lang->line('lay_code')); ?>
-<?php display_column('layouts', $columns[2], $this->lang->line('lay_type')); ?>
-<?php display_column('layouts', $columns[3], $this->lang->line('sections')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'layouts', $columns[0], $this->lang->line('lay_id')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'layouts', $columns[1], $this->lang->line('lay_code')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'layouts', $columns[2], $this->lang->line('lay_type')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'layouts', $columns[3], $this->lang->line('sections')); ?>
 <th>&nbsp;</th>
 </tr>
 </thead>

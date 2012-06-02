@@ -23,7 +23,7 @@ class languages extends CI_Controller {
 		$col = build_columns('languages', $columns, 'lng.lng_id', 'DESC');
 
 		$results = $this->languages_model->get_all_languages($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'languages');
+		$build_pagination = $this->axipi_library->build_pagination(base_url().$this->itm->itm_code, 'languages', $results->count, 30);
 
 		$data = array();
 		$data['columns'] = $col;

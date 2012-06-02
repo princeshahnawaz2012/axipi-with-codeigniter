@@ -130,7 +130,7 @@ if ( ! function_exists('delete_files'))
 
 		while (FALSE !== ($filename = @readdir($current_dir)))
 		{
-			if ($filename != "." and $filename != "..")
+			if ($filename != "." and $filename != ".." and $filename != "index.html" and $filename != ".htaccess")
 			{
 				if (is_dir($path.DIRECTORY_SEPARATOR.$filename))
 				{

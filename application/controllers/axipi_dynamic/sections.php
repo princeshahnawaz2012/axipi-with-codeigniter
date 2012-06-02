@@ -22,7 +22,7 @@ class sections extends CI_Controller {
 		$col = build_columns('sections', $columns, 'sct.sct_id', 'DESC');
 
 		$results = $this->sections_model->get_all_sections($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'sections');
+		$build_pagination = $this->axipi_library->build_pagination(base_url().$this->itm->itm_code, 'sections', $results->count, 30);
 
 		$data = array();
 		$data['columns'] = $col;

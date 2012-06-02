@@ -21,7 +21,7 @@ class groups_permissions extends CI_Controller {
 		$col = build_columns('groups_permissions', $columns, 'per.per_id', 'DESC');
 
 		$results = $this->permissions_model->get_all_permissions($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'groups_permissions');
+		$build_pagination = $this->axipi_library->build_pagination(base_url().$this->itm->itm_code, 'groups_permissions', $results->count, 30);
 
 		$data = array();
 		$data['columns'] = $col;

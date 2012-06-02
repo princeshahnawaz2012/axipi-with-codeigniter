@@ -31,7 +31,7 @@ class items_relations extends CI_Controller {
 		$col = build_columns('items_relations', $columns, 'itm.itm_code', 'ASC');
 
 		$results = $this->items_model->get_all_items($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'items_relations');
+		$build_pagination = $this->axipi_library->build_pagination(base_url().$this->itm->itm_code, 'items_relations', $results->count, 30);
 
 		$data = array();
 		$data['columns'] = $col;

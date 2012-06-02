@@ -17,6 +17,12 @@ if( ! function_exists('build_filters')) {
 				$value = $CI->session->userdata($k);
 			}
 			if($value != '') {
+				if($v[1] == 'notnull' && $value == 1) {
+					$flt[] = $v[0].' IS NOT NULL';
+				}
+				if($v[1] == 'notnull' && $value == 0) {
+					$flt[] = $v[0].' IS NULL';
+				}
 				if($v[1] == 'equal') {
 					$flt[] = $v[0].' = '.$CI->db->escape($value);
 				}
@@ -82,7 +88,7 @@ if( ! function_exists('build_columns')) {
 }
 
 if( ! function_exists('display_column')) {
-	function display_column($reference, $column, $lang) {
+	function display_column($url, $reference, $column, $lang) {
 		$CI =& get_instance();
 		$class = '';
 		list($display_order, $display_direction) = explode(' ', $column);
@@ -97,7 +103,7 @@ if( ! function_exists('display_column')) {
 				}
 			}
 		}
-		$link = '<th'.$class.'><a href="'.current_url().'?'.$reference.'_col='.urlencode($column).'">'.$lang.'</a></th>';
+		$link = '<th'.$class.'><a href="'.$url.'?'.$reference.'_col='.urlencode($column).'">'.$lang.'</a></th>';
 		echo $link;
 	}
 }

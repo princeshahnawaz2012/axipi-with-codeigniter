@@ -24,6 +24,7 @@
 <div><?php echo form_label($this->lang->line('cmp_code'), 'items_cmp_code'); ?><?php echo form_input('items_cmp_code', set_value('items_cmp_code', $this->session->userdata('items_cmp_code')), 'id="items_cmp_code" class="inputtext"'); ?></div>
 <div><?php echo form_label($this->lang->line('lng_code'), 'items_lng_id'); ?><?php echo form_dropdown('items_lng_id', $select_language, set_value('items_lng_id', $this->session->userdata('items_lng_id')), 'id="items_lng_id" class="select"'); ?></div>
 <div><?php echo form_label($this->lang->line('itm_ispublished'), 'items_itm_ispublished'); ?><?php echo form_dropdown('items_itm_ispublished', $select_ispublished, set_value('items_itm_ispublished', $this->session->userdata('items_itm_ispublished')), 'id="items_itm_ispublished" class="select"'); ?></div>
+<div><?php echo form_label($this->lang->line('layout'), 'items_lay_id'); ?><?php echo form_dropdown('items_lay_id', $select_ispublished, set_value('items_lay_id', $this->session->userdata('items_lay_id')), 'id="items_lay_id" class="select"'); ?></div>
 <div><input class="inputsubmit" type="submit" name="submit" id="submit" value="<?php echo $this->lang->line('validate'); ?>"></div>
 </div>
 </form>
@@ -37,14 +38,14 @@
 <table>
 <thead>
 <tr>
-<?php display_column('items', $columns[0], $this->lang->line('itm_id')); ?>
-<?php display_column('items', $columns[1], $this->lang->line('itm_code')); ?>
-<?php display_column('items', $columns[2], $this->lang->line('itm_title')); ?>
-<?php display_column('items', $columns[3], $this->lang->line('sct_code')); ?>
-<?php display_column('items', $columns[4], $this->lang->line('cmp_code')); ?>
-<?php display_column('items', $columns[5], $this->lang->line('lng_code')); ?>
-<?php display_column('items', $columns[6], $this->lang->line('itm_ispublished')); ?>
-<?php display_column('items', $columns[7], $this->lang->line('itm_access')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'items', $columns[0], $this->lang->line('itm_id')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'items', $columns[1], $this->lang->line('itm_code')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'items', $columns[2], $this->lang->line('itm_title')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'items', $columns[3], $this->lang->line('sct_code')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'items', $columns[4], $this->lang->line('cmp_code')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'items', $columns[5], $this->lang->line('lng_code')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'items', $columns[6], $this->lang->line('itm_ispublished')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'items', $columns[7], $this->lang->line('itm_access')); ?>
 <th>&nbsp;</th>
 </tr>
 </thead>

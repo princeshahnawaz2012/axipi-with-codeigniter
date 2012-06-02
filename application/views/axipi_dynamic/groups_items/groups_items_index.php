@@ -36,10 +36,10 @@
 <table>
 <thead>
 <tr>
-<?php display_column('groups_items', $columns[0], $this->lang->line('itm_id')); ?>
-<?php display_column('groups_items', $columns[1], $this->lang->line('itm_code')); ?>
-<?php display_column('groups_items', $columns[2], $this->lang->line('itm_title')); ?>
-<?php display_column('groups_items', $columns[3], $this->lang->line('cmp_code')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'groups_items', $columns[0], $this->lang->line('itm_id')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'groups_items', $columns[1], $this->lang->line('itm_code')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'groups_items', $columns[2], $this->lang->line('itm_title')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'groups_items', $columns[3], $this->lang->line('cmp_code')); ?>
 <?php foreach($groups as $group) { ?>
 <th><?php echo $group->grp_trl_title; ?></th>
 <?php } ?>

@@ -22,6 +22,7 @@ class items extends CI_Controller {
 		$filters['items_cmp_code'] = array('cmp.cmp_code', 'like');
 		$filters['items_lng_id'] = array('itm.lng_id', 'equal');
 		$filters['items_itm_ispublished'] = array('itm.itm_ispublished', 'equal');
+		$filters['items_lay_id'] = array('itm.lay_id', 'notnull');
 		$flt = build_filters($filters);
 
 		$columns = array();
@@ -36,7 +37,7 @@ class items extends CI_Controller {
 		$col = build_columns('items', $columns, 'itm.itm_id', 'DESC');
 
 		$results = $this->items_model->get_all_items($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 50, 'items');
+		$build_pagination = $this->axipi_library->build_pagination(base_url().$this->itm->itm_code, 'items', $results->count, 50);
 
 		$data = array();
 		$data['columns'] = $col;

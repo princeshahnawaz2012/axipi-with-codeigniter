@@ -32,11 +32,11 @@
 <table>
 <thead>
 <tr>
-<?php display_column('groups', $columns[0], $this->lang->line('grp_id')); ?>
-<?php display_column('groups', $columns[1], $this->lang->line('grp_code')); ?>
-<?php display_column('groups', $columns[2], $this->lang->line('permissions')); ?>
-<?php display_column('groups', $columns[3], $this->lang->line('items')); ?>
-<?php display_column('groups', $columns[4], $this->lang->line('users')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'groups', $columns[0], $this->lang->line('grp_id')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'groups', $columns[1], $this->lang->line('grp_code')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'groups', $columns[2], $this->lang->line('permissions')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'groups', $columns[3], $this->lang->line('items')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'groups', $columns[4], $this->lang->line('users')); ?>
 <th>&nbsp;</th>
 </tr>
 </thead>

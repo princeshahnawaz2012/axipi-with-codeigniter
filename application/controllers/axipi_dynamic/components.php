@@ -12,6 +12,7 @@ class components extends CI_Controller {
 
 		$filters = array();
 		$filters['components_cmp_code'] = array('cmp.cmp_code', 'like');
+		$filters['components_lay_id'] = array('cmp.lay_id', 'notnull');
 		$flt = build_filters($filters);
 
 		$columns = array();
@@ -25,13 +26,14 @@ class components extends CI_Controller {
 		$col = build_columns('components', $columns, 'cmp.cmp_id', 'DESC');
 
 		$results = $this->components_model->get_all_components($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 50, 'components');
+		$build_pagination = $this->axipi_library->build_pagination(base_url().$this->itm->itm_code, 'components', $results->count, 50);
 
 		$data = array();
 		$data['columns'] = $col;
 		$data['pagination'] = $build_pagination['output'];
 		$data['position'] = $build_pagination['position'];
 		$data['results'] = $this->components_model->get_pagination_components($flt, $build_pagination['limit'], $build_pagination['start'], 'components');
+		$data['select_ispublished'] = array(''=>'-', '0'=>$this->lang->line('reply_0'), '1'=>$this->lang->line('reply_1'));
 		$this->zones['content'] = $this->load->view('axipi_dynamic/components/components_index', $data, true);
 	}
 	public function rule_cmp_code($cmp_code, $current = '') {
@@ -71,6 +73,7 @@ class components extends CI_Controller {
 			$this->db->set('cmp_datecreated', date('Y-m-d H:i:s'));
 			$this->db->insert('cmp');
 			$this->msg[] = $this->lang->line('created');
+			$this->db->cache_delete_all();
 			$this->index();
 		}
 	}
@@ -109,6 +112,7 @@ class components extends CI_Controller {
 				$this->db->where('cmp_id', $cmp_id);
 				$this->db->update('cmp');
 				$this->msg[] = $this->lang->line('updated');
+				$this->db->cache_delete_all();
 				$this->index();
 			}
 		} else {
@@ -134,6 +138,7 @@ class components extends CI_Controller {
 					$this->db->where('cmp_islocked', 0);
 					$this->db->delete('cmp');
 					$this->msg[] = $this->lang->line('deleted');
+					$this->db->cache_delete_all();
 					$this->index();
 				}
 			} else {

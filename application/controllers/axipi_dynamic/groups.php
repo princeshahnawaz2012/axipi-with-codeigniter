@@ -23,7 +23,7 @@ class groups extends CI_Controller {
 		$col = build_columns('groups', $columns, 'grp.grp_id', 'DESC');
 
 		$results = $this->groups_model->get_all_groups($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'groups');
+		$build_pagination = $this->axipi_library->build_pagination(base_url().$this->itm->itm_code, 'groups', $results->count, 30);
 
 		$data = array();
 		$data['columns'] = $col;

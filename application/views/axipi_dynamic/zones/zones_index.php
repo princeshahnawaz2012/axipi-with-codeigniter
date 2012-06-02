@@ -31,11 +31,11 @@
 <table>
 <thead>
 <tr>
-<?php display_column('zones', $columns[0], $this->lang->line('zon_id')); ?>
-<?php display_column('zones', $columns[1], $this->lang->line('zon_code')); ?>
-<?php display_column('zones', $columns[2], $this->lang->line('lay_code')); ?>
-<?php display_column('zones', $columns[3], $this->lang->line('zon_ordering')); ?>
-<?php display_column('zones', $columns[4], $this->lang->line('items')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'zones', $columns[0], $this->lang->line('zon_id')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'zones', $columns[1], $this->lang->line('zon_code')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'zones', $columns[2], $this->lang->line('lay_code')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'zones', $columns[3], $this->lang->line('zon_ordering')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'zones', $columns[4], $this->lang->line('items')); ?>
 <th>&nbsp;</th>
 </tr>
 </thead>

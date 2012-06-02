@@ -2,12 +2,12 @@
 
 class axipi_library {
 	public function __construct($params = array()) {
+		$this->CI =& get_instance();
 		if(function_exists('date_default_timezone_set')) {
-			date_default_timezone_set('Etc/UCT');
+			date_default_timezone_set($this->CI->config->item('date_timezone'));
 		}
 		set_error_handler(array($this, 'error_handler'));
 		register_shutdown_function(array($this, 'shutdown_function'));
-		$this->CI =& get_instance();
 		$this->CI->err = array();
 		$this->CI->hlp = array();
 		$this->CI->msg = array();
@@ -76,18 +76,18 @@ class axipi_library {
 			}
 		} 
 	}
-	function build_pagination($total, $per_page, $ref = 'default') {
+	function build_pagination($url, $reference, $total, $per_page) {
 		$this->CI->load->library('pagination');
 
 		$config = array();
-		$config['base_url'] = '?';
+		$config['base_url'] = $url.'?';
 		$config['num_links'] = 5;
 		$config['total_rows'] = $total;
 		$config['per_page'] = $per_page;
 		$config['page_query_string'] = TRUE;
 		$config['use_page_numbers'] = TRUE;
-		$config['query_string_segment'] = $ref.'_pg';
-		$config['first_url'] = '?'.$config['query_string_segment'].'=1';
+		$config['query_string_segment'] = $reference.'_pg';
+		$config['first_url'] = $url.'?'.$config['query_string_segment'].'=1';
 
 		$pages = ceil($total/$config['per_page']);
 

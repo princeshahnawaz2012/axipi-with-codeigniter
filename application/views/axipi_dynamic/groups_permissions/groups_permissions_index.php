@@ -31,8 +31,8 @@
 <table>
 <thead>
 <tr>
-<?php display_column('groups_permissions', $columns[0], $this->lang->line('per_id')); ?>
-<?php display_column('groups_permissions', $columns[1], $this->lang->line('per_code')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'groups_permissions', $columns[0], $this->lang->line('per_id')); ?>
+<?php display_column(base_url().$this->itm->itm_code, 'groups_permissions', $columns[1], $this->lang->line('per_code')); ?>
 <?php foreach($groups as $group) { ?>
 <th><?php echo $group->grp_trl_title; ?></th>
 <?php } ?>

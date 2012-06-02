@@ -22,7 +22,7 @@ class layouts extends CI_Controller {
 		$col = build_columns('layouts', $columns, 'lay.lay_id', 'DESC');
 
 		$results = $this->layouts_model->get_all_layouts($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'layouts');
+		$build_pagination = $this->axipi_library->build_pagination(base_url().$this->itm->itm_code, 'layouts', $results->count, 30);
 
 		$data = array();
 		$data['columns'] = $col;

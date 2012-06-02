@@ -22,7 +22,7 @@ class users extends CI_Controller {
 		$col = build_columns('users', $columns, 'usr.usr_id', 'DESC');
 
 		$results = $this->users_model->get_all_users($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'users');
+		$build_pagination = $this->axipi_library->build_pagination(base_url().$this->itm->itm_code, 'users', $results->count, 30);
 
 		$data = array();
 		$data['columns'] = $col;

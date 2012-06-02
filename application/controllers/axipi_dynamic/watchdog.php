@@ -14,7 +14,7 @@ class watchdog extends CI_Controller {
 		$flt = build_filters($filters);
 
 		$results = $this->watchdog_model->get_all_watchdog($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'watchdog');
+		$build_pagination = $this->axipi_library->build_pagination(base_url().$this->itm->itm_code, 'watchdog', $results->count, 30);
 
 		$data = array();
 		$data['pagination'] = $build_pagination['output'];

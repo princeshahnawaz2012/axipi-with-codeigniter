@@ -24,7 +24,7 @@ class items_zones extends CI_Controller {
 		$col = build_columns('items_zones', $columns, 'zon.zon_ordering', 'ASC');
 
 		$results = $this->zones_model->get_all_zones($flt);
-		$build_pagination = $this->axipi_library->build_pagination($results->count, 30, 'items_zones');
+		$build_pagination = $this->axipi_library->build_pagination(base_url().$this->itm->itm_code, 'items_zones', $results->count, 30);
 
 		$data = array();
 		$data['columns'] = $col;
